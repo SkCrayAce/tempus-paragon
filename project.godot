@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Unnamed Gamex Prototype"
+config/name="Tempus Paragon"
 run/main_scene="res://scenes/game_world.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://temp_assets/icon.svg"
