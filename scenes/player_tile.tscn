@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cohlakdbumiy2"]
+
+[ext_resource type="Texture2D" uid="uid://ckafiysr0vf3q" path="res://temp_assets/textures/kai.png" id="1_x1kok"]
+
+[node name="TextureRect" type="TextureRect"]
+clip_contents = true
+custom_minimum_size = Vector2(64, 32)
+offset_right = 512.0
+offset_bottom = 512.0
+texture = ExtResource("1_x1kok")
+stretch_mode = 2
