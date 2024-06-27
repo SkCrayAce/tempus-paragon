@@ -3,9 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://b8hfpwp4cdd6g" path="res://temp_assets/textures/tile.png" id="1_ujurv"]
 [ext_resource type="Texture2D" uid="uid://crhgqophukhom" path="res://temp_assets/textures/tile_selected.png" id="2_qjx4p"]
 [ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://temp_assets/textures/texture_pack1.png" id="3_yrtg7"]
-[ext_resource type="Script" path="res://scenes/character_icon.gd" id="4_cumgj"]
 [ext_resource type="Texture2D" uid="uid://ckafiysr0vf3q" path="res://temp_assets/textures/kai.png" id="4_oa717"]
+[ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character_icon.tscn" id="5_6vrsy"]
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://temp_assets/textures/emerald.png" id="5_ux5it"]
+[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://temp_assets/textures/tyrone.png" id="6_q0jl4"]
 [ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="7_3cg71"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4aii"]
@@ -98,17 +99,16 @@ sources/2 = SubResource("TileSetAtlasSource_hp3yx")
 [sub_resource type="GDScript" id="GDScript_tnuxs"]
 script/source = "extends TileMap
 
-var grid_length = 18
-var grid_height = 10
+@export var grid_length = 18
+@export var grid_height = 10
+@export var enemy_speed = 60
 var dictionary = {}
 
 const enemy_script = preload(\"res://scenes/enemy.gd\")
 
-# @onready var enemy = $Enemy
-@export var enemy_speed = 60
 var enemy
-var target_pos : Vector2i
-var world_pos : Vector2i
+# var target_pos : Vector2i
+# var world_pos : Vector2i
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 
@@ -134,36 +134,36 @@ func _process(delta):
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		if global.dragged_char_name == \"kai\":
-			#attack_AoE(hovered_tile, kai_offset_list)
-			for offset in kai_offset_list:
-				target_pos = hovered_tile + offset
-				world_pos = map_to_local(target_pos)
-				set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-				var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
-				prints(Input.is_action_just_released(\"left_click\"))
-				if Input.is_action_just_released(\"left_click\"):
-					prints(enemy)
-				if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
-					prints(\"success\")
-					enemy.kill()
+			attack_AoE(hovered_tile, kai_offset_list)
+			#for offset in kai_offset_list:
+				#var target_pos = hovered_tile + offset
+				#var world_pos = map_to_local(target_pos)
+				#set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
+				#var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+				#prints(Input.is_action_just_released(\"left_click\"))
+				#if Input.is_action_just_released(\"left_click\"):
+					#prints(enemy)
+				#if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
+					#prints(\"success\")
+					#enemy.kill()
 		elif global.dragged_char_name == \"emerald\":
-			# attack_AoE(hovered_tile, emerald_offset_list)
-			for offset in emerald_offset_list:
-				target_pos = hovered_tile + offset
-				world_pos = map_to_local(target_pos)
-				set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-				var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
-				prints(Input.is_action_just_released(\"left_click\"))
-				if Input.is_action_just_released(\"left_click\"):
-					prints(enemy)
-				if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
-					prints(\"success\")
-					enemy.kill()
+			attack_AoE(hovered_tile, emerald_offset_list)
+			#for offset in emerald_offset_list:
+				#var target_pos = hovered_tile + offset
+				#var world_pos = map_to_local(target_pos)
+				#set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
+				#var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+				#prints(Input.is_action_just_released(\"left_click\"))
+				#if Input.is_action_just_released(\"left_click\"):
+					#prints(enemy)
+				#if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
+					#prints(\"success\")
+					#enemy.kill()
 
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
-		target_pos = hovered_tile + offset
-		world_pos = map_to_local(target_pos)
+		var target_pos : Vector2 = hovered_tile + offset
+		var world_pos : Vector2 = map_to_local(target_pos)
 		set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
 		enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
 				# prints(Input.is_action_just_released(\"left_click\"))
@@ -171,14 +171,11 @@ func attack_AoE(hovered_tile, offset_list):
 			prints(enemy)
 		if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
 			prints(\"success\")
-			enemy.kill()
+			enemy.hit(500)
 
 		
 
 "
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
-size = Vector2(259, 267)
 
 [node name="Battle" type="Node2D"]
 
@@ -201,43 +198,50 @@ enabled = false
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="tyrone" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
 layout_mode = 2
 
-[node name="kai" type="Node2D" parent="VBoxContainer/MarginContainer"]
-unique_name_in_owner = true
-position = Vector2(1106, 47)
-script = ExtResource("4_cumgj")
+[node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("6_q0jl4")
 
-[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/MarginContainer/kai"]
-scale = Vector2(0.3, 0.3)
+[node name="CooldownBar" parent="VBoxContainer/tyrone" index="2"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="kai" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
+layout_mode = 2
+
+[node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("4_oa717")
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer/MarginContainer/kai"]
+[node name="CooldownBar" parent="VBoxContainer/kai" index="2"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 200.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/MarginContainer/kai/Area2D"]
-shape = SubResource("RectangleShape2D_vlow2")
+[node name="emerald" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
+layout_mode = 2
 
-[node name="emerald" type="Node2D" parent="VBoxContainer/MarginContainer"]
-unique_name_in_owner = true
-position = Vector2(1106, 138)
-script = ExtResource("4_cumgj")
-
-[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/MarginContainer/emerald"]
-scale = Vector2(0.3, 0.3)
+[node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_ux5it")
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer/MarginContainer/emerald"]
+[node name="CooldownBar" parent="VBoxContainer/emerald" index="2"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 200.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/MarginContainer/emerald/Area2D"]
-shape = SubResource("RectangleShape2D_vlow2")
-
-[connection signal="body_entered" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_body_exited"]
-[connection signal="mouse_entered" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_mouse_exited"]
-[connection signal="body_entered" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_body_exited"]
-[connection signal="mouse_entered" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_mouse_exited"]
+[editable path="VBoxContainer/tyrone"]
+[editable path="VBoxContainer/kai"]
+[editable path="VBoxContainer/emerald"]

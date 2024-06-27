@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b03oo28kniiu7"]
+[gd_scene load_steps=22 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scenes/enemy.gd" id="1_6jaq7"]
 [ext_resource type="Texture2D" uid="uid://c1ql1o06waw8t" path="res://temp_assets/characters/slime.png" id="1_123u2"]
@@ -132,6 +132,13 @@ radius = 58.0775
 [sub_resource type="CircleShape2D" id="CircleShape2D_drfnt"]
 radius = 5.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3ea"]
+bg_color = Color(0.878431, 0.247059, 0.247059, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_6jaq7")
@@ -154,11 +161,21 @@ y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_drfnt")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="NextMoveTimer" type="Timer" parent="."]
 process_callback = 0
 wait_time = 5.0
 autostart = true
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -9.0
+offset_top = 3.0
+offset_right = 81.0
+offset_bottom = 26.0
+scale = Vector2(0.2, 0.2)
+theme_override_styles/background = SubResource("StyleBoxFlat_8b3ea")
+max_value = 1000.0
+step = 1.0
+
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="NextMoveTimer" to="." method="_on_next_move_timer_timeout"]

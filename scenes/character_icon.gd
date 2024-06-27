@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var draggable = false
 var is_inside_droppable = false
@@ -9,12 +9,21 @@ var initialPos : Vector2
 
 const enemy_script = preload("res://scenes/enemy.gd")
 
-func _ready():
-	scale = Vector2(0.3, 0.3)
-	
+# func _ready():
+	# scale = Vector2(0.3, 0.3)
+@onready var cooldown_bar = $CooldownBar
+@onready var cooldown_timer = $CooldownTimer
+
+func start_cooldown():
+	cooldown_bar.max_value = cooldown_timer.wait_time
+	cooldown_timer.start()
+	cooldown_bar.show()
+	# cooldown_bar.value = cooldown_timer.time_left
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	cooldown_bar.value = cooldown_timer.time_left
 	if draggable:
 		if Input.is_action_just_pressed("left_click"):
 			initialPos = global_position
@@ -29,6 +38,7 @@ func _process(delta):
 			global.is_released = true
 			global.is_dragging = false
 			global.dragged_char_name = ""
+			start_cooldown()
 			
 			var tween = get_tree().create_tween()
 			if is_inside_droppable:
@@ -40,12 +50,12 @@ func _process(delta):
 func _on_area_2d_mouse_entered():
 	if not global.is_dragging:
 		draggable = true
-		scale = Vector2(0.35, 0.35)
+		scale = Vector2(0.6, 0.6)
 
 func _on_area_2d_mouse_exited():
 	if not global.is_dragging:
 		draggable = false
-		scale = Vector2(0.3, 0.3)
+		scale = Vector2(0.5, 0.5)
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("dropable"):
@@ -58,3 +68,6 @@ func _on_area_2d_body_exited(body):
 		is_inside_droppable = false
 		body.modulate = Color(Color.MEDIUM_PURPLE, 0.7)
 		# body_ref = body
+
+func _on_cooldown_timer_timeout():
+	cooldown_bar.hide()

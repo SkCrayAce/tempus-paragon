@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
 @onready var anim = $AnimatedSprite2D
+@onready var healthbar = $HealthBar
 @export var speed = 60
+@export var health = 1000
 var player_chase = false
 var player = null
 
 func _ready():
+	healthbar.value = health
+	healthbar.max_value = 1000
 	global.add_enemy(self)
 	# global.enemy_dict[position] = self
 	anim.play("idle")
@@ -34,14 +38,21 @@ func _on_detection_area_body_exited(body):
 	player = null
 	player_chase = false
 
-func _on_timer_timeout():
+func _on_next_move_timer_timeout():
 	anim.play("walk")
 	global.delete_enemy(self)
 	position.x += 64
 	# position = position.snapped(Vector2(64, 64))
 	global.add_enemy(self)
 	# position.snapped()
-	
-func kill():
-	global.delete_enemy(self)
-	queue_free()
+
+#func update_healthbar():
+	#healthbar.value = health
+
+func hit(damage : int):
+	prints("Before:", healthbar.value)
+	healthbar.value -= damage
+	prints("After:", healthbar.value)
+	if healthbar.value <= 0:
+		global.delete_enemy(self)
+		queue_free()
