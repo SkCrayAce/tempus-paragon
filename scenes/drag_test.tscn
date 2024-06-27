@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3y8luvsodhgh"]
+
+[ext_resource type="PackedScene" uid="uid://b1wv1xlyip0tv" path="res://scenes/platform.tscn" id="1_lixor"]
+[ext_resource type="PackedScene" uid="uid://c1fi1o2wfog1c" path="res://scenes/object.tscn" id="2_63t1b"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="object" parent="." instance=ExtResource("2_63t1b")]
+z_index = 1
+position = Vector2(162, 253)
+
+[node name="platform" parent="." instance=ExtResource("1_lixor")]
+position = Vector2(164, 255)
+
+[node name="platform2" parent="." instance=ExtResource("1_lixor")]
+position = Vector2(1031, 265)
+
+[node name="platform3" parent="." instance=ExtResource("1_lixor")]
+position = Vector2(593, 527)
+
+[node name="Control" type="Control" parent="."]
+visible = false
+z_index = -1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+visible = false
+z_index = -1
+z_as_relative = false
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 1922.0
+offset_bottom = 1083.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.54902, 0.141176, 0, 1)

@@ -1,63 +1,243 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=14 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Texture2D" uid="uid://b8hfpwp4cdd6g" path="res://temp_assets/textures/tile.png" id="1_ujurv"]
 [ext_resource type="Texture2D" uid="uid://crhgqophukhom" path="res://temp_assets/textures/tile_selected.png" id="2_qjx4p"]
-[ext_resource type="PackedScene" uid="uid://cohlakdbumiy2" path="res://scenes/player_tile.tscn" id="3_ogmua"]
+[ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://temp_assets/textures/texture_pack1.png" id="3_yrtg7"]
+[ext_resource type="Script" path="res://scenes/character_icon.gd" id="4_cumgj"]
+[ext_resource type="Texture2D" uid="uid://ckafiysr0vf3q" path="res://temp_assets/textures/kai.png" id="4_oa717"]
+[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://temp_assets/textures/emerald.png" id="5_ux5it"]
+[ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="7_3cg71"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4aii"]
 texture = ExtResource("1_ujurv")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l7ya"]
 texture = ExtResource("2_qjx4p")
-texture_region_size = Vector2i(128, 128)
+texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hp3yx"]
+texture = ExtResource("3_yrtg7")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+8:1/0 = 0
+7:1/0 = 0
+6:1/0 = 0
+5:1/0 = 0
+4:1/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+5:4/0 = 0
+4:4/0 = 0
+3:4/0 = 0
+2:4/0 = 0
+1:4/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+8:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_6qi4m"]
-tile_size = Vector2i(128, 128)
+tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_w4aii")
 sources/1 = SubResource("TileSetAtlasSource_3l7ya")
+sources/2 = SubResource("TileSetAtlasSource_hp3yx")
 
 [sub_resource type="GDScript" id="GDScript_tnuxs"]
 script/source = "extends TileMap
 
-var grid_size = 4
+var grid_length = 18
+var grid_height = 10
 var dictionary = {}
 
-func _ready():
-	for x in grid_size:
-		for y in grid_size:
+const enemy_script = preload(\"res://scenes/enemy.gd\")
+
+# @onready var enemy = $Enemy
+@export var enemy_speed = 60
+var enemy
+var target_pos : Vector2i
+var world_pos : Vector2i
+var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
+
+func _ready():    
+	prints(global.enemy_position)    
+	for x in grid_length:
+		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
 				\"Type\" : \"Grass\"
 			}
-			set_cell(0, Vector2(x, y), 0, Vector2i(0, 0), 0)
 
 func _process(delta):
 	var hovered_tile = local_to_map(get_global_mouse_position())
+	var enemy_tile = local_to_map(global.enemy_position)
 	
-	for x in grid_size:
-		for y in grid_size:
+	# prints(enemy_tile)
+
+	for x in grid_length:
+		for y in grid_height:
 			erase_cell(1, Vector2(x, y))
 	
-	if dictionary.has(str(hovered_tile)): 
-		set_cell(1, hovered_tile, 1, Vector2i(0, 0), 0)
-		print(dictionary[str(hovered_tile)])
+	# set_cell(1, enemy_tile, 1, Vector2i(0, 0), 0)
+	
+	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
+		if global.dragged_char_name == \"kai\":
+			#attack_AoE(hovered_tile, kai_offset_list)
+			for offset in kai_offset_list:
+				target_pos = hovered_tile + offset
+				world_pos = map_to_local(target_pos)
+				set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
+				var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+				prints(Input.is_action_just_released(\"left_click\"))
+				if Input.is_action_just_released(\"left_click\"):
+					prints(enemy)
+				if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
+					prints(\"success\")
+					enemy.kill()
+		elif global.dragged_char_name == \"emerald\":
+			# attack_AoE(hovered_tile, emerald_offset_list)
+			for offset in emerald_offset_list:
+				target_pos = hovered_tile + offset
+				world_pos = map_to_local(target_pos)
+				set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
+				var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+				prints(Input.is_action_just_released(\"left_click\"))
+				if Input.is_action_just_released(\"left_click\"):
+					prints(enemy)
+				if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
+					prints(\"success\")
+					enemy.kill()
+
+func attack_AoE(hovered_tile, offset_list):
+	for offset in offset_list:
+		target_pos = hovered_tile + offset
+		world_pos = map_to_local(target_pos)
+		set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
+		enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+				# prints(Input.is_action_just_released(\"left_click\"))
+		if Input.is_action_just_released(\"left_click\"):
+			prints(enemy)
+		if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
+			prints(\"success\")
+			enemy.kill()
+
 		
+
 "
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
+size = Vector2(259, 267)
 
 [node name="Battle" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6qi4m")
-rendering_quadrant_size = 128
+rendering_quadrant_size = 64
 format = 2
+layer_0/tile_data = PackedInt32Array(0, 2, 1, 65536, 2, 0, 131072, 2, 0, 196608, 2, 0, 262144, 2, 0, 327680, 2, 0, 393216, 2, 0, 458752, 2, 0, 524288, 2, 1, 589824, 2, 4, 589825, 65538, 4, 589826, 131074, 4, 589827, 131074, 4, 589828, 131074, 4, 589829, 131074, 4, 589830, 131074, 4, 589831, 131074, 4, 589832, 131074, 4, 589833, 131074, 4, 589834, 131074, 4, 589835, 131074, 4, 589836, 131074, 4, 589837, 131074, 4, 589838, 131074, 4, 589839, 131074, 4, 589840, 262146, 4, 589841, 327682, 4, 524305, 327682, 3, 458769, 327682, 2, 393233, 327682, 2, 327697, 327682, 2, 262161, 327682, 2, 196625, 327682, 2, 131089, 327682, 2, 65553, 327682, 2, 17, 327682, 1, -65520, 65538, 0, -65521, 65538, 0, -65522, 131074, 0, -65523, 65538, 0, -65524, 196610, 0, -65525, 65538, 0, -65526, 131074, 0, -65527, 65538, 0, -65528, 196610, 0, -65529, 65538, 0, -65530, 131074, 0, -65531, 65538, 0, -65532, 196610, 0, -65533, 65538, 0, -65534, 131074, 0, -65535, 65538, 0, -65536, 2, 0, -65519, 327682, 0, 1, 65538, 1, 16, 262146, 1, 524304, 262146, 3, 524289, 65538, 3, 524303, 131074, 3, 524302, 131074, 3, 524301, 131074, 3, 524300, 131074, 3, 524299, 131074, 3, 524298, 131074, 3, 524297, 131074, 3, 524296, 131074, 3, 524295, 131074, 3, 524294, 131074, 3, 524293, 131074, 3, 524292, 131074, 3, 524291, 131074, 3, 524290, 131074, 3, 458753, 65538, 2, 393217, 65538, 2, 327681, 65538, 2, 262145, 65538, 2, 196609, 65538, 2, 131073, 65538, 2, 65537, 65538, 2, 458768, 262146, 2, 393232, 262146, 2, 327696, 262146, 2, 262160, 262146, 2, 196624, 262146, 2, 131088, 262146, 2, 65552, 262146, 2, 15, 196610, 1, 14, 196610, 1, 13, 196610, 1, 12, 196610, 1, 11, 196610, 1, 10, 196610, 1, 9, 196610, 1, 8, 196610, 1, 7, 196610, 1, 6, 196610, 1, 5, 196610, 1, 4, 196610, 1, 3, 196610, 1, 2, 196610, 1, 327690, 131074, 2, 262154, 131074, 2, 196618, 131074, 2, 131082, 131074, 2, 65546, 131074, 2, 65545, 131074, 2, 65544, 131074, 2, 65543, 131074, 2, 65542, 131074, 2, 65541, 131074, 2, 65540, 131074, 2, 65539, 131074, 2, 65538, 131074, 2, 131074, 131074, 2, 196610, 131074, 2, 262146, 131074, 2, 327682, 131074, 2, 393218, 131074, 2, 458754, 131074, 2, 458755, 131074, 2, 393219, 131074, 2, 327683, 131074, 2, 262147, 131074, 2, 196611, 131074, 2, 131075, 131074, 2, 131076, 131074, 2, 196612, 131074, 2, 262148, 131074, 2, 327684, 131074, 2, 393220, 131074, 2, 458756, 131074, 2, 458757, 131074, 2, 393221, 131074, 2, 327685, 131074, 2, 262149, 131074, 2, 196613, 131074, 2, 131077, 131074, 2, 131078, 131074, 2, 196614, 131074, 2, 262150, 131074, 2, 327686, 131074, 2, 393222, 131074, 2, 458758, 131074, 2, 458759, 131074, 2, 393223, 131074, 2, 327687, 131074, 2, 262151, 131074, 2, 196615, 131074, 2, 131079, 131074, 2, 131080, 131074, 2, 196616, 131074, 2, 262152, 131074, 2, 327688, 131074, 2, 393224, 131074, 2, 458760, 131074, 2, 458761, 131074, 2, 393225, 131074, 2, 327689, 131074, 2, 262153, 131074, 2, 196617, 131074, 2, 131081, 131074, 2, 393226, 131074, 2, 458762, 131074, 2, 458763, 131074, 2, 393227, 131074, 2, 327691, 131074, 2, 262155, 131074, 2, 196619, 131074, 2, 131083, 131074, 2, 65547, 131074, 2, 65548, 131074, 2, 131084, 131074, 2, 196620, 131074, 2, 262156, 131074, 2, 327692, 131074, 2, 393228, 131074, 2, 458764, 131074, 2, 458765, 131074, 2, 393229, 131074, 2, 327693, 131074, 2, 262157, 131074, 2, 196621, 131074, 2, 131085, 131074, 2, 65549, 131074, 2, 65550, 131074, 2, 131086, 131074, 2, 196622, 131074, 2, 262158, 131074, 2, 327694, 131074, 2, 393230, 131074, 2, 458766, 131074, 2, 458767, 131074, 2, 393231, 131074, 2, 327695, 131074, 2, 262159, 131074, 2, 196623, 131074, 2, 131087, 131074, 2, 65551, 131074, 2)
 layer_1/modulate = Color(1, 1, 1, 0.180392)
 layer_1/tile_data = PackedInt32Array()
 script = SubResource("GDScript_tnuxs")
 
+[node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
+position = Vector2(289, 230)
+scale = Vector2(3, 3)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
 
-[node name="TextureRect" parent="." instance=ExtResource("3_ogmua")]
-expand_mode = 3
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="kai" type="Node2D" parent="VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+position = Vector2(1106, 47)
+script = ExtResource("4_cumgj")
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/MarginContainer/kai"]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_oa717")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/MarginContainer/kai"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/MarginContainer/kai/Area2D"]
+shape = SubResource("RectangleShape2D_vlow2")
+
+[node name="emerald" type="Node2D" parent="VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+position = Vector2(1106, 138)
+script = ExtResource("4_cumgj")
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/MarginContainer/emerald"]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_ux5it")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/MarginContainer/emerald"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/MarginContainer/emerald/Area2D"]
+shape = SubResource("RectangleShape2D_vlow2")
+
+[connection signal="body_entered" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_body_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/MarginContainer/kai/Area2D" to="VBoxContainer/MarginContainer/kai" method="_on_area_2d_mouse_exited"]
+[connection signal="body_entered" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_body_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/MarginContainer/emerald/Area2D" to="VBoxContainer/MarginContainer/emerald" method="_on_area_2d_mouse_exited"]

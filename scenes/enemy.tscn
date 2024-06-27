@@ -100,7 +100,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 60.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,5 +154,11 @@ y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_drfnt")
 
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+autostart = true
+
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
