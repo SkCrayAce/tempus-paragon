@@ -177,7 +177,7 @@ func attack_AoE(hovered_tile, offset_list):
 
 "
 
-[node name="Battle" type="Node2D"]
+[node name="Battle" type="Node"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6qi4m")
@@ -196,52 +196,35 @@ scale = Vector2(3, 3)
 enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 2
-
-[node name="tyrone" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-layout_mode = 2
-
-[node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("6_q0jl4")
-
-[node name="CooldownBar" parent="VBoxContainer/tyrone" index="2"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 200.0
-offset_bottom = 200.0
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
 layout_mode = 2
 
-[node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
-scale = Vector2(0.4, 0.4)
+[node name="Sprite2D" parent="VBoxContainer/kai/Node2D" index="0"]
 texture = ExtResource("4_oa717")
-
-[node name="CooldownBar" parent="VBoxContainer/kai" index="2"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 200.0
-offset_bottom = 200.0
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
 layout_mode = 2
 
-[node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
-scale = Vector2(0.4, 0.4)
+[node name="Sprite2D" parent="VBoxContainer/emerald/Node2D" index="0"]
+position = Vector2(-75.5, 75.5)
+scale = Vector2(0.705078, 0.705078)
 texture = ExtResource("5_ux5it")
 
-[node name="CooldownBar" parent="VBoxContainer/emerald" index="2"]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 200.0
-offset_bottom = 200.0
+[node name="tyrone" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
+layout_mode = 2
 
-[editable path="VBoxContainer/tyrone"]
+[node name="Sprite2D" parent="VBoxContainer/tyrone/Node2D" index="0"]
+position = Vector2(-76, 76)
+scale = Vector2(0.703125, 0.703125)
+texture = ExtResource("6_q0jl4")
+
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
+[editable path="VBoxContainer/tyrone"]

@@ -11,8 +11,9 @@ const enemy_script = preload("res://scenes/enemy.gd")
 
 # func _ready():
 	# scale = Vector2(0.3, 0.3)
-@onready var cooldown_bar = $CooldownBar
-@onready var cooldown_timer = $CooldownTimer
+@onready var cooldown_bar = $Node2D/CooldownBar
+@onready var cooldown_timer = $Node2D/CooldownTimer
+@onready var sprite = $Node2D/Sprite2D
 
 func start_cooldown():
 	cooldown_bar.max_value = cooldown_timer.wait_time
@@ -50,12 +51,12 @@ func _process(delta):
 func _on_area_2d_mouse_entered():
 	if not global.is_dragging:
 		draggable = true
-		scale = Vector2(0.6, 0.6)
+		sprite.scale = Vector2(0.6, 0.6)
 
 func _on_area_2d_mouse_exited():
 	if not global.is_dragging:
 		draggable = false
-		scale = Vector2(0.5, 0.5)
+		sprite.scale = Vector2(0.5, 0.5)
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("dropable"):

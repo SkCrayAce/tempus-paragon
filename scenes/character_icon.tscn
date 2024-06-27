@@ -10,36 +10,42 @@ size = Vector2(200, 200)
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
+offset_left = -63.0
+offset_top = -98.0
+offset_right = 137.0
+offset_bottom = 102.0
+size_flags_horizontal = 10
 script = ExtResource("1_x5sk1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 metadata/_edit_lock_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
-metadata/_edit_lock_ = true
+[node name="Area2D" type="Area2D" parent="Node2D"]
+position = Vector2(97, 95)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D"]
 shape = SubResource("RectangleShape2D_vlow2")
 metadata/_edit_lock_ = true
 
-[node name="CooldownBar" type="TextureProgressBar" parent="."]
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
+[node name="CooldownBar" type="TextureProgressBar" parent="Node2D"]
+offset_left = -208.0
+offset_top = 37.0
+offset_right = -8.0
+offset_bottom = 237.0
 value = 75.0
 fill_mode = 5
 nine_patch_stretch = true
 texture_progress = ExtResource("2_3vtjw")
 tint_progress = Color(0.678431, 0.466667, 1, 0.470588)
-metadata/_edit_lock_ = true
 
-[node name="CooldownTimer" type="Timer" parent="."]
+[node name="CooldownTimer" type="Timer" parent="Node2D"]
 wait_time = 3.0
 one_shot = true
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
-[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="body_entered" from="Node2D/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Node2D/Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="mouse_entered" from="Node2D/Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Node2D/Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="timeout" from="Node2D/CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
