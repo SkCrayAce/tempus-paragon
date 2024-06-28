@@ -5,7 +5,7 @@ var current_dir = "none"
 
 func _ready():
 	$AnimatedSprite2D.play("front_idle")
-	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect() # I think think this gets all the tiles in your tile map.
+	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect() # I think this gets all the tiles in your tile map.
 	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size # this gets the size of each tile map to help with the math later
 	$Camera2D.limit_left = tilemap_rect.position.x * tilemap_cell_size.x # this will set the limit to the camera to the left. you get the position of the last tile to the left and multiply by its size to get the exact pixle size
 	$Camera2D.limit_right = tilemap_rect.end.x * tilemap_cell_size.x # same as above but for the right of the map. Im not sure why you use end. plz help explain.

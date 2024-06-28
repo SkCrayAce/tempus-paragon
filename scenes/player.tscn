@@ -421,7 +421,7 @@ collision_layer = 3
 script = ExtResource("1_x7eio")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.125, 1.07056)
+scale = Vector2(1, 0.952)
 sprite_frames = SubResource("SpriteFrames_x6rij")
 animation = &"front_idle"
 frame_progress = 0.945718
