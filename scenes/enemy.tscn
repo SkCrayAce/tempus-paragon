@@ -148,18 +148,22 @@ y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_6nsju")
 animation = &"idle"
 offset = Vector2(0, -6)
+metadata/_edit_lock_ = true
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 2
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_4tlsm")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_drfnt")
+metadata/_edit_lock_ = true
 
 [node name="NextMoveTimer" type="Timer" parent="."]
 process_callback = 0
@@ -175,6 +179,7 @@ scale = Vector2(0.2, 0.2)
 theme_override_styles/background = SubResource("StyleBoxFlat_8b3ea")
 max_value = 1000.0
 step = 1.0
+metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

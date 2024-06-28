@@ -10,19 +10,18 @@ size = Vector2(200, 200)
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 0
-offset_left = -63.0
-offset_top = -98.0
-offset_right = 137.0
-offset_bottom = 102.0
+offset_top = 1.0
+offset_right = 200.0
+offset_bottom = 201.0
 size_flags_horizontal = 10
 script = ExtResource("1_x5sk1")
 
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="Node2D"]
+visible = false
 position = Vector2(97, 95)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D"]
@@ -30,15 +29,16 @@ shape = SubResource("RectangleShape2D_vlow2")
 metadata/_edit_lock_ = true
 
 [node name="CooldownBar" type="TextureProgressBar" parent="Node2D"]
-offset_left = -208.0
-offset_top = 37.0
-offset_right = -8.0
-offset_bottom = 237.0
+offset_left = -3.0
+offset_top = -5.0
+offset_right = 197.0
+offset_bottom = 195.0
 value = 75.0
 fill_mode = 5
 nine_patch_stretch = true
 texture_progress = ExtResource("2_3vtjw")
 tint_progress = Color(0.678431, 0.466667, 1, 0.470588)
+metadata/_edit_lock_ = true
 
 [node name="CooldownTimer" type="Timer" parent="Node2D"]
 wait_time = 3.0

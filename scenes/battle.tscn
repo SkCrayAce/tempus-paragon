@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=16 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Texture2D" uid="uid://b8hfpwp4cdd6g" path="res://temp_assets/textures/tile.png" id="1_ujurv"]
 [ext_resource type="Texture2D" uid="uid://crhgqophukhom" path="res://temp_assets/textures/tile_selected.png" id="2_qjx4p"]
@@ -107,12 +107,15 @@ var dictionary = {}
 const enemy_script = preload(\"res://scenes/enemy.gd\")
 
 var enemy
+@onready var enemy_move_timer = $Enemy/NextMoveTimer
+@onready var move_timer_bar = $\"../MoveTimerBar\"
 # var target_pos : Vector2i
 # var world_pos : Vector2i
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 
 func _ready():    
+	move_timer_bar.max_value = enemy_move_timer.wait_time
 	prints(global.enemy_position)    
 	for x in grid_length:
 		for y in grid_height:
@@ -124,7 +127,7 @@ func _process(delta):
 	var hovered_tile = local_to_map(get_global_mouse_position())
 	var enemy_tile = local_to_map(global.enemy_position)
 	
-	# prints(enemy_tile)
+	move_timer_bar.value = enemy_move_timer.time_left
 
 	for x in grid_length:
 		for y in grid_height:
@@ -173,9 +176,27 @@ func attack_AoE(hovered_tile, offset_list):
 			prints(\"success\")
 			enemy.hit(500)
 
+
+	
+	
+	
 		
 
 "
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb7ee"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0agcu"]
+bg_color = Color(0.952941, 0.415686, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Battle" type="Node"]
 
@@ -196,10 +217,15 @@ scale = Vector2(3, 3)
 enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 15
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -304.0
+offset_bottom = 304.0
+grow_horizontal = 0
 grow_vertical = 2
 alignment = 2
 
@@ -207,6 +233,7 @@ alignment = 2
 layout_mode = 2
 
 [node name="Sprite2D" parent="VBoxContainer/kai/Node2D" index="0"]
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_oa717")
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
@@ -225,6 +252,19 @@ position = Vector2(-76, 76)
 scale = Vector2(0.703125, 0.703125)
 texture = ExtResource("6_q0jl4")
 
+[node name="MoveTimerBar" type="ProgressBar" parent="."]
+offset_left = 7.0
+offset_top = 15.0
+offset_right = 33.0
+offset_bottom = 577.0
+theme_override_styles/background = SubResource("StyleBoxFlat_mb7ee")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0agcu")
+max_value = 5.0
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[editable path="TileMap/Enemy"]
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]
