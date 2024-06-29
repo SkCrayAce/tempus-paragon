@@ -535,7 +535,16 @@ layer_1/modulate = Color(1, 1, 1, 0.501961)
 layer_1/tile_data = PackedInt32Array()
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
-position = Vector2(201, 76)
+position = Vector2(233, 43)
+
+[node name="Enemy2" parent="TileMap" instance=ExtResource("7_3cg71")]
+position = Vector2(185, 77)
+
+[node name="Enemy3" parent="TileMap" instance=ExtResource("7_3cg71")]
+position = Vector2(217, 110)
+
+[node name="Enemy4" parent="TileMap" instance=ExtResource("7_3cg71")]
+position = Vector2(153, 142)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

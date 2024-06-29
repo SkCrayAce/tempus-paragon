@@ -52,5 +52,5 @@ func hit(damage : int):
 		await anim.animation_finished
 		global.delete_enemy(self)
 		# move_timer_bar.queue_free()
-		move_timer.queue_free()
+		# move_timer.queue_free()
 		queue_free()

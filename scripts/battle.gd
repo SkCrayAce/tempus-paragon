@@ -10,6 +10,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var enemy_move_timer = $TileMap/Enemy/NextMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
 @onready var tilemap = $TileMap
+@onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
