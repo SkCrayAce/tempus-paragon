@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://mt4h11tult0b"]
+[gd_scene load_steps=11 format=3 uid="uid://dvcnoys2vj21x"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_5ou0x"]
-[ext_resource type="Texture2D" uid="uid://ctien611lqsni" path="res://sprites/objects/objects.png" id="2_hsqbt"]
-[ext_resource type="Texture2D" uid="uid://dafodct2qv82w" path="res://sprites/tilesets/grass.png" id="3_g6ca7"]
-[ext_resource type="Texture2D" uid="uid://bq6jrsx6m0iu0" path="res://sprites/tilesets/plains.png" id="4_obbkc"]
-[ext_resource type="PackedScene" uid="uid://bq4xtkkj52fxq" path="res://scenes/player.tscn" id="5_1njh0"]
-[ext_resource type="PackedScene" path="res://scenes/slime.tscn" id="6_p1hre"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_xmg6l"]
+[ext_resource type="Texture2D" uid="uid://ctien611lqsni" path="res://sprites/objects/objects.png" id="2_31uo7"]
+[ext_resource type="Texture2D" uid="uid://dafodct2qv82w" path="res://sprites/tilesets/grass.png" id="3_6emod"]
+[ext_resource type="Texture2D" uid="uid://bq6jrsx6m0iu0" path="res://sprites/tilesets/plains.png" id="4_khqeq"]
+[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="5_ff34b"]
+[ext_resource type="PackedScene" uid="uid://dlbv0boehiunl" path="res://scenes/slime.tscn" id="6_4ctde"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3qjkk"]
-texture = ExtResource("2_hsqbt")
+texture = ExtResource("2_31uo7")
 0:0/0 = 0
 0:0/0/y_sort_origin = 4
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -58,13 +58,13 @@ texture = ExtResource("2_hsqbt")
 11:2/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gkjuj"]
-texture = ExtResource("3_g6ca7")
+texture = ExtResource("3_6emod")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kcjnn"]
-texture = ExtResource("4_obbkc")
+texture = ExtResource("4_khqeq")
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
@@ -222,7 +222,7 @@ sources/2 = SubResource("TileSetAtlasSource_kcjnn")
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_5ou0x")
+script = ExtResource("1_xmg6l")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -236,10 +236,10 @@ layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/tile_data = PackedInt32Array(2, 655360, 7, 262150, 655360, 7, 262163, 655360, 7, 25, 655360, 7, 262161, 0, 5, 131077, 524288, 6, 6, 524288, 6, 9, 0, 5, 131095, 524288, 6, 19, 393216, 7, 589836, 393216, 7, 655381, 393216, 7, 65549, 524288, 6, 524289, 0, 5, 589829, 524288, 6, 655368, 655360, 7, 655376, 524288, 6, 524311, 524288, 6, 65560, 0, 1, 196634, 0, 1, 720915, 0, 1, 196616, 0, 1, 131083, 327680, 0, 196620, 0, 0, 720900, 0, 1)
 
-[node name="Player" parent="." instance=ExtResource("5_1njh0")]
+[node name="Player" parent="." instance=ExtResource("5_ff34b")]
 position = Vector2(37, 75)
 
-[node name="Slime" parent="." instance=ExtResource("6_p1hre")]
+[node name="Slime" parent="." instance=ExtResource("6_4ctde")]
 position = Vector2(273, 130)
 
 [node name="Camera2D" type="Camera2D" parent="."]
