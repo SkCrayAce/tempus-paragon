@@ -1,13 +1,12 @@
 extends Node
 
-@export var grid_length = 18
-@export var grid_height = 10
-@export var enemy_speed = 60
+@export var grid_length : int
+@export var grid_height : int
+@export var attack_damage :int
 var dictionary = {}
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
-var enemy
 @onready var enemy_move_timer = $TileMap/Enemy/NextMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
 @onready var tilemap = $TileMap
@@ -43,24 +42,19 @@ func _process(delta):
 			"kai": attack_AoE(hovered_tile, kai_offset_list)
 			"emerald": attack_AoE(hovered_tile, emerald_offset_list)
 			"tyrone": attack_AoE(hovered_tile, tyrone_offset_list)
-			"bettany": attack_AoE(hovered_tile, tyrone_offset_list)
+			"bettany": attack_AoE(hovered_tile, bettany_offset_list)
 
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2 = hovered_tile + offset
 		var world_pos : Vector2 = tilemap.map_to_local(target_pos)
 		tilemap.set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-		enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
+		var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
 				# prints(Input.is_action_just_released("left_click"))
 		if Input.is_action_just_released("left_click"):
 			prints(enemy)
-		if enemy is enemy_script and Input.is_action_just_released("left_click"):
+		if is_instance_valid(enemy) and enemy is enemy_script and Input.is_action_just_released("left_click"):
 			prints("success")
-			enemy.hit(500)
-
-
-	
-	
-	
+			enemy.hit(attack_damage)
 		
 

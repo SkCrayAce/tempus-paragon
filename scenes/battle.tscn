@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=19 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_050bv"]
+[ext_resource type="Texture2D" uid="uid://bqpxqbdotqqi1" path="res://sprites/textures/blue_tile.png" id="3_cxy22"]
 [ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://sprites/textures/texture_pack1.png" id="3_yrtg7"]
+[ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="4_2kluv"]
 [ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="4_hnfox"]
 [ext_resource type="Texture2D" uid="uid://2d57nnrjrwfs" path="res://sprites/textures/kai.png" id="4_oa717"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character_icon.tscn" id="5_6vrsy"]
@@ -11,17 +13,78 @@
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="9_4twyk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4aii"]
-texture_region_size = Vector2i(128, 128)
+texture = ExtResource("4_2kluv")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
 1:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l7ya"]
+texture = ExtResource("3_cxy22")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
 1:1/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hp3yx"]
 texture = ExtResource("3_yrtg7")
@@ -460,6 +523,9 @@ corner_radius_bottom_left = 10
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_050bv")
+grid_length = 120
+grid_height = 68
+attack_damage = 800
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6qi4m")
@@ -469,12 +535,8 @@ layer_1/modulate = Color(1, 1, 1, 0.501961)
 layer_1/tile_data = PackedInt32Array()
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
-position = Vector2(57, 60)
-
-[node name="AnimatedSprite2D" parent="TileMap/Enemy" index="0"]
-animation = &"idle"
-frame = 0
-frame_progress = 0.0
+position = Vector2(201, 76)
+speed = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -489,42 +551,40 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
-alignment = 2
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-position = Vector2(1034, 114)
+position = Vector2(132, 124)
 
 [node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_oa717")
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-position = Vector2(1034, 223)
+position = Vector2(132, 256)
 
 [node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_hjf0c")
 
 [node name="tyrone" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-position = Vector2(1034, 331)
+position = Vector2(132, 384)
 
 [node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("8_elw16")
 
 [node name="bettany" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-position = Vector2(1034, 441)
+position = Vector2(132, 508)
 
 [node name="Sprite2D" parent="VBoxContainer/bettany" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("9_4twyk")
 
 [node name="MoveTimerBar" type="ProgressBar" parent="."]
-visible = false
-offset_left = 7.0
-offset_top = 15.0
-offset_right = 33.0
-offset_bottom = 577.0
+offset_left = 284.0
+offset_top = 13.0
+offset_right = 294.0
+offset_bottom = 141.0
 theme_override_styles/background = SubResource("StyleBoxFlat_mb7ee")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0agcu")
 max_value = 5.0

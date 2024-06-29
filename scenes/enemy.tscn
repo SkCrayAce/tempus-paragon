@@ -1,7 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://b03oo28kniiu7"]
+[gd_scene load_steps=21 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_6jaq7"]
 [ext_resource type="Texture2D" uid="uid://cmpyafy33g1bf" path="res://sprites/characters/slime.png" id="1_123u2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3ea"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obl5d"]
+bg_color = Color(0.419608, 0.196078, 0.027451, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xwxuf"]
 atlas = ExtResource("1_123u2")
@@ -121,56 +130,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qkq0e")
 }],
-"loop": true,
+"loop": false,
 "name": &"walk",
-"speed": 5.0
+"speed": 12.0
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_4tlsm"]
-radius = 58.0775
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_drfnt"]
-radius = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3ea"]
-bg_color = Color(0.878431, 0.247059, 0.247059, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_6jaq7")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-y_sort_enabled = true
-sprite_frames = SubResource("SpriteFrames_6nsju")
-animation = &"death"
-frame = 4
-frame_progress = 1.0
-offset = Vector2(0, -6)
-metadata/_edit_lock_ = true
-
-[node name="detection_area" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
-shape = SubResource("CircleShape2D_4tlsm")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-y_sort_enabled = true
-position = Vector2(0, -3)
-shape = SubResource("CircleShape2D_drfnt")
-metadata/_edit_lock_ = true
-
-[node name="NextMoveTimer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 5.0
-autostart = true
+speed = null
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -9.0
@@ -179,10 +147,21 @@ offset_right = 81.0
 offset_bottom = 26.0
 scale = Vector2(0.2, 0.2)
 theme_override_styles/background = SubResource("StyleBoxFlat_8b3ea")
-max_value = 1000.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_obl5d")
+max_value = 3000.0
 step = 1.0
 metadata/_edit_lock_ = true
 
-[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_6nsju")
+animation = &"idle"
+offset = Vector2(0, -6)
+metadata/_edit_lock_ = true
+
+[node name="NextMoveTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+autostart = true
+
 [connection signal="timeout" from="NextMoveTimer" to="." method="_on_next_move_timer_timeout"]

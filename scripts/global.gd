@@ -1,15 +1,13 @@
 extends Node
 
-const snap_position : Vector2 = Vector2(64, 64)
+const snap_position : Vector2 = Vector2(16, 16)
 
 var is_dragging = false
 var is_released = false
 var dragged_char_name : String
 var enemy_position : Vector2
 
-var enemy_dict = {
-	
-}
+var enemy_dict : Dictionary 
 
 func delete_enemy(enemy_ref : Node2D):
 	var delete_position = enemy_ref.position.snapped(snap_position)
