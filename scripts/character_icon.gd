@@ -7,7 +7,7 @@ var on_cooldown = false
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
-@onready var cooldown_bar = $CooldownBar
+@onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
 @onready var sprite = $Sprite2D
 
@@ -43,7 +43,7 @@ func _on_area_2d_mouse_entered():
 		sprite.scale = Vector2(0.25, 0.25)
 
 func _on_area_2d_mouse_exited():
-	if !global.is_dragging and !on_cooldown:
+	if !global.is_dragging:
 		draggable = false
 		sprite.scale = Vector2(0.2, 0.2)
 
@@ -55,5 +55,5 @@ func start_cooldown():
 	
 func _on_cooldown_timer_timeout():
 	on_cooldown = false
-	cooldown_timer.stop()
+	# cooldown_timer.stop()
 	cooldown_bar.hide()

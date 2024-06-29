@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var healthbar = $HealthBar
 @onready var move_timer_bar = $"../../MoveTimerBar"
 @onready var move_timer = $NextMoveTimer 
-@onready var tilemap = 
+# @onready var tilemap 
 @export var speed : int
 
 var health : int
@@ -30,7 +30,7 @@ func _on_detection_area_body_exited(body):
 func _on_next_move_timer_timeout():
 	var tween = create_tween()
 	var new_position = Vector2(position.x - 16, position.y)
-	var enemy_position = 
+	# var enemy_position = 
 	move_timer.stop()
 	global.delete_enemy(self)
 	anim.flip_h = true

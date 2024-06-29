@@ -2,7 +2,7 @@ extends Node
 
 @export var grid_length : int
 @export var grid_height : int
-@export var attack_damage :int
+@export var attack_damage : int
 var dictionary = {}
 
 const enemy_script = preload("res://scripts/enemy.gd")

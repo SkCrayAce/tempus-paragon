@@ -138,7 +138,6 @@ animations = [{
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_6jaq7")
-speed = null
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -9.0

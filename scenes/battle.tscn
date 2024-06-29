@@ -536,7 +536,6 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
 position = Vector2(201, 76)
-speed = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

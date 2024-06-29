@@ -21,26 +21,37 @@ shape = SubResource("RectangleShape2D_vlow2")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 metadata/_edit_lock_ = true
 
-[node name="CooldownBar" type="TextureProgressBar" parent="."]
-z_index = 2
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="CooldownBar" type="TextureProgressBar" parent="Control"]
+visible = false
+z_index = 1
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-value = 75.0
+value = 60.0
 fill_mode = 5
 nine_patch_stretch = true
 texture_under = ExtResource("2_y08e1")
 texture_progress = ExtResource("2_3vtjw")
-tint_progress = Color(0.678431, 0.466667, 1, 0.470588)
-metadata/_edit_lock_ = true
-
-[node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
+tint_under = Color(1, 1, 1, 0.501961)
+tint_progress = Color(1, 1, 1, 0.490196)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
