@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crarvu03wr4ki"
-path="res://.godot/imported/cooldown_timer.png-b9b4912e82a1cc1f7fe25c84781a45e0.ctex"
+path="res://.godot/imported/cooldown_timer.png-fdcbd13c5644fd8c3add35b8d5dccda5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://temp_assets/textures/cooldown_timer.png"
-dest_files=["res://.godot/imported/cooldown_timer.png-b9b4912e82a1cc1f7fe25c84781a45e0.ctex"]
+source_file="res://sprites/textures/cooldown_timer.png"
+dest_files=["res://.godot/imported/cooldown_timer.png-fdcbd13c5644fd8c3add35b8d5dccda5.ctex"]
 
 [params]
 

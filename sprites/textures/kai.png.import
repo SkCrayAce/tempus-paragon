@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brflobhbarjry"
-path="res://.godot/imported/vecteezy_white-circle-png_21115771.png-02b623ccf2c7344a4e49fd026a485c07.ctex"
+uid="uid://2d57nnrjrwfs"
+path="res://.godot/imported/kai.png-99c470e719749efade42d130605a4442.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/textures/vecteezy_white-circle-png_21115771.png"
-dest_files=["res://.godot/imported/vecteezy_white-circle-png_21115771.png-02b623ccf2c7344a4e49fd026a485c07.ctex"]
+source_file="res://sprites/textures/kai.png"
+dest_files=["res://.godot/imported/kai.png-99c470e719749efade42d130605a4442.ctex"]
 
 [params]
 

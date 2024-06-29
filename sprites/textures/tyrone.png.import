@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bkjglp3yu5pfk"
-path="res://.godot/imported/tyrone.png-75fad0b713d76b2beaf42308d8ae0614.ctex"
+path="res://.godot/imported/tyrone.png-bedd21dac17e07b34500fa1ca5943059.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://temp_assets/textures/tyrone.png"
-dest_files=["res://.godot/imported/tyrone.png-75fad0b713d76b2beaf42308d8ae0614.ctex"]
+source_file="res://sprites/textures/tyrone.png"
+dest_files=["res://.godot/imported/tyrone.png-bedd21dac17e07b34500fa1ca5943059.ctex"]
 
 [params]
 

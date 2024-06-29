@@ -6,7 +6,7 @@ var body_ref
 var offset : Vector2
 var initialPos : Vector2
 
-const enemy_script = preload("res://scenes/enemy.gd")
+const enemy_script = preload("res://scripts/enemy.gd")
 
 @onready var cooldown_bar = $CooldownBar
 @onready var cooldown_timer = $CooldownTimer
