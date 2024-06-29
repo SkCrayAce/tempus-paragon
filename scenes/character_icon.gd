@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 var draggable = false
 var is_inside_droppable = false
@@ -6,20 +6,11 @@ var body_ref
 var offset : Vector2
 var initialPos : Vector2
 
-
 const enemy_script = preload("res://scenes/enemy.gd")
 
-# func _ready():
-	# scale = Vector2(0.3, 0.3)
-@onready var cooldown_bar = $Node2D/CooldownBar
-@onready var cooldown_timer = $Node2D/CooldownTimer
-@onready var sprite = $Node2D/Sprite2D
-
-func start_cooldown():
-	cooldown_bar.max_value = cooldown_timer.wait_time
-	cooldown_timer.start()
-	cooldown_bar.show()
-	# cooldown_bar.value = cooldown_timer.time_left
+@onready var cooldown_bar = $CooldownBar
+@onready var cooldown_timer = $CooldownTimer
+@onready var sprite = $Sprite2D
 
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,13 +21,14 @@ func _process(delta):
 			initialPos = global_position
 			offset = get_global_mouse_position() - global_position
 			global.is_dragging = true
-			global.is_released = false
+			# global.is_released = false
 			global.dragged_char_name = name
 			print("clicked")
 		if Input.is_action_pressed("left_click"):
 			global_position = get_global_mouse_position() - offset
+			sprite.scale = Vector2(0.1, 0.1)
 		elif Input.is_action_just_released("left_click"):
-			global.is_released = true
+			# global.is_released = true
 			global.is_dragging = false
 			global.dragged_char_name = ""
 			start_cooldown()
@@ -49,14 +41,15 @@ func _process(delta):
 				
 
 func _on_area_2d_mouse_entered():
+	prints("mouse entered")
 	if not global.is_dragging:
 		draggable = true
-		sprite.scale = Vector2(0.6, 0.6)
+		sprite.scale = Vector2(0.25, 0.25)
 
 func _on_area_2d_mouse_exited():
 	if not global.is_dragging:
 		draggable = false
-		sprite.scale = Vector2(0.5, 0.5)
+		sprite.scale = Vector2(0.2, 0.2)
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("dropable"):
@@ -69,6 +62,11 @@ func _on_area_2d_body_exited(body):
 		is_inside_droppable = false
 		body.modulate = Color(Color.MEDIUM_PURPLE, 0.7)
 		# body_ref = body
-
+		
+func start_cooldown():
+	cooldown_bar.max_value = cooldown_timer.wait_time
+	cooldown_timer.start()
+	cooldown_bar.show()
+	
 func _on_cooldown_timer_timeout():
 	cooldown_bar.hide()

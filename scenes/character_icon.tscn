@@ -4,35 +4,23 @@
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://temp_assets/textures/vecteezy_white-circle-png_21115771.png" id="2_3vtjw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
-size = Vector2(200, 200)
+size = Vector2(100, 100)
 
-[node name="character_icon" type="Control"]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 3
-anchors_preset = 0
-offset_top = 1.0
-offset_right = 200.0
-offset_bottom = 201.0
-size_flags_horizontal = 10
+[node name="character_icon" type="Node2D"]
 script = ExtResource("1_x5sk1")
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
-
-[node name="Area2D" type="Area2D" parent="Node2D"]
-visible = false
-position = Vector2(97, 95)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D"]
-shape = SubResource("RectangleShape2D_vlow2")
+[node name="Sprite2D" type="Sprite2D" parent="."]
 metadata/_edit_lock_ = true
 
-[node name="CooldownBar" type="TextureProgressBar" parent="Node2D"]
-offset_left = -3.0
-offset_top = -5.0
-offset_right = 197.0
-offset_bottom = 195.0
+[node name="Area2D" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_vlow2")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+metadata/_edit_lock_ = true
+
+[node name="CooldownBar" type="TextureProgressBar" parent="."]
 value = 75.0
 fill_mode = 5
 nine_patch_stretch = true
@@ -40,12 +28,12 @@ texture_progress = ExtResource("2_3vtjw")
 tint_progress = Color(0.678431, 0.466667, 1, 0.470588)
 metadata/_edit_lock_ = true
 
-[node name="CooldownTimer" type="Timer" parent="Node2D"]
+[node name="CooldownTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
-[connection signal="body_entered" from="Node2D/Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Node2D/Area2D" to="." method="_on_area_2d_body_exited"]
-[connection signal="mouse_entered" from="Node2D/Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Node2D/Area2D" to="." method="_on_area_2d_mouse_exited"]
-[connection signal="timeout" from="Node2D/CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

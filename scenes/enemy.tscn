@@ -81,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ps4sg")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -146,7 +146,9 @@ script = ExtResource("1_6jaq7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_6nsju")
-animation = &"idle"
+animation = &"death"
+frame = 4
+frame_progress = 1.0
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 

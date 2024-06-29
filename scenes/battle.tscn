@@ -1,13 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=19 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Texture2D" uid="uid://b8hfpwp4cdd6g" path="res://temp_assets/textures/tile.png" id="1_ujurv"]
 [ext_resource type="Texture2D" uid="uid://crhgqophukhom" path="res://temp_assets/textures/tile_selected.png" id="2_qjx4p"]
 [ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://temp_assets/textures/texture_pack1.png" id="3_yrtg7"]
+[ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="4_hnfox"]
 [ext_resource type="Texture2D" uid="uid://ckafiysr0vf3q" path="res://temp_assets/textures/kai.png" id="4_oa717"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character_icon.tscn" id="5_6vrsy"]
-[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://temp_assets/textures/emerald.png" id="5_ux5it"]
-[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://temp_assets/textures/tyrone.png" id="6_q0jl4"]
 [ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="7_3cg71"]
+[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://temp_assets/textures/emerald.png" id="7_hjf0c"]
+[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://temp_assets/textures/tyrone.png" id="8_elw16"]
+[ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://temp_assets/textures/bettany.png" id="9_4twyk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4aii"]
 texture = ExtResource("1_ujurv")
@@ -19,7 +21,6 @@ texture_region_size = Vector2i(128, 128)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l7ya"]
 texture = ExtResource("2_qjx4p")
-texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -90,11 +91,361 @@ texture_region_size = Vector2i(64, 64)
 6:7/0 = 0
 8:6/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ry1ya"]
+texture = ExtResource("4_hnfox")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+5:4/0 = 0
+5:5/0 = 0
+5:6/0 = 0
+6:0/0 = 0
+6:1/0 = 0
+6:2/0 = 0
+6:3/0 = 0
+6:4/0 = 0
+6:5/0 = 0
+6:6/0 = 0
+7:0/0 = 0
+7:1/0 = 0
+7:2/0 = 0
+7:3/0 = 0
+7:4/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+8:0/0 = 0
+8:1/0 = 0
+8:2/0 = 0
+8:3/0 = 0
+8:4/0 = 0
+8:5/0 = 0
+8:6/0 = 0
+9:0/0 = 0
+9:1/0 = 0
+9:2/0 = 0
+9:3/0 = 0
+9:4/0 = 0
+9:5/0 = 0
+9:6/0 = 0
+10:0/0 = 0
+10:1/0 = 0
+10:2/0 = 0
+10:3/0 = 0
+10:4/0 = 0
+10:5/0 = 0
+10:6/0 = 0
+11:0/0 = 0
+11:1/0 = 0
+11:2/0 = 0
+11:3/0 = 0
+11:4/0 = 0
+11:5/0 = 0
+11:6/0 = 0
+12:0/0 = 0
+12:1/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+12:4/0 = 0
+12:5/0 = 0
+12:6/0 = 0
+13:0/0 = 0
+13:1/0 = 0
+13:2/0 = 0
+13:3/0 = 0
+13:4/0 = 0
+13:5/0 = 0
+13:6/0 = 0
+14:0/0 = 0
+14:1/0 = 0
+14:2/0 = 0
+14:3/0 = 0
+14:4/0 = 0
+14:5/0 = 0
+14:6/0 = 0
+15:0/0 = 0
+15:1/0 = 0
+15:2/0 = 0
+15:3/0 = 0
+15:4/0 = 0
+15:5/0 = 0
+15:6/0 = 0
+16:0/0 = 0
+16:1/0 = 0
+16:2/0 = 0
+16:3/0 = 0
+16:4/0 = 0
+16:5/0 = 0
+16:6/0 = 0
+17:0/0 = 0
+17:1/0 = 0
+17:2/0 = 0
+17:3/0 = 0
+17:4/0 = 0
+17:5/0 = 0
+17:6/0 = 0
+18:0/0 = 0
+18:1/0 = 0
+18:2/0 = 0
+18:3/0 = 0
+18:4/0 = 0
+18:5/0 = 0
+18:6/0 = 0
+19:0/0 = 0
+19:1/0 = 0
+19:2/0 = 0
+19:3/0 = 0
+19:4/0 = 0
+19:5/0 = 0
+19:6/0 = 0
+10:7/0 = 0
+10:8/0 = 0
+10:9/0 = 0
+10:10/0 = 0
+10:11/0 = 0
+10:12/0 = 0
+10:13/0 = 0
+11:7/0 = 0
+11:8/0 = 0
+11:9/0 = 0
+11:10/0 = 0
+11:11/0 = 0
+11:12/0 = 0
+11:13/0 = 0
+12:7/0 = 0
+12:8/0 = 0
+12:9/0 = 0
+12:10/0 = 0
+12:11/0 = 0
+12:12/0 = 0
+12:13/0 = 0
+13:7/0 = 0
+13:8/0 = 0
+13:9/0 = 0
+13:10/0 = 0
+13:11/0 = 0
+13:12/0 = 0
+13:13/0 = 0
+14:7/0 = 0
+14:8/0 = 0
+15:7/0 = 0
+15:8/0 = 0
+16:7/0 = 0
+16:8/0 = 0
+17:7/0 = 0
+17:8/0 = 0
+18:7/0 = 0
+18:8/0 = 0
+19:7/0 = 0
+19:8/0 = 0
+16:9/0 = 0
+17:9/0 = 0
+18:9/0 = 0
+19:9/0 = 0
+14:10/0 = 0
+14:11/0 = 0
+14:12/0 = 0
+14:13/0 = 0
+15:10/0 = 0
+15:11/0 = 0
+15:12/0 = 0
+15:13/0 = 0
+16:10/0 = 0
+16:11/0 = 0
+16:12/0 = 0
+16:13/0 = 0
+17:10/0 = 0
+17:11/0 = 0
+17:12/0 = 0
+17:13/0 = 0
+18:10/0 = 0
+18:11/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+8:10/0 = 0
+5:10/0 = 0
+5:11/0 = 0
+5:12/0 = 0
+6:10/0 = 0
+6:11/0 = 0
+6:12/0 = 0
+7:10/0 = 0
+7:11/0 = 0
+7:12/0 = 0
+8:11/0 = 0
+8:12/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+0:8/size_in_atlas = Vector2i(2, 5)
+0:8/0 = 0
+2:8/size_in_atlas = Vector2i(2, 5)
+2:8/0 = 0
+7:7/0 = 0
+1:13/size_in_atlas = Vector2i(4, 3)
+1:13/0 = 0
+6:13/size_in_atlas = Vector2i(2, 3)
+6:13/0 = 0
+14:16/0 = 0
+8:14/0 = 0
+8:15/0 = 0
+8:16/0 = 0
+8:17/0 = 0
+8:18/0 = 0
+9:14/0 = 0
+9:15/0 = 0
+9:16/0 = 0
+9:17/0 = 0
+9:18/0 = 0
+10:14/0 = 0
+10:15/0 = 0
+10:16/0 = 0
+10:17/0 = 0
+10:18/0 = 0
+11:14/0 = 0
+11:15/0 = 0
+11:16/0 = 0
+11:17/0 = 0
+11:18/0 = 0
+12:14/0 = 0
+12:15/0 = 0
+12:16/0 = 0
+12:17/0 = 0
+12:18/0 = 0
+13:14/0 = 0
+13:15/0 = 0
+13:16/0 = 0
+13:17/0 = 0
+13:18/0 = 0
+14:14/0 = 0
+14:15/0 = 0
+14:17/0 = 0
+14:18/0 = 0
+15:14/0 = 0
+15:15/0 = 0
+15:16/0 = 0
+15:17/0 = 0
+15:18/0 = 0
+16:14/0 = 0
+16:15/0 = 0
+16:16/0 = 0
+16:17/0 = 0
+16:18/0 = 0
+17:14/0 = 0
+17:15/0 = 0
+17:16/0 = 0
+17:17/0 = 0
+17:18/0 = 0
+18:14/0 = 0
+18:15/0 = 0
+18:16/0 = 0
+18:17/0 = 0
+18:18/0 = 0
+19:14/0 = 0
+19:15/0 = 0
+19:16/0 = 0
+19:17/0 = 0
+19:18/0 = 0
+0:19/size_in_atlas = Vector2i(7, 5)
+0:19/0 = 0
+1:17/size_in_atlas = Vector2i(3, 2)
+1:17/0 = 0
+8:19/0 = 0
+8:20/0 = 0
+9:20/0 = 0
+9:21/0 = 0
+10:21/0 = 0
+8:21/0 = 0
+8:22/0 = 0
+9:19/0 = 0
+9:22/0 = 0
+10:19/0 = 0
+10:20/0 = 0
+10:22/0 = 0
+11:19/0 = 0
+11:20/0 = 0
+11:21/0 = 0
+11:22/0 = 0
+12:19/0 = 0
+13:19/0 = 0
+14:19/0 = 0
+15:19/0 = 0
+16:19/0 = 0
+17:19/0 = 0
+18:19/0 = 0
+19:19/0 = 0
+17:21/0 = 0
+17:20/0 = 0
+12:20/0 = 0
+13:20/size_in_atlas = Vector2i(3, 2)
+13:20/0 = 0
+7:21/0 = 0
+0:24/size_in_atlas = Vector2i(2, 3)
+0:24/0 = 0
+2:24/size_in_atlas = Vector2i(2, 3)
+2:24/0 = 0
+5:24/size_in_atlas = Vector2i(4, 5)
+5:24/0 = 0
+10:24/size_in_atlas = Vector2i(3, 4)
+10:24/0 = 0
+16:24/0 = 0
+16:25/0 = 0
+15:25/0 = 0
+17:24/0 = 0
+17:23/0 = 0
+9:11/0 = 0
+9:12/0 = 0
+4:11/0 = 0
+4:12/0 = 0
+7:8/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_6qi4m"]
-tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_w4aii")
 sources/1 = SubResource("TileSetAtlasSource_3l7ya")
 sources/2 = SubResource("TileSetAtlasSource_hp3yx")
+sources/3 = SubResource("TileSetAtlasSource_ry1ya")
 
 [sub_resource type="GDScript" id="GDScript_tnuxs"]
 script/source = "extends TileMap
@@ -113,6 +464,8 @@ var enemy
 # var world_pos : Vector2i
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
+var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
+var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
 func _ready():    
 	move_timer_bar.max_value = enemy_move_timer.wait_time
@@ -127,7 +480,8 @@ func _process(delta):
 	var hovered_tile = local_to_map(get_global_mouse_position())
 	var enemy_tile = local_to_map(global.enemy_position)
 	
-	move_timer_bar.value = enemy_move_timer.time_left
+	if is_instance_valid(enemy_move_timer):
+		move_timer_bar.value = enemy_move_timer.time_left
 
 	for x in grid_length:
 		for y in grid_height:
@@ -136,39 +490,18 @@ func _process(delta):
 	# set_cell(1, enemy_tile, 1, Vector2i(0, 0), 0)
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
-		if global.dragged_char_name == \"kai\":
-			attack_AoE(hovered_tile, kai_offset_list)
-			#for offset in kai_offset_list:
-				#var target_pos = hovered_tile + offset
-				#var world_pos = map_to_local(target_pos)
-				#set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-				#var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
-				#prints(Input.is_action_just_released(\"left_click\"))
-				#if Input.is_action_just_released(\"left_click\"):
-					#prints(enemy)
-				#if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
-					#prints(\"success\")
-					#enemy.kill()
-		elif global.dragged_char_name == \"emerald\":
-			attack_AoE(hovered_tile, emerald_offset_list)
-			#for offset in emerald_offset_list:
-				#var target_pos = hovered_tile + offset
-				#var world_pos = map_to_local(target_pos)
-				#set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-				#var enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
-				#prints(Input.is_action_just_released(\"left_click\"))
-				#if Input.is_action_just_released(\"left_click\"):
-					#prints(enemy)
-				#if enemy is enemy_script and Input.is_action_just_released(\"left_click\"):
-					#prints(\"success\")
-					#enemy.kill()
+		match global.dragged_char_name:
+			\"kai\": attack_AoE(hovered_tile, kai_offset_list)
+			\"emerald\": attack_AoE(hovered_tile, emerald_offset_list)
+			\"tyrone\": attack_AoE(hovered_tile, tyrone_offset_list)
+			\"bettany\": attack_AoE(hovered_tile, tyrone_offset_list)
 
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2 = hovered_tile + offset
 		var world_pos : Vector2 = map_to_local(target_pos)
 		set_cell(1, target_pos, 1, Vector2i(0, 0), 0)
-		enemy = global.enemy_dict.get(world_pos.snapped(Vector2(64, 64)))
+		enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
 				# prints(Input.is_action_just_released(\"left_click\"))
 		if Input.is_action_just_released(\"left_click\"):
 			prints(enemy)
@@ -202,57 +535,66 @@ corner_radius_bottom_left = 10
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6qi4m")
-rendering_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 2, 1, 65536, 2, 0, 131072, 2, 0, 196608, 2, 0, 262144, 2, 0, 327680, 2, 0, 393216, 2, 0, 458752, 2, 0, 524288, 2, 1, 589824, 2, 4, 589825, 65538, 4, 589826, 131074, 4, 589827, 131074, 4, 589828, 131074, 4, 589829, 131074, 4, 589830, 131074, 4, 589831, 131074, 4, 589832, 131074, 4, 589833, 131074, 4, 589834, 131074, 4, 589835, 131074, 4, 589836, 131074, 4, 589837, 131074, 4, 589838, 131074, 4, 589839, 131074, 4, 589840, 262146, 4, 589841, 327682, 4, 524305, 327682, 3, 458769, 327682, 2, 393233, 327682, 2, 327697, 327682, 2, 262161, 327682, 2, 196625, 327682, 2, 131089, 327682, 2, 65553, 327682, 2, 17, 327682, 1, -65520, 65538, 0, -65521, 65538, 0, -65522, 131074, 0, -65523, 65538, 0, -65524, 196610, 0, -65525, 65538, 0, -65526, 131074, 0, -65527, 65538, 0, -65528, 196610, 0, -65529, 65538, 0, -65530, 131074, 0, -65531, 65538, 0, -65532, 196610, 0, -65533, 65538, 0, -65534, 131074, 0, -65535, 65538, 0, -65536, 2, 0, -65519, 327682, 0, 1, 65538, 1, 16, 262146, 1, 524304, 262146, 3, 524289, 65538, 3, 524303, 131074, 3, 524302, 131074, 3, 524301, 131074, 3, 524300, 131074, 3, 524299, 131074, 3, 524298, 131074, 3, 524297, 131074, 3, 524296, 131074, 3, 524295, 131074, 3, 524294, 131074, 3, 524293, 131074, 3, 524292, 131074, 3, 524291, 131074, 3, 524290, 131074, 3, 458753, 65538, 2, 393217, 65538, 2, 327681, 65538, 2, 262145, 65538, 2, 196609, 65538, 2, 131073, 65538, 2, 65537, 65538, 2, 458768, 262146, 2, 393232, 262146, 2, 327696, 262146, 2, 262160, 262146, 2, 196624, 262146, 2, 131088, 262146, 2, 65552, 262146, 2, 15, 196610, 1, 14, 196610, 1, 13, 196610, 1, 12, 196610, 1, 11, 196610, 1, 10, 196610, 1, 9, 196610, 1, 8, 196610, 1, 7, 196610, 1, 6, 196610, 1, 5, 196610, 1, 4, 196610, 1, 3, 196610, 1, 2, 196610, 1, 327690, 131074, 2, 262154, 131074, 2, 196618, 131074, 2, 131082, 131074, 2, 65546, 131074, 2, 65545, 131074, 2, 65544, 131074, 2, 65543, 131074, 2, 65542, 131074, 2, 65541, 131074, 2, 65540, 131074, 2, 65539, 131074, 2, 65538, 131074, 2, 131074, 131074, 2, 196610, 131074, 2, 262146, 131074, 2, 327682, 131074, 2, 393218, 131074, 2, 458754, 131074, 2, 458755, 131074, 2, 393219, 131074, 2, 327683, 131074, 2, 262147, 131074, 2, 196611, 131074, 2, 131075, 131074, 2, 131076, 131074, 2, 196612, 131074, 2, 262148, 131074, 2, 327684, 131074, 2, 393220, 131074, 2, 458756, 131074, 2, 458757, 131074, 2, 393221, 131074, 2, 327685, 131074, 2, 262149, 131074, 2, 196613, 131074, 2, 131077, 131074, 2, 131078, 131074, 2, 196614, 131074, 2, 262150, 131074, 2, 327686, 131074, 2, 393222, 131074, 2, 458758, 131074, 2, 458759, 131074, 2, 393223, 131074, 2, 327687, 131074, 2, 262151, 131074, 2, 196615, 131074, 2, 131079, 131074, 2, 131080, 131074, 2, 196616, 131074, 2, 262152, 131074, 2, 327688, 131074, 2, 393224, 131074, 2, 458760, 131074, 2, 458761, 131074, 2, 393225, 131074, 2, 327689, 131074, 2, 262153, 131074, 2, 196617, 131074, 2, 131081, 131074, 2, 393226, 131074, 2, 458762, 131074, 2, 458763, 131074, 2, 393227, 131074, 2, 327691, 131074, 2, 262155, 131074, 2, 196619, 131074, 2, 131083, 131074, 2, 65547, 131074, 2, 65548, 131074, 2, 131084, 131074, 2, 196620, 131074, 2, 262156, 131074, 2, 327692, 131074, 2, 393228, 131074, 2, 458764, 131074, 2, 458765, 131074, 2, 393229, 131074, 2, 327693, 131074, 2, 262157, 131074, 2, 196621, 131074, 2, 131085, 131074, 2, 65549, 131074, 2, 65550, 131074, 2, 131086, 131074, 2, 196622, 131074, 2, 262158, 131074, 2, 327694, 131074, 2, 393230, 131074, 2, 458766, 131074, 2, 458767, 131074, 2, 393231, 131074, 2, 327695, 131074, 2, 262159, 131074, 2, 196623, 131074, 2, 131087, 131074, 2, 65551, 131074, 2)
-layer_1/modulate = Color(1, 1, 1, 0.180392)
+layer_0/tile_data = PackedInt32Array(0, 917507, 14, 65536, 917507, 14, 131072, 917507, 14, 196608, 917507, 14, 262144, 917507, 14, 1, 983043, 14, 2, 983043, 14, 3, 983043, 14, 4, 983043, 14, 5, 983043, 14, 6, 983043, 14, 7, 983043, 14, 8, 983043, 14, 9, 983043, 14, 10, 983043, 14, 11, 983043, 14, 12, 983043, 14, 13, 983043, 14, 14, 983043, 14, 17, 1245187, 14, 65553, 1245187, 14, 131089, 1245187, 14, 196625, 1245187, 14, 262161, 1245187, 14, 327697, 1245187, 14, 393233, 1245187, 14, 458769, 1245187, 14, 524305, 1245187, 14, 589841, 1245187, 18, 589824, 917507, 18, 589825, 983043, 18, 589840, 1048579, 18, 589839, 983043, 18, 589838, 1114115, 18, 589837, 983043, 18, 589836, 1114115, 18, 589835, 983043, 18, 589834, 1114115, 18, 589833, 983043, 18, 589832, 1114115, 18, 589831, 983043, 18, 589830, 1114115, 18, 589829, 983043, 18, 589828, 1114115, 18, 589827, 983043, 18, 589826, 1114115, 18, 327680, 917507, 15, 393216, 917507, 15, 458752, 917507, 15, 524288, 917507, 15, 15, 983043, 14, 16, 983043, 14, 196610, 983043, 15, 131074, 983043, 15, 65538, 983043, 15, 65537, 983043, 15, 131073, 983043, 15, 196609, 983043, 15, 262145, 983043, 15, 327681, 983043, 15, 393217, 983043, 15, 458753, 983043, 15, 524289, 983043, 15, 524290, 983043, 15, 458754, 983043, 15, 393218, 983043, 15, 327682, 983043, 15, 262146, 983043, 15, 262147, 983043, 15, 196611, 983043, 15, 131075, 983043, 15, 65539, 983043, 15, 65540, 983043, 15, 131076, 983043, 15, 196612, 983043, 15, 262148, 983043, 15, 327684, 983043, 15, 327683, 983043, 15, 393219, 983043, 15, 458755, 983043, 15, 524291, 983043, 15, 524292, 983043, 15, 458756, 983043, 15, 393220, 983043, 15, 393221, 983043, 15, 327685, 983043, 15, 262149, 983043, 15, 196613, 983043, 15, 131077, 983043, 15, 65541, 983043, 15, 65542, 983043, 15, 131078, 983043, 15, 196614, 983043, 15, 262150, 983043, 15, 327686, 983043, 15, 393222, 983043, 15, 458758, 983043, 15, 458757, 983043, 15, 524293, 983043, 15, 524294, 983043, 15, 524295, 983043, 15, 458759, 983043, 15, 393223, 983043, 15, 327687, 983043, 15, 262151, 983043, 15, 196615, 983043, 15, 131079, 983043, 15, 65543, 983043, 15, 65544, 983043, 15, 131080, 983043, 15, 196616, 983043, 15, 262152, 983043, 15, 327688, 983043, 15, 393224, 983043, 15, 458760, 983043, 15, 524296, 983043, 15, 524297, 983043, 15, 458761, 983043, 15, 393225, 983043, 15, 327689, 983043, 15, 262153, 983043, 15, 196617, 983043, 15, 131081, 983043, 15, 65545, 983043, 15, 65546, 983043, 15, 131082, 983043, 15, 196618, 983043, 15, 262154, 983043, 15, 327690, 983043, 15, 393226, 983043, 15, 458762, 983043, 15, 524298, 983043, 15, 524299, 983043, 15, 458763, 983043, 15, 393227, 983043, 15, 327691, 983043, 15, 262155, 983043, 15, 196619, 983043, 15, 131083, 983043, 15, 65547, 983043, 15, 65548, 983043, 15, 131084, 983043, 15, 196620, 983043, 15, 262156, 983043, 15, 327692, 983043, 15, 393228, 983043, 15, 458764, 983043, 15, 524300, 983043, 15, 524301, 983043, 15, 458765, 983043, 15, 393229, 983043, 15, 327693, 983043, 15, 262157, 983043, 15, 196621, 983043, 15, 131085, 983043, 15, 65549, 983043, 15, 65550, 983043, 15, 131086, 983043, 15, 196622, 983043, 15, 262158, 983043, 15, 327694, 983043, 15, 393230, 983043, 15, 458766, 983043, 15, 524302, 983043, 15, 524303, 983043, 15, 458767, 983043, 15, 393231, 983043, 15, 327695, 983043, 15, 262159, 983043, 15, 196623, 983043, 15, 131087, 983043, 15, 65551, 983043, 15, 65552, 983043, 15, 131088, 983043, 15, 196624, 983043, 15, 262160, 983043, 15, 327696, 983043, 15, 393232, 983043, 15, 458768, 983043, 15, 524304, 983043, 15)
+layer_1/modulate = Color(1, 1, 1, 0.501961)
 layer_1/tile_data = PackedInt32Array()
 script = SubResource("GDScript_tnuxs")
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
-position = Vector2(289, 230)
-scale = Vector2(3, 3)
+position = Vector2(57, 60)
+health = 2000
+
+[node name="AnimatedSprite2D" parent="TileMap/Enemy" index="0"]
+animation = &"idle"
+frame = 0
+frame_progress = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
+anchor_mode = 0
+zoom = Vector2(4, 4)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -304.0
-offset_bottom = 304.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.25, 0.25)
 alignment = 2
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-layout_mode = 2
+position = Vector2(1034, 114)
 
-[node name="Sprite2D" parent="VBoxContainer/kai/Node2D" index="0"]
-scale = Vector2(0.3, 0.3)
+[node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_oa717")
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-layout_mode = 2
+position = Vector2(1034, 223)
 
-[node name="Sprite2D" parent="VBoxContainer/emerald/Node2D" index="0"]
-position = Vector2(-75.5, 75.5)
-scale = Vector2(0.705078, 0.705078)
-texture = ExtResource("5_ux5it")
+[node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_hjf0c")
 
 [node name="tyrone" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
-layout_mode = 2
+position = Vector2(1034, 331)
 
-[node name="Sprite2D" parent="VBoxContainer/tyrone/Node2D" index="0"]
-position = Vector2(-76, 76)
-scale = Vector2(0.703125, 0.703125)
-texture = ExtResource("6_q0jl4")
+[node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_elw16")
+
+[node name="bettany" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
+position = Vector2(1034, 441)
+
+[node name="Sprite2D" parent="VBoxContainer/bettany" index="0"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_4twyk")
 
 [node name="MoveTimerBar" type="ProgressBar" parent="."]
+visible = false
 offset_left = 7.0
 offset_top = 15.0
 offset_right = 33.0
@@ -268,3 +610,4 @@ show_percentage = false
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]
+[editable path="VBoxContainer/bettany"]
