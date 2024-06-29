@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjrj4a644xgvw"]
+[gd_scene load_steps=8 format=3 uid="uid://b5lorfwierxxj"]
 
 [ext_resource type="Texture2D" uid="uid://ddq3jvtqgiddr" path="res://sprites/tilesets/underground.png" id="1_fbuns"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="2_dlw5u"]
 [ext_resource type="Texture2D" uid="uid://cuaq8hihnbu3x" path="res://sprites/tilesets/slums_tileset-sheet.png" id="2_g3ul6"]
-[ext_resource type="PackedScene" uid="uid://dlbv0boehiunl" path="res://scenes/slime.tscn" id="3_2gji2"]
+[ext_resource type="PackedScene" path="res://scenes/slime.tscn" id="3_2gji2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shefy"]
 texture = ExtResource("1_fbuns")
