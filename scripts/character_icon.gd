@@ -15,7 +15,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var defeat_filter = $Control/DefeatFilter
 
 func _ready():
-	initialPos = global_position
+	initialPos = sprite.global_position
 	health_bar.value = health_bar.max_value # health_bar.max_value
 		
 	
@@ -37,7 +37,7 @@ func _process(delta):
 			global.dragged_char_name = ""
 			
 			var tween = get_tree().create_tween()
-			tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
+			tween.tween_property(self, "global_position", initialPos, 0.1).set_ease(Tween.EASE_OUT)
 			
 			start_cooldown()
 

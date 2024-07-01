@@ -10,47 +10,49 @@ extends CharacterBody2D
 var health : int
 var player_chase = false
 var player = null
+var is_defeated : bool
 
 func _ready():
 	health = healthbar.max_value
 	healthbar.value = health
-
 	global.add_enemy(self)
-	# global.enemy_dict[position] = self
+	#prints(position)
 	anim.play("idle")
 
-func _on_detection_area_body_entered(body):
-	player = body
-	player_chase = true
-
-func _on_detection_area_body_exited(body):
-	player = null
-	player_chase = false
-
 func _on_next_move_timer_timeout():
-	var tween = create_tween()
+	if is_defeated: return
+	
 	var new_position = Vector2(position.x - 16, position.y)
-	# var enemy_position = 
+	var tween = create_tween()
 	move_timer.stop()
 	global.delete_enemy(self)
 	anim.flip_h = true
+	anim.stop()
 	anim.play("walk")
 	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
 	move_timer.start()
 	anim.play("idle")
 	global.add_enemy(self)
-	# position.snapped()
+	prints(position)
 
 func hit(damage : int):
 	prints("Before:", healthbar.value)
 	healthbar.value -= damage
 	prints("After:", healthbar.value)
 	if healthbar.value <= 0:
-		anim.stop()
+		is_defeated = true
 		anim.play("death")
 		await anim.animation_finished
+		anim.stop()
 		global.delete_enemy(self)
-		# move_timer_bar.queue_free()
-		# move_timer.queue_free()
 		queue_free()
+
+func move_animation():
+	var new_position = Vector2(position.x - 16, position.y)
+	var tween = create_tween()
+	anim.flip_h = true
+	anim.stop()
+	anim.play("walk")
+	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
+	await anim.animation_finished

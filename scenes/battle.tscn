@@ -502,6 +502,8 @@ texture = ExtResource("4_hnfox")
 5:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_6qi4m"]
+custom_data_layer_0/name = "can_place_attack"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_w4aii")
 sources/1 = SubResource("TileSetAtlasSource_3l7ya")
 sources/2 = SubResource("TileSetAtlasSource_hp3yx")
@@ -535,7 +537,7 @@ layer_1/modulate = Color(1, 1, 1, 0.501961)
 layer_1/tile_data = PackedInt32Array()
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("7_3cg71")]
-position = Vector2(233, 43)
+position = Vector2(217, 45)
 
 [node name="Enemy2" parent="TileMap" instance=ExtResource("7_3cg71")]
 position = Vector2(185, 77)
@@ -559,6 +561,7 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
+metadata/_edit_lock_ = true
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("5_6vrsy")]
 position = Vector2(132, 124)

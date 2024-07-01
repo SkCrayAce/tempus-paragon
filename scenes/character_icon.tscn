@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=7 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character_icon.gd" id="1_x5sk1"]
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="2_3vtjw"]
@@ -7,9 +7,18 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
 size = Vector2(100, 100)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_helk3"]
+bg_color = Color(0, 0.2, 0.2, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upwom"]
 bg_color = Color(0.352941, 0.647059, 0.207843, 1)
 corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="character_icon" type="Node2D"]
@@ -42,6 +51,7 @@ offset_top = 52.0
 offset_right = 50.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 10
+theme_override_styles/background = SubResource("StyleBoxFlat_helk3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_upwom")
 max_value = 1000.0
 step = 1.0
