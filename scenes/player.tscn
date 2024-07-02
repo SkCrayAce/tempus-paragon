@@ -389,5 +389,3 @@ shape = SubResource("CircleShape2D_68oed")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
