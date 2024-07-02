@@ -155,7 +155,7 @@ metadata/_edit_lock_ = true
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_6nsju")
 animation = &"idle"
-frame_progress = 0.153021
+frame_progress = 0.68298
 offset = Vector2(0, -5)
 metadata/_edit_lock_ = true
 

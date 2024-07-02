@@ -71,10 +71,13 @@ func _process(delta):
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset
+		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
+		var y_valid = target_pos.y > 0 and target_pos.y <= 8
 		var world_pos : Vector2 = tilemap.map_to_local(target_pos)
 		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
 		
-		tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
+		if x_valid and y_valid:
+			tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
 			
 		if offset_list == kai_offset_list and Input.is_action_just_released("left_click"):
 			prints("kai offset", offset)
