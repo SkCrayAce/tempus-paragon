@@ -89,6 +89,13 @@ func _on_cooldown_timer_timeout():
 	cooldown_bar.hide()
 	prints(name, "cooldown at timer end:", on_cooldown)
 	draggable = false
-		
+
+func take_damage(damage : int):
+	health_bar.value -= damage
+	
+	if health_bar.value <= 0:
+		defeated = true
+		defeat_filter.show()
+	prints("damage taken")
 	
 		

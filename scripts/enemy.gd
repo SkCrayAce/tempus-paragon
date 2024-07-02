@@ -5,13 +5,18 @@ extends CharacterBody2D
 @onready var move_timer_bar = $"../../MoveTimerBar"
 @onready var move_timer = $NextMoveTimer 
 @onready var tile_map = get_parent()
-@export var speed : int
 
 var health : int
 var player_chase = false
 var player = null
 var is_defeated : bool
+var is_attacking : bool
 var map_position : Vector2i
+
+@onready var kai = get_node("../../VBoxContainer/kai") as Node2D
+@onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
+@onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
+@onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
 
 func _ready():
 	map_position = tile_map.local_to_map(position)
@@ -26,6 +31,9 @@ func _process(delta):
 
 func action():
 	if is_defeated: return
+	elif map_position.x == 3 or is_attacking:
+		attack_character()
+		return
 	
 	var new_position = Vector2(position.x - 16, position.y)
 	var tween = create_tween()
@@ -64,4 +72,11 @@ func move_animation():
 	
 
 func attack_character():
-	pass
+	is_attacking = true
+	prints("map position:", map_position)
+	if map_position.x != 3: return
+	
+	if map_position.y == 1 or map_position.y == 2: kai.take_damage(125)
+	if map_position.y == 3 or map_position.y == 4: emerald.take_damage(125)
+	if map_position.y == 5 or map_position.y == 6: tyrone.take_damage(125)
+	if map_position.y == 7 or map_position.y == 8: bettany.take_damage(125)

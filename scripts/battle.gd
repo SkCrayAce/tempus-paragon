@@ -41,7 +41,7 @@ func _ready():
 			}
 	for y in range (1, 9):
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
-		enemy_instance.position = tilemap.map_to_local(Vector2i(11, y))
+		enemy_instance.position = tilemap.map_to_local(Vector2i(4, y))
 		tilemap.add_child(enemy_instance)
 	
 
