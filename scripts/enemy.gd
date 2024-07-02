@@ -3,62 +3,53 @@ extends CharacterBody2D
 @onready var anim = $AnimatedSprite2D
 @onready var healthbar = $HealthBar
 @onready var move_timer_bar = $"../../MoveTimerBar"
-@onready var move_timer = $NextMoveTimer
-@export var speed = 60
-@export var health = 1000
+@onready var move_timer = $NextMoveTimer 
+# @onready var tilemap 
+@export var speed : int
+
+var health : int
 var player_chase = false
 var player = null
+var is_defeated : bool
 
 func _ready():
+	health = healthbar.max_value
 	healthbar.value = health
-	healthbar.max_value = 1000
 	global.add_enemy(self)
-	# global.enemy_dict[position] = self
+	#prints(position)
 	anim.play("idle")
 
-# func _process(delta):
+func action():
+	if is_defeated: return
 	
-func _physics_process(delta):
-	if player_chase:
-		# position += (player.position - position)/speed
-		global.enemy_position = position
-		prints(position)
-		anim.play("walk")
-		
-		if (player.position.x - position.x) > 0: anim.flip_h = false
-		else: anim.flip_h = true
-		
-		if position == Vector2(0, 0): return
-	else:
-		anim.play("idle")
-
-func _on_detection_area_body_entered(body):
-	player = body
-	player_chase = true
-
-func _on_detection_area_body_exited(body):
-	player = null
-	player_chase = false
-
-func _on_next_move_timer_timeout():
-	anim.play("walk")
+	var new_position = Vector2(position.x - 16, position.y)
+	var tween = create_tween()
+	#move_timer.stop()
 	global.delete_enemy(self)
-	position.x += 16
-	# position = position.snapped(Vector2(64, 64))
-	global.add_enemy(self)
-	# position.snapped()
-
-#func update_healthbar():
-	#healthbar.value = health
+	move_animation()
+	#move_timer.start()
+	#anim.play("idle")
+	prints(position)
 
 func hit(damage : int):
 	prints("Before:", healthbar.value)
 	healthbar.value -= damage
 	prints("After:", healthbar.value)
 	if healthbar.value <= 0:
-		#anim.play("death")
-		#await anim.animation_finished
+		is_defeated = true
+		anim.play("death")
+		await anim.animation_finished
+		anim.stop()
 		global.delete_enemy(self)
-		move_timer_bar.queue_free()
-		move_timer.queue_free()
 		queue_free()
+
+func move_animation():
+	var new_position = Vector2(position.x - 16, position.y)
+	var tween = create_tween()
+	anim.flip_h = true
+	anim.stop()
+	anim.play("walk")
+	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
+	await anim.animation_finished
+	anim.play("idle")
+	global.add_enemy(self)
