@@ -19,21 +19,16 @@ func _ready():
 	#prints(position)
 	anim.play("idle")
 
-func _on_next_move_timer_timeout():
+func action():
 	if is_defeated: return
 	
 	var new_position = Vector2(position.x - 16, position.y)
 	var tween = create_tween()
-	move_timer.stop()
+	#move_timer.stop()
 	global.delete_enemy(self)
-	anim.flip_h = true
-	anim.stop()
-	anim.play("walk")
-	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
-	await anim.animation_finished
-	move_timer.start()
-	anim.play("idle")
-	global.add_enemy(self)
+	move_animation()
+	#move_timer.start()
+	#anim.play("idle")
 	prints(position)
 
 func hit(damage : int):
@@ -56,3 +51,5 @@ func move_animation():
 	anim.play("walk")
 	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
+	anim.play("idle")
+	global.add_enemy(self)

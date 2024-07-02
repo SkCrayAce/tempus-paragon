@@ -3,15 +3,16 @@ extends Node
 @export var grid_length : int
 @export var grid_height : int
 @export var attack_damage : int
+@export var enemy_scene : PackedScene
+var enemy_instance : CharacterBody2D
 var dictionary = {}
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
-@onready var enemy_move_timer = $TileMap/Enemy/NextMoveTimer
+@onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
 @onready var tilemap = $TileMap
-@onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar
-@onready var enemy = $TileMap/Enemy
+@onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar 
 
 @onready var kai = $"../VBoxContainer/kai"
 @onready var emerald = $"../VBoxContainer/emerald"
@@ -38,18 +39,22 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
+	for y in range (1, 4):
+		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
+		enemy_instance.position = tilemap.map_to_local(Vector2i(11, y))
+		tilemap.add_child(enemy_instance)
 	
 	for character in get_tree().get_nodes_in_group("characters"):
 		character_ids[character.get_instance_id()] = character.name
+		
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
-	if is_instance_valid(enemy):
-		var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position) 
+	#if is_instance_valid(enemy):
+		#var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position) 
 	# var tile_data = tilemap.get_cell_tile_data(0, )
 	
-	if is_instance_valid(enemy_move_timer):
-		move_timer_bar.value = enemy_move_timer.time_left
+	move_timer_bar.value = enemy_move_timer.time_left
 
 	for x in grid_length:
 		for y in grid_height:
@@ -81,4 +86,6 @@ func attack_AoE(hovered_tile, offset_list):
 			#prints("success")
 			detected_enemy.hit(attack_damage)
 		
-
+func _on_enemy_move_timer_timeout():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.action()

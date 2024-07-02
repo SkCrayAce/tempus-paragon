@@ -135,7 +135,7 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 y_sort_enabled = true
 script = ExtResource("1_6jaq7")
 
@@ -157,10 +157,3 @@ sprite_frames = SubResource("SpriteFrames_6nsju")
 animation = &"idle"
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
-
-[node name="NextMoveTimer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 4.0
-autostart = true
-
-[connection signal="timeout" from="NextMoveTimer" to="." method="_on_next_move_timer_timeout"]
