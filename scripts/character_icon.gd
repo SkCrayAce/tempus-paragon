@@ -29,15 +29,13 @@ func _process(delta):
 			global.dragged_char_name = name
 			print("clicked")
 		if Input.is_action_pressed("left_click"):
-			global_position = get_global_mouse_position() - offset
-			sprite.scale = Vector2(0.1, 0.1)
+			pass
+			#global_position = get_global_mouse_position() - offset
+			#sprite.scale = Vector2(0.1, 0.1)
 		elif Input.is_action_just_released("left_click"):
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
 			global.dragged_char_name = ""
-			
-			var tween = get_tree().create_tween()
-			tween.tween_property(self, "global_position", initialPos, 0.1).set_ease(Tween.EASE_OUT)
 			
 			start_cooldown()
 
@@ -45,12 +43,16 @@ func _on_area_2d_mouse_entered():
 	prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !defeated:
 		draggable = true
-		sprite.scale = Vector2(0.25, 0.25)
+		var tween = get_tree().create_tween()
+		tween.tween_property(sprite, "scale", Vector2(0.25, 0.25), 0.1).set_ease(Tween.EASE_OUT)
+		#sprite.scale = Vector2(0.25, 0.25)
 
 func _on_area_2d_mouse_exited():
 	if !global.is_dragging:
 		draggable = false
-		sprite.scale = Vector2(0.2, 0.2)
+		var tween = get_tree().create_tween()
+		tween.tween_property(sprite, "scale", Vector2(0.2, 0.2), 0.1).set_ease(Tween.EASE_OUT)
+		#sprite.scale = Vector2(0.2, 0.2)
 
 func start_cooldown():
 	on_cooldown = true

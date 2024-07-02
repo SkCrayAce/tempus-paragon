@@ -34,7 +34,8 @@ func _ready():
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
-	var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position)
+	if is_instance_valid(enemy):
+		var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position) 
 	# var tile_data = tilemap.get_cell_tile_data(0, )
 	
 	if is_instance_valid(enemy_move_timer):
@@ -44,8 +45,8 @@ func _process(delta):
 		for y in grid_height:
 			tilemap.erase_cell(1, Vector2(x, y))
 	
-	tilemap.set_cell(hover_layer, enemy_tile, 0, Vector2i(0, 0), 0)
-	prints("map_coordinates:", enemy_tile)
+	#tilemap.set_cell(hover_layer, enemy_tile, 0, Vector2i(0, 0), 0)
+	#prints("map_coordinates:", enemy_tile)
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		match global.dragged_char_name:
