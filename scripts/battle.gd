@@ -28,6 +28,7 @@ var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var custom_data_name: String = "can_place_attack"
 var ground_layer = 0
 var hover_layer = 1
+var enemy_list : Array[CharacterBody2D]
 
 var character_ids = {}
 
@@ -39,10 +40,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
-	for y in range (1, 9):
-		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
-		enemy_instance.position = tilemap.map_to_local(Vector2i(4, y))
-		tilemap.add_child(enemy_instance)
+	wave_spawner()
 	
 
 		
@@ -77,10 +75,10 @@ func attack_AoE(hovered_tile, offset_list):
 		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
 		
 		tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
-				
-		if Input.is_action_just_released("left_click"):
-			pass
-			#prints(detected_enemy)
+			
+		if offset_list == kai_offset_list and Input.is_action_just_released("left_click"):
+			prints("kai offset", offset)
+
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
 			#prints("success")
 			detected_enemy.hit(attack_damage)
@@ -88,3 +86,18 @@ func attack_AoE(hovered_tile, offset_list):
 func _on_enemy_move_timer_timeout():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
+		
+func enemy_defeated(enemy_ref : CharacterBody2D):
+	enemy_list.erase(enemy_ref)
+	
+	if enemy_list.size() == 0: 
+		wave_spawner()
+		
+func wave_spawner():
+	prints("next wave")
+	for y in range (1, 4):
+		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
+		enemy_list.append(enemy_instance)
+		enemy_instance.position = tilemap.map_to_local(Vector2i(10, y))
+		tilemap.add_child.call_deferred(enemy_instance)
+		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))

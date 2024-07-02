@@ -38,7 +38,7 @@ func _process(delta):
 			global.is_dragging = true
 			offset = get_global_mouse_position() - global_position
 			global.dragged_char_name = name
-			prints("dragged character at click:", global.dragged_char_name, draggable)
+			#prints("dragged character at click:", global.dragged_char_name, draggable)
 			#prints("actual name:", name)
 			#prints("dictionary name:", character_ids.get(get_instance_id()))
 			# print("clicked")
@@ -49,7 +49,7 @@ func _process(delta):
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
 			global.dragged_char_name = " "
-			prints("dragged character at drop:", global.dragged_char_name)
+			#prints("dragged character at drop:", global.dragged_char_name)
 			#var tween = get_tree().create_tween()
 			#tween.tween_property(self, "global_position", initialPos, 0.1).set_ease(Tween.EASE_OUT)
 			start_cooldown()
@@ -57,7 +57,7 @@ func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 
 func _on_area_2d_mouse_entered():
-	prints("mouse entered at:", name)
+	#prints("mouse entered at:", name)
 	var tween := create_tween()
 	# prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !defeated:
@@ -66,7 +66,7 @@ func _on_area_2d_mouse_entered():
 		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_ease(Tween.EASE_OUT)
 
 func _on_area_2d_mouse_exited():
-	prints("mouse exited at:", name)
+	#prints("mouse exited at:", name)
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
@@ -75,7 +75,7 @@ func _on_area_2d_mouse_exited():
 
 func start_cooldown():
 	on_cooldown = true
-	prints(name, "cooldown at timer start:", on_cooldown)
+	#prints(name, "cooldown at timer start:", on_cooldown)
 	if not on_cooldown: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
@@ -87,7 +87,7 @@ func _on_cooldown_timer_timeout():
 	on_cooldown = false
 	#cooldown_timer.stop()
 	cooldown_bar.hide()
-	prints(name, "cooldown at timer end:", on_cooldown)
+	#prints(name, "cooldown at timer end:", on_cooldown)
 	draggable = false
 
 func take_damage(damage : int):
@@ -96,6 +96,6 @@ func take_damage(damage : int):
 	if health_bar.value <= 0:
 		defeated = true
 		defeat_filter.show()
-	prints("damage taken")
+	#prints("damage taken: ")
 	
 		

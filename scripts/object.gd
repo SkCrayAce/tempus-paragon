@@ -13,7 +13,7 @@ func _process(delta):
 			initialPos = global_position
 			offset = get_global_mouse_position() - global_position
 			Global.is_dragging = true
-			print("clicked")
+
 		if Input.is_action_pressed("left_click"):
 			global_position = get_global_mouse_position() - offset
 		elif Input.is_action_just_released("left_click"):

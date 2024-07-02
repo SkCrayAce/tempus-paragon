@@ -23,7 +23,7 @@ func _ready():
 	health = healthbar.max_value
 	healthbar.value = health
 	global.add_enemy(self)
-	#prints(position)
+
 	anim.play("idle")
 	
 func _process(delta):
@@ -43,12 +43,9 @@ func action():
 	map_position = tile_map.local_to_map(position)
 	#move_timer.start()
 	#anim.play("idle")
-	prints(map_position)
 
 func hit(damage : int):
-	prints("Before:", healthbar.value)
 	healthbar.value -= damage
-	prints("After:", healthbar.value)
 	if healthbar.value <= 0:
 		is_defeated = true
 		anim.play("death")
@@ -56,6 +53,7 @@ func hit(damage : int):
 		anim.stop()
 		global.delete_enemy(self)
 		queue_free()
+		remove_from_group("enemies")
 
 func move_animation():
 	var new_position = Vector2(position.x - 16, position.y)
@@ -73,7 +71,6 @@ func move_animation():
 
 func attack_character():
 	is_attacking = true
-	prints("map position:", map_position)
 	if map_position.x != 3: return
 	
 	if map_position.y == 1 or map_position.y == 2: kai.take_damage(125)
