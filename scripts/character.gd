@@ -7,7 +7,6 @@ var on_cooldown = false
 var defeated = false
 var is_dragging : bool = false
 
-
 const enemy_script = preload("res://scripts/enemy.gd")
 const battle_script := preload("res://scenes/battle.tscn")
 
@@ -19,31 +18,34 @@ const battle_script := preload("res://scenes/battle.tscn")
 @onready var battle = $"../../Battle"
 #@onready var tween := create_tween()
 
-@onready var character_ids : Dictionary = battle.char_instances_ids
+# @onready var character_ids : Dictionary = battle.character_ids
 
 func _ready():
-	prints("character ready")
+	#prints("character ready")
 	on_cooldown = false
 	initialPos = sprite.global_position
 	health_bar.value = health_bar.max_value # health_bar.max_value
-	battle.attack_finished.connect(start_cooldown)
+	#battle.attack_finished.connect(start_cooldown)
 	#prints(character_ids)
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if health_bar.value <= 0:
+		defeat_filter.visible = true
+		defeated = true
 	if draggable and !on_cooldown and !defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
 			offset = get_global_mouse_position() - global_position
-			global.dragged_char_name = character_ids.get(get_instance_id())
-			prints("dragged character at click:", global.dragged_char_name)
-			prints("actual name:", name)
-			prints("dictionary name:", character_ids.get(get_instance_id()))
+			global.dragged_char_name = name
+			prints("dragged character at click:", global.dragged_char_name, draggable)
+			#prints("actual name:", name)
+			#prints("dictionary name:", character_ids.get(get_instance_id()))
 			# print("clicked")
 		if Input.is_action_pressed("left_click"):
 			global.dragged_char_name = name
 			#global.is_dragging = true
-		elif Input.is_action_just_released("left_click") and character_ids.get(get_instance_id()) == global.dragged_char_name:
+		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
 			global.dragged_char_name = " "
@@ -55,6 +57,7 @@ func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 
 func _on_area_2d_mouse_entered():
+	prints("mouse entered at:", name)
 	var tween := create_tween()
 	# prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !defeated:
@@ -63,6 +66,7 @@ func _on_area_2d_mouse_entered():
 		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_ease(Tween.EASE_OUT)
 
 func _on_area_2d_mouse_exited():
+	prints("mouse exited at:", name)
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
@@ -84,11 +88,7 @@ func _on_cooldown_timer_timeout():
 	#cooldown_timer.stop()
 	cooldown_bar.hide()
 	prints(name, "cooldown at timer end:", on_cooldown)
+	draggable = false
 		
 	
-func take_damage(damage_taken : int):
-	health_bar.value -= damage_taken
 		
-	if health_bar.value <= 0:
-		defeat_filter.visible = true
-		defeated = true

@@ -13,6 +13,11 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar
 @onready var enemy = $TileMap/Enemy
 
+@onready var kai = $"../VBoxContainer/kai"
+@onready var emerald = $"../VBoxContainer/emerald"
+@onready var tyrone = $"../VBoxContainer/tyrone"
+@onready var bettany = $"../VBoxContainer/bettany"
+
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -23,14 +28,19 @@ var custom_data_name: String = "can_place_attack"
 var ground_layer = 0
 var hover_layer = 1
 
+var character_ids = {}
+
 func _ready():    
 	move_timer_bar.max_value = enemy_move_timer.wait_time
-	prints(global.enemy_position)    
+	#prints(global.enemy_position)    
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
+	
+	for character in get_tree().get_nodes_in_group("characters"):
+		character_ids[character.get_instance_id()] = character.name
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
@@ -65,9 +75,10 @@ func attack_AoE(hovered_tile, offset_list):
 		tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
 				
 		if Input.is_action_just_released("left_click"):
-			prints(detected_enemy)
+			pass
+			#prints(detected_enemy)
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
-			prints("success")
+			#prints("success")
 			detected_enemy.hit(attack_damage)
 		
 
