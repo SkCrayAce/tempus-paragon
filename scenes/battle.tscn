@@ -599,7 +599,6 @@ offset_bottom = 141.0
 theme_override_styles/background = SubResource("StyleBoxFlat_mb7ee")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0agcu")
 max_value = 5.0
-step = 1.0
 fill_mode = 3
 show_percentage = false
 
