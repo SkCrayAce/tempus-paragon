@@ -13,7 +13,7 @@ func _process(delta):
 			initialPos = global_position
 			offset = get_global_mouse_position() - global_position
 			Global.is_dragging = true
-			print("clicked")
+
 		if Input.is_action_pressed("left_click"):
 			global_position = get_global_mouse_position() - offset
 		elif Input.is_action_just_released("left_click"):
@@ -26,12 +26,12 @@ func _process(delta):
 				
 
 func _on_area_2d_mouse_entered():
-	if not Global.is_dragging:
+	if not global.is_dragging:
 		draggable = true
 		scale = Vector2(1.05, 1.05)
 
 func _on_area_2d_mouse_exited():
-	if not Global.is_dragging:
+	if not global.is_dragging:
 		draggable = false
 		scale = Vector2(1, 1)
 
