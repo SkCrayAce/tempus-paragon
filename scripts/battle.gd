@@ -39,13 +39,12 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
-	for y in range (1, 4):
+	for y in range (1, 9):
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_instance.position = tilemap.map_to_local(Vector2i(11, y))
 		tilemap.add_child(enemy_instance)
 	
-	for character in get_tree().get_nodes_in_group("characters"):
-		character_ids[character.get_instance_id()] = character.name
+
 		
 
 func _process(delta):

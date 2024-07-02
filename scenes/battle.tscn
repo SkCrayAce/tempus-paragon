@@ -553,28 +553,28 @@ scale = Vector2(0.25, 0.25)
 metadata/_edit_lock_ = true
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("7_04alb")]
-position = Vector2(132, 124)
+position = Vector2(132, 116)
 
 [node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_oa717")
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("7_04alb")]
-position = Vector2(132, 256)
+position = Vector2(132, 244)
 
 [node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_hjf0c")
 
 [node name="tyrone" parent="VBoxContainer" instance=ExtResource("7_04alb")]
-position = Vector2(132, 384)
+position = Vector2(132, 372)
 
 [node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("8_elw16")
 
 [node name="bettany" parent="VBoxContainer" instance=ExtResource("7_04alb")]
-position = Vector2(132, 508)
+position = Vector2(132, 500)
 
 [node name="Sprite2D" parent="VBoxContainer/bettany" index="0"]
 scale = Vector2(0.2, 0.2)

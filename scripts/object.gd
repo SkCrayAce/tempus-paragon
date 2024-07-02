@@ -26,12 +26,12 @@ func _process(delta):
 				
 
 func _on_area_2d_mouse_entered():
-	if not Global.is_dragging:
+	if not global.is_dragging:
 		draggable = true
 		scale = Vector2(1.05, 1.05)
 
 func _on_area_2d_mouse_exited():
-	if not Global.is_dragging:
+	if not global.is_dragging:
 		draggable = false
 		scale = Vector2(1, 1)
 
