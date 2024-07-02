@@ -8,7 +8,6 @@ var defeated = false
 var is_dragging : bool = false
 
 const enemy_script = preload("res://scripts/enemy.gd")
-const battle_script := preload("res://scenes/battle.tscn")
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
