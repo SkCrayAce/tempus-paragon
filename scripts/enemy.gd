@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @onready var anim = $AnimatedSprite2D
 @onready var healthbar = $HealthBar
-@onready var move_timer_bar = $"../../MoveTimerBar"
-@onready var move_timer = $NextMoveTimer 
+@onready var move_timer_bar = get_node("../../MoveTimerBar") as ProgressBar
+@onready var move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var tile_map = get_parent()
 
 var health : int
@@ -34,15 +34,9 @@ func action():
 	elif map_position.x == 3 or is_attacking:
 		attack_character()
 		return
-	
-	var new_position = Vector2(position.x - 16, position.y)
-	var tween = create_tween()
-	#move_timer.stop()
-	#global.delete_enemy(self)
+
 	move_animation()
 	map_position = tile_map.local_to_map(position)
-	#move_timer.start()
-	#anim.play("idle")
 
 func hit(damage : int):
 	healthbar.value -= damage
@@ -59,11 +53,13 @@ func move_animation():
 	var new_position = Vector2(position.x - 16, position.y)
 	var current_position = position
 	var tween = create_tween()
+	move_timer.stop()
 	anim.flip_h = true
 	anim.stop()
 	anim.play("walk")
 	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
+	move_timer.start()
 	anim.play("idle")
 	global.delete_position(current_position)
 	global.add_enemy(self)

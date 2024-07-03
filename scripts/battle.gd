@@ -4,6 +4,7 @@ extends Node
 @export var grid_height : int
 @export var attack_damage : int
 @export var enemy_scene : PackedScene
+
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 
@@ -12,12 +13,6 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
 @onready var tilemap = $TileMap
-@onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar 
-
-@onready var kai = $"../VBoxContainer/kai"
-@onready var emerald = $"../VBoxContainer/emerald"
-@onready var tyrone = $"../VBoxContainer/tyrone"
-@onready var bettany = $"../VBoxContainer/bettany"
 
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -47,9 +42,6 @@ func _ready():
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
-	#if is_instance_valid(enemy):
-		#var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position) 
-	# var tile_data = tilemap.get_cell_tile_data(0, )
 	
 	move_timer_bar.value = enemy_move_timer.time_left
 
@@ -57,8 +49,6 @@ func _process(delta):
 		for y in grid_height:
 			tilemap.erase_cell(1, Vector2(x, y))
 	
-	#tilemap.set_cell(hover_layer, enemy_tile, 0, Vector2i(0, 0), 0)
-	#prints("map_coordinates:", enemy_tile)
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		match global.dragged_char_name:
@@ -98,7 +88,7 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		
 func wave_spawner():
 	prints("next wave")
-	for y in range (1, 4):
+	for y in range (1, 9):
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
 		enemy_instance.position = tilemap.map_to_local(Vector2i(10, y))

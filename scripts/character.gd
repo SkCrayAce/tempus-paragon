@@ -82,7 +82,6 @@ func start_cooldown():
 	cooldown_bar.show()
 	
 func _on_cooldown_timer_timeout():
-	var char_id : int = 1
 	on_cooldown = false
 	#cooldown_timer.stop()
 	cooldown_bar.hide()
