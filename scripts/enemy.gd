@@ -58,7 +58,7 @@ func move_animation():
 	
 	prints(new_map_position in global.enemy_dict)
 	
-	if new_map_position in global.enemy_dict:
+	if new_map_position in global.enemy_dict.get(new_map_position).is_attacking:
 		return
 		
 	var previous_map_position = tile_map.local_to_map(position)
