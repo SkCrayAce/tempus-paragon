@@ -6,6 +6,10 @@ var initialPos : Vector2
 var on_cooldown = false
 var defeated = false
 var is_dragging : bool = false
+var ground_layer = 0
+var hover_layer = 1
+
+@export var attack_damage : int
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
@@ -15,7 +19,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle = $"../../Battle"
-#@onready var tween := create_tween()
+@onready var tile_map = get_node("../../TileMap")#$"../../tile_map"
 
 # @onready var character_ids : Dictionary = battle.character_ids
 
@@ -63,7 +67,26 @@ func _on_area_2d_mouse_exited():
 		draggable = false
 		#sprite.scale = Vector2(0.2, 0.2)
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
-
+		
+func attack_AoE(hovered_tile, offset_list):
+	if defeated: return
+	
+	for offset in offset_list:
+		var target_pos : Vector2i = hovered_tile + offset as Vector2i
+		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
+		var y_valid = target_pos.y > 0 and target_pos.y <= 8
+		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
+		
+		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
+		prints("detected_enemy:", detected_enemy)
+		
+		if x_valid and y_valid:
+			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
+		
+		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
+			prints("enemy hit")
+			detected_enemy.hit(attack_damage)
+			
 func start_cooldown():
 	on_cooldown = true
 

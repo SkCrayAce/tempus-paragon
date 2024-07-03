@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var anim = $AnimatedSprite2D
-@onready var healthbar = $HealthBar
+@onready var healthbar = $HealthBar as ProgressBar
 @onready var move_timer_bar = get_node("../../MoveTimerBar") as ProgressBar
 @onready var move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var tile_map = get_parent()
@@ -40,6 +40,7 @@ func action():
 
 func hit(damage : int):
 	healthbar.value -= damage
+	prints("enemy health changed:", healthbar.value_changed)
 	if healthbar.value <= 0:
 		is_defeated = true
 		anim.play("death")

@@ -2,7 +2,6 @@ extends Node
 
 @export var grid_length : int
 @export var grid_height : int
-@export var attack_damage : int
 @export var enemy_scene : PackedScene
 
 var enemy_instance : CharacterBody2D
@@ -20,9 +19,13 @@ var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
+@onready var kai = $VBoxContainer/kai
+@onready var emerald = $VBoxContainer/emerald
+@onready var tyrone = $VBoxContainer/tyrone
+@onready var bettany = $VBoxContainer/bettany
+
+
 var custom_data_name: String = "can_place_attack"
-var ground_layer = 0
-var hover_layer = 1
 var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
 
@@ -53,28 +56,11 @@ func _process(delta):
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		match global.dragged_char_name:
-			"kai": attack_AoE(hovered_tile, kai_offset_list)
-			"emerald": attack_AoE(hovered_tile, emerald_offset_list)
-			"tyrone": attack_AoE(hovered_tile, tyrone_offset_list)
-			"bettany": attack_AoE(hovered_tile, bettany_offset_list)
+			"kai": kai.attack_AoE(hovered_tile, kai_offset_list)
+			"emerald": emerald.attack_AoE(hovered_tile, emerald_offset_list)
+			"tyrone": tyrone.attack_AoE(hovered_tile, tyrone_offset_list)
+			"bettany": bettany.attack_AoE(hovered_tile, bettany_offset_list)
 
-
-func attack_AoE(hovered_tile, offset_list):
-	for offset in offset_list:
-		var target_pos : Vector2i = hovered_tile + offset as Vector2i
-		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
-		var y_valid = target_pos.y > 0 and target_pos.y <= 8
-		var world_pos : Vector2 = tilemap.map_to_local(target_pos)
-		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
-		
-		if x_valid and y_valid:
-			tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
-			
-		if offset_list == kai_offset_list and Input.is_action_just_released("left_click"):
-			prints("kai offset", offset)
-
-		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
-			detected_enemy.hit(attack_damage)
 		
 func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -99,8 +85,8 @@ func wave_spawner():
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
 
 func generate_random_vector() -> Vector2i :
+	var rng = RandomNumberGenerator.new()
 	while true:
-		var rng = RandomNumberGenerator.new()
 		rng.randomize()
 		var random_x = rng.randi_range(6, 16)
 		var random_y = rng.randi_range(1, 8)
