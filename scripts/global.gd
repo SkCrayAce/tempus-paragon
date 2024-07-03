@@ -9,12 +9,8 @@ var enemy_position : Vector2
 @onready var tile_map = $TileMap
 
 var enemy_dict : Dictionary 
-
-#func delete_position(map_position_key: Vector2i):
-	#enemy_dict.erase(map_position_key)
 	
 func delete_enemy(map_position_key : Vector2i):
-	#var delete_position = enemy_ref.map_position#position.snapped(snap_position)
 	enemy_dict.erase(map_position_key)
 
 func add_enemy(map_position_key : Vector2i, enemy_ref : CharacterBody2D):
