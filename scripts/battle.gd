@@ -55,6 +55,7 @@ func _process(delta):
 	
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
+		prints("dragged char:", global.dragged_char_name, Time.get_unix_time_from_system())
 		match global.dragged_char_name:
 			"kai": kai.attack_AoE(hovered_tile, kai_offset_list)
 			"emerald": emerald.attack_AoE(hovered_tile, emerald_offset_list)
@@ -89,7 +90,7 @@ func generate_random_vector() -> Vector2i :
 	while true:
 		rng.randomize()
 		var random_x = rng.randi_range(6, 16)
-		var random_y = rng.randi_range(1, 8)
+		var random_y = 4#rng.randi_range(1, 8)
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if random_vector not in used_vectors:

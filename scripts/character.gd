@@ -19,9 +19,8 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle = $"../../Battle"
-@onready var tile_map = get_node("../../TileMap")#$"../../tile_map"
+@onready var tile_map = get_node("../../TileMap")
 
-# @onready var character_ids : Dictionary = battle.character_ids
 
 func _ready():
 	#prints("character ready")
@@ -33,9 +32,9 @@ func _ready():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if health_bar.value <= 0:
-		defeat_filter.visible = true
-		defeated = true
+	#if health_bar.value <= 0:
+		#defeat_filter.visible = true
+		#defeated = true
 	if draggable and !on_cooldown and !defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
@@ -65,7 +64,6 @@ func _on_area_2d_mouse_exited():
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
-		#sprite.scale = Vector2(0.2, 0.2)
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 		
 func attack_AoE(hovered_tile, offset_list):
@@ -78,7 +76,7 @@ func attack_AoE(hovered_tile, offset_list):
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		prints("detected_enemy:", detected_enemy)
 		
-		if x_valid and y_valid and !defeated:
+		if x_valid and y_valid:
 			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
 		
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
@@ -105,9 +103,15 @@ func _on_cooldown_timer_timeout():
 func take_damage(damage : int):
 	health_bar.value -= damage
 	
+	if defeated: return
+	
 	if health_bar.value <= 0:
 		defeated = true
 		defeat_filter.show()
+		is_dragging = false
+		global.is_dragging = false
+		global.is_released = false
+		global.dragged_char_name = ""
 	#prints("damage taken: ")
 	
 		

@@ -13,6 +13,7 @@ var player_chase = false
 var player = null
 var is_defeated : bool
 var is_attacking : bool
+var is_waiting : bool
 var current_map_position : Vector2i
 
 @onready var kai = get_node("../../VBoxContainer/kai") as Node2D
@@ -55,11 +56,15 @@ func hit(damage : int):
 func move_animation():
 	var new_position = Vector2(position.x - 16, position.y)
 	var new_map_position = tile_map.local_to_map(new_position)
+	var next_enemy := global.get_enemy(new_map_position)
 	
-	prints(new_map_position in global.enemy_dict)
+	if is_blocked(): return
+			
+
+	#if  is_instance_valid(global.enemy_dict.get(new_map_position)) and new_map_position in global.enemy_dict:
+		#
 	
-	if new_map_position in global.enemy_dict.get(new_map_position).is_attacking:
-		return
+	is_waiting = false
 		
 	var previous_map_position = tile_map.local_to_map(position)
 	var tween = create_tween()
@@ -69,12 +74,15 @@ func move_animation():
 	anim.play("walk")
 	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
+	
 	move_timer.start()
+	global.delete_enemy(previous_map_position)
+	global.add_enemy(current_map_position, self)
 	anim.play("idle")
 	
 	current_map_position = tile_map.local_to_map(position)
-	global.delete_enemy(previous_map_position)
-	global.add_enemy(current_map_position, self)
+	
+	
 	
 
 func attack_character():
@@ -85,3 +93,14 @@ func attack_character():
 	if current_map_position.y == 3 or current_map_position.y == 4: emerald.take_damage(attack_damage)
 	if current_map_position.y == 5 or current_map_position.y == 6: tyrone.take_damage(attack_damage)
 	if current_map_position.y == 7 or current_map_position.y == 8: bettany.take_damage(attack_damage)
+	
+func is_blocked() -> bool:
+	var new_position = Vector2(position.x - 16, position.y)
+	var new_map_position = tile_map.local_to_map(new_position)
+	var next_enemy := global.get_enemy(new_map_position)
+	
+	if  is_instance_valid(next_enemy):
+		return next_enemy.is_blocked()
+		
+	return new_map_position.x == 2
+			
