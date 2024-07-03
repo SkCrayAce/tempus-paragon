@@ -37,20 +37,12 @@ func _process(delta):
 			global.is_dragging = true
 			offset = get_global_mouse_position() - global_position
 			global.dragged_char_name = name
-			#prints("dragged character at click:", global.dragged_char_name, draggable)
-			#prints("actual name:", name)
-			#prints("dictionary name:", character_ids.get(get_instance_id()))
-			# print("clicked")
 		if Input.is_action_pressed("left_click"):
 			global.dragged_char_name = name
-			#global.is_dragging = true
 		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
 			global.dragged_char_name = " "
-			#prints("dragged character at drop:", global.dragged_char_name)
-			#var tween = get_tree().create_tween()
-			#tween.tween_property(self, "global_position", initialPos, 0.1).set_ease(Tween.EASE_OUT)
 			start_cooldown()
 			
 	cooldown_bar.value = cooldown_timer.time_left
@@ -74,12 +66,13 @@ func _on_area_2d_mouse_exited():
 
 func start_cooldown():
 	on_cooldown = true
-	#prints(name, "cooldown at timer start:", on_cooldown)
+
 	if not on_cooldown: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
 	cooldown_bar.show()
+	scale = Vector2(1, 1)
 	
 func _on_cooldown_timer_timeout():
 	on_cooldown = false

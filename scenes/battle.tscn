@@ -527,7 +527,7 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_050bv")
 grid_length = 120
 grid_height = 68
-attack_damage = 800
+attack_damage = 1000
 enemy_scene = ExtResource("7_3cg71")
 
 [node name="TileMap" type="TileMap" parent="."]

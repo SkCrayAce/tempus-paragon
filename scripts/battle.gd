@@ -87,9 +87,14 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		
 func wave_spawner():
 	prints("next wave")
+	enemy_move_timer.start(enemy_move_timer.wait_time)
+	
+	var rng = RandomNumberGenerator.new()
 	for y in range (1, 9):
+		var random_x = rng.randi_range(6, 16)
+		var random_y = rng.randi_range(1, 8)
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
-		enemy_instance.position = tilemap.map_to_local(Vector2i(10, y))
+		enemy_instance.position = tilemap.map_to_local(Vector2i(random_x, random_y))
 		tilemap.add_child.call_deferred(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
