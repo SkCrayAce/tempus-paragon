@@ -89,7 +89,7 @@ func wave_spawner():
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
 		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
-		tilemap.add_child(enemy_instance)
+		tilemap.add_child.call_deferred(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
 	record_enemies()
 	prints("used vectors:", global.enemy_dict)

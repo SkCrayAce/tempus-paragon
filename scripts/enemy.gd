@@ -97,5 +97,5 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 		
-	return new_map_position.x == 3
+	return new_map_position.x == 2
 			
