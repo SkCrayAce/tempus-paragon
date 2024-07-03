@@ -69,7 +69,7 @@ func _on_area_2d_mouse_exited():
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 		
 func attack_AoE(hovered_tile, offset_list):
-	if defeated: return
+	
 	
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
@@ -77,10 +77,10 @@ func attack_AoE(hovered_tile, offset_list):
 		var y_valid = target_pos.y > 0 and target_pos.y <= 8
 		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
-		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
+		var detected_enemy = global.enemy_dict.get(target_pos)#world_pos.snapped(Vector2(16, 16)))
 		prints("detected_enemy:", detected_enemy)
 		
-		if x_valid and y_valid:
+		if x_valid and y_valid and !defeated:
 			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
 		
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):

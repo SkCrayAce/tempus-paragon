@@ -10,13 +10,12 @@ var enemy_position : Vector2
 
 var enemy_dict : Dictionary 
 
-func delete_position(target_position: Vector2):
-	enemy_dict.erase(target_position.snapped(snap_position))
+#func delete_position(map_position_key: Vector2i):
+	#enemy_dict.erase(map_position_key)
 	
-func delete_enemy(enemy_ref : Node2D):
-	var delete_position = enemy_ref.position.snapped(snap_position)
-	enemy_dict.erase(delete_position)
+func delete_enemy(map_position_key : Vector2i):
+	#var delete_position = enemy_ref.map_position#position.snapped(snap_position)
+	enemy_dict.erase(map_position_key)
 
-func add_enemy(enemy_ref : Node2D):
-	var add_position = enemy_ref.position.snapped(snap_position)
-	enemy_dict[add_position] = enemy_ref
+func add_enemy(map_position_key : Vector2i, enemy_ref : CharacterBody2D):
+	enemy_dict[map_position_key] = enemy_ref
