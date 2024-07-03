@@ -25,7 +25,7 @@ func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	health = healthbar.max_value
 	healthbar.value = health
-	global.add_enemy(current_map_position, self)
+	# global.add_enemy(current_map_position, self)
 
 	anim.play("idle")
 	
@@ -43,13 +43,12 @@ func action():
 
 func hit(damage : int):
 	healthbar.value -= damage
-	prints("enemy health changed:", healthbar.value_changed)
 	if healthbar.value <= 0:
 		is_defeated = true
 		anim.play("death")
 		await anim.animation_finished
 		anim.stop()
-		global.delete_enemy(current_map_position)
+		#global.delete_enemy(current_map_position)
 		queue_free()
 		remove_from_group("enemies")
 
@@ -59,10 +58,6 @@ func move_animation():
 	var next_enemy := global.get_enemy(new_map_position)
 	
 	if is_blocked(): return
-			
-
-	#if  is_instance_valid(global.enemy_dict.get(new_map_position)) and new_map_position in global.enemy_dict:
-		#
 	
 	is_waiting = false
 		
@@ -76,8 +71,8 @@ func move_animation():
 	await anim.animation_finished
 	
 	move_timer.start()
-	global.delete_enemy(previous_map_position)
-	global.add_enemy(current_map_position, self)
+	#global.delete_enemy(previous_map_position)
+	#global.add_enemy(current_map_position, self)
 	anim.play("idle")
 	
 	current_map_position = tile_map.local_to_map(position)
@@ -99,8 +94,8 @@ func is_blocked() -> bool:
 	var new_map_position = tile_map.local_to_map(new_position)
 	var next_enemy := global.get_enemy(new_map_position)
 	
-	if  is_instance_valid(next_enemy):
+	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 		
-	return new_map_position.x == 2
+	return new_map_position.x == 3
 			

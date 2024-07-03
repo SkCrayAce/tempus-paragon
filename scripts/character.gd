@@ -74,13 +74,11 @@ func attack_AoE(hovered_tile, offset_list):
 		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
 		var detected_enemy = global.enemy_dict.get(target_pos)
-		prints("detected_enemy:", detected_enemy)
 		
 		if x_valid and y_valid:
 			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
 		
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
-			prints("enemy hit")
 			detected_enemy.hit(attack_damage)
 			
 func start_cooldown():

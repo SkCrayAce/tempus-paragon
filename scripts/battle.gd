@@ -11,7 +11,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
-@onready var tilemap = $TileMap
+@onready var tilemap = $TileMap as TileMap
 
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -39,7 +39,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
-	wave_spawner()
+	wave_spawner.call_deferred()
 	
 
 		
@@ -55,7 +55,6 @@ func _process(delta):
 	
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
-		prints("dragged char:", global.dragged_char_name, Time.get_unix_time_from_system())
 		match global.dragged_char_name:
 			"kai": kai.attack_AoE(hovered_tile, kai_offset_list)
 			"emerald": emerald.attack_AoE(hovered_tile, emerald_offset_list)
@@ -66,9 +65,17 @@ func _process(delta):
 func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
+		record_enemies()
+
+func record_enemies():
+	global.enemy_dict.clear()
+	for enemy in enemy_list:
+		var enemy_map_pos = tilemap.local_to_map(enemy.position)
+		global.enemy_dict[enemy_map_pos] = enemy
 		
 func enemy_defeated(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
+	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
 	
 	if enemy_list.size() == 0: 
 		wave_spawner()
@@ -78,12 +85,14 @@ func wave_spawner():
 	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	for y in range (1, 9):
+	for y in range (8):
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
 		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
-		tilemap.add_child.call_deferred(enemy_instance)
+		tilemap.add_child(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
+	record_enemies()
+	prints("used vectors:", global.enemy_dict)
 
 func generate_random_vector() -> Vector2i :
 	var rng = RandomNumberGenerator.new()
@@ -96,5 +105,7 @@ func generate_random_vector() -> Vector2i :
 		if random_vector not in used_vectors:
 			used_vectors.append(random_vector)
 			return random_vector
-	return Vector2i(1, 16)
-	
+			
+		#if !global.enemy_dict.has(random_vector):
+			#return random_vector
+	return Vector2i(0, 0)
