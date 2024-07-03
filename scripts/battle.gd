@@ -60,7 +60,7 @@ func _process(delta):
 
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
-		var target_pos : Vector2i = hovered_tile + offset
+		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
 		var y_valid = target_pos.y > 0 and target_pos.y <= 8
 		var world_pos : Vector2 = tilemap.map_to_local(target_pos)
@@ -73,7 +73,6 @@ func attack_AoE(hovered_tile, offset_list):
 			prints("kai offset", offset)
 
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
-			#prints("success")
 			detected_enemy.hit(attack_damage)
 		
 func _on_enemy_move_timer_timeout():
