@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
-const speed = 100
+const max_speed = 100
+const accel = 2000
+const friction = 2500
+
+var input = Vector2.ZERO
 var current_dir = "none"
 
 func _ready():
@@ -16,35 +20,41 @@ func _ready():
 func _physics_process(delta):
 	player_movement(delta)
 
+func get_input():
+	input.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
+	input.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
+	return input.normalized()
 
 func player_movement(delta):
+	input = get_input()
+	
+	if input == Vector2.ZERO:
+		#if velocity.length() > (friction * delta):
+			#velocity -= velocity.normalized() * (friction * delta)
+		#else:
+		velocity = Vector2.ZERO
+	else:
+		velocity += (input * accel * delta)
+		velocity = velocity.limit_length(max_speed)
+	
+	move_and_slide()
+	
 	if Input.is_action_pressed("ui_right"):
 		current_dir = "right"
 		play_anim(1)
-		velocity.x = speed
-		velocity.y = 0
 	elif Input.is_action_pressed("ui_left"):
 		current_dir = "left"
 		play_anim(1)
-		velocity.x = -speed
-		velocity.y = 0
 	elif Input.is_action_pressed("ui_down"):
 		current_dir = "down"
 		play_anim(1)
-		velocity.x = 0
-		velocity.y = speed
 	elif Input.is_action_pressed("ui_up"):
 		current_dir = "up"
 		play_anim(1)
-		velocity.x = 0
-		velocity.y = -speed
 	else:
 		play_anim(0)
-		velocity.x = 0
-		velocity.y = 0
-		
-	move_and_slide()
-
+	
+#
 func play_anim(movement):
 	var dir = current_dir
 	var anim = $AnimatedSprite2D
