@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var attack_damage : int
+
 @onready var anim = $AnimatedSprite2D
 @onready var healthbar = $HealthBar as ProgressBar
 @onready var move_timer_bar = get_node("../../MoveTimerBar") as ProgressBar
@@ -79,7 +81,7 @@ func attack_character():
 	is_attacking = true
 	if current_map_position.x != 3: return
 	
-	if current_map_position.y == 1 or current_map_position.y == 2: kai.take_damage(125)
-	if current_map_position.y == 3 or current_map_position.y == 4: emerald.take_damage(125)
-	if current_map_position.y == 5 or current_map_position.y == 6: tyrone.take_damage(125)
-	if current_map_position.y == 7 or current_map_position.y == 8: bettany.take_damage(125)
+	if current_map_position.y == 1 or current_map_position.y == 2: kai.take_damage(attack_damage)
+	if current_map_position.y == 3 or current_map_position.y == 4: emerald.take_damage(attack_damage)
+	if current_map_position.y == 5 or current_map_position.y == 6: tyrone.take_damage(attack_damage)
+	if current_map_position.y == 7 or current_map_position.y == 8: bettany.take_damage(attack_damage)

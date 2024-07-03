@@ -69,15 +69,13 @@ func _on_area_2d_mouse_exited():
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 		
 func attack_AoE(hovered_tile, offset_list):
-	
-	
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
 		var y_valid = target_pos.y > 0 and target_pos.y <= 8
 		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
-		var detected_enemy = global.enemy_dict.get(target_pos)#world_pos.snapped(Vector2(16, 16)))
+		var detected_enemy = global.enemy_dict.get(target_pos)
 		prints("detected_enemy:", detected_enemy)
 		
 		if x_valid and y_valid and !defeated:
@@ -90,7 +88,7 @@ func attack_AoE(hovered_tile, offset_list):
 func start_cooldown():
 	on_cooldown = true
 
-	if not on_cooldown: return 
+	if not on_cooldown or defeated: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
