@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dsn1ed1mngin"]
+
+[ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="1_q5fhe"]
+
+[resource]
+default_font = ExtResource("1_q5fhe")
+Button/font_sizes/font_size = 50
+Button/fonts/font = ExtResource("1_q5fhe")
+Button/styles/focus = null
