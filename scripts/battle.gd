@@ -24,6 +24,7 @@ var custom_data_name: String = "can_place_attack"
 var ground_layer = 0
 var hover_layer = 1
 var enemy_list : Array[CharacterBody2D]
+var used_vectors : Array[Vector2i]
 
 var character_ids = {}
 
@@ -75,7 +76,7 @@ func attack_AoE(hovered_tile, offset_list):
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
 			detected_enemy.hit(attack_damage)
 		
-func _on_enemy_move_timer_timeout():
+func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
 		
@@ -87,14 +88,25 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		
 func wave_spawner():
 	prints("next wave")
+	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	var rng = RandomNumberGenerator.new()
 	for y in range (1, 9):
-		var random_x = rng.randi_range(6, 16)
-		var random_y = rng.randi_range(1, 8)
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
-		enemy_instance.position = tilemap.map_to_local(Vector2i(random_x, random_y))
+		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
 		tilemap.add_child.call_deferred(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
+
+func generate_random_vector() -> Vector2i :
+	while true:
+		var rng = RandomNumberGenerator.new()
+		var random_x = rng.randi_range(6, 16)
+		var random_y = rng.randi_range(1, 8)
+		var random_vector = Vector2i(random_x, random_y)
+		
+		if random_vector not in used_vectors:
+			used_vectors.append(random_vector)
+			return random_vector
+	return Vector2i(1, 16)
+	
