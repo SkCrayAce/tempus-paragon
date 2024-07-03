@@ -101,6 +101,7 @@ func wave_spawner():
 func generate_random_vector() -> Vector2i :
 	while true:
 		var rng = RandomNumberGenerator.new()
+		rng.randomize()
 		var random_x = rng.randi_range(6, 16)
 		var random_y = rng.randi_range(1, 8)
 		var random_vector = Vector2i(random_x, random_y)
