@@ -10,6 +10,10 @@ var ground_layer = 0
 var hover_layer = 1
 
 @export var attack_damage : int
+@export var min_hover_x : int
+@export var max_hover_x : int
+@export var min_hover_y : int
+@export var max_hover_y : int
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
@@ -45,7 +49,7 @@ func _process(delta):
 		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
-			global.dragged_char_name = " "
+			global.dragged_char_name = ""
 			start_cooldown()
 			
 	cooldown_bar.value = cooldown_timer.time_left
@@ -69,8 +73,8 @@ func _on_area_2d_mouse_exited():
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
-		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
-		var y_valid = target_pos.y > 0 and target_pos.y <= 8
+		var x_valid = target_pos.x >= min_hover_x and target_pos.x <= max_hover_x
+		var y_valid = target_pos.y >= min_hover_y and target_pos.y <= max_hover_y
 		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
 		var detected_enemy = global.enemy_dict.get(target_pos)

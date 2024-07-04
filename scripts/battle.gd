@@ -1,8 +1,13 @@
 extends Node
 
+
 @export var grid_length : int
 @export var grid_height : int
 @export var enemy_scene : PackedScene
+@export var min_x_spawn : int
+@export var max_x_spawn : int
+@export var min_y_spawn : int
+@export var max_y_spawn : int
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
@@ -18,6 +23,7 @@ var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
+
 
 @onready var kai = $VBoxContainer/kai
 @onready var emerald = $VBoxContainer/emerald
@@ -65,7 +71,7 @@ func _process(delta):
 func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
-		record_enemies()
+		#record_enemies()
 
 func record_enemies():
 	global.enemy_dict.clear()
@@ -91,21 +97,19 @@ func wave_spawner():
 		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
 		tilemap.add_child.call_deferred(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
-	record_enemies()
+	#record_enemies()
 	prints("used vectors:", global.enemy_dict)
 
 func generate_random_vector() -> Vector2i :
 	var rng = RandomNumberGenerator.new()
 	while true:
 		rng.randomize()
-		var random_x = rng.randi_range(6, 16)
-		var random_y = 4#rng.randi_range(1, 8)
+		var random_x = rng.randi_range(min_x_spawn, max_x_spawn)
+		var random_y = 8#rng.randi_range(min_y_spawn, max_y_spawn)
 		var random_vector = Vector2i(random_x, random_y)
 		
-		if random_vector not in used_vectors:
+		if not used_vectors.has(random_vector):
 			used_vectors.append(random_vector)
 			return random_vector
 			
-		#if !global.enemy_dict.has(random_vector):
-			#return random_vector
 	return Vector2i(0, 0)

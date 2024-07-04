@@ -25,7 +25,7 @@ func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	health = healthbar.max_value
 	healthbar.value = health
-	# global.add_enemy(current_map_position, self)
+	global.add_enemy(current_map_position, self)
 
 	anim.play("idle")
 	
@@ -34,7 +34,7 @@ func _process(delta):
 
 func action():
 	if is_defeated: return
-	elif current_map_position.x == 3 or is_attacking:
+	elif current_map_position.x == 9 or is_attacking:
 		attack_character()
 		return
 
@@ -67,27 +67,24 @@ func move_animation():
 	anim.flip_h = true
 	anim.stop()
 	anim.play("walk")
-	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position", new_position, 0.25).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
 	
 	move_timer.start()
-	#global.delete_enemy(previous_map_position)
-	#global.add_enemy(current_map_position, self)
+	global.delete_enemy(previous_map_position)
+	global.add_enemy(current_map_position, self)
 	anim.play("idle")
 	
 	current_map_position = tile_map.local_to_map(position)
-	
-	
-	
 
 func attack_character():
 	is_attacking = true
-	if current_map_position.x != 3: return
+	if current_map_position.x != 9: return
 	
-	if current_map_position.y == 1 or current_map_position.y == 2: kai.take_damage(attack_damage)
-	if current_map_position.y == 3 or current_map_position.y == 4: emerald.take_damage(attack_damage)
-	if current_map_position.y == 5 or current_map_position.y == 6: tyrone.take_damage(attack_damage)
-	if current_map_position.y == 7 or current_map_position.y == 8: bettany.take_damage(attack_damage)
+	if current_map_position.y == 4 or current_map_position.y == 5: kai.take_damage(attack_damage)
+	if current_map_position.y == 6 or current_map_position.y == 7: emerald.take_damage(attack_damage)
+	if current_map_position.y == 8 or current_map_position.y == 9: tyrone.take_damage(attack_damage)
+	if current_map_position.y == 10 or current_map_position.y == 11: bettany.take_damage(attack_damage)
 	
 func is_blocked() -> bool:
 	var new_position = Vector2(position.x - 16, position.y)
@@ -97,5 +94,5 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 		
-	return new_map_position.x == 2
+	return new_map_position.x == 8
 			
