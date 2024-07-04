@@ -314,10 +314,10 @@ radius = 5.7071
 radius = 59.0085
 
 [node name="Slime" type="CharacterBody2D"]
+y_sort_enabled = true
 script = ExtResource("1_10df6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mxb7f")
 animation = &"side_jumping"

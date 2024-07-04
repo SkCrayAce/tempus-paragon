@@ -1801,9 +1801,6 @@ layer_2/name = "Objects"
 layer_2/y_sort_enabled = true
 layer_2/tile_data = PackedInt32Array(65544, 0, 0, 131080, 0, 1, 196616, 0, 2, 262152, 0, 3, 262145, 131072, 0, 13, 393216, 0, 14, 458752, 0, 15, 458752, 0, 16, 458752, 0, 17, 458752, 0, 18, 524288, 0, 262156, 131072, 0, 327692, 131072, 1, 393228, 131072, 2, 458764, 131072, 3, 655374, 0, 0, 655366, 65536, 0, 458769, 0, 4, 458770, 65536, 4, 458772, 65536, 4, 458774, 65536, 4, 458771, 65536, 3, 458773, 65536, 3, 20, 65536, 1, 65556, 65536, 2, 22, 589824, 3, 65558, 589824, 4, 131094, 589824, 4, 196630, 393216, 4, 393222, 589824, 1, 524294, 589824, 2, 458758, 524288, 4, 65548, 65536, 5, 327688, 0, 5, 65557, 131072, 5)
 
-[node name="Slime" parent="." instance=ExtResource("3_48o3d")]
-position = Vector2(283, 60)
-
 [node name="Player" parent="." instance=ExtResource("4_kom75")]
 position = Vector2(39, 40)
 
@@ -1813,6 +1810,9 @@ scale = Vector2(2.0625, 2.0625)
 energy = 0.6
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_8tqc1")
+
+[node name="Slime" parent="." instance=ExtResource("3_48o3d")]
+position = Vector2(283, 60)
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
 position = Vector2(104, 10)
