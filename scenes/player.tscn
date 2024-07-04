@@ -372,6 +372,7 @@ animations = [{
 size = Vector2(8, 7)
 
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 3
 script = ExtResource("1_x7eio")
 
@@ -383,7 +384,6 @@ frame_progress = 0.125975
 offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-y_sort_enabled = true
 position = Vector2(0, -4.5)
 shape = SubResource("RectangleShape2D_vmphf")
 

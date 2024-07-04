@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=14 format=3 uid="uid://c7apibvg107xh"]
 
-[ext_resource type="Script" path="res://scenes/areas/slums.gd" id="1_6tum6"]
+[ext_resource type="Script" path="res://scripts/slums.gd" id="1_6tum6"]
 [ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="1_drjby"]
-[ext_resource type="AudioStream" uid="uid://cupv1l7dbllip" path="res://audio/music/overworld01_v02.wav" id="2_4ja3h"]
+[ext_resource type="AudioStream" uid="uid://c61nmuw4nrgrh" path="res://audio/music/overworld-slums01_v02.wav" id="2_3h5lj"]
 [ext_resource type="Texture2D" uid="uid://6qf6a4ecyfla" path="res://tempus_assets/underground.png" id="2_64j61"]
 [ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="2_jdhpd"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="2_vth2c"]
@@ -2661,21 +2661,24 @@ sources/0 = SubResource("TileSetAtlasSource_4dqes")
 sources/3 = SubResource("TileSetAtlasSource_0h4rf")
 sources/1 = SubResource("TileSetAtlasSource_eaw0e")
 
-[sub_resource type="Gradient" id="Gradient_o60a4"]
+[sub_resource type="Gradient" id="Gradient_jcj7u"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j32lc"]
-gradient = SubResource("Gradient_o60a4")
+gradient = SubResource("Gradient_jcj7u")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jvpnt"]
+size = Vector2(20, 304)
 
 [node name="slums" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_6tum6")
 
 [node name="bgmusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_4ja3h")
+stream = ExtResource("2_3h5lj")
 volume_db = -15.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -2749,9 +2752,18 @@ energy = 0.5
 texture = SubResource("GradientTexture2D_j32lc")
 
 [node name="Player" parent="." instance=ExtResource("2_vth2c")]
-position = Vector2(68, 165)
+position = Vector2(62, 161)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
+
+[node name="TransitionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TransitionArea"]
+position = Vector2(522, 152)
+shape = SubResource("RectangleShape2D_jvpnt")
+
+[connection signal="body_entered" from="TransitionArea" to="." method="_on_transition_area_body_entered"]
+[connection signal="body_exited" from="TransitionArea" to="." method="_on_transition_area_body_exited"]
