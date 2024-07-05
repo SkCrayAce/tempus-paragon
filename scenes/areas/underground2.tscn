@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://dsp53pk61vgom"]
+[gd_scene load_steps=23 format=3 uid="uid://dsp53pk61vgom"]
 
 [ext_resource type="Texture2D" uid="uid://6qf6a4ecyfla" path="res://tempus_assets/underground.png" id="1_brgkb"]
 [ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="2_p1f26"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="3_8uma7"]
+[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_807ta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_erj46"]
 texture = ExtResource("1_brgkb")
@@ -1873,3 +1874,6 @@ scale = Vector2(2.0625, 2.0625)
 energy = 0.6
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_g73qo")
+
+[node name="Door" parent="." instance=ExtResource("4_807ta")]
+position = Vector2(402, 362)

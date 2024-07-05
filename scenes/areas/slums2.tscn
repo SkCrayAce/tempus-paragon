@@ -104,14 +104,21 @@ position = Vector2(300, 85)
 
 [node name="Door" parent="." instance=ExtResource("4_uuvrj")]
 position = Vector2(-10, 65)
-destination_level_tag = "slums"
-destination_door_tag = "E"
-spawn_direction = "left"
 
 [node name="CollisionShape2D" parent="Door" index="0"]
-position = Vector2(514, 63)
+position = Vector2(562, 15)
 
 [node name="Spawn" parent="Door" index="1"]
 position = Vector2(20, 14)
 
+[node name="Door2" parent="." instance=ExtResource("4_uuvrj")]
+position = Vector2(-10, 65)
+
+[node name="CollisionShape2D" parent="Door2" index="0"]
+position = Vector2(306, 375)
+
+[node name="Spawn" parent="Door2" index="1"]
+position = Vector2(20, 14)
+
 [editable path="Door"]
+[editable path="Door2"]

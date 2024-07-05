@@ -20,6 +20,8 @@ func _ready():
 
 
 func next_level(levels_cleared):
+	TransitionScreen.transition()
+	await TransitionScreen.on_transition_finished
 	var next_scene
 	var randnum
 	if levels_cleared % mpla == 0:
@@ -37,11 +39,10 @@ func next_level(levels_cleared):
 		randnum = randi() % city_levels.size()
 		next_scene = city_levels[randnum]
 		get_tree().change_scene_to_packed(next_scene)
-		slums_levels.remove_at(randnum)
+		city_levels.remove_at(randnum)
 	elif curr_area == "underground":
-		randnum = randi() % slums_levels.size()
+		randnum = randi() % underground_levels.size()
 		next_scene = underground_levels[randnum]
 		get_tree().change_scene_to_packed(next_scene)
-		slums_levels.remove_at(randnum)
-	
-	
+		underground_levels.remove_at(randnum)
+

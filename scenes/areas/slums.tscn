@@ -100,11 +100,9 @@ blend_mode = 2
 
 [node name="Door_E" parent="Door" instance=ExtResource("4_npavo")]
 position = Vector2(522, 168)
-destination_level_tag = "slums2"
-destination_door_tag = "W"
 
 [node name="CollisionShape2D" parent="Door/Door_E" index="0"]
-position = Vector2(0, 8)
+position = Vector2(46, -16)
 
 [node name="Spawn" parent="Door/Door_E" index="1"]
 position = Vector2(-18, 0)

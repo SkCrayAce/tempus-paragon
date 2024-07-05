@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://csifn418tx5e5"]
 
-[ext_resource type="Script" path="res://NextLevelTrigger.gd" id="1_i2hnc"]
+[ext_resource type="Script" path="res://scripts/nextleveltrigger.gd" id="1_m6xys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cpr8y"]
-size = Vector2(20, 256)
+size = Vector2(112, 304)
 
 [node name="Door" type="Area2D"]
-script = ExtResource("1_i2hnc")
+script = ExtResource("1_m6xys")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cpr8y")
