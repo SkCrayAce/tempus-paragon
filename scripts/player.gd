@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 const max_speed = 120
 const accel = 2000

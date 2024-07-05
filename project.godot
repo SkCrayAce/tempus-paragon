@@ -21,6 +21,8 @@ config/icon="res://temp_assets/icon.svg"
 [autoload]
 
 global="*res://scripts/global.gd"
+AudioPlayer="*res://scenes/AudioPlayer.tscn"
+NavigationManager="*res://scripts/navigation_manager.gd"
 
 [display]
 
