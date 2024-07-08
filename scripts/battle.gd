@@ -15,8 +15,8 @@ var dictionary = {}
 const enemy_script = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
-@onready var move_timer_bar = $MoveTimerBar
-@onready var tilemap = $TileMap as TileMap
+@onready var move_timer_bar = $CanvasLayer/TextureProgressBar
+@onready var tilemap = $TileMap2 as TileMap
 
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]

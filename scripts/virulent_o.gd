@@ -4,10 +4,10 @@ var speed = 60
 var player_chase = false
 var player = null
 var init_pos = null
+const Player = preload("res://scripts/player.gd")
 @onready var anim = $AnimatedSprite2D
 @onready var timer = $Timer
 
-const Player = preload("res://scripts/player.gd")
 
 func _ready():
 	init_pos = position
@@ -53,3 +53,8 @@ func _on_timer_timeout():
 	timer.wait_time = randi_range(2, 5)
 	if player_chase == false:
 		random_idle_anim()
+
+
+func _on_fight_range_body_entered(body):
+	if body is Player:
+		get_tree().change_scene_to_file("res://scenes/battle.tscn")

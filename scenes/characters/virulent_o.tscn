@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c0b8likh8uvor"]
+[gd_scene load_steps=43 format=3 uid="uid://c0b8likh8uvor"]
 
 [ext_resource type="Script" path="res://scripts/virulent_o.gd" id="1_mkmqa"]
 [ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
@@ -309,6 +309,8 @@ size = Vector2(9, 9)
 [sub_resource type="CircleShape2D" id="CircleShape2D_1fmfe"]
 radius = 85.0059
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxc68"]
+
 [node name="Virulent_O" type="CharacterBody2D"]
 script = ExtResource("1_mkmqa")
 
@@ -330,6 +332,12 @@ shape = SubResource("CircleShape2D_1fmfe")
 wait_time = 3.0
 autostart = true
 
+[node name="FightRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FightRange"]
+shape = SubResource("CircleShape2D_bxc68")
+
 [connection signal="body_entered" from="Detection_Range" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="Detection_Range" to="." method="_on_detection_range_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="FightRange" to="." method="_on_fight_range_body_entered"]

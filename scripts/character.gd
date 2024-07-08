@@ -23,7 +23,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle = $"../../Battle"
-@onready var tile_map = get_node("../../TileMap")
+@onready var tile_map = get_node("../../TileMap2")
 
 
 func _ready():
@@ -80,7 +80,7 @@ func attack_AoE(hovered_tile, offset_list):
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		
 		if x_valid and y_valid:
-			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
+			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 		
 		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
 			detected_enemy.hit(attack_damage)

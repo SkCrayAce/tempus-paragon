@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://d1exvu624fjgw"]
+[gd_scene load_steps=10 format=3 uid="uid://d1exvu624fjgw"]
 
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_njwbf"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_wnfe2"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="2_x3dxn"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_4xdv3"]
@@ -25,6 +26,15 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="slums2" type="Node2D"]
 y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("1_njwbf")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
