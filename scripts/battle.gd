@@ -11,6 +11,7 @@ extends Node
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
+var rng
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
@@ -19,7 +20,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var tilemap = $TileMap as TileMap
 
 
-var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -91,25 +92,56 @@ func wave_spawner():
 	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	for y in range (8):
-		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
-		enemy_list.append(enemy_instance)
-		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
-		tilemap.add_child.call_deferred(enemy_instance)
-		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
+	for pattern in range(4):
+		var base_position = generate_random_vector()
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+		var random_pattern = rng.randi_range(0, 4)
+		var offset_list : Array
+		
+		prints("random pattern:", random_pattern)
+		match random_pattern:
+			0 : offset_list = kai_offset_list
+			1 : offset_list = emerald_offset_list
+			2 : offset_list = tyrone_offset_list
+			3 : offset_list = bettany_offset_list
+		
+		var formation_positions : Array
+		for offset in offset_list:
+			var target_pos : Vector2i = base_position + offset as Vector2i
+			#formation_positions.append(target_pos)
+			#if intersect_exists(formation_positions, used_vectors):
+				#formation_positions.clear()
+				#continue
+				
+			var x_valid = target_pos.x >= min_x_spawn and target_pos.x <= max_x_spawn
+			var y_valid = target_pos.y >= min_y_spawn and target_pos.y <= max_y_spawn
+				
+			if x_valid and y_valid and not used_vectors.has(target_pos):
+				enemy_instance = enemy_scene.instantiate() as CharacterBody2D
+				enemy_list.append(enemy_instance)
+				enemy_instance.position = tilemap.map_to_local(target_pos)
+				tilemap.add_child.call_deferred(enemy_instance)
+				enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
+				used_vectors.append(target_pos)
 	#record_enemies()
-	prints("used vectors:", global.enemy_dict)
+	#prints("used vectors:", global.enemy_dict)
 
 func generate_random_vector() -> Vector2i :
-	var rng = RandomNumberGenerator.new()
+	rng = RandomNumberGenerator.new()
 	while true:
 		rng.randomize()
 		var random_x = rng.randi_range(min_x_spawn, max_x_spawn)
-		var random_y = 8#rng.randi_range(min_y_spawn, max_y_spawn)
+		var random_y = rng.randi_range(min_y_spawn, max_y_spawn)
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if not used_vectors.has(random_vector):
 			used_vectors.append(random_vector)
-			return random_vector
-			
+			return random_vector			
 	return Vector2i(0, 0)
+
+func intersect_exists(first_arr : Array, second_arr : Array) -> bool :
+	for value in first_arr:
+		if value in second_arr:
+			return true
+	return false

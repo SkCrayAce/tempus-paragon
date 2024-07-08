@@ -524,6 +524,10 @@ texture = ExtResource("4_hnfox")
 4:9/0 = 0
 5:9/0 = 0
 7:16/0 = 0
+8:8/0 = 0
+9:9/0 = 0
+9:10/0 = 0
+6:9/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_6qi4m"]
 custom_data_layer_0/name = "can_place_attack"

@@ -75,7 +75,7 @@ func attack_AoE(hovered_tile, offset_list):
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var x_valid = target_pos.x >= min_hover_x and target_pos.x <= max_hover_x
 		var y_valid = target_pos.y >= min_hover_y and target_pos.y <= max_hover_y
-		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
+		# var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		
