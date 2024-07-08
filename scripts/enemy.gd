@@ -50,6 +50,7 @@ func hit(damage : int):
 	healthbar.value -= damage
 	if healthbar.value <= 0:
 		is_defeated = true
+		anim.flip_h = false
 		anim.play("death")
 		await anim.animation_finished
 		anim.stop()
@@ -71,8 +72,8 @@ func move_animation():
 	move_timer.stop()
 	anim.flip_h = true
 	anim.stop()
-	anim.play("walk", 1.2)
-	tween.tween_property(self, "position", new_position, 0.25).set_ease(Tween.EASE_OUT)
+	anim.play("walk", 2.2)
+	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
 	await anim.animation_finished
 	
 	move_timer.start()

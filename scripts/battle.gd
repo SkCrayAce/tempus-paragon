@@ -11,6 +11,8 @@ extends Node
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 var rng
+var count : int
+
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
@@ -45,7 +47,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
-	wave_spawner.call_deferred()
+	start_wave()
 	
 
 func _process(delta):
@@ -71,61 +73,73 @@ func _on_enemy_move_timer_timeout():
 		enemy.action()
 		#record_enemies()
 
+
 func record_enemies():
 	global.enemy_dict.clear()
 	for enemy in enemy_list:
 		var enemy_map_pos = tilemap.local_to_map(enemy.position)
 		global.enemy_dict[enemy_map_pos] = enemy
 		
-func enemy_defeated(enemy_ref : CharacterBody2D):
+		
+func wave_cleared(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
 	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
 	
 	if enemy_list.size() == 0: 
-		wave_spawner()
-		
-func wave_spawner():
-	prints("next wave")
+		start_wave()
+	
+func start_wave():
+	prints("new wave")
+	count = 0
 	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	for pattern in range(4):
-		var base_position = generate_random_vector()
-		rng = RandomNumberGenerator.new()
-		rng.randomize()
-		var random_pattern = rng.randi_range(0, 4)
-		var offset_list : Array
+	while count <= 4:
+		place_formation()
 		
-		prints("random pattern:", random_pattern)
-		match random_pattern:
-			0 : offset_list = kai_offset_list
-			1 : offset_list = emerald_offset_list
-			2 : offset_list = tyrone_offset_list
-			3 : offset_list = bettany_offset_list
+func place_formation():
+	prints("Place formation")
+	var base_position = generate_random_vector()
+	var formation_positions : Array
+	var spawn_position : Vector2i
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var random_pattern = rng.randi_range(0, 4)
+	var offset_list : Array	
+	
+	match random_pattern:
+		0 : offset_list = kai_offset_list
+		1 : offset_list = emerald_offset_list
+		2 : offset_list = tyrone_offset_list
+		3 : offset_list = bettany_offset_list
+	
+	for offset in offset_list:
+		spawn_position = base_position + offset as Vector2i
+		formation_positions.append(spawn_position)
 		
-		var formation_positions : Array
-		var target_pos : Vector2i
-		for offset in offset_list:
-			target_pos = base_position + offset as Vector2i
-			#formation_positions.append(target_pos)
+		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
+		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
+		
+		if intersect_exists(formation_positions, used_vectors):
+			prints("intersect exists")
+			return
 			
-			#if intersect_exists(formation_positions, used_vectors):
-				#formation_positions.clear()
-				#continue
-				
-			var x_valid = target_pos.x in x_spawn_range 
-			#prints("x valid:", x_valid, x_spawn_range)
-			var y_valid = target_pos.y in y_spawn_range
-			#prints("y valid:", y_valid, y_spawn_range)
-					
-			if x_valid and y_valid and not target_pos in used_vectors :
-				enemy_instance = enemy_scene.instantiate() as CharacterBody2D
-				enemy_list.append(enemy_instance)
-				enemy_instance.position = tilemap.map_to_local(target_pos)
-				tilemap.add_child.call_deferred(enemy_instance)
-				enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
-				used_vectors.append(target_pos)
-				prints("enemy spawned")
+		if x_valid and y_valid:
+			wave_spawner(spawn_position)
+			count += 1
+			return
+		else:
+			formation_positions.clear()
+			return
+		
+func wave_spawner(spawn_position : Vector2i):	
+	enemy_instance = enemy_scene.instantiate() as CharacterBody2D
+	enemy_list.append(enemy_instance)
+	enemy_instance.position = tilemap.map_to_local(spawn_position)
+	tilemap.add_child.call_deferred(enemy_instance)
+	enemy_instance.tree_exiting.connect(wave_cleared.bind(enemy_instance))
+	used_vectors.append(spawn_position)
+	prints("enemy spawned")
 	#record_enemies()
 	#prints("used vectors:", global.enemy_dict)
 
