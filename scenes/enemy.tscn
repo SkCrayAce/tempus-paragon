@@ -190,6 +190,10 @@ animations = [{
 y_sort_enabled = true
 script = ExtResource("1_6jaq7")
 attack_damage = 50
+kai_hitbox = Array[int]([4, 5])
+emerald_hitbox = Array[int]([6, 7])
+tyrone_hitbox = Array[int]([8, 9])
+bettany_hitbox = Array[int]([10, 11])
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -9.0

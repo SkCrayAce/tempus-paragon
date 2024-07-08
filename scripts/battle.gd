@@ -4,10 +4,9 @@ extends Node
 @export var grid_length : int
 @export var grid_height : int
 @export var enemy_scene : PackedScene
-@export var min_x_spawn : int
-@export var max_x_spawn : int
-@export var min_y_spawn : int
-@export var max_y_spawn : int
+@export var x_spawn_range : Array[int]
+@export var y_spawn_range : Array[int]
+
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
@@ -48,8 +47,6 @@ func _ready():
 			}
 	wave_spawner.call_deferred()
 	
-
-		
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
@@ -107,23 +104,28 @@ func wave_spawner():
 			3 : offset_list = bettany_offset_list
 		
 		var formation_positions : Array
+		var target_pos : Vector2i
 		for offset in offset_list:
-			var target_pos : Vector2i = base_position + offset as Vector2i
+			target_pos = base_position + offset as Vector2i
 			#formation_positions.append(target_pos)
+			
 			#if intersect_exists(formation_positions, used_vectors):
 				#formation_positions.clear()
 				#continue
 				
-			var x_valid = target_pos.x >= min_x_spawn and target_pos.x <= max_x_spawn
-			var y_valid = target_pos.y >= min_y_spawn and target_pos.y <= max_y_spawn
-				
-			if x_valid and y_valid and not used_vectors.has(target_pos):
+			var x_valid = target_pos.x in x_spawn_range 
+			#prints("x valid:", x_valid, x_spawn_range)
+			var y_valid = target_pos.y in y_spawn_range
+			#prints("y valid:", y_valid, y_spawn_range)
+					
+			if x_valid and y_valid and not target_pos in used_vectors :
 				enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 				enemy_list.append(enemy_instance)
 				enemy_instance.position = tilemap.map_to_local(target_pos)
 				tilemap.add_child.call_deferred(enemy_instance)
 				enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
 				used_vectors.append(target_pos)
+				prints("enemy spawned")
 	#record_enemies()
 	#prints("used vectors:", global.enemy_dict)
 
@@ -131,8 +133,8 @@ func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
 	while true:
 		rng.randomize()
-		var random_x = rng.randi_range(min_x_spawn, max_x_spawn)
-		var random_y = rng.randi_range(min_y_spawn, max_y_spawn)
+		var random_x = rng.randi_range(x_spawn_range.min(), x_spawn_range.max())
+		var random_y = rng.randi_range(y_spawn_range.min(), y_spawn_range.max())
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if not used_vectors.has(random_vector):

@@ -21,6 +21,11 @@ var current_map_position : Vector2i
 @onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
 @onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
 
+@export var kai_hitbox : Array[int]
+@export var emerald_hitbox : Array[int]
+@export var tyrone_hitbox : Array[int]
+@export var bettany_hitbox : Array[int]
+
 func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	health = healthbar.max_value
@@ -78,10 +83,10 @@ func move_animation():
 	current_map_position = tile_map.local_to_map(position)
 
 func attack_character():
-	var kai_aligned = current_map_position.y == 4 or current_map_position.y == 5
-	var emerald_aligned = current_map_position.y == 6 or current_map_position.y == 7
-	var tyrone_aligned = current_map_position.y == 8 or current_map_position.y == 9
-	var bettany_aligned = current_map_position.y == 10 or current_map_position.y == 11
+	var kai_aligned = current_map_position.y in kai_hitbox
+	var emerald_aligned = current_map_position.y in emerald_hitbox
+	var tyrone_aligned = current_map_position.y in tyrone_hitbox
+	var bettany_aligned = current_map_position.y in bettany_hitbox
 	is_attacking = true
 	
 	if current_map_position.x != 9: return

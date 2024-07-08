@@ -556,10 +556,8 @@ script = ExtResource("1_050bv")
 grid_length = 120
 grid_height = 68
 enemy_scene = ExtResource("7_3cg71")
-min_x_spawn = 11
-max_x_spawn = 22
-min_y_spawn = 4
-max_y_spawn = 11
+x_spawn_range = Array[int]([11, 22])
+y_spawn_range = Array[int]([4, 11])
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_6qi4m")
