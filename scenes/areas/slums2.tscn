@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1exvu624fjgw"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_wnfe2"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="3_lixg7"]
-[ext_resource type="PackedScene" uid="uid://dlbv0boehiunl" path="res://scenes/slime.tscn" id="4_8d5m5"]
+[ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="2_x3dxn"]
+[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_4xdv3"]
 [ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_uuvrj"]
 
 [sub_resource type="Gradient" id="Gradient_r5op8"]
@@ -90,17 +90,17 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Player" parent="." instance=ExtResource("3_lixg7")]
+[node name="Virulent_O" parent="." instance=ExtResource("2_x3dxn")]
+position = Vector2(304, 168)
+
+[node name="Virulent_O2" parent="." instance=ExtResource("2_x3dxn")]
+position = Vector2(384, 120)
+
+[node name="Virulent_O3" parent="." instance=ExtResource("2_x3dxn")]
+position = Vector2(312, 80)
+
+[node name="Player" parent="." instance=ExtResource("3_4xdv3")]
 position = Vector2(15, 86)
-
-[node name="Slime" parent="." instance=ExtResource("4_8d5m5")]
-position = Vector2(385, 98)
-
-[node name="Slime2" parent="." instance=ExtResource("4_8d5m5")]
-position = Vector2(314, 157)
-
-[node name="Slime3" parent="." instance=ExtResource("4_8d5m5")]
-position = Vector2(300, 85)
 
 [node name="Door" parent="." instance=ExtResource("4_uuvrj")]
 position = Vector2(-10, 65)

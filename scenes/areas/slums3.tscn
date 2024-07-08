@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_1kyow"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="2_okpf5"]
-[ext_resource type="PackedScene" uid="uid://dlbv0boehiunl" path="res://scenes/slime.tscn" id="3_ylw7p"]
+[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_02u3x"]
 [ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_g78kc"]
+[ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_rnjku"]
 
 [sub_resource type="Gradient" id="Gradient_jcj7u"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -118,27 +118,27 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Player" parent="." instance=ExtResource("2_okpf5")]
-position = Vector2(312, 35)
-
-[node name="Slime" parent="." instance=ExtResource("3_ylw7p")]
-position = Vector2(270, 214)
-
-[node name="Slime2" parent="." instance=ExtResource("3_ylw7p")]
-position = Vector2(334, 239)
-
-[node name="Slime3" parent="." instance=ExtResource("3_ylw7p")]
-position = Vector2(399, 202)
+[node name="Player" parent="." instance=ExtResource("2_02u3x")]
+position = Vector2(312, 29)
 
 [node name="Door" parent="." instance=ExtResource("4_g78kc")]
 
 [node name="CollisionShape2D" parent="Door" index="0"]
-position = Vector2(634, 152)
+position = Vector2(680, 150)
 
 [node name="Door2" parent="." instance=ExtResource("4_g78kc")]
 
 [node name="CollisionShape2D" parent="Door2" index="0"]
-position = Vector2(-10, 187)
+position = Vector2(-57, 178)
+
+[node name="Virulent_O" parent="." instance=ExtResource("4_rnjku")]
+position = Vector2(253, 200)
+
+[node name="Virulent_O2" parent="." instance=ExtResource("4_rnjku")]
+position = Vector2(350, 238)
+
+[node name="Virulent_O3" parent="." instance=ExtResource("4_rnjku")]
+position = Vector2(443, 184)
 
 [editable path="Door"]
 [editable path="Door2"]

@@ -8,10 +8,11 @@ var underground_levels = []
 const mpla = 3
 var area_index = 0
 var areas = ["slums", "city", "underground"]
+var curr_area
 
 
 func _ready():
-	##slums_levels.append(preload("res://scenes/areas/slums.tscn"))
+	slums_levels.append(preload("res://scenes/areas/slums1.tscn"))
 	slums_levels.append(preload("res://scenes/areas/slums2.tscn"))
 	slums_levels.append(preload("res://scenes/areas/slums3.tscn"))
 	city_levels.append(preload("res://scenes/areas/city.tscn"))
@@ -27,7 +28,7 @@ func next_level(levels_cleared):
 	if levels_cleared % mpla == 0:
 		area_index += 1
 	
-	var curr_area = areas[area_index]
+	curr_area = areas[area_index]
 	global.curr_area = curr_area
 	print(curr_area, " ", levels_cleared)
 	if curr_area == "slums":

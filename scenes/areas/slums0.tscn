@@ -1,29 +1,29 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7apibvg107xh"]
 
-[ext_resource type="Script" path="res://scripts/slums.gd" id="1_6tum6"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/player.tscn" id="2_vth2c"]
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="3_6kvuc"]
-[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_npavo"]
+[ext_resource type="Script" path="res://scripts/slums.gd" id="1_1yoqr"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
+[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_kgjqi"]
+[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_v1s8o"]
 
-[sub_resource type="Gradient" id="Gradient_h2s1s"]
+[sub_resource type="Gradient" id="Gradient_4u1jx"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j32lc"]
-gradient = SubResource("Gradient_h2s1s")
+gradient = SubResource("Gradient_4u1jx")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="slums" type="Node2D"]
+[node name="slums0" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_6tum6")
+script = ExtResource("1_1yoqr")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
-tile_set = ExtResource("3_6kvuc")
+tile_set = ExtResource("2_cxd4y")
 format = 2
 layer_0/name = "Collision"
 layer_0/z_index = -3
@@ -88,7 +88,7 @@ color = Color(1, 1, 0.0352941, 1)
 energy = 0.5
 texture = SubResource("GradientTexture2D_j32lc")
 
-[node name="Player" parent="." instance=ExtResource("2_vth2c")]
+[node name="Player" parent="." instance=ExtResource("3_kgjqi")]
 position = Vector2(62, 161)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
@@ -98,7 +98,7 @@ blend_mode = 2
 
 [node name="Door" type="Node" parent="."]
 
-[node name="Door_E" parent="Door" instance=ExtResource("4_npavo")]
+[node name="Door_E" parent="Door" instance=ExtResource("4_v1s8o")]
 position = Vector2(522, 168)
 
 [node name="CollisionShape2D" parent="Door/Door_E" index="0"]
