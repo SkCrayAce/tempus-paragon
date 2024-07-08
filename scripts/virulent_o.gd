@@ -7,6 +7,8 @@ var init_pos = null
 @onready var anim = $AnimatedSprite2D
 @onready var timer = $Timer
 
+const Player = preload("res://scripts/player.gd")
+
 func _ready():
 	init_pos = position
 	random_idle_anim()
