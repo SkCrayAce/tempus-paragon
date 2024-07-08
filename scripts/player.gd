@@ -5,11 +5,12 @@ const max_speed = 120
 const accel = 2000
 #const friction = 2500
 
+@onready var anim = $AnimatedSprite2D
 var input = Vector2.ZERO
 var current_dir = "none"
 
 func _ready():
-	$AnimatedSprite2D.play("front_idle")
+	anim.play("front_idle")
 	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect() # I think this gets all the tiles in your tile map.
 	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size # this gets the size of each tile map to help with the math later
 	$Camera2D.limit_left = tilemap_rect.position.x * tilemap_cell_size.x # this will set the limit to the camera to the left. you get the position of the last tile to the left and multiply by its size to get the exact pixle size
@@ -58,20 +59,17 @@ func player_movement(delta):
 #
 func play_anim(movement):
 	var dir = current_dir
-	var anim = $AnimatedSprite2D
 
 	if dir == "right":
-		anim.flip_h = false
 		if movement == 1:
-			anim.play("side_walk")
+			anim.play("side_walk_right")
 		elif movement == 0:
-			anim.play("side_idle")
+			anim.play("side_idle_right")
 	elif dir == "left":
-		anim.flip_h = true
 		if movement == 1:
-			anim.play("side_walk")
+			anim.play("side_walk_left")
 		elif movement == 0:
-			anim.play("side_idle")
+			anim.play("side_idle_left")
 	elif dir == "down":
 		anim.flip_h = false
 		if movement == 1:

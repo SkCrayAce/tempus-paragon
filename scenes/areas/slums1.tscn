@@ -126,7 +126,7 @@ energy = 0.35
 blend_mode = 2
 
 [node name="Player" parent="." instance=ExtResource("2_dvl2p")]
-position = Vector2(12, 90)
+position = Vector2(20, 92)
 
 [node name="Door" parent="." instance=ExtResource("3_u1svb")]
 position = Vector2(760, 114)
