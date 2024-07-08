@@ -1,6 +1,7 @@
 extends Node
 
 const snap_position : Vector2 = Vector2(16, 16)
+const EnemyBody = preload("res://scripts/enemy.gd") 
 
 var is_dragging = false
 var is_released = false
@@ -12,6 +13,9 @@ var levels_cleared = 0
 var curr_area = "slums"
 
 var enemy_dict : Dictionary 
+	
+func delete_enemy(map_position_key : Vector2i):
+	enemy_dict.erase(map_position_key)
 
 func add_level_cleared():
 	levels_cleared +=1

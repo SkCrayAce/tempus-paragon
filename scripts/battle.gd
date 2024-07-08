@@ -1,9 +1,14 @@
 extends Node
 
+
 @export var grid_length : int
 @export var grid_height : int
-@export var attack_damage : int
 @export var enemy_scene : PackedScene
+@export var min_x_spawn : int
+@export var max_x_spawn : int
+@export var min_y_spawn : int
+@export var max_y_spawn : int
+
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 
@@ -11,13 +16,7 @@ const enemy_script = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
-@onready var tilemap = $TileMap
-@onready var kai_healthbar = $VBoxContainer/kai/Control/HealthBar 
-
-@onready var kai = $"../VBoxContainer/kai"
-@onready var emerald = $"../VBoxContainer/emerald"
-@onready var tyrone = $"../VBoxContainer/tyrone"
-@onready var bettany = $"../VBoxContainer/bettany"
+@onready var tilemap = $TileMap as TileMap
 
 
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -25,10 +24,16 @@ var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
+
+@onready var kai = $VBoxContainer/kai
+@onready var emerald = $VBoxContainer/emerald
+@onready var tyrone = $VBoxContainer/tyrone
+@onready var bettany = $VBoxContainer/bettany
+
+
 var custom_data_name: String = "can_place_attack"
-var ground_layer = 0
-var hover_layer = 1
 var enemy_list : Array[CharacterBody2D]
+var used_vectors : Array[Vector2i]
 
 var character_ids = {}
 
@@ -40,16 +45,13 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Grass"
 			}
-	wave_spawner()
+	wave_spawner.call_deferred()
 	
 
 		
 
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
-	#if is_instance_valid(enemy):
-		#var enemy_tile : Vector2i = tilemap.local_to_map(enemy.position) 
-	# var tile_data = tilemap.get_cell_tile_data(0, )
 	
 	move_timer_bar.value = enemy_move_timer.time_left
 
@@ -57,50 +59,57 @@ func _process(delta):
 		for y in grid_height:
 			tilemap.erase_cell(1, Vector2(x, y))
 	
-	#tilemap.set_cell(hover_layer, enemy_tile, 0, Vector2i(0, 0), 0)
-	#prints("map_coordinates:", enemy_tile)
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		match global.dragged_char_name:
-			"kai": attack_AoE(hovered_tile, kai_offset_list)
-			"emerald": attack_AoE(hovered_tile, emerald_offset_list)
-			"tyrone": attack_AoE(hovered_tile, tyrone_offset_list)
-			"bettany": attack_AoE(hovered_tile, bettany_offset_list)
+			"kai": kai.attack_AoE(hovered_tile, kai_offset_list)
+			"emerald": emerald.attack_AoE(hovered_tile, emerald_offset_list)
+			"tyrone": tyrone.attack_AoE(hovered_tile, tyrone_offset_list)
+			"bettany": bettany.attack_AoE(hovered_tile, bettany_offset_list)
 
-
-func attack_AoE(hovered_tile, offset_list):
-	for offset in offset_list:
-		var target_pos : Vector2i = hovered_tile + offset
-		var x_valid = target_pos.x > 0 and target_pos.x <= 16 
-		var y_valid = target_pos.y > 0 and target_pos.y <= 8
-		var world_pos : Vector2 = tilemap.map_to_local(target_pos)
-		var detected_enemy = global.enemy_dict.get(world_pos.snapped(Vector2(16, 16)))
 		
-		if x_valid and y_valid:
-			tilemap.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
-			
-		if offset_list == kai_offset_list and Input.is_action_just_released("left_click"):
-			prints("kai offset", offset)
-
-		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
-			#prints("success")
-			detected_enemy.hit(attack_damage)
-		
-func _on_enemy_move_timer_timeout():
+func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
+		#record_enemies()
+
+func record_enemies():
+	global.enemy_dict.clear()
+	for enemy in enemy_list:
+		var enemy_map_pos = tilemap.local_to_map(enemy.position)
+		global.enemy_dict[enemy_map_pos] = enemy
 		
 func enemy_defeated(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
+	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
 	
 	if enemy_list.size() == 0: 
 		wave_spawner()
 		
 func wave_spawner():
 	prints("next wave")
-	for y in range (1, 4):
+	used_vectors.clear()
+	enemy_move_timer.start(enemy_move_timer.wait_time)
+	
+	for y in range (8):
 		enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 		enemy_list.append(enemy_instance)
-		enemy_instance.position = tilemap.map_to_local(Vector2i(10, y))
+		enemy_instance.position = tilemap.map_to_local(generate_random_vector())
 		tilemap.add_child.call_deferred(enemy_instance)
 		enemy_instance.tree_exiting.connect(enemy_defeated.bind(enemy_instance))
+	#record_enemies()
+	prints("used vectors:", global.enemy_dict)
+
+func generate_random_vector() -> Vector2i :
+	var rng = RandomNumberGenerator.new()
+	while true:
+		rng.randomize()
+		var random_x = rng.randi_range(min_x_spawn, max_x_spawn)
+		var random_y = 8#rng.randi_range(min_y_spawn, max_y_spawn)
+		var random_vector = Vector2i(random_x, random_y)
+		
+		if not used_vectors.has(random_vector):
+			used_vectors.append(random_vector)
+			return random_vector
+			
+	return Vector2i(0, 0)

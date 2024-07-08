@@ -6,6 +6,14 @@ var initialPos : Vector2
 var on_cooldown = false
 var defeated = false
 var is_dragging : bool = false
+var ground_layer = 0
+var hover_layer = 1
+
+@export var attack_damage : int
+@export var min_hover_x : int
+@export var max_hover_x : int
+@export var min_hover_y : int
+@export var max_hover_y : int
 
 const enemy_script = preload("res://scripts/enemy.gd")
 
@@ -15,42 +23,33 @@ const enemy_script = preload("res://scripts/enemy.gd")
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle = $"../../Battle"
-#@onready var tween := create_tween()
+@onready var tile_map = get_node("../../TileMap")
 
-# @onready var character_ids : Dictionary = battle.character_ids
 
 func _ready():
 	#prints("character ready")
 	on_cooldown = false
-	initialPos = sprite.global_position
+	initialPos = sprite.position
 	health_bar.value = health_bar.max_value # health_bar.max_value
 	#battle.attack_finished.connect(start_cooldown)
 	#prints(character_ids)
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if health_bar.value <= 0:
-		defeat_filter.visible = true
-		defeated = true
+	#if health_bar.value <= 0:
+		#defeat_filter.visible = true
+		#defeated = true
 	if draggable and !on_cooldown and !defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
 			offset = get_global_mouse_position() - global_position
 			global.dragged_char_name = name
-			#prints("dragged character at click:", global.dragged_char_name, draggable)
-			#prints("actual name:", name)
-			#prints("dictionary name:", character_ids.get(get_instance_id()))
-			# print("clicked")
 		if Input.is_action_pressed("left_click"):
 			global.dragged_char_name = name
-			#global.is_dragging = true
 		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
 			sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
-			global.dragged_char_name = " "
-			#prints("dragged character at drop:", global.dragged_char_name)
-			#var tween = get_tree().create_tween()
-			#tween.tween_property(self, "global_position", initialPos, 0.1).set_ease(Tween.EASE_OUT)
+			global.dragged_char_name = ""
 			start_cooldown()
 			
 	cooldown_bar.value = cooldown_timer.time_left
@@ -69,20 +68,34 @@ func _on_area_2d_mouse_exited():
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
-		#sprite.scale = Vector2(0.2, 0.2)
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
-
+		
+func attack_AoE(hovered_tile, offset_list):
+	for offset in offset_list:
+		var target_pos : Vector2i = hovered_tile + offset as Vector2i
+		var x_valid = target_pos.x >= min_hover_x and target_pos.x <= max_hover_x
+		var y_valid = target_pos.y >= min_hover_y and target_pos.y <= max_hover_y
+		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
+		
+		var detected_enemy = global.enemy_dict.get(target_pos)
+		
+		if x_valid and y_valid:
+			tile_map.set_cell(hover_layer, target_pos, 1, Vector2i(0, 0), 0)
+		
+		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
+			detected_enemy.hit(attack_damage)
+			
 func start_cooldown():
 	on_cooldown = true
-	sprite.scale = Vector2(0.2, 0.2)
-	if not on_cooldown: return 
+
+	if not on_cooldown or defeated: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
 	cooldown_bar.show()
+	scale = Vector2(1, 1)
 	
 func _on_cooldown_timer_timeout():
-	var char_id : int = 1
 	on_cooldown = false
 	#cooldown_timer.stop()
 	cooldown_bar.hide()
@@ -92,9 +105,15 @@ func _on_cooldown_timer_timeout():
 func take_damage(damage : int):
 	health_bar.value -= damage
 	
+	if defeated: return
+	
 	if health_bar.value <= 0:
 		defeated = true
 		defeat_filter.show()
+		is_dragging = false
+		global.is_dragging = false
+		global.is_released = false
+		global.dragged_char_name = ""
 	#prints("damage taken: ")
 	
 		
