@@ -96,6 +96,10 @@ func stop_animation():
 	var new_position = position
 	if is_instance_valid(tween):
 		tween.kill()
+	if is_attacking:
+		anim.play("attack")
+		return
+		
 	anim.play("idle")
 	position.x = new_position.x
 	
