@@ -15,7 +15,7 @@ var hover_layer = 1
 @export var min_hover_y : int
 @export var max_hover_y : int
 
-const enemy_script = preload("res://scripts/enemy.gd")
+const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
@@ -75,14 +75,14 @@ func attack_AoE(hovered_tile, offset_list):
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var x_valid = target_pos.x >= min_hover_x and target_pos.x <= max_hover_x
 		var y_valid = target_pos.y >= min_hover_y and target_pos.y <= max_hover_y
-		var world_pos : Vector2 = tile_map.map_to_local(target_pos)
+		# var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		
 		if x_valid and y_valid:
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 		
-		if is_instance_valid(detected_enemy) and detected_enemy is enemy_script and Input.is_action_just_released("left_click"):
+		if is_instance_valid(detected_enemy) and detected_enemy is EnemyScript and Input.is_action_just_released("left_click"):
 			detected_enemy.hit(attack_damage)
 			
 func start_cooldown():
