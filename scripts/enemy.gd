@@ -4,12 +4,11 @@ extends CharacterBody2D
 
 const BattleNode = preload("res://scripts/battle.gd")
 
-@onready var anim = $AnimatedSprite2D
+@onready var anim = $AnimatedSprite2D as AnimatedSprite2D
 @onready var healthbar = $HealthBar as ProgressBar
-@onready var move_timer_bar = get_node("../../MoveTimerBar") as ProgressBar
-@onready var move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
+@onready var animation_timer = get_node("../../AnimationTimer") as Timer
 
 var health : int
 var player_chase = false
@@ -18,16 +17,21 @@ var is_defeated : bool
 var is_attacking : bool
 var is_waiting : bool
 var current_map_position : Vector2i
+var tween : Tween
+var new_position : Vector2
 
 @onready var kai = get_node("../../VBoxContainer/kai") as Node2D
 @onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
 @onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
 @onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
 
+
 @export var kai_hitbox : Array[int]
 @export var emerald_hitbox : Array[int]
 @export var tyrone_hitbox : Array[int]
 @export var bettany_hitbox : Array[int]
+
+signal enemy_died
 
 func _ready():
 	current_map_position = tile_map.local_to_map(position)
@@ -55,38 +59,46 @@ func hit(damage : int):
 		is_defeated = true
 		anim.flip_h = false
 		anim.play("death")
+		emit_signal("enemy_died")
+		global.delete_enemy(current_map_position)
+		remove_from_group("enemies")
 		await anim.animation_finished
 		anim.stop()
-		global.delete_enemy(current_map_position)
+		
 		queue_free()
-		remove_from_group("enemies")
+		
 		#battle_node.record_enemies()
 
 func move_animation():
-	var new_position = Vector2(position.x - 16, position.y)
+	new_position = Vector2(position.x - 16, position.y)
 	var new_map_position = tile_map.local_to_map(new_position)
 	var next_enemy := global.get_enemy(new_map_position)
+	var previous_map_position = tile_map.local_to_map(position)
 	
 	if is_blocked(): return
 	
 	is_waiting = false
-		
-	var previous_map_position = tile_map.local_to_map(position)
-	var tween = create_tween()
-	move_timer.stop()
+	
+	tween = create_tween()
 	anim.flip_h = true
 	anim.stop()
 	anim.play("walk", 2.2)
-	tween.tween_property(self, "position", new_position, 0.5).set_ease(Tween.EASE_OUT)
-	await anim.animation_finished
+	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
+	prints("anim finished")
 	
-	move_timer.start()
+	#global.add_enemy(new_map_position, self)
 	#global.delete_enemy(previous_map_position)
-	#global.add_enemy(current_map_position, self)
-	anim.play("idle")
 	
 	current_map_position = tile_map.local_to_map(position)
-
+	return
+	
+func stop_animation():
+	var new_position = position
+	if is_instance_valid(tween):
+		tween.kill()
+	anim.play("idle")
+	position.x = new_position.x
+	
 func attack_character():
 	var kai_aligned = current_map_position.y in kai_hitbox
 	var emerald_aligned = current_map_position.y in emerald_hitbox
@@ -106,13 +118,13 @@ func attack_character():
 	anim.play("attack")
 	
 func is_blocked() -> bool:
-	var new_position = Vector2(position.x - 16, position.y)
-	var new_map_position = tile_map.local_to_map(new_position)
-	var next_enemy := global.get_enemy(new_map_position)
+	var next_position = Vector2(position.x - 16, position.y)
+	var next_map_position = tile_map.local_to_map(next_position)
+	var next_enemy := global.get_enemy(next_map_position)
 	
 	if is_instance_valid(next_enemy):
-		prints(get_instance_id(), next_enemy.is_blocked())
+		#prints(get_instance_id(), next_enemy.is_blocked())
 		return next_enemy.is_blocked()
 		
-	return new_map_position.x < 9
+	return next_map_position.x < 9
 			

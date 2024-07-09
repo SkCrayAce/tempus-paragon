@@ -19,6 +19,7 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
 @onready var tilemap = $TileMap as TileMap
+@onready var animation_timer = $AnimationTimer as Timer
 
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -40,6 +41,7 @@ var used_vectors : Array[Vector2i]
 var character_ids = {}
 
 func _ready():    
+	animation_timer.timeout.connect(animation_ended)
 	move_timer_bar.max_value = enemy_move_timer.wait_time
 	#prints(global.enemy_position)    
 	for x in grid_length:
@@ -69,10 +71,19 @@ func _process(delta):
 
 		
 func _on_enemy_move_timer_timeout(): 
+	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
-		record_enemies()
+		
+	animation_timer.start()
+		#record_enemies()
+	prints("recorded")
 
+func animation_ended():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.stop_animation()
+	record_enemies()
+	enemy_move_timer.start()
 
 func record_enemies():
 	global.enemy_dict.clear()
@@ -140,7 +151,9 @@ func wave_spawner(spawn_position : Vector2i):
 	enemy_instance.position = enemy_local_pos
 	enemy_instance.z_index = enemy_local_pos.y
 	tilemap.add_child.call_deferred(enemy_instance) 
-	enemy_instance.tree_exiting.connect(wave_cleared.bind(enemy_instance))
+	enemy_instance.enemy_died.connect(wave_cleared.bind(enemy_instance))
+	var enemy_sprite = enemy_instance.get_node("AnimatedSprite2D") as AnimatedSprite2D
+	#enemy_sprite.animation_finished.connect()
 	used_vectors.append(spawn_position)
 	prints("enemy spawned")
 	#prints("used vectors:", global.enemy_dict)
