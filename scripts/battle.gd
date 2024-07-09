@@ -19,8 +19,8 @@ var count : int
 const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
-@onready var move_timer_bar = $MoveTimerBar
-@onready var tilemap = $TileMap as TileMap
+@onready var move_timer_bar = $CanvasLayer/TextureProgressBar
+@onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
 
 
