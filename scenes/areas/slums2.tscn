@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1exvu624fjgw"]
+[gd_scene load_steps=11 format=3 uid="uid://d1exvu624fjgw"]
 
+[ext_resource type="Script" path="res://scripts/overworld_control.gd" id="1_gc4wq"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_njwbf"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_wnfe2"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="2_x3dxn"]
@@ -26,6 +27,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="slums2" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_gc4wq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

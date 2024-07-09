@@ -42,6 +42,7 @@ var used_vectors : Array[Vector2i]
 var character_ids = {}
 
 func _ready():    
+	global.battle_won = false
 	animation_timer.timeout.connect(animation_ended)
 	move_timer_bar.max_value = enemy_move_timer.wait_time
 	#prints(global.enemy_position)    
@@ -96,18 +97,10 @@ func record_enemies():
 func add_enemy(enemy : CharacterBody2D):
 	var enemy_map_pos = tilemap.local_to_map(enemy.position)
 	global.enemy_dict[enemy_map_pos] = enemy
-		
-func wave_cleared(enemy_ref : CharacterBody2D):
-	enemy_list.erase(enemy_ref)
-	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
-	
-	if enemy_list.size() == 0: 
-		waves_cleared += 1
-		start_wave()
 	
 func start_wave():
 	if waves_cleared < 2:
-		get_tree().change_scene_to_packed(global.current_scene)
+		battle_ended()
 		
 	prints("new wave")
 	count = 0
@@ -158,13 +151,24 @@ func wave_spawner(spawn_position : Vector2i):
 	enemy_instance.z_index = enemy_local_pos.y
 	tilemap.add_child.call_deferred(enemy_instance) 
 	enemy_instance.enemy_died.connect(wave_cleared.bind(enemy_instance))
-	#var enemy_sprite = enemy_instance.get_node("AnimatedSprite2D") as AnimatedSprite2D
-	#enemy_sprite.animation_finished.connect()
 	used_vectors.append(spawn_position)
 	add_enemy(enemy_instance)
 	prints("enemy spawned")
 	#prints("used vectors:", global.enemy_dict)
+	
+func wave_cleared(enemy_ref : CharacterBody2D):
+	enemy_list.erase(enemy_ref)
+	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
+	
+	if enemy_list.size() == 0: 
+		waves_cleared += 1
+		start_wave()
 
+func battle_ended():
+	global.battle_won = true
+	get_tree().change_scene_to_packed(global.current_scene)
+	
+	
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
 	while true:
