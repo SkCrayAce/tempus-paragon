@@ -555,6 +555,7 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_050bv")
 grid_length = 120
 grid_height = 68
+num_of_forms = 4
 enemy_scene = ExtResource("7_3cg71")
 x_spawn_range = Array[int]([11, 22])
 y_spawn_range = Array[int]([4, 11])

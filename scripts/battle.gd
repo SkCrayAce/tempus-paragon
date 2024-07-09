@@ -3,9 +3,11 @@ extends Node
 
 @export var grid_length : int
 @export var grid_height : int
+@export var num_of_forms : int
 @export var enemy_scene : PackedScene
 @export var x_spawn_range : Array[int]
 @export var y_spawn_range : Array[int]
+
 
 
 var enemy_instance : CharacterBody2D
@@ -88,10 +90,13 @@ func animation_ended():
 func record_enemies():
 	global.enemy_dict.clear()
 	for enemy in enemy_list:
-		var enemy_map_pos = tilemap.local_to_map(enemy.position)
-		#prints(enemy.get_instance_id(), enemy_map_pos)
-		global.enemy_dict[enemy_map_pos] = enemy
+		add_enemy(enemy)
+
 	#prints("/n")
+
+func add_enemy(enemy : CharacterBody2D):
+	var enemy_map_pos = tilemap.local_to_map(enemy.position)
+	global.enemy_dict[enemy_map_pos] = enemy
 		
 func wave_cleared(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
@@ -106,7 +111,7 @@ func start_wave():
 	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	while count <= 4:
+	while count < num_of_forms:
 		place_formation()
 		
 func place_formation():
@@ -132,17 +137,17 @@ func place_formation():
 		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
 		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
 		
-		#if intersect_exists(formation_positions, used_vectors):
-			#prints("intersect exists")
-			#return
+		if spawn_position in global.enemy_dict:
+			prints("intersect exists")
+			continue
 			
 		if x_valid and y_valid:
 			wave_spawner(spawn_position)
-			count += 1
 		else:
 			formation_positions.clear()
 			return
 		record_enemies()
+	count += 1
 		
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = tilemap.map_to_local(spawn_position)
@@ -152,9 +157,10 @@ func wave_spawner(spawn_position : Vector2i):
 	enemy_instance.z_index = enemy_local_pos.y
 	tilemap.add_child.call_deferred(enemy_instance) 
 	enemy_instance.enemy_died.connect(wave_cleared.bind(enemy_instance))
-	var enemy_sprite = enemy_instance.get_node("AnimatedSprite2D") as AnimatedSprite2D
+	#var enemy_sprite = enemy_instance.get_node("AnimatedSprite2D") as AnimatedSprite2D
 	#enemy_sprite.animation_finished.connect()
 	used_vectors.append(spawn_position)
+	add_enemy(enemy_instance)
 	prints("enemy spawned")
 	#prints("used vectors:", global.enemy_dict)
 

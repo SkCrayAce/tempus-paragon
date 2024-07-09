@@ -59,12 +59,11 @@ func hit(damage : int):
 		is_defeated = true
 		anim.flip_h = false
 		anim.play("death")
-		emit_signal("enemy_died")
 		global.delete_enemy(current_map_position)
 		remove_from_group("enemies")
 		await anim.animation_finished
 		anim.stop()
-		
+		emit_signal("enemy_died")
 		queue_free()
 		
 		#battle_node.record_enemies()
