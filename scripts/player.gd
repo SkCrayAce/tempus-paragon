@@ -5,9 +5,12 @@ const max_speed = 120
 const accel = 2000
 #const friction = 2500
 
+#Scene Tree Node References
 @onready var anim = $AnimatedSprite2D
 @onready var cam = $Camera2D
 @onready var interact_ui = $InteractUI
+@onready var inventory_ui = $InventoryUI
+
 
 var input = Vector2.ZERO
 var current_dir = "none"
@@ -62,7 +65,7 @@ func player_movement(delta):
 	else:
 		play_anim(0)
 	
-#
+
 func play_anim(movement):
 	var dir = current_dir
 
@@ -88,3 +91,10 @@ func play_anim(movement):
 			anim.play("back_walk")
 		elif movement == 0:
 			anim.play("back_idle")
+
+
+func _input(event):
+	if event.is_action_pressed("ui_inventory"):
+		#flip flops
+		inventory_ui.visible = !inventory_ui.visible
+		get_tree().paused = !get_tree().paused
