@@ -14,7 +14,7 @@ var rng
 var count : int
 
 
-const enemy_script = preload("res://scripts/enemy.gd")
+const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
 @onready var move_timer_bar = $MoveTimerBar
@@ -71,15 +71,16 @@ func _process(delta):
 func _on_enemy_move_timer_timeout(): 
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
-		#record_enemies()
+		record_enemies()
 
 
 func record_enemies():
 	global.enemy_dict.clear()
 	for enemy in enemy_list:
 		var enemy_map_pos = tilemap.local_to_map(enemy.position)
+		#prints(enemy.get_instance_id(), enemy_map_pos)
 		global.enemy_dict[enemy_map_pos] = enemy
-		
+	#prints("/n")
 		
 func wave_cleared(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
@@ -120,27 +121,28 @@ func place_formation():
 		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
 		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
 		
-		if intersect_exists(formation_positions, used_vectors):
-			prints("intersect exists")
-			return
+		#if intersect_exists(formation_positions, used_vectors):
+			#prints("intersect exists")
+			#return
 			
 		if x_valid and y_valid:
 			wave_spawner(spawn_position)
 			count += 1
-			return
 		else:
 			formation_positions.clear()
 			return
+		record_enemies()
 		
 func wave_spawner(spawn_position : Vector2i):	
+	var enemy_local_pos = tilemap.map_to_local(spawn_position)
 	enemy_instance = enemy_scene.instantiate() as CharacterBody2D
 	enemy_list.append(enemy_instance)
-	enemy_instance.position = tilemap.map_to_local(spawn_position)
-	tilemap.add_child.call_deferred(enemy_instance)
+	enemy_instance.position = enemy_local_pos
+	enemy_instance.z_index = enemy_local_pos.y
+	tilemap.add_child.call_deferred(enemy_instance) 
 	enemy_instance.tree_exiting.connect(wave_cleared.bind(enemy_instance))
 	used_vectors.append(spawn_position)
 	prints("enemy spawned")
-	#record_enemies()
 	#prints("used vectors:", global.enemy_dict)
 
 func generate_random_vector() -> Vector2i :

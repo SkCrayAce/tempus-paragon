@@ -2,11 +2,14 @@ extends CharacterBody2D
 
 @export var attack_damage : int
 
+const BattleNode = preload("res://scripts/battle.gd")
+
 @onready var anim = $AnimatedSprite2D
 @onready var healthbar = $HealthBar as ProgressBar
 @onready var move_timer_bar = get_node("../../MoveTimerBar") as ProgressBar
 @onready var move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var tile_map = get_parent() as TileMap
+@onready var battle_node = get_node("../..") as BattleNode
 
 var health : int
 var player_chase = false
@@ -30,7 +33,7 @@ func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	health = healthbar.max_value
 	healthbar.value = health
-	global.add_enemy(current_map_position, self)
+	#global.add_enemy(current_map_position, self)
 
 	anim.play("idle")
 	
@@ -54,9 +57,10 @@ func hit(damage : int):
 		anim.play("death")
 		await anim.animation_finished
 		anim.stop()
-		#global.delete_enemy(current_map_position)
+		global.delete_enemy(current_map_position)
 		queue_free()
 		remove_from_group("enemies")
+		#battle_node.record_enemies()
 
 func move_animation():
 	var new_position = Vector2(position.x - 16, position.y)
@@ -77,8 +81,8 @@ func move_animation():
 	await anim.animation_finished
 	
 	move_timer.start()
-	global.delete_enemy.call_deferred(previous_map_position)
-	global.add_enemy.call_deferred(current_map_position, self)
+	#global.delete_enemy(previous_map_position)
+	#global.add_enemy(current_map_position, self)
 	anim.play("idle")
 	
 	current_map_position = tile_map.local_to_map(position)
@@ -107,7 +111,8 @@ func is_blocked() -> bool:
 	var next_enemy := global.get_enemy(new_map_position)
 	
 	if is_instance_valid(next_enemy):
+		prints(get_instance_id(), next_enemy.is_blocked())
 		return next_enemy.is_blocked()
 		
-	return new_map_position.x == 8
+	return new_map_position.x < 9
 			
