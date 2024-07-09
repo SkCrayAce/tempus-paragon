@@ -24,10 +24,10 @@ corner_radius_bottom_left = 5
 [node name="character_icon" type="Node2D"]
 script = ExtResource("1_qeil2")
 attack_damage = 1000
-min_hover_x = 7
+min_hover_x = 9
 max_hover_x = 22
-min_hover_y = 4
-max_hover_y = 11
+min_hover_y = 3
+max_hover_y = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 metadata/_edit_lock_ = true
@@ -41,7 +41,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 metadata/_edit_lock_ = true
 
 [node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 one_shot = true
 
 [node name="Control" type="Control" parent="."]
