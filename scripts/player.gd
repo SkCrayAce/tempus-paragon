@@ -6,18 +6,24 @@ const accel = 2000
 #const friction = 2500
 
 @onready var anim = $AnimatedSprite2D
+@onready var cam = $Camera2D
+@onready var interact_ui = $InteractUI
+
 var input = Vector2.ZERO
 var current_dir = "none"
 
 func _ready():
 	anim.play("front_idle")
-	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect() # I think this gets all the tiles in your tile map.
-	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size # this gets the size of each tile map to help with the math later
-	$Camera2D.limit_left = tilemap_rect.position.x * tilemap_cell_size.x # this will set the limit to the camera to the left. you get the position of the last tile to the left and multiply by its size to get the exact pixle size
-	$Camera2D.limit_right = tilemap_rect.end.x * tilemap_cell_size.x # same as above but for the right of the map. Im not sure why you use end. plz help explain.
-	$Camera2D.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y # same as above but for the bottom
-	$Camera2D.limit_top = tilemap_rect.position.y * tilemap_cell_size.y # same but for the top.
-
+	
+	#Set Camera Bound to Tilemap Size
+	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect()
+	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size 
+	cam.limit_left = tilemap_rect.position.x * tilemap_cell_size.x 
+	cam.limit_right = tilemap_rect.end.x * tilemap_cell_size.x
+	cam.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y 
+	cam.limit_top = tilemap_rect.position.y * tilemap_cell_size.y 
+	
+	global.set_player_reference(self)
 
 func _physics_process(delta):
 	player_movement(delta)
