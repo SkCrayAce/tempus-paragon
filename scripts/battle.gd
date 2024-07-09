@@ -8,18 +8,17 @@ extends Node
 @export var x_spawn_range : Array[int]
 @export var y_spawn_range : Array[int]
 
-
-
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 var rng
 var count : int
+var waves_cleared : int
 
 
 const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var enemy_move_timer = $EnemyMoveTimer
-@onready var move_timer_bar = $CanvasLayer/TextureProgressBar
+@onready var move_timer_bar = $CanvasLayer/MoveTimerBar
 @onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
 
@@ -103,9 +102,13 @@ func wave_cleared(enemy_ref : CharacterBody2D):
 	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
 	
 	if enemy_list.size() == 0: 
+		waves_cleared += 1
 		start_wave()
 	
 func start_wave():
+	if waves_cleared < 2:
+		get_tree().change_scene_to_packed(global.current_scene)
+		
 	prints("new wave")
 	count = 0
 	used_vectors.clear()
@@ -117,7 +120,7 @@ func start_wave():
 func place_formation():
 	prints("Place formation")
 	var base_position = generate_random_vector()
-	var formation_positions : Array
+	#var formation_positions : Array
 	var spawn_position : Vector2i
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -132,7 +135,7 @@ func place_formation():
 	
 	for offset in offset_list:
 		spawn_position = base_position + offset as Vector2i
-		formation_positions.append(spawn_position)
+		#formation_positions.append(spawn_position)
 		
 		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
 		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
@@ -143,9 +146,7 @@ func place_formation():
 			
 		if x_valid and y_valid:
 			wave_spawner(spawn_position)
-		else:
-			formation_positions.clear()
-			return
+	
 		record_enemies()
 	count += 1
 		

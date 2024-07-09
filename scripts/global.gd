@@ -3,16 +3,20 @@ extends Node
 const snap_position : Vector2 = Vector2(16, 16)
 const EnemyBody = preload("res://scripts/enemy.gd") 
 
+# battle scene vars
 var is_dragging = false
 var is_released = false
 var dragged_char_name : String
 var enemy_position : Vector2
-@onready var tile_map = $TileMap
+var enemy_dict : Dictionary 
 
+# overworld scene vars
 var levels_cleared = 0
 var curr_area = "slums"
+var current_scene : PackedScene
+var player_position : Vector2
 
-var enemy_dict : Dictionary 
+
 
 func add_level_cleared():
 	levels_cleared +=1

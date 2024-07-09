@@ -27,12 +27,10 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 
 
 func _ready():
-	#prints("character ready")
 	on_cooldown = false
 	initialPos = sprite.position
 	health_bar.value = health_bar.max_value # health_bar.max_value
-	#battle.attack_finished.connect(start_cooldown)
-	#prints(character_ids)
+
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

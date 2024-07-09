@@ -57,4 +57,5 @@ func _on_timer_timeout():
 
 func _on_fight_range_body_entered(body):
 	if body is Player:
+		global.player_position = body.position
 		get_tree().change_scene_to_file("res://scenes/battle.tscn")

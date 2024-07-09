@@ -1,7 +1,7 @@
 [gd_scene load_steps=43 format=3 uid="uid://c0b8likh8uvor"]
 
 [ext_resource type="Script" path="res://scripts/virulent_o.gd" id="1_mkmqa"]
-[ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
+[ext_resource type="Texture2D" uid="uid://dg0nqhaf8byg3" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_evrff"]
 atlas = ExtResource("2_gkmho")
@@ -311,7 +311,7 @@ radius = 85.0059
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxc68"]
 
-[node name="Virulent_O" type="CharacterBody2D"]
+[node name="Virulent_O" type="CharacterBody2D" groups=["virulents"]]
 script = ExtResource("1_mkmqa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
