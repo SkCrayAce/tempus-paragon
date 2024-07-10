@@ -52,8 +52,9 @@ func _ready():
 				"Type" : "Grass"
 			}
 	start_wave()
+	prints("battle started")
 	
-
+	
 func _process(delta):
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
 	

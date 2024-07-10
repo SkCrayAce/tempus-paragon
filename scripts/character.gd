@@ -22,7 +22,6 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var sprite = $Sprite2D
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
-@onready var battle = $"../../Battle"
 @onready var tile_map = get_node("../../TileMap2") as TileMap
 
 

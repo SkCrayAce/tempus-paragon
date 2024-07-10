@@ -2,6 +2,7 @@ extends Node
 
 const snap_position : Vector2 = Vector2(16, 16)
 const EnemyBody = preload("res://scripts/enemy.gd") 
+#const BattleScene = preload("res://scenes/battle.tscn")
 
 # battle scene vars
 var is_dragging = false
