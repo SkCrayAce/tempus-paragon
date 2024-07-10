@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="3_vwls6"]
 [ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="4_pk0hs"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="6_6tein"]
-[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="7_cqqg7"]
+[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="7_cqqg7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kya4y"]
 texture = ExtResource("3_vwls6")

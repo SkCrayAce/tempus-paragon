@@ -11,6 +11,8 @@ const accel = 2000
 @onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
 
+@onready var control = $Control
+
 
 var input = Vector2.ZERO
 var current_dir = "none"
@@ -30,6 +32,7 @@ func _ready():
 
 func _physics_process(delta):
 	player_movement(delta)
+	
 
 func get_input():
 	input.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
@@ -64,7 +67,6 @@ func player_movement(delta):
 		play_anim(1)
 	else:
 		play_anim(0)
-	
 
 func play_anim(movement):
 	var dir = current_dir
@@ -92,9 +94,16 @@ func play_anim(movement):
 		elif movement == 0:
 			anim.play("back_idle")
 
-
 func _input(event):
 	if event.is_action_pressed("ui_inventory"):
 		#flip flops
 		inventory_ui.visible = !inventory_ui.visible
-		get_tree().paused = !get_tree().paused
+		#get_tree().paused = !get_tree().paused
+
+func apply_item_effect(item):
+	match item["name"]:
+		"Shard of Time":
+			print("i am effecting")
+		_:
+			print("no fuckin effect")
+	

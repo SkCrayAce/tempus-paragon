@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bextdwc3w0yr8"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_eq0be"]
-[ext_resource type="PackedScene" path="res://scenes/overworld_ui.tscn" id="1_hgfd8"]
+[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_hgfd8"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_dvl2p"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_u1svb"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_25jdl"]

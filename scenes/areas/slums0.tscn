@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=13 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums.gd" id="1_1yoqr"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_kgjqi"]
-[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_v1s8o"]
-[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
+[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
+[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
 [ext_resource type="PackedScene" uid="uid://me2q4ro6ufqh" path="res://scenes/inventory_item.tscn" id="6_yqhsw"]
 [ext_resource type="Texture2D" uid="uid://chqvw6b1rjgyw" path="res://theme/atlas/items.tres" id="7_0slv3"]
+[ext_resource type="PackedScene" uid="uid://byc8pua0fn6s5" path="res://test.tscn" id="8_fwt6t"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -129,10 +130,23 @@ position = Vector2(-18, 0)
 
 [node name="Inventory_Item" parent="." instance=ExtResource("6_yqhsw")]
 position = Vector2(170, 245)
+item_type = "Non-consumable"
+item_name = "Shard of Time"
 item_texture = SubResource("AtlasTexture_6w53e")
+item_effect = "Reduce Cooldown"
+item_rarity = "Rare"
+item_quantity = 1
 
 [node name="Inventory_Item2" parent="." instance=ExtResource("6_yqhsw")]
-position = Vector2(199, 237)
+position = Vector2(214, 236)
+item_type = "Non-consumable"
+item_name = "Ring of Chaos"
 item_texture = SubResource("AtlasTexture_sd6jj")
+item_effect = "Randomize AoE"
+item_rarity = "Epic"
+item_quantity = 1
+
+[node name="Control" parent="." instance=ExtResource("8_fwt6t")]
+visible = false
 
 [editable path="Door/Door_E"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_6jaq7"]
-[ext_resource type="Texture2D" uid="uid://dg0nqhaf8byg3" path="res://tempus_assets/virulent-spritesheet.png" id="2_yfrvh"]
+[ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_yfrvh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3ea"]
 corner_radius_top_left = 10

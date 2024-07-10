@@ -1,19 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://me2q4ro6ufqh"]
+[gd_scene load_steps=3 format=3 uid="uid://me2q4ro6ufqh"]
 
 [ext_resource type="Script" path="res://scripts/inventory_item.gd" id="1_fp4e7"]
-[ext_resource type="Texture2D" uid="uid://chqvw6b1rjgyw" path="res://theme/atlas/items.tres" id="2_ft20e"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k3vf7"]
-atlas = ExtResource("2_ft20e")
-region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jhdeg"]
 
 [node name="Inventory_Item" type="Node2D" groups=["Items"]]
 script = ExtResource("1_fp4e7")
+item_rarity = null
+item_quantity = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_k3vf7")
 
 [node name="Area2D" type="Area2D" parent="."]
 

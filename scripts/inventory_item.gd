@@ -5,6 +5,8 @@ extends Node2D
 @export var item_name = ""
 @export var item_texture: Texture
 @export var item_effect = ""
+@export var item_rarity = ""
+@export var item_quantity = 0
 
 #Scene tree Node references
 @onready var icon_sprite = $Sprite2D
@@ -32,7 +34,9 @@ func pickup_item():
 		"name": item_name,
 		"effect": item_effect,
 		"texture": item_texture,
-		"scene_path": scene_path
+		"scene_path": scene_path,
+		"rarity": item_rarity,
+		"quantity": item_quantity
 	}
 	
 	if global.player_node:
@@ -50,3 +54,12 @@ func _on_area_2d_body_exited(body):
 	if body.is_in_group("Player"):
 		player_in_range = false
 		body.interact_ui.visible = false
+		
+
+func set_item_data(data):
+	item_type = data["type"]
+	item_name = data["name"]
+	item_effect = data["effect"]
+	item_texture = data["texture"]
+	item_rarity = data["rarity"]
+	item_quantity = data["quantity"]

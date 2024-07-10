@@ -1,13 +1,12 @@
-extends StaticBody2D
+extends Control
 
+@onready var panel = $Panel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	modulate = Color(Color.MEDIUM_PURPLE, 0.7)
-	
+	pass # Replace with function body.
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Global.is_dragging:
-		visible = true
-	else:
-		visible = false
+	panel.position = get_global_mouse_position()
