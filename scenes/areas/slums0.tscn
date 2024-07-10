@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=7 format=3 uid="uid://c7apibvg107xh"]
 
-[ext_resource type="Script" path="res://scripts/slums.gd" id="1_1yoqr"]
+[ext_resource type="Script" path="res://scripts/slums0.gd" id="1_jionn"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_kgjqi"]
-[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
-[ext_resource type="PackedScene" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
+[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_v1s8o"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -17,7 +16,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="slums0" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_1yoqr")
+script = ExtResource("1_jionn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -48,6 +47,7 @@ layer_3/name = "Objects"
 layer_3/y_sort_enabled = true
 layer_3/z_index = 1
 layer_3/tile_data = PackedInt32Array(917508, 786435, 7, 983037, 1, 4, 983038, 65537, 4, 262144, 786435, 7, 983040, 720899, 7, 983041, 786435, 7, 1114116, 720899, 8, 1179652, 917507, 7, 1114117, 851971, 8, 196605, 917507, 6, 196604, 851971, 6, 196603, 851971, 6, 65531, 851971, 7, 983062, 720899, 7, 983063, 786435, 7, 26, 851971, 6, 27, 851971, 6, 28, 851971, 6, 29, 851971, 6, 30, 917507, 6, 458769, 917507, 268435462, 458770, 851971, 6, 458771, 851971, 6, 589840, 720899, 7, 655376, 720899, 7, 458772, 917507, 6, 393237, 65537, 0, 12, 983043, 5, 65548, 983043, 6, 131070, 983043, 7, 196606, 983043, 8, 393228, 720899, 8, 393229, 851971, 8, 131101, 917507, 7)
+metadata/_edit_lock_ = true
 
 [node name="PointLight2D12" type="PointLight2D" parent="TileMap"]
 position = Vector2(343, 47)
@@ -98,15 +98,6 @@ color = Color(1, 1, 0.0352941, 1)
 energy = 0.5
 texture = SubResource("GradientTexture2D_j32lc")
 
-[node name="Player" parent="." instance=ExtResource("3_kgjqi")]
-position = Vector2(62, 161)
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Player/Camera2D" index="0"]
-position = Vector2(-62, -161)
-color = Color(0, 0, 0, 1)
-energy = 0.35
-blend_mode = 2
-
 [node name="Door" type="Node" parent="."]
 
 [node name="Door_E" parent="Door" instance=ExtResource("4_v1s8o")]
@@ -118,5 +109,7 @@ position = Vector2(46, -16)
 [node name="Spawn" parent="Door/Door_E" index="1"]
 position = Vector2(-18, 0)
 
-[editable path="Player"]
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(160, 156)
+
 [editable path="Door/Door_E"]

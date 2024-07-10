@@ -52,4 +52,5 @@ func next_level(levels_cleared):
 		underground_levels.remove_at(randnum)
 		
 	global.current_scene = current_scene
+	prints(global.current_scene)
 
