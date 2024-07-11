@@ -14,7 +14,7 @@ func _ready():
 	if global.player_pos_pre_battle and global.battle_won:
 		player_instance.position = global.player_pos_pre_battle
 		global.battle_won = false
-		global.current_scene = null
+		global.current_scene 
 		add_child(player_instance)
 	
 	

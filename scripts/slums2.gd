@@ -2,6 +2,8 @@ extends "res://scripts/slums_control.gd"
 
 @onready var player_spawn_point = $PlayerSpawnPoint
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
