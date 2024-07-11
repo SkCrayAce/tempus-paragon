@@ -164,13 +164,14 @@ func wave_cleared(enemy_ref : CharacterBody2D):
 	
 	if enemy_list.size() == 0: 
 		waves_cleared += 1
+		prints("wave cleared:", waves_cleared)
 		start_wave()
 
 func battle_ended():
 	global.battle_won = true
 	prints("battle ended")
-	if global.current_scene:
-		get_tree().change_scene_to_packed(global.current_scene)
+	#if global.current_scene:
+	get_tree().change_scene_to_file(global.current_scene)
 	
 	
 func generate_random_vector() -> Vector2i :

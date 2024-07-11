@@ -3,6 +3,7 @@ extends "res://scripts/slums_control.gd"
 @onready var player_spawn_point = $PlayerSpawnPoint
 
 
+
 func _ready():
 	super._ready()
 	prints("nahh, i'd win")
@@ -13,3 +14,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+

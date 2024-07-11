@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ygregg6wuaqa"]
+[gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_1kyow"]
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
-[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
+[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
 [ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_g78kc"]
-[ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_rnjku"]
 
 [sub_resource type="Gradient" id="Gradient_jcj7u"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -36,6 +35,8 @@ fill_from = Vector2(0.5, 0.5)
 [node name="slums3" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_41wgy")
+top_leftmost_spawn_coords = Vector2i(13, 10)
+bottom_rightmost_spawn_coords = Vector2i(29, 14)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -139,17 +140,11 @@ position = Vector2(680, 150)
 [node name="CollisionShape2D" parent="Door2" index="0"]
 position = Vector2(-57, 178)
 
-[node name="Virulent_O" parent="." instance=ExtResource("4_rnjku")]
-position = Vector2(253, 200)
-
-[node name="Virulent_O2" parent="." instance=ExtResource("4_rnjku")]
-position = Vector2(350, 238)
-
-[node name="Virulent_O3" parent="." instance=ExtResource("4_rnjku")]
-position = Vector2(443, 184)
-
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(17, 176)
+
+[node name="VirulentSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(315, 162)
 
 [editable path="Door"]
 [editable path="Door2"]

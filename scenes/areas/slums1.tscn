@@ -35,8 +35,11 @@ fill_from = Vector2(0.5, 0.5)
 [node name="slums1" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_bewti")
+top_leftmost_spawn_coords = Vector2i(18, 2)
+bottom_rightmost_spawn_coords = Vector2i(36, 6)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("1_hgfd8")]
 anchors_preset = 0
