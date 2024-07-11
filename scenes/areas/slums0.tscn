@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=6 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums0.gd" id="1_jionn"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
-[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_v1s8o"]
-[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
+[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -17,15 +16,6 @@ fill_from = Vector2(0.5, 0.5)
 [node name="slums0" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_jionn")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("5_rmi4o")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)

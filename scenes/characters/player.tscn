@@ -1,12 +1,13 @@
-[gd_scene load_steps=68 format=3 uid="uid://bfbclphhqo4h6"]
+[gd_scene load_steps=69 format=3 uid="uid://bfbclphhqo4h6"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l0wft"]
 [ext_resource type="Texture2D" uid="uid://cx7xnvhy3p4hp" path="res://sprites/characters/player.png" id="2_qth4g"]
 [ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="3_32cwt"]
 [ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_6hgmu"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]
-[ext_resource type="PackedScene" uid="uid://h82qnjggq5hf" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
+[ext_resource type="PackedScene" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
 [ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="6_e2wgd"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="8_nfne6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sau1d"]
 atlas = ExtResource("2_qth4g")
@@ -619,3 +620,12 @@ offset_bottom = -216.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("8_nfne6")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
