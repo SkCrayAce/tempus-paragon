@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwj8te0ofyesw"]
+[gd_scene load_steps=10 format=3 uid="uid://blliftv00gagw"]
 
 [ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="1_gm6o7"]
 [ext_resource type="Texture2D" uid="uid://chqvw6b1rjgyw" path="res://theme/atlas/items.tres" id="2_u7stf"]
@@ -131,12 +131,12 @@ anchor_bottom = 0.565
 offset_left = 15.0
 offset_top = -8.45
 offset_right = 226.0
-offset_bottom = 14.55
+offset_bottom = 45.55
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("3_o184v")
 theme_override_font_sizes/font_size = 20
 text = "Item Effect and Description"
-metadata/_edit_lock_ = true
+autowrap_mode = 3
 
 [node name="UsagePanel" type="ColorRect" parent="."]
 visible = false

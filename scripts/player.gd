@@ -99,8 +99,6 @@ func play_anim(movement):
 
 func _input(event):
 	if event.is_action_pressed("ui_inventory"):
-		#flip flops
-		#inventory_ui.visible = !inventory_ui.visible
 		inventory_ui_anim()
 		#get_tree().paused = !get_tree().paused
 
@@ -115,8 +113,12 @@ func apply_item_effect(item):
 func inventory_ui_anim():
 	var tween = create_tween()
 	if inventory_isopen == false:
+		inventory_ui.visible = true
 		tween.tween_property(inventory_panel, "position", end_point.position, 0.5).set_trans(Tween.TRANS_SINE)
 		inventory_isopen = true
 	else:
 		tween.tween_property(inventory_panel, "position", init_point.position, 0.5).set_trans(Tween.TRANS_SINE)
 		inventory_isopen = false
+		await tween.finished
+		inventory_ui.visible = false
+		

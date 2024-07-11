@@ -621,9 +621,9 @@ grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="PlayerUI" type="CanvasLayer" parent="."]
 
-[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("8_nfne6")]
+[node name="Overworld_UI" parent="PlayerUI" instance=ExtResource("8_nfne6")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0

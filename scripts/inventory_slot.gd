@@ -48,6 +48,7 @@ func set_item(new_item):
 	item_quantity.text = str(new_item["quantity"])
 	item_type.text = str(new_item["type"])
 	
+	#Give color to text based on rarity
 	match new_item["rarity"]:
 		"Common":
 			item_rarity.set("theme_override_colors/font_color", Color("CADET_BLUE"))

@@ -96,7 +96,7 @@ func swap_inventory_items(index1, index2):
 
 
 func add_level_cleared():
-	levels_cleared +=1
+	levels_cleared += 1
 
 func delete_enemy(map_position_key : Vector2i):
 	enemy_dict.erase(map_position_key)

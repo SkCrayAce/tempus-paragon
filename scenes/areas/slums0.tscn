@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=9 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums0.gd" id="1_jionn"]
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="2_cxd4y"]
+[ext_resource type="PackedScene" uid="uid://c2eiem8wa5pkq" path="res://scenes/inventory_item.tscn" id="4_cbgkf"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
+[ext_resource type="Texture2D" uid="uid://b4yfhllypdsmx" path="res://tempus_assets/item sprites/item-spritesheet5.png" id="5_d8b6m"]
+[ext_resource type="Texture2D" uid="uid://c5wlo3imb54ym" path="res://tempus_assets/item sprites/item-spritesheet6.png" id="6_snv01"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -96,9 +99,6 @@ position = Vector2(522, 168)
 [node name="CollisionShape2D" parent="Door/Door_E" index="0"]
 position = Vector2(46, -16)
 
-[node name="Spawn" parent="Door/Door_E" index="1"]
-position = Vector2(-18, 0)
-
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(81, 153)
 
@@ -106,5 +106,23 @@ position = Vector2(81, 153)
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
+
+[node name="Inventory_Item" parent="." instance=ExtResource("4_cbgkf")]
+position = Vector2(142, 244)
+item_type = "Non-Consumable"
+item_name = "Medallion of Courage"
+item_texture = ExtResource("5_d8b6m")
+item_effect = "Gives enemies testicular torsion"
+item_rarity = "Legendary"
+item_quantity = 1
+
+[node name="Inventory_Item2" parent="." instance=ExtResource("4_cbgkf")]
+position = Vector2(189, 239)
+item_type = "Non-Consumable"
+item_name = "Flintlock Pistol"
+item_texture = ExtResource("6_snv01")
+item_effect = "Gives enemies testicular torsion"
+item_rarity = "Legendary"
+item_quantity = 1
 
 [editable path="Door/Door_E"]

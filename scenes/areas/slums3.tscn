@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
 
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_1kyow"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="1_1kyow"]
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_g78kc"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_rnjku"]

@@ -5,7 +5,6 @@ var player_scene : PackedScene = preload("res://scenes/characters/player.tscn")
 
 func _ready():
 	AudioPlayer.play_music_level()
-	global.levels_cleared = 0
 	prints("would you lose?")
 	
 

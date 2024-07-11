@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://csifn418tx5e5"]
+[gd_scene load_steps=3 format=3 uid="uid://duo40oekbica8"]
 
 [ext_resource type="Script" path="res://scripts/nextleveltrigger.gd" id="1_m6xys"]
 
@@ -10,7 +10,5 @@ script = ExtResource("1_m6xys")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cpr8y")
-
-[node name="Spawn" type="Marker2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

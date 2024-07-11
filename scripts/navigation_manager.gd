@@ -17,6 +17,8 @@ func _ready():
 	slums_levels.append(preload("res://scenes/areas/slums2.tscn"))
 	slums_levels.append(preload("res://scenes/areas/slums3.tscn"))
 	city_levels.append(preload("res://scenes/areas/city.tscn"))
+	city_levels.append(preload("res://scenes/areas/city1.tscn"))
+	city_levels.append(preload("res://scenes/areas/city2.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground2.tscn"))
 
@@ -26,12 +28,12 @@ func next_level(levels_cleared):
 	await TransitionScreen.on_transition_finished
 	var next_scene
 	var randnum
-	if levels_cleared % mpla == 0:
+	if global.levels_cleared % mpla == 0:
 		area_index += 1
 	
 	curr_area = areas[area_index]
 	global.curr_area = curr_area
-	print(curr_area, " ", levels_cleared)
+	print(curr_area, " ", global.levels_cleared)
 	if curr_area == "slums":
 		randnum = randi() % slums_levels.size()
 		next_scene = slums_levels[randnum]
