@@ -2,7 +2,7 @@ extends Node
 
 const snap_position : Vector2 = Vector2(16, 16)
 const EnemyBody = preload("res://scripts/enemy.gd") 
-#const BattleScene = preload("res://scenes/battle.tscn")
+
 
 # battle scene vars
 var is_dragging = false
@@ -14,8 +14,9 @@ var enemy_dict : Dictionary
 #Overworld Data
 var levels_cleared = 0
 var curr_area = "slums"
-var current_scene : PackedScene
-var player_pos_pre_battle : Vector2
+var current_scene : String
+var player_pos_pre_battle : Vector2 
+var enemy_pos_at_contact : Vector2
 var battle_won : bool
 
 #Scene and node references

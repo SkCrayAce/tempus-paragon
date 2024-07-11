@@ -23,6 +23,7 @@ func _ready():
 	underground_levels.append(preload("res://scenes/areas/underground2.tscn"))
 
 
+
 func next_level(levels_cleared):
 	TransitionScreen.transition()
 	await TransitionScreen.on_transition_finished
@@ -53,6 +54,6 @@ func next_level(levels_cleared):
 		current_scene = next_scene
 		underground_levels.remove_at(randnum)
 		
-	global.current_scene = current_scene
+	global.battle_won = false
 	prints(global.current_scene)
 

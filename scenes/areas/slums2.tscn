@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1exvu624fjgw"]
 
 [ext_resource type="Script" path="res://scripts/slums2.gd" id="1_7ixyu"]
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="2_j2g7m"]
-[ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="2_x3dxn"]
-[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_uuvrj"]
+[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_njwbf"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_wnfe2"]
+[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_uuvrj"]
 
 [sub_resource type="Gradient" id="Gradient_r5op8"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -26,13 +26,24 @@ fill_from = Vector2(0.5, 0.5)
 [node name="slums2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_7ixyu")
+top_leftmost_spawn_coords = Vector2i(12, 4)
+bottom_rightmost_spawn_coords = Vector2i(26, 10)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("1_njwbf")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
-tile_set = ExtResource("2_j2g7m")
+tile_set = ExtResource("1_wnfe2")
 format = 2
 layer_0/name = "Collision"
 layer_0/z_index = -2
@@ -91,20 +102,14 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Virulent_O" parent="." instance=ExtResource("2_x3dxn")]
-position = Vector2(304, 168)
-
-[node name="Virulent_O2" parent="." instance=ExtResource("2_x3dxn")]
-position = Vector2(384, 120)
-
-[node name="Virulent_O3" parent="." instance=ExtResource("2_x3dxn")]
-position = Vector2(312, 80)
-
 [node name="Door" parent="." instance=ExtResource("4_uuvrj")]
 position = Vector2(-10, 65)
 
 [node name="CollisionShape2D" parent="Door" index="0"]
 position = Vector2(562, 15)
+
+[node name="Spawn" parent="Door" index="1"]
+position = Vector2(20, 14)
 
 [node name="Door2" parent="." instance=ExtResource("4_uuvrj")]
 position = Vector2(-10, 65)
@@ -112,8 +117,14 @@ position = Vector2(-10, 65)
 [node name="CollisionShape2D" parent="Door2" index="0"]
 position = Vector2(306, 375)
 
+[node name="Spawn" parent="Door2" index="1"]
+position = Vector2(20, 14)
+
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(26, 75)
+
+[node name="VirulentSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(306, 118)
 
 [editable path="Door"]
 [editable path="Door2"]
