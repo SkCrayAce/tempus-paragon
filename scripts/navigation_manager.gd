@@ -53,7 +53,6 @@ func next_level(levels_cleared):
 		current_scene = next_scene
 		underground_levels.remove_at(randnum)
 		
-	#global.current_scene = get_tree().current_scene.get_path()
 	global.battle_won = false
 	prints(global.current_scene)
 

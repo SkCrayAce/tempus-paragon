@@ -58,5 +58,6 @@ func _on_timer_timeout():
 func _on_fight_range_body_entered(body):
 	if body is Player:
 		global.player_pos_pre_battle = body.position
+		global.enemy_pos_at_contact = position
 		prints(body is Player)
 		get_tree().change_scene_to_file(BattleScene)
