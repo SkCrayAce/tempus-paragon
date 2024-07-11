@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://bextdwc3w0yr8"]
 
+[ext_resource type="Script" path="res://scripts/slums1.gd" id="1_bewti"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_eq0be"]
-[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_hgfd8"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_dvl2p"]
-[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_u1svb"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hgfd8"]
+[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="3_u1svb"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_25jdl"]
 
 [sub_resource type="Gradient" id="Gradient_7dbpd"]
@@ -35,6 +35,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="slums1" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_bewti")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -135,9 +136,6 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Player" parent="." instance=ExtResource("2_dvl2p")]
-position = Vector2(20, 85)
-
 [node name="Door" parent="." instance=ExtResource("3_u1svb")]
 position = Vector2(760, 114)
 
@@ -146,3 +144,6 @@ position = Vector2(482, 116)
 
 [node name="Virulent_O2" parent="." instance=ExtResource("4_25jdl")]
 position = Vector2(532, 76)
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(32, 78)

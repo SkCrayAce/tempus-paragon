@@ -1,25 +1,25 @@
 [gd_scene load_steps=29 format=3 uid="uid://bvw1dpdysu56x"]
 
-[ext_resource type="Script" path="res://scripts/battle.gd" id="1_050bv"]
-[ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://sprites/textures/texture_pack1.png" id="3_yrtg7"]
-[ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="4_2kluv"]
-[ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="4_hnfox"]
-[ext_resource type="Texture2D" uid="uid://2d57nnrjrwfs" path="res://sprites/textures/kai.png" id="4_oa717"]
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="7_1r5c2"]
-[ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="7_3cg71"]
-[ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="7_04alb"]
-[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="7_hjf0c"]
-[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="8_elw16"]
-[ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="8_hxa7s"]
-[ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="9_4twyk"]
-[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="12_uf5hu"]
+[ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
+[ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="2_y3oqw"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="4_6mqeq"]
+[ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="5_e7aj3"]
+[ext_resource type="Texture2D" uid="uid://c38rs83uaf7wg" path="res://sprites/textures/texture_pack1.png" id="6_j46on"]
+[ext_resource type="Texture2D" uid="uid://ca0y3c8fmbc8w" path="res://tempus_assets/slums_tileset-sheet.png" id="7_dbme3"]
+[ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="8_wh81y"]
+[ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
+[ext_resource type="Texture2D" uid="uid://2d57nnrjrwfs" path="res://sprites/textures/kai.png" id="10_vowbt"]
+[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
+[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
+[ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
-atlas = ExtResource("12_uf5hu")
+atlas = ExtResource("3_ypaqq")
 region = Rect2(128, 0, 16, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5hxf3"]
-atlas = ExtResource("12_uf5hu")
+atlas = ExtResource("3_ypaqq")
 region = Rect2(144, 0, 16, 64)
 
 [sub_resource type="Gradient" id="Gradient_k253i"]
@@ -50,7 +50,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4aii"]
-texture = ExtResource("4_2kluv")
+texture = ExtResource("5_e7aj3")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -127,7 +127,7 @@ texture = SubResource("CompressedTexture2D_iyf2v")
 7:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hp3yx"]
-texture = ExtResource("3_yrtg7")
+texture = ExtResource("6_j46on")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 1:0/0 = 0
@@ -192,7 +192,7 @@ texture_region_size = Vector2i(64, 64)
 8:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ry1ya"]
-texture = ExtResource("4_hnfox")
+texture = ExtResource("7_dbme3")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -570,7 +570,7 @@ texture = ExtResource("4_hnfox")
 6:9/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s5ets"]
-texture = ExtResource("8_hxa7s")
+texture = ExtResource("8_wh81y")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -825,11 +825,11 @@ sources/3 = SubResource("TileSetAtlasSource_ry1ya")
 sources/4 = SubResource("TileSetAtlasSource_s5ets")
 
 [node name="Battle" type="Node"]
-script = ExtResource("1_050bv")
+script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
 num_of_forms = 3
-enemy_scene = ExtResource("7_3cg71")
+enemy_scene = ExtResource("2_y3oqw")
 x_spawn_range = Array[int]([11, 22])
 y_spawn_range = Array[int]([3, 10])
 
@@ -859,7 +859,7 @@ visible = false
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="TileMap2" type="TileMap" parent="."]
-tile_set = ExtResource("7_1r5c2")
+tile_set = ExtResource("4_6mqeq")
 format = 2
 layer_0/name = "L1"
 layer_0/modulate = Color(0.909804, 0.701961, 0.701961, 0.988235)
@@ -943,33 +943,33 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
 
-[node name="kai" parent="VBoxContainer" instance=ExtResource("7_04alb")]
+[node name="kai" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 116)
 
 [node name="Sprite2D" parent="VBoxContainer/kai" index="0"]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_oa717")
+texture = ExtResource("10_vowbt")
 
-[node name="emerald" parent="VBoxContainer" instance=ExtResource("7_04alb")]
+[node name="emerald" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
 
 [node name="Sprite2D" parent="VBoxContainer/emerald" index="0"]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("7_hjf0c")
+texture = ExtResource("11_mh8dm")
 
-[node name="tyrone" parent="VBoxContainer" instance=ExtResource("7_04alb")]
+[node name="tyrone" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
 
 [node name="Sprite2D" parent="VBoxContainer/tyrone" index="0"]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("8_elw16")
+texture = ExtResource("12_5dqlu")
 
-[node name="bettany" parent="VBoxContainer" instance=ExtResource("7_04alb")]
+[node name="bettany" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
 
 [node name="Sprite2D" parent="VBoxContainer/bettany" index="0"]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("9_4twyk")
+texture = ExtResource("13_lbq7u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)

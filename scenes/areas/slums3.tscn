@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_1kyow"]
+[ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_02u3x"]
 [ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_g78kc"]
 [ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_rnjku"]
 
@@ -35,6 +35,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="slums3" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_41wgy")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -128,9 +129,6 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Player" parent="." instance=ExtResource("2_02u3x")]
-position = Vector2(312, 29)
-
 [node name="Door" parent="." instance=ExtResource("4_g78kc")]
 
 [node name="CollisionShape2D" parent="Door" index="0"]
@@ -149,6 +147,9 @@ position = Vector2(350, 238)
 
 [node name="Virulent_O3" parent="." instance=ExtResource("4_rnjku")]
 position = Vector2(443, 184)
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(17, 176)
 
 [editable path="Door"]
 [editable path="Door2"]

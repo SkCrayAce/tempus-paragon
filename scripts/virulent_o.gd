@@ -5,9 +5,10 @@ var player_chase = false
 var player = null
 var init_pos = null
 const Player = preload("res://scripts/player.gd")
+const BattleScene = "res://scenes/areas/battle.tscn"
+
 @onready var anim = $AnimatedSprite2D
 @onready var timer = $Timer
-
 
 func _ready():
 	init_pos = position
@@ -47,7 +48,6 @@ func _on_detection_range_body_exited(body):
 			anim.play("side_idle_right")
 		player = null
 		player_chase = false
-		
 
 func _on_timer_timeout():
 	timer.wait_time = randi_range(2, 5)
@@ -58,4 +58,5 @@ func _on_timer_timeout():
 func _on_fight_range_body_entered(body):
 	if body is Player:
 		global.player_position = body.position
-		get_tree().change_scene_to_file("res://scenes/battle.tscn")
+		prints(body is Player)
+		get_tree().change_scene_to_file(BattleScene)
