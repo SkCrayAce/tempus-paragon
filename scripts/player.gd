@@ -5,22 +5,34 @@ const max_speed = 120
 const accel = 2000
 #const friction = 2500
 
+#Scene Tree Node References
 @onready var anim = $AnimatedSprite2D
+@onready var cam = $Camera2D
+@onready var interact_ui = $InteractUI
+@onready var inventory_ui = $InventoryUI
+
+@onready var control = $Control
+
+
 var input = Vector2.ZERO
 var current_dir = "none"
 
 func _ready():
 	anim.play("front_idle")
-	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect() # I think this gets all the tiles in your tile map.
-	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size # this gets the size of each tile map to help with the math later
-	$Camera2D.limit_left = tilemap_rect.position.x * tilemap_cell_size.x # this will set the limit to the camera to the left. you get the position of the last tile to the left and multiply by its size to get the exact pixle size
-	$Camera2D.limit_right = tilemap_rect.end.x * tilemap_cell_size.x # same as above but for the right of the map. Im not sure why you use end. plz help explain.
-	$Camera2D.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y # same as above but for the bottom
-	$Camera2D.limit_top = tilemap_rect.position.y * tilemap_cell_size.y # same but for the top.
-
+	
+	#Set Camera Bound to Tilemap Size
+	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect()
+	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size 
+	cam.limit_left = tilemap_rect.position.x * tilemap_cell_size.x 
+	cam.limit_right = tilemap_rect.end.x * tilemap_cell_size.x
+	cam.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y 
+	cam.limit_top = tilemap_rect.position.y * tilemap_cell_size.y 
+	
+	global.set_player_reference(self)
 
 func _physics_process(delta):
 	player_movement(delta)
+	
 
 func get_input():
 	input.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
@@ -55,8 +67,7 @@ func player_movement(delta):
 		play_anim(1)
 	else:
 		play_anim(0)
-	
-#
+
 func play_anim(movement):
 	var dir = current_dir
 
@@ -82,3 +93,17 @@ func play_anim(movement):
 			anim.play("back_walk")
 		elif movement == 0:
 			anim.play("back_idle")
+
+func _input(event):
+	if event.is_action_pressed("ui_inventory"):
+		#flip flops
+		inventory_ui.visible = !inventory_ui.visible
+		#get_tree().paused = !get_tree().paused
+
+func apply_item_effect(item):
+	match item["name"]:
+		"Shard of Time":
+			print("i am effecting")
+		_:
+			print("no fuckin effect")
+	

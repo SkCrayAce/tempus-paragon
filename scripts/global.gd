@@ -11,6 +11,9 @@ var enemy_position : Vector2
 var enemy_dict : Dictionary 
 
 # overworld scene vars
+var enemy_dict : Dictionary 
+
+#Overworld Data
 var levels_cleared = 0
 var curr_area = "slums"
 var current_scene : PackedScene

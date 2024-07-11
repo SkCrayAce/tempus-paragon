@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://h82qnjggq5hf"]
+
+[ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="1_sh1ny"]
+
+[node name="Inventory_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -603.0
+offset_top = -300.0
+offset_right = -3.0
+offset_bottom = 300.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_sh1ny")
+metadata/_edit_lock_ = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 57.0
+offset_right = 507.0
+offset_bottom = 657.0
+theme_override_constants/h_separation = 110
+theme_override_constants/v_separation = 110
+columns = 4

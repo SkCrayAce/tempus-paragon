@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=13 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums.gd" id="1_1yoqr"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="3_kgjqi"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
-[ext_resource type="PackedScene" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
+[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="5_rmi4o"]
+[ext_resource type="PackedScene" uid="uid://me2q4ro6ufqh" path="res://scenes/inventory_item.tscn" id="6_yqhsw"]
+[ext_resource type="Texture2D" uid="uid://chqvw6b1rjgyw" path="res://theme/atlas/items.tres" id="7_0slv3"]
+[ext_resource type="PackedScene" uid="uid://byc8pua0fn6s5" path="res://test.tscn" id="8_fwt6t"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -14,6 +17,14 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_rmiai")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6w53e"]
+atlas = ExtResource("7_0slv3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sd6jj"]
+atlas = ExtResource("7_0slv3")
+region = Rect2(112, 16, 16, 16)
 
 [node name="slums0" type="Node2D"]
 y_sort_enabled = true
@@ -98,14 +109,13 @@ color = Color(1, 1, 0.0352941, 1)
 energy = 0.5
 texture = SubResource("GradientTexture2D_j32lc")
 
-[node name="Player" parent="." instance=ExtResource("3_kgjqi")]
-position = Vector2(62, 161)
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Player/Camera2D" index="0"]
-position = Vector2(-62, -161)
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
+
+[node name="Player" parent="." instance=ExtResource("3_kgjqi")]
+position = Vector2(62, 161)
 
 [node name="Door" type="Node" parent="."]
 
@@ -118,5 +128,25 @@ position = Vector2(46, -16)
 [node name="Spawn" parent="Door/Door_E" index="1"]
 position = Vector2(-18, 0)
 
-[editable path="Player"]
+[node name="Inventory_Item" parent="." instance=ExtResource("6_yqhsw")]
+position = Vector2(170, 245)
+item_type = "Non-consumable"
+item_name = "Shard of Time"
+item_texture = SubResource("AtlasTexture_6w53e")
+item_effect = "Reduce Cooldown"
+item_rarity = "Rare"
+item_quantity = 1
+
+[node name="Inventory_Item2" parent="." instance=ExtResource("6_yqhsw")]
+position = Vector2(214, 236)
+item_type = "Non-consumable"
+item_name = "Ring of Chaos"
+item_texture = SubResource("AtlasTexture_sd6jj")
+item_effect = "Randomize AoE"
+item_rarity = "Epic"
+item_quantity = 1
+
+[node name="Control" parent="." instance=ExtResource("8_fwt6t")]
+visible = false
+
 [editable path="Door/Door_E"]

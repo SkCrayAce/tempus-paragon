@@ -1,8 +1,12 @@
-[gd_scene load_steps=60 format=3 uid="uid://bfbclphhqo4h6"]
+[gd_scene load_steps=66 format=3 uid="uid://bfbclphhqo4h6"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l0wft"]
 [ext_resource type="Texture2D" uid="uid://cx7xnvhy3p4hp" path="res://sprites/characters/player.png" id="2_qth4g"]
 [ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="3_32cwt"]
+[ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_6hgmu"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]
+[ext_resource type="Theme" uid="uid://dsn1ed1mngin" path="res://theme/mainmenu.tres" id="5_wu5kx"]
+[ext_resource type="PackedScene" uid="uid://h82qnjggq5hf" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sau1d"]
 atlas = ExtResource("2_qth4g")
@@ -451,7 +455,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmphf"]
 size = Vector2(8, 7)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dd0n"]
+atlas = ExtResource("5_lnohu")
+region = Rect2(64, 0, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_646sc"]
+texture = SubResource("AtlasTexture_7dd0n")
+texture_margin_left = 9.0
+texture_margin_top = 10.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(0, 0, 48, 48)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+process_mode = 3
 y_sort_enabled = true
 collision_layer = 3
 script = ExtResource("1_l0wft")
@@ -469,3 +486,77 @@ shape = SubResource("RectangleShape2D_vmphf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="InteractUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="InteractUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.25098, 0.231373, 0.188235, 1)
+
+[node name="Label" type="Label" parent="InteractUI/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.5
+offset_top = -11.5
+offset_right = 79.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_6hgmu")
+theme_override_font_sizes/font_size = 30
+text = "PRESS 'E' TO PICK UP"
+horizontal_alignment = 1
+
+[node name="InventoryUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Panel" type="Panel" parent="InventoryUI"]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.488
+anchor_right = 1.0
+anchor_bottom = 0.488
+offset_left = -502.0
+offset_top = -278.36
+offset_right = -2.0
+offset_bottom = 278.64
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_646sc")
+
+[node name="Label" type="Label" parent="InventoryUI/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -171.0
+offset_top = 10.0
+offset_right = 171.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme = ExtResource("5_wu5kx")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.392157)
+theme_override_font_sizes/font_size = 50
+text = "ITEMS"
+horizontal_alignment = 1
+
+[node name="Inventory_UI" parent="InventoryUI/Panel" instance=ExtResource("6_6xlyy")]
+layout_mode = 1
+offset_left = -466.0
+offset_top = -184.5
+offset_right = 96.0
+offset_bottom = 238.5
