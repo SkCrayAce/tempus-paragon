@@ -100,7 +100,7 @@ func add_enemy(enemy : CharacterBody2D):
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
-	if waves_cleared < 2:
+	if waves_cleared == 2:
 		battle_ended()
 		
 	prints("new wave")
