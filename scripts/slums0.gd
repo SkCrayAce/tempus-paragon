@@ -6,6 +6,7 @@ extends "res://scripts/slums_control.gd"
 func _ready():
 	super._ready()
 	prints("nahh, i'd win")
+	
 	player_instance.position = player_spawn_point.position
 	add_child(player_instance)
 

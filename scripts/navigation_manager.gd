@@ -26,6 +26,7 @@ func next_level(levels_cleared):
 	await TransitionScreen.on_transition_finished
 	var next_scene
 	var randnum
+	
 	if levels_cleared % mpla == 0:
 		area_index += 1
 	

@@ -17,8 +17,8 @@ var waves_cleared : int
 
 const EnemyScript = preload("res://scripts/enemy.gd")
 
-@onready var enemy_move_timer = $EnemyMoveTimer
-@onready var move_timer_bar = $CanvasLayer/MoveTimerBar
+@onready var enemy_move_timer = $EnemyMoveTimer as Timer
+@onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
 
@@ -42,9 +42,10 @@ var used_vectors : Array[Vector2i]
 var character_ids = {}
 
 func _ready():    
+	waves_cleared = 0
 	global.battle_won = false
 	animation_timer.timeout.connect(animation_ended)
-	move_timer_bar.max_value = enemy_move_timer.wait_time
+	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
 	#prints(global.enemy_position)    
 	for x in grid_length:
 		for y in grid_height:
@@ -100,7 +101,7 @@ func add_enemy(enemy : CharacterBody2D):
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
-	if waves_cleared == 2:
+	if waves_cleared == 1:
 		battle_ended()
 		
 	prints("new wave")
@@ -167,7 +168,9 @@ func wave_cleared(enemy_ref : CharacterBody2D):
 
 func battle_ended():
 	global.battle_won = true
-	get_tree().change_scene_to_packed(global.current_scene)
+	prints("battle ended")
+	if global.current_scene:
+		get_tree().change_scene_to_packed(global.current_scene)
 	
 	
 func generate_random_vector() -> Vector2i :
