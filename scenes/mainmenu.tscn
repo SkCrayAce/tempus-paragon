@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://p6wlt5hsint2"]
+[gd_scene load_steps=5 format=3 uid="uid://dkb5nslxxihq6"]
 
 [ext_resource type="Script" path="res://scripts/mainmenu.gd" id="1_drxc3"]
 [ext_resource type="Texture2D" uid="uid://b2hwgpt6su2mu" path="res://tempus_assets/title.png" id="1_eowjy"]
