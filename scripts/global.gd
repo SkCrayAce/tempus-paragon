@@ -13,6 +13,8 @@ var enemy_dict : Dictionary
 #Overworld Data
 var levels_cleared = 0
 var curr_area = "slums"
+var current_scene : PackedScene
+var player_position : Vector2
 
 #Scene and node references
 var player_node: Node = null
