@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bextdwc3w0yr8"]
+[gd_scene load_steps=11 format=3 uid="uid://bextdwc3w0yr8"]
 
 [ext_resource type="Script" path="res://scripts/slums1.gd" id="1_bewti"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="1_eq0be"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hgfd8"]
 [ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="3_u1svb"]
-[ext_resource type="PackedScene" uid="uid://c0b8likh8uvor" path="res://scenes/characters/virulent_o.tscn" id="4_25jdl"]
 
 [sub_resource type="Gradient" id="Gradient_7dbpd"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -139,11 +138,8 @@ blend_mode = 2
 [node name="Door" parent="." instance=ExtResource("3_u1svb")]
 position = Vector2(760, 114)
 
-[node name="Virulent_O" parent="." instance=ExtResource("4_25jdl")]
-position = Vector2(482, 116)
-
-[node name="Virulent_O2" parent="." instance=ExtResource("4_25jdl")]
-position = Vector2(532, 76)
-
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(32, 78)
+
+[node name="VirulentSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(492, 86)

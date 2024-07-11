@@ -5,7 +5,7 @@ var player_chase = false
 var player = null
 var init_pos = null
 const Player = preload("res://scripts/player.gd")
-const BattleScene = "res://scenes/areas/battle.tscn"
+@onready var BattleScene = "res://scenes/areas/battle.tscn"
 
 @onready var anim = $AnimatedSprite2D
 @onready var timer = $Timer

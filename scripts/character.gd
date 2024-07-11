@@ -33,9 +33,6 @@ func _ready():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#if health_bar.value <= 0:
-		#defeat_filter.visible = true
-		#defeated = true
 	if draggable and !on_cooldown and !defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
@@ -70,13 +67,10 @@ func _on_area_2d_mouse_exited():
 func attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
-		var x_valid = target_pos.x >= min_hover_x and target_pos.x <= max_hover_x
-		var y_valid = target_pos.y >= min_hover_y and target_pos.y <= max_hover_y
-		# var world_pos : Vector2 = tile_map.map_to_local(target_pos)
 		
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		
-		if x_valid and y_valid:
+		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 		
 		if is_instance_valid(detected_enemy) and detected_enemy is EnemyScript and Input.is_action_just_released("left_click"):
@@ -114,3 +108,10 @@ func take_damage(damage : int):
 	#prints("damage taken: ")
 	
 		
+func within_bounds(coordinate : Vector2) -> bool:
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x
+	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
+	
+	if x_valid and y_valid:
+		return true
+	return false
