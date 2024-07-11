@@ -25,6 +25,7 @@ global="*res://scripts/global.gd"
 AudioPlayer="*res://scenes/AudioPlayer.tscn"
 NavigationManager="*res://scripts/navigation_manager.gd"
 TransitionScreen="*res://scenes/transition_screen.tscn"
+ItemDatabase="*res://elements/items/item_database.gd"
 
 [display]
 
