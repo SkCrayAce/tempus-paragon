@@ -34,8 +34,7 @@ func _ready():
 	global.set_player_reference(self)
 
 func _physics_process(delta):
-	global.player_pos_pre_battle = position
-	prints(global.player_pos_pre_battle)
+	global.player_position = position
 	player_movement(delta)
 	
 

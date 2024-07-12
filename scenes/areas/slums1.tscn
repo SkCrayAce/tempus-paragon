@@ -141,8 +141,8 @@ blend_mode = 2
 [node name="Door" parent="." instance=ExtResource("3_u1svb")]
 position = Vector2(760, 114)
 
-[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(32, 78)
+[node name="PlayerAnimationStart" type="Marker2D" parent="."]
+position = Vector2(3, 77)
 
-[node name="VirulentSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(492, 86)
+[node name="PlayerAnimationEnd" type="Marker2D" parent="."]
+position = Vector2(57, 77)

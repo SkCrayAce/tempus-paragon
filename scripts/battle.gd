@@ -170,7 +170,6 @@ func wave_cleared(enemy_ref : CharacterBody2D):
 func battle_ended():
 	global.battle_won = true
 	prints("battle ended")
-	#if global.current_scene:
 	get_tree().change_scene_to_file(global.current_scene)
 	
 	

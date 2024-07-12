@@ -3,11 +3,13 @@ extends CanvasLayer
 signal on_transition_finished
 
 @onready var animation_player = $AnimationPlayer
+@onready var transition_screen = $ColorRect
+@onready var transition_node = $Transition
 
+var tween
 func _ready():
-	$ColorRect.visible = false
+	$ColorRect.visible = true
 	animation_player.animation_finished.connect(_on_animation_finished)
-
 
 func _on_animation_finished(anim_name):
 	if anim_name == "dissolve":
@@ -21,4 +23,6 @@ func transition():
 	$ColorRect.visible = true
 	animation_player.play("dissolve")
 
-
+func _on_transition_animation_finished(anim_name):
+	if anim_name == "fade_out":
+		on_transition_finished.emit()

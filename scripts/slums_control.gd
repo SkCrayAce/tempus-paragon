@@ -3,6 +3,8 @@ extends Node2D
 var used_vectors : Array[Vector2i]
 var player_scene : PackedScene = preload("res://scenes/characters/player.tscn")
 var virulent_scene: PackedScene = preload("res://scenes/characters/virulent_o.tscn")
+var tween
+
 
 @onready var player_instance = player_scene.instantiate() as CharacterBody2D
 @onready var virulent_instance : CharacterBody2D
@@ -11,15 +13,16 @@ var virulent_scene: PackedScene = preload("res://scenes/characters/virulent_o.ts
 @export var bottom_rightmost_spawn_coords : Vector2i
 
 func _ready():
+	TransitionScreen.transition_node.play("fade_in")
+	used_vectors.clear()
 	global.current_scene = scene_file_path
 	prints(global.current_scene)
 	AudioPlayer.play_music_level()
 	prints("would you lose?")
 	
-	if global.player_pos_pre_battle and global.battle_won:
-		player_instance.position = global.player_pos_pre_battle
+	if global.battle_won:
+		player_instance.position = global.player_position
 		add_child(player_instance)
-		global.current_scene = ""
 	
 	
 func _process(delta):
@@ -38,5 +41,17 @@ func generate_random_vector(top_left_coord : Vector2, bottom_right_coord : Vecto
 			used_vectors.append(random_vector)
 			return random_vector			
 	return Vector2i(0, 0)
-	
 
+func spawn_enemy(tile_map : TileMap, top_left : Vector2i, bottom_right : Vector2i):
+	virulent_instance = virulent_scene.instantiate() as CharacterBody2D
+	var random_position = tile_map.map_to_local(generate_random_vector(top_left, bottom_right))
+	virulent_instance.position = random_position
+	add_child(virulent_instance)
+	
+func despawn_enemy(enemy_instance : CharacterBody2D):
+	remove_child(enemy_instance)
+	global.battle_won = false
+
+func player_entry_animation(player_instance, end_position : Vector2):
+	tween = create_tween()
+	tween.tween_property(player_instance, "position", end_position, 1)
