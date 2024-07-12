@@ -1,7 +1,7 @@
 [gd_scene load_steps=43 format=3 uid="uid://c0b8likh8uvor"]
 
 [ext_resource type="Script" path="res://scripts/virulent_o.gd" id="1_mkmqa"]
-[ext_resource type="Texture2D" uid="uid://dg0nqhaf8byg3" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
+[ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_evrff"]
 atlas = ExtResource("2_gkmho")
@@ -317,7 +317,7 @@ script = ExtResource("1_mkmqa")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nwx5m")
 animation = &"side_run_right"
-frame_progress = 0.825503
+frame_progress = 0.466651
 offset = Vector2(0, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

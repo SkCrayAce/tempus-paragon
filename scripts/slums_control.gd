@@ -3,6 +3,9 @@ extends Node2D
 var used_vectors : Array[Vector2i]
 var player_scene : PackedScene = preload("res://scenes/characters/player.tscn")
 var virulent_scene: PackedScene = preload("res://scenes/characters/virulent_o.tscn")
+var virulent_scene2: PackedScene = preload("res://scenes/characters/virulent_o2.tscn")
+var virulent_scenes = []
+
 
 @onready var player_instance = player_scene.instantiate() as CharacterBody2D
 @onready var virulent_instance : CharacterBody2D
@@ -15,6 +18,8 @@ func _ready():
 	prints(global.current_scene)
 	AudioPlayer.play_music_level()
 	prints("would you lose?")
+	virulent_scenes.append(virulent_scene)
+	virulent_scenes.append(virulent_scene2)
 	
 	if global.player_pos_pre_battle and global.battle_won:
 		player_instance.position = global.player_pos_pre_battle

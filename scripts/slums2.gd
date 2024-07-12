@@ -13,7 +13,8 @@ func _ready():
 		player_instance.position = player_spawn_point.position
 		add_child(player_instance)
 		for i in range(4):
-			virulent_instance = virulent_scene.instantiate() as CharacterBody2D
+			var randnum = randi() % virulent_scenes.size()
+			virulent_instance = virulent_scenes[randnum].instantiate() as CharacterBody2D
 			random_position = tile_map.map_to_local(super.generate_random_vector(top_leftmost_spawn_coords, bottom_rightmost_spawn_coords))
 			virulent_instance.position = random_position
 			add_child(virulent_instance)
