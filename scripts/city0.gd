@@ -1,9 +1,10 @@
-extends Node2D
+extends "res://scripts/city_control.gd"
 
 
 
 func _ready():
-	AudioPlayer.play_music_level()
+	super._ready()
+	pass
 
 
 func _process(delta):

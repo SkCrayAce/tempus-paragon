@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://je76dh3gll1"]
+[gd_scene load_steps=7 format=3 uid="uid://je76dh3gll1"]
 
 [ext_resource type="TileSet" uid="uid://c3gfjh4j2i453" path="res://scenes/areas/tilesets/city.tres" id="1_lx6x7"]
+[ext_resource type="Script" path="res://scripts/city_bf.gd" id="1_pt23s"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_ivixm"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_gifpv"]
 
@@ -15,6 +16,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="city_bf" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_pt23s")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true

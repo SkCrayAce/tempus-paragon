@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://scripts/overworld_control.gd"
 
 var used_vectors : Array[Vector2i]
 var player_scene : PackedScene = preload("res://scenes/characters/player.tscn")
@@ -17,9 +17,8 @@ var tween
 @export var bottom_rightmost_spawn_coords : Vector2i
 
 func _ready():
-	TransitionScreen.transition_node.play("fade_in")
+	super._ready()
 	used_vectors.clear()
-	global.current_scene = scene_file_path
 	prints(global.current_scene)
 	AudioPlayer.play_music_level()
 	prints("would you lose?")

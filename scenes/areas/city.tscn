@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dvaylqrpnnlcq"]
 
-[ext_resource type="Script" path="res://scripts/city.gd" id="1_xru6j"]
+[ext_resource type="Script" path="res://scripts/city0.gd" id="1_1csep"]
 [ext_resource type="AudioStream" uid="uid://cupv1l7dbllip" path="res://audio/music/overworld01_v02.wav" id="2_wam1d"]
 [ext_resource type="TileSet" uid="uid://c3gfjh4j2i453" path="res://scenes/areas/tilesets/city.tres" id="3_celje"]
 [ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="6_6tein"]
@@ -18,7 +18,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="city" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_xru6j")
+script = ExtResource("1_1csep")
 
 [node name="CityMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_wam1d")
