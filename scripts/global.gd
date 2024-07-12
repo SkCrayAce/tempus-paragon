@@ -15,7 +15,7 @@ var enemy_dict : Dictionary
 var levels_cleared = 0
 var curr_area = "slums"
 var current_scene : String
-var player_pos_pre_battle : Vector2 
+var player_position : Vector2 
 var enemy_pos_at_contact : Vector2
 var battle_won : bool
 

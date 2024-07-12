@@ -4,12 +4,14 @@ var slums_levels = []
 var city_levels = []
 var underground_levels = []
 
+
 #mpla == max levels per area
 const mpla = 3
 var area_index = 0
 var areas = ["slums", "city", "underground"]
 var curr_area
 var current_scene : PackedScene
+var next_scene
 
 
 func _ready():
@@ -21,13 +23,11 @@ func _ready():
 	city_levels.append(preload("res://scenes/areas/city_bf.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground2.tscn"))
-
+	TransitionScreen.on_transition_finished.connect(scene_transition)
 
 
 func next_level(levels_cleared):
-	TransitionScreen.transition()
-	await TransitionScreen.on_transition_finished
-	var next_scene
+	TransitionScreen.transition_node.play("fade_out")
 	var randnum
 	if global.levels_cleared % mpla == 0:
 		area_index += 1
@@ -38,22 +38,20 @@ func next_level(levels_cleared):
 	if curr_area == "slums":
 		randnum = randi() % slums_levels.size()
 		next_scene = slums_levels[randnum]
-		get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
+		#get_tree().change_scene_to_packed(next_scene)
 		slums_levels.remove_at(randnum)
 	elif curr_area == "city":
 		randnum = randi() % city_levels.size()
 		next_scene = city_levels[randnum]
-		get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
+		#get_tree().change_scene_to_packed(next_scene)
 		city_levels.remove_at(randnum)
 	elif curr_area == "underground":
 		randnum = randi() % underground_levels.size()
 		next_scene = underground_levels[randnum]
-		get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
+		#get_tree().change_scene_to_packed(next_scene)
 		underground_levels.remove_at(randnum)
 		
 	global.battle_won = false
-	prints(global.current_scene)
 
+func scene_transition():
+	get_tree().change_scene_to_packed(next_scene)

@@ -6,6 +6,7 @@ var breakloop = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	main_menu_play_anim()
+	TransitionScreen.on_transition_finished.connect(scene_transition)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -26,8 +27,11 @@ func main_menu_play_anim():
 
 func _on_play_btn_pressed():
 	breakloop = true
-	get_tree().change_scene_to_file("res://scenes/areas/slums0.tscn")
+	TransitionScreen.transition_node.play("fade_out")
 
 
 func _on_button_3_pressed():
 	get_tree().quit()
+
+func scene_transition():
+	get_tree().change_scene_to_file("res://scenes/areas/slums0.tscn")
