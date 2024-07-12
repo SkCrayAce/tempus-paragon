@@ -5,6 +5,7 @@ var player_scene : PackedScene = preload("res://scenes/characters/player.tscn")
 var virulent_scene: PackedScene = preload("res://scenes/characters/virulent_o.tscn")
 var virulent_scene2: PackedScene = preload("res://scenes/characters/virulent_o2.tscn")
 var virulent_scenes = []
+
 var tween
 
 
@@ -51,10 +52,12 @@ func generate_random_vector(top_left_coord : Vector2, bottom_right_coord : Vecto
 	return Vector2i(0, 0)
 
 func spawn_enemy(tile_map : TileMap, top_left : Vector2i, bottom_right : Vector2i):
-	virulent_instance = virulent_scene.instantiate() as CharacterBody2D
-	var random_position = tile_map.map_to_local(generate_random_vector(top_left, bottom_right))
+	var randnum = randi() % virulent_scenes.size()
+	virulent_instance = virulent_scenes[randnum].instantiate() as CharacterBody2D
+	var random_position = tile_map.map_to_local(generate_random_vector(top_leftmost_spawn_coords, bottom_rightmost_spawn_coords))
 	virulent_instance.position = random_position
 	add_child(virulent_instance)
+
 	
 func despawn_enemy(enemy_instance : CharacterBody2D):
 	remove_child(enemy_instance)

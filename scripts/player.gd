@@ -13,6 +13,7 @@ const accel = 2000
 @onready var inventory_panel = $InventoryUI/Panel
 @onready var init_point = $InventoryUI/Init_point
 @onready var end_point = $InventoryUI/End_point
+@onready var current_tile_map = get_parent().get_node("TileMap") as TileMap
 
 @onready var control = $Control
 
@@ -24,8 +25,8 @@ func _ready():
 	anim.play("front_idle")
 	
 	#Set Camera Bound to Tilemap Size
-	var tilemap_rect = get_parent().get_node("TileMap").get_used_rect()
-	var tilemap_cell_size = get_parent().get_node("TileMap").tile_set.tile_size 
+	var tilemap_rect = current_tile_map.get_used_rect()
+	var tilemap_cell_size = current_tile_map.tile_set.tile_size 
 	cam.limit_left = tilemap_rect.position.x * tilemap_cell_size.x 
 	cam.limit_right = tilemap_rect.end.x * tilemap_cell_size.x
 	cam.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y 

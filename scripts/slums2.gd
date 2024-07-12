@@ -9,16 +9,9 @@ extends "res://scripts/slums_control.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
-	var random_position
 	if not global.battle_won:
 		player_instance.position = player_animation_start.position
 		add_child(player_instance)
-		for i in range(4):
-			var randnum = randi() % virulent_scenes.size()
-			virulent_instance = virulent_scenes[randnum].instantiate() as CharacterBody2D
-			random_position = tile_map.map_to_local(super.generate_random_vector(top_leftmost_spawn_coords, bottom_rightmost_spawn_coords))
-			virulent_instance.position = random_position
-			add_child(virulent_instance)
 		super.player_entry_animation(player_instance, player_animation_end.position)
 		
 		for i in range(4):
