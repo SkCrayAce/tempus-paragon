@@ -18,7 +18,7 @@ func _ready():
 	slums_levels.append(preload("res://scenes/areas/slums3.tscn"))
 	city_levels.append(preload("res://scenes/areas/city.tscn"))
 	city_levels.append(preload("res://scenes/areas/city1.tscn"))
-	city_levels.append(preload("res://scenes/areas/city2.tscn"))
+	city_levels.append(preload("res://scenes/areas/city_bf.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground.tscn"))
 	underground_levels.append(preload("res://scenes/areas/underground2.tscn"))
 

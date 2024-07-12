@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://je76dh3gll1"]
 
-[ext_resource type="TileSet" uid="uid://c3gfjh4j2i453" path="res://scenes/areas/tilesets/city.tres" id="1_1ljbn"]
-[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_t37ry"]
-[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_n1kvx"]
+[ext_resource type="TileSet" uid="uid://c3gfjh4j2i453" path="res://scenes/areas/tilesets/city.tres" id="1_lx6x7"]
+[ext_resource type="PackedScene" uid="uid://bfbclphhqo4h6" path="res://scenes/characters/player.tscn" id="2_ivixm"]
+[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_gifpv"]
 
 [sub_resource type="Gradient" id="Gradient_o60a4"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -13,12 +13,12 @@ gradient = SubResource("Gradient_o60a4")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="city2" type="Node2D"]
+[node name="city_bf" type="Node2D"]
 y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
-tile_set = ExtResource("1_1ljbn")
+tile_set = ExtResource("1_lx6x7")
 format = 2
 layer_0/name = "Collision"
 layer_0/tile_data = PackedInt32Array(917504, 983042, 0, 917505, 983042, 0, 917506, 983042, 0, 917507, 983042, 0, 917508, 983042, 0, 917509, 983042, 0, 917510, 983042, 0, 917511, 983042, 0, 917512, 983042, 0, 917513, 983042, 0, 917514, 983042, 0, 917515, 983042, 0, 917516, 983042, 0, 917517, 983042, 0, 917518, 983042, 0, 917519, 983042, 0, 851983, 983042, 0, 786447, 983042, 0, 720911, 983042, 0, 655375, 983042, 0, 589839, 983042, 0, 524303, 983042, 0, 458767, 983042, 0, 458768, 983042, 0, 458769, 983042, 0, 458770, 983042, 0, 458771, 983042, 0, 458772, 983042, 0, 458773, 983042, 0, 458774, 983042, 0, 393238, 983042, 0, 327702, 983042, 0, 262166, 983042, 0, 196630, 983042, 0, 131094, 983042, 0, 65558, 983042, 0, 22, 983042, 0, 29, 983042, 0, 65565, 983042, 0, 131101, 983042, 0, 196637, 983042, 0, 262173, 983042, 0, 327709, 983042, 0, 393245, 983042, 0, 458781, 983042, 0, 458782, 983042, 0, 458783, 983042, 0, 458784, 983042, 0, 524320, 983042, 0, 589856, 983042, 0, 655392, 983042, 0, 720928, 983042, 0, 786464, 983042, 0, 852000, 983042, 0, 917536, 983042, 0, 917537, 983042, 0, 917538, 983042, 0, 917539, 983042, 0, 983075, 983042, 0, 983076, 983042, 0, 983077, 983042, 0, 917541, 983042, 0, 917542, 983042, 0, 917543, 983042, 0, 917544, 983042, 0, 1310760, 983042, 0, 1310759, 983042, 0, 1310758, 983042, 0, 1310757, 983042, 0, 1310756, 983042, 0, 1310755, 983042, 0, 1310754, 983042, 0, 1310753, 983042, 0, 1310752, 983042, 0, 1376288, 983042, 0, 1441824, 983042, 0, 1441807, 983042, 0, 1376271, 983042, 0, 1310735, 983042, 0, 1310734, 983042, 0, 1310733, 983042, 0, 1310732, 983042, 0, 1310731, 983042, 0, 1310730, 983042, 0, 1310728, 983042, 0, 1310727, 983042, 0, 1310726, 983042, 0, 1310725, 983042, 0, 1310724, 983042, 0, 1310723, 983042, 0, 1310722, 983042, 0, 1310721, 983042, 0, 1310720, 983042, 0, 1245184, 1114114, 1, 1179648, 1114114, 1, 1114112, 1114114, 1, 1048576, 1114114, 1, 983040, 1114114, 1, 1572896, 983042, 0, 1572895, 983042, 0, 1572894, 983042, 0, 1572893, 983042, 0, 1572892, 983042, 0, 1572891, 983042, 0, 1572890, 983042, 0, 1572889, 983042, 0, 1572888, 983042, 0, 1572887, 983042, 0, 1572886, 983042, 0, 1572885, 983042, 0, 1572884, 983042, 0, 1572883, 983042, 0, 1572882, 983042, 0, 1572881, 983042, 0, 1572880, 983042, 0, 1572879, 983042, 0, 1507343, 983042, 0, 1507360, 983042, 0)
@@ -129,11 +129,11 @@ color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
 
-[node name="Player" parent="." instance=ExtResource("2_t37ry")]
+[node name="Player" parent="." instance=ExtResource("2_ivixm")]
 position = Vector2(31, 274)
 
-[node name="Door" parent="." instance=ExtResource("3_n1kvx")]
+[node name="Door" parent="." instance=ExtResource("3_gifpv")]
 position = Vector2(716, 270)
 
-[node name="Door2" parent="." instance=ExtResource("3_n1kvx")]
+[node name="Door2" parent="." instance=ExtResource("3_gifpv")]
 position = Vector2(420, -153)

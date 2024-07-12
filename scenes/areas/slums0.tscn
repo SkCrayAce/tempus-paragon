@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums0.gd" id="1_jionn"]
-[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/slums.tres" id="2_cxd4y"]
-[ext_resource type="PackedScene" uid="uid://csifn418tx5e5" path="res://scenes/door.tscn" id="4_v1s8o"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="2_cxd4y"]
+[ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -95,9 +95,6 @@ position = Vector2(522, 168)
 
 [node name="CollisionShape2D" parent="Door/Door_E" index="0"]
 position = Vector2(46, -16)
-
-[node name="Spawn" parent="Door/Door_E" index="1"]
-position = Vector2(-18, 0)
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(81, 153)
