@@ -71,8 +71,6 @@ func hit(damage : int):
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
 	var new_map_position = tile_map.local_to_map(new_position)
-	#var next_enemy := global.get_enemy(new_map_position)
-	#var previous_map_position = tile_map.local_to_map(position)
 	
 	if is_blocked(): return
 	
@@ -83,16 +81,11 @@ func move_animation():
 	anim.stop()
 	anim.play("walk", 2.2)
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
-	prints("anim finished")
-	
-	#global.add_enemy(new_map_position, self)
-	#global.delete_enemy(previous_map_position)
 	
 	current_map_position = tile_map.local_to_map(position)
 	return
 	
 func stop_animation():
-	#var new_position = position
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
@@ -100,7 +93,6 @@ func stop_animation():
 		return
 		
 	anim.play("idle")
-	#position.x = new_position.x
 	
 func attack_character():
 	var kai_aligned = current_map_position.y in kai_hitbox
@@ -126,7 +118,6 @@ func is_blocked() -> bool:
 	var next_enemy := global.get_enemy(next_map_position)
 	
 	if is_instance_valid(next_enemy):
-		#prints(get_instance_id(), next_enemy.is_blocked())
 		return next_enemy.is_blocked()
 		
 	return next_map_position.x < 9
