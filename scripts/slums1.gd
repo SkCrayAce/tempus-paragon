@@ -14,6 +14,7 @@ func _ready():
 		player_instance.position = player_animation_start.position
 		add_child(player_instance)
 		super.player_entry_animation(player_instance, player_animation_end.position)
+		
 		for i in range(4):
 			super.spawn_enemy(tile_map, top_leftmost_spawn_coords, bottom_rightmost_spawn_coords)
 		

@@ -13,7 +13,6 @@ func _ready():
 	if not global.battle_won:
 		player_instance.position = player_animation_start.position
 		add_child(player_instance)
-		
 		super.player_entry_animation(player_instance, player_animation_end.position)
 		
 		for i in range(4):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwj8te0ofyesw"]
+[gd_scene load_steps=10 format=3 uid="uid://c6wtgr0fs3280"]
 
 [ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="1_gm6o7"]
 [ext_resource type="Texture2D" uid="uid://chqvw6b1rjgyw" path="res://theme/atlas/items.tres" id="2_u7stf"]
