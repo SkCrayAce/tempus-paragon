@@ -25,9 +25,6 @@ func _ready():
 
 
 func next_level(levels_cleared):
-	#TransitionScreen.transition()
-	#await TransitionScreen.on_transition_finished
-	
 	TransitionScreen.transition_node.play("fade_out")
 	var randnum
 	
@@ -41,19 +38,16 @@ func next_level(levels_cleared):
 		randnum = randi() % slums_levels.size()
 		next_scene = slums_levels[randnum]
 		#get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
 		slums_levels.remove_at(randnum)
 	elif curr_area == "city":
 		randnum = randi() % city_levels.size()
 		next_scene = city_levels[randnum]
 		#get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
 		city_levels.remove_at(randnum)
 	elif curr_area == "underground":
 		randnum = randi() % underground_levels.size()
 		next_scene = underground_levels[randnum]
 		#get_tree().change_scene_to_packed(next_scene)
-		current_scene = next_scene
 		underground_levels.remove_at(randnum)
 		
 	global.battle_won = false
