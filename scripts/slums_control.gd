@@ -22,6 +22,7 @@ func _ready():
 	prints(global.current_scene)
 	AudioPlayer.play_music_level()
 	prints("would you lose?")
+	#for variety
 	virulent_scenes.append(virulent_scene)
 	virulent_scenes.append(virulent_scene2)
 	

@@ -72,7 +72,7 @@ func set_item_data(data):
 	item_effect = data["effect"]
 	item_texture = data["texture"]
 	item_rarity = data["rarity"]
-	#item_quantity = data["quantity"]
+	item_quantity = data["quantity"]
 
 func tween_item(sprite):
 	while breakloop == false:
@@ -84,4 +84,5 @@ func tween_item(sprite):
 		await tween.finished
 		if breakloop == true:
 			break
+			
 	

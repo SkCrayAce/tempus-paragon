@@ -7,6 +7,7 @@ var underground_levels = []
 
 #mpla == max levels per area
 const mpla = 3
+const bossfightlevelnum = 4
 var area_index = 0
 var areas = ["slums", "city", "underground"]
 var curr_area

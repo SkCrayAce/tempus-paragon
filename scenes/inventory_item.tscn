@@ -12,6 +12,7 @@ item_rarity = null
 item_quantity = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 position = Vector2(0, -2.11515)
 
