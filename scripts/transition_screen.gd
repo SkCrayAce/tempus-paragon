@@ -6,7 +6,6 @@ signal on_transition_finished
 @onready var transition_screen = $Transition/ColorRect
 @onready var transition_node = $Transition
 
-var tween
 func _ready():
 	pass
 	
