@@ -9,6 +9,7 @@ var virulent_scenes = []
 
 @onready var player_instance = player_scene.instantiate() as CharacterBody2D
 @onready var virulent_instance : CharacterBody2D
+@onready var item_instance: Node2D
 
 @export var top_leftmost_spawn_coords : Vector2i
 @export var bottom_rightmost_spawn_coords : Vector2i
@@ -24,6 +25,7 @@ func _ready():
 	if global.player_pos_pre_battle and global.battle_won:
 		player_instance.position = global.player_pos_pre_battle
 		add_child(player_instance)
+		global.drop_random_item(player_instance.position)
 		global.current_scene = ""
 	
 	

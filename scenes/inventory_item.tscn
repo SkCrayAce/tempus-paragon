@@ -1,15 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2eiem8wa5pkq"]
+[gd_scene load_steps=4 format=3 uid="uid://c2eiem8wa5pkq"]
 
 [ext_resource type="Script" path="res://scripts/inventory_item.gd" id="1_fp4e7"]
+[ext_resource type="Texture2D" uid="uid://bhoboeomcaa66" path="res://tempus_assets/item sprites/item_shadow.png" id="2_0ppq8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jhdeg"]
 
 [node name="Inventory_Item" type="Node2D" groups=["Items"]]
+y_sort_enabled = true
 script = ExtResource("1_fp4e7")
 item_rarity = null
 item_quantity = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -2.11515)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 5)
+texture = ExtResource("2_0ppq8")
 
 [node name="Area2D" type="Area2D" parent="."]
 

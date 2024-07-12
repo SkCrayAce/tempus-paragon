@@ -312,7 +312,7 @@ script = ExtResource("1_hs0e0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vcg8x")
 animation = &"side_run_right"
-frame_progress = 0.00821563
+frame_progress = 0.0216138
 offset = Vector2(0, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

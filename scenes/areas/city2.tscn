@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://c076jhkyuncm2"]
+
+[ext_resource type="TileSet" uid="uid://c3gfjh4j2i453" path="res://scenes/areas/tilesets/city.tres" id="1_ybspr"]
+
+[node name="city2" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+tile_set = ExtResource("1_ybspr")
+format = 2
+layer_0/name = "Collision"
+layer_1/name = "Ground"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Building L1"
+layer_2/enabled = false
+layer_2/y_sort_enabled = true
+layer_2/tile_data = PackedInt32Array()
+layer_3/name = "Building L2"
+layer_3/y_sort_enabled = true
+layer_3/tile_data = PackedInt32Array()
+layer_4/name = "Building L3"
+layer_4/y_sort_enabled = true
+layer_4/tile_data = PackedInt32Array()

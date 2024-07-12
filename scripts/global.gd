@@ -92,6 +92,16 @@ func swap_inventory_items(index1, index2):
 	print("swap happened")
 	inventory_updated.emit()
 	return true
+	
+func drop_random_item(drop_position):
+	#for now just randomly choose from items without taking rarity in consideration
+	var item = ItemDatabase.items[randi() % ItemDatabase.items.size()]
+	var item_scene = load("res://scenes/inventory_item.tscn")
+	var item_instance = item_scene.instantiate()
+	item_instance.set_item_data(item)
+	drop_position = adjust_drop_position(drop_position)
+	item_instance.global_position = drop_position
+	get_tree().current_scene.add_child(item_instance)
 #---------------------------------
 
 

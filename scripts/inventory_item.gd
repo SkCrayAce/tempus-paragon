@@ -10,14 +10,21 @@ extends Node2D
 
 #Scene tree Node references
 @onready var icon_sprite = $Sprite2D
+@onready var shadow = $Shadow
+
 
 var scene_path: String = "res://scenes/inventory_item.tscn"
+#var shadow_texture: Texture = load("res://tempus_assets/item sprites/item_shadow.png")
 var player_in_range = false
+var breakloop = false
 
 func _ready():
 	#Set texture to reflect in the game
 	if not Engine.is_editor_hint():
 		icon_sprite.texture = item_texture
+	#shadow.texture = shadow_texture
+	tween_item(icon_sprite)
+
 
 
 func _process(delta):
@@ -27,6 +34,8 @@ func _process(delta):
 	
 	if player_in_range and Input.is_action_just_pressed("ui_add"):
 		pickup_item()
+	
+		
 
 func pickup_item():
 	var item = {
@@ -41,6 +50,7 @@ func pickup_item():
 	
 	if global.player_node:
 		global.add_item(item)
+		breakloop = true
 		self.queue_free()
 
 
@@ -62,4 +72,16 @@ func set_item_data(data):
 	item_effect = data["effect"]
 	item_texture = data["texture"]
 	item_rarity = data["rarity"]
-	item_quantity = data["quantity"]
+	#item_quantity = data["quantity"]
+
+func tween_item(sprite):
+	while breakloop == false:
+		var tween = create_tween()
+		tween.tween_property(sprite, "position", Vector2(sprite.position.x,sprite.position.y-2), 1).set_trans(Tween.TRANS_SINE)
+		await tween.finished
+		tween = create_tween()
+		tween.tween_property(sprite, "position", Vector2(sprite.position.x,sprite.position.y+2), 1).set_trans(Tween.TRANS_SINE)
+		await tween.finished
+		if breakloop == true:
+			break
+	

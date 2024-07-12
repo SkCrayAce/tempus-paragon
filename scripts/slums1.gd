@@ -25,6 +25,7 @@ func _ready():
 	if global.battle_won:
 		remove_child(virulent_instance)
 		
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
