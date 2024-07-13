@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://54gffsgsd8if"]
+
+[ext_resource type="Shader" path="res://shaders/transition_screen.gdshader" id="1_deffa"]
+[ext_resource type="Script" path="res://scripts/transitiontobattle.gd" id="2_dw0cl"]
+[ext_resource type="Texture2D" uid="uid://cx1ld7onjkuhn" path="res://tempus_assets/Screenshot 2024-07-13 223549.png" id="3_6msmv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4owu"]
+shader = ExtResource("1_deffa")
+shader_parameter/pixel_size = 1.0
+
+[sub_resource type="Animation" id="Animation_op67r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixelFactor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:material:shader_parameter/pixel_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_gqiuy"]
+resource_name = "pixelate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixel_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 15.0]
+}
+
+[sub_resource type="Animation" id="Animation_xjrui"]
+resource_name = "pixelate_reverse"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixelFactor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [1.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_002cq"]
+_data = {
+"RESET": SubResource("Animation_op67r"),
+"pixelate": SubResource("Animation_gqiuy"),
+"pixelate_reverse": SubResource("Animation_xjrui")
+}
+
+[node name="TransitiontoBattle" type="CanvasLayer"]
+script = ExtResource("2_dw0cl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+process_mode = 3
+material = SubResource("ShaderMaterial_v4owu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_6msmv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_002cq")
+}

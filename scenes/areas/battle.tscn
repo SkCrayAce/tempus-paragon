@@ -855,7 +855,6 @@ texture_under = SubResource("AtlasTexture_0dq3t")
 texture_progress = SubResource("AtlasTexture_5hxf3")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="TileMap2" type="TileMap" parent="."]
@@ -905,7 +904,6 @@ texture = SubResource("GradientTexture2D_y51p6")
 position = Vector2(448, 31)
 scale = Vector2(1.39063, 1)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_hvymv")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="TileMap2"]

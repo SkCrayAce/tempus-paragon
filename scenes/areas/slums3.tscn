@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
-[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_rlgrv"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_g78kc"]
 
@@ -122,7 +122,7 @@ texture = SubResource("GradientTexture2D_5jkon")
 position = Vector2(193, 318)
 scale = Vector2(1.39063, 1)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
+energy = 0.8
 texture = SubResource("GradientTexture2D_gfxxm")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]

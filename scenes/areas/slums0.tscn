@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7apibvg107xh"]
+[gd_scene load_steps=8 format=3 uid="uid://c7apibvg107xh"]
 
 [ext_resource type="Script" path="res://scripts/slums0.gd" id="1_jionn"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="2_cxd4y"]
+[ext_resource type="PackedScene" uid="uid://c2eiem8wa5pkq" path="res://scenes/inventory_item.tscn" id="4_jdj2d"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_v1s8o"]
+[ext_resource type="Texture2D" uid="uid://bljrsvul4oc8u" path="res://tempus_assets/item sprites/item-spritesheet9.png" id="5_2mo0y"]
 
 [sub_resource type="Gradient" id="Gradient_rmiai"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -97,11 +99,20 @@ position = Vector2(522, 168)
 position = Vector2(46, -16)
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(59, 54)
+position = Vector2(66, 152)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
+
+[node name="Inventory_Item" parent="." instance=ExtResource("4_jdj2d")]
+position = Vector2(155, 256)
+item_type = "Non-consumable"
+item_name = "Ring of Anima"
+item_texture = ExtResource("5_2mo0y")
+item_effect = "Grants lifesteal, but reduces max health by 40%."
+item_rarity = "Epic"
+item_quantity = 1
 
 [editable path="Door/Door_E"]

@@ -6,6 +6,7 @@ signal on_transition_finished
 @onready var transition_screen = $Transition/ColorRect
 @onready var transition_node = $Transition
 
+
 func _ready():
 	pass
 	

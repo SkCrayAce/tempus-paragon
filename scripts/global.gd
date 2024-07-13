@@ -18,6 +18,7 @@ var current_scene : String
 var player_position : Vector2 
 var enemy_pos_at_contact : Vector2
 var battle_won : bool
+var transition_commence : bool = false
 
 #Scene and node references
 var player_node: Node = null

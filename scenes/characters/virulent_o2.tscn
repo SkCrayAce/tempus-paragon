@@ -306,7 +306,7 @@ radius = 85.0059
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ll0du"]
 
-[node name="virulent_o2" type="CharacterBody2D"]
+[node name="virulent_o2" type="CharacterBody2D" groups=["virulents"]]
 script = ExtResource("1_hs0e0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

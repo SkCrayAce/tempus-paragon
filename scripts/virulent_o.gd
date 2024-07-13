@@ -59,4 +59,15 @@ func _on_fight_range_body_entered(body):
 	if body is Player:
 		global.player_position = body.position
 		global.enemy_pos_at_contact = position
-		get_tree().change_scene_to_file(BattleScene)
+		
+		if global.transition_commence == false:
+			global.transition_commence = true
+			var trans_screen_scene = load("res://scenes/transitionto_battle.tscn")
+			var trans_screen = trans_screen_scene.instantiate()
+			get_tree().get_root().add_child(trans_screen)
+			trans_screen.play_animation()
+			await trans_screen.animation_player.animation_finished
+			trans_screen.queue_free()
+			get_tree().change_scene_to_file(BattleScene)
+
+		

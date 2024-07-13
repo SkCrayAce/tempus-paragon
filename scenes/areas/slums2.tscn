@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1exvu624fjgw"]
 
 [ext_resource type="Script" path="res://scripts/slums2.gd" id="1_7ixyu"]
-[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="1_njwbf"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_njwbf"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_orbvp"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_uuvrj"]
 

@@ -34,11 +34,13 @@ var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 @onready var tyrone = $VBoxContainer/tyrone
 @onready var bettany = $VBoxContainer/bettany
 
+@onready var trans_scene = preload("res://scenes/transitionto_battle.tscn")
+
 var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
+var anim_start = false
 
-
-func _ready():    
+func _ready():
 	waves_cleared = 0
 	global.battle_won = false
 	animation_timer.timeout.connect(animation_ended)
@@ -54,6 +56,10 @@ func _ready():
 	
 	
 func _process(delta):
+	if anim_start == false:
+		start_anim()
+		anim_start = true
+		
 	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
 	
 	move_timer_bar.value = enemy_move_timer.time_left
@@ -164,6 +170,11 @@ func wave_cleared(enemy_ref : CharacterBody2D):
 func battle_ended():
 	global.battle_won = true
 	prints("battle ended")
+	var trans_screen = trans_scene.instantiate()
+	add_child(trans_screen)
+	trans_screen.play_animation()
+	await get_tree().create_timer(1).timeout
+	trans_screen.queue_free()
 	get_tree().change_scene_to_file(global.current_scene)
 
 func generate_random_vector() -> Vector2i :
@@ -176,6 +187,13 @@ func generate_random_vector() -> Vector2i :
 		
 		if not used_vectors.has(random_vector):
 			used_vectors.append(random_vector)
-			return random_vector			
+			return random_vector
 	return Vector2i(0, 0)
 
+func start_anim():
+	var trans_screen = trans_scene.instantiate()
+	add_child(trans_screen)
+	trans_screen.play_animation_backwards()
+	await get_tree().create_timer(1).timeout
+	trans_screen.queue_free()
+	global.transition_commence = false
