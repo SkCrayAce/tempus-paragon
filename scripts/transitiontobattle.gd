@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var texture_rect = $TextureRect
+@onready var color_rect = $ColorRect
 @onready var animation_player = $AnimationPlayer
 
 @export var animation = "pixelate"

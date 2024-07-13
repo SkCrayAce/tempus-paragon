@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://54gffsgsd8if"]
+[gd_scene load_steps=8 format=3 uid="uid://54gffsgsd8if"]
 
 [ext_resource type="Shader" path="res://shaders/transition_screen.gdshader" id="1_deffa"]
 [ext_resource type="Script" path="res://scripts/transitiontobattle.gd" id="2_dw0cl"]
-[ext_resource type="Texture2D" uid="uid://cx1ld7onjkuhn" path="res://tempus_assets/Screenshot 2024-07-13 223549.png" id="3_6msmv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v4owu"]
 shader = ExtResource("1_deffa")
@@ -13,7 +12,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixelFactor")
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/pixelFactor")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,7 +24,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect:material:shader_parameter/pixel_size")
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/pixel_size")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -40,7 +39,7 @@ resource_name = "pixelate"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixel_size")
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/pixel_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -55,7 +54,7 @@ resource_name = "pixelate_reverse"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:material:shader_parameter/pixelFactor")
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/pixelFactor")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -75,7 +74,7 @@ _data = {
 [node name="TransitiontoBattle" type="CanvasLayer"]
 script = ExtResource("2_dw0cl")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 process_mode = 3
 material = SubResource("ShaderMaterial_v4owu")
 anchors_preset = 15
@@ -83,7 +82,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_6msmv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
