@@ -12,6 +12,8 @@ extends Control
 @onready var item_button = $ItemButton
 @onready var inner_border = $InnerBorder
 
+var itemdragsprite = preload("res://scenes/item_drag_sprite.tscn")
+var itemdragsprite_instance = itemdragsprite.instantiate()
 
 signal drag_start(slot)
 signal drag_end()
@@ -91,11 +93,14 @@ func _on_item_button_gui_input(event):
 		#Dragging Item
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.is_pressed():
+				get_parent().get_parent().add_child(itemdragsprite_instance)
 				inner_border.modulate = Color(1, 1, 0)
+				itemdragsprite_instance.texture = item_icon.texture
 				drag_start.emit(self)
 				item_icon.visible = false
-			else:
+			elif event.is_released():
 				inner_border.modulate = Color(1, 1, 1)
 				drag_end.emit()
 				item_icon.visible = true
-	
+				itemdragsprite_instance.visible = false
+				itemdragsprite_instance.queue_free()

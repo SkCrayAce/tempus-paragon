@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4weiwdlbqamg"]
+
+[ext_resource type="Texture2D" uid="uid://cb5m85ixk3hv6" path="res://tempus_assets/item sprites/item-spritesheet19.png" id="1_myi5e"]
+[ext_resource type="Script" path="res://scripts/item_drag_sprite.gd" id="1_pkb6v"]
+
+[node name="ItemDragSprite" type="Sprite2D"]
+top_level = true
+z_index = 10
+scale = Vector2(3, 3)
+texture = ExtResource("1_myi5e")
+script = ExtResource("1_pkb6v")

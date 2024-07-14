@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_6hgmu"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]
 [ext_resource type="PackedScene" uid="uid://47cvcw1uidxf" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
-[ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="6_e2wgd"]
+[ext_resource type="FontFile" uid="uid://blbxp1op7o1yv" path="res://tempus_assets/font/alagard.ttf" id="6_jm0yp"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="8_nfne6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sau1d"]
@@ -541,13 +541,13 @@ anchor_left = 1.0
 anchor_top = 0.488
 anchor_right = 1.0
 anchor_bottom = 0.488
-offset_left = 37.0
-offset_top = -217.36
-offset_right = 267.0
-offset_bottom = 11.64
+offset_left = 2.0
+offset_top = -266.36
+offset_right = 172.0
+offset_bottom = -86.36
 grow_horizontal = 0
 grow_vertical = 2
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 theme_override_styles/panel = SubResource("StyleBoxTexture_646sc")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="InventoryUI/Panel"]
@@ -572,17 +572,18 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -46.5
-offset_top = 6.0
-offset_right = 49.5
-offset_bottom = 35.0
+offset_left = -35.5
+offset_top = 8.66666
+offset_right = 1433.5
+offset_bottom = 477.667
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_e2wgd")
-theme_override_font_sizes/font_size = 30
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_color = Color(0.261212, 0.187932, 0.130077, 1)
+theme_override_fonts/font = ExtResource("6_jm0yp")
+theme_override_font_sizes/font_size = 400
 text = "ITEMS"
 horizontal_alignment = 1
-metadata/_edit_lock_ = true
+vertical_alignment = 1
 
 [node name="Inventory_UI" parent="InventoryUI/Panel" instance=ExtResource("6_6xlyy")]
 layout_mode = 1
@@ -599,9 +600,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -226.0
+offset_top = -266.0
 offset_right = 10.0
-offset_bottom = -216.0
+offset_bottom = -256.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
@@ -613,10 +614,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -463.0
-offset_top = -226.0
-offset_right = -453.0
-offset_bottom = -216.0
+offset_left = -511.0
+offset_top = -266.0
+offset_right = -501.0
+offset_bottom = -256.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8

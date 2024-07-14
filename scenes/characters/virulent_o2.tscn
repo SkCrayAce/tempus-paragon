@@ -333,5 +333,6 @@ autostart = true
 shape = SubResource("CircleShape2D_ll0du")
 
 [connection signal="body_entered" from="Detection_Range" to="." method="_on_detection_range_body_entered"]
+[connection signal="body_exited" from="Detection_Range" to="." method="_on_detection_range_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="FightRange" to="." method="_on_fight_range_body_entered"]
