@@ -49,7 +49,6 @@ func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 
 func _on_area_2d_mouse_entered():
-	#prints("mouse entered at:", name)
 	var tween := create_tween()
 	# prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !defeated:
@@ -57,7 +56,6 @@ func _on_area_2d_mouse_entered():
 		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_ease(Tween.EASE_OUT)
 
 func _on_area_2d_mouse_exited():
-	#prints("mouse exited at:", name)
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
@@ -67,8 +65,6 @@ func preview_attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var detected_enemy = global.enemy_dict.get(target_pos)
-		
-		
 		
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)

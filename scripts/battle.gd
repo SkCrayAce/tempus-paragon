@@ -45,11 +45,11 @@ func _ready():
 	global.battle_won = false
 	animation_timer.timeout.connect(animation_ended)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-	#prints(global.enemy_position)    
+   
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
-				"Type" : "Grass"
+				"Type" : "Battle Area"
 			}
 	start_wave()
 	prints("battle started")
@@ -116,8 +116,6 @@ func start_wave():
 func place_formation():
 	prints("Place formation")
 	var base_position = generate_random_vector()
-	#var formation_positions : Array
-	var spawn_position : Vector2i
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var random_pattern = rng.randi_range(0, 4)
@@ -130,8 +128,7 @@ func place_formation():
 		3 : offset_list = bettany_offset_list
 	
 	for offset in offset_list:
-		spawn_position = base_position + offset as Vector2i
-		#formation_positions.append(spawn_position)
+		var spawn_position = base_position + offset as Vector2i
 		
 		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
 		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
