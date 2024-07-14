@@ -56,6 +56,7 @@ func spawn_enemy(tile_map : TileMap, top_left : Vector2i, bottom_right : Vector2
 	var random_position = tile_map.map_to_local(generate_random_vector(top_leftmost_spawn_coords, bottom_rightmost_spawn_coords))
 	virulent_instance.position = random_position
 	add_child(virulent_instance)
+	pass
 
 	
 func despawn_enemy(enemy_instance : CharacterBody2D):
@@ -63,5 +64,8 @@ func despawn_enemy(enemy_instance : CharacterBody2D):
 	global.battle_won = false
 
 func player_entry_animation(player_instance, end_position : Vector2):
+	global.player_input_enabled = false
 	tween = create_tween()
 	tween.tween_property(player_instance, "position", end_position, 1)
+	await get_tree().create_timer(1).timeout
+	global.player_input_enabled = true

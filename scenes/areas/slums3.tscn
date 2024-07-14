@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
+[gd_scene load_steps=13 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_rlgrv"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_g78kc"]
+[ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_8r5dt"]
 
 [sub_resource type="Gradient" id="Gradient_jcj7u"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -32,6 +33,9 @@ gradient = SubResource("Gradient_vgku4")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_prri2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="slums3" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_41wgy")
@@ -39,6 +43,7 @@ top_leftmost_spawn_coords = Vector2i(13, 10)
 bottom_rightmost_spawn_coords = Vector2i(29, 14)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("1_hb4mb")]
 anchors_preset = 0
@@ -145,6 +150,128 @@ position = Vector2(315, 3)
 
 [node name="PlayerAnimationEnd" type="Marker2D" parent="."]
 position = Vector2(315, 37)
+
+[node name="Smokes" type="Node" parent="."]
+
+[node name="Smoke" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(153, 215)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke2" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(233, 279)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke3" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(329, 246)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke4" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(537, 263)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke5" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(617, 167)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke6" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(233, 54)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke7" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(137, 38)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
+
+[node name="Smoke8" type="CPUParticles2D" parent="Smokes"]
+z_index = 3
+position = Vector2(601, 6)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_8r5dt")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_prri2")
 
 [editable path="Door"]
 [editable path="Door2"]

@@ -46,7 +46,7 @@ func get_input():
 
 func player_movement(delta):
 	input = get_input()
-	
+
 	if input == Vector2.ZERO:
 		#if velocity.length() > (friction * delta):
 			#velocity -= velocity.normalized() * (friction * delta)
@@ -58,20 +58,21 @@ func player_movement(delta):
 	
 	move_and_slide()
 	
-	if Input.is_action_pressed("ui_right"):
-		current_dir = "right"
-		play_anim(1)
-	elif Input.is_action_pressed("ui_left"):
-		current_dir = "left"
-		play_anim(1)
-	elif Input.is_action_pressed("ui_down"):
-		current_dir = "down"
-		play_anim(1)
-	elif Input.is_action_pressed("ui_up"):
-		current_dir = "up"
-		play_anim(1)
-	else:
-		play_anim(0)
+	if global.player_input_enabled == true:
+		if Input.is_action_pressed("ui_right"):
+			current_dir = "right"
+			play_anim(1)
+		elif Input.is_action_pressed("ui_left"):
+			current_dir = "left"
+			play_anim(1)
+		elif Input.is_action_pressed("ui_down"):
+			current_dir = "down"
+			play_anim(1)
+		elif Input.is_action_pressed("ui_up"):
+			current_dir = "up"
+			play_anim(1)
+		else:
+			play_anim(0)
 
 func play_anim(movement):
 	var dir = current_dir

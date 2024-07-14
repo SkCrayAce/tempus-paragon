@@ -13,7 +13,7 @@ func _ready():
 		add_child(player_instance)
 		super.player_entry_animation(player_instance, player_animation_end.position)
 		
-		for i in range(4):
+		for i in randi_range(3, 5):
 			super.spawn_enemy(tile_map, top_leftmost_spawn_coords, bottom_rightmost_spawn_coords)
 		
 	elif global.battle_won:
