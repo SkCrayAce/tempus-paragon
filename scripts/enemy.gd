@@ -9,6 +9,7 @@ const BattleNode = preload("res://scripts/battle.gd")
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
+@onready var effect = $Effect
 
 var health : int
 var player_chase = false
@@ -39,7 +40,7 @@ func _ready():
 	healthbar.value = health
 	#global.add_enemy(current_map_position, self)
 
-	anim.play("idle")
+	anim.play("side_idle_left")
 	
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
@@ -54,10 +55,10 @@ func action():
 	current_map_position = tile_map.local_to_map(position)
 
 func hit(damage : int):
+	effect.play("hit_flash")
 	healthbar.value -= damage
 	if healthbar.value <= 0:
 		is_defeated = true
-		anim.flip_h = false
 		anim.play("death")
 		global.delete_enemy(current_map_position)
 		remove_from_group("enemies")
@@ -77,7 +78,6 @@ func move_animation():
 	is_waiting = false
 	
 	tween = create_tween()
-	anim.flip_h = true
 	anim.stop()
 	anim.play("walk", 2.2)
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
@@ -92,7 +92,7 @@ func stop_animation():
 		anim.play("attack")
 		return
 		
-	anim.play("idle")
+	anim.play("side_idle_left")
 	
 func attack_character():
 	var kai_aligned = current_map_position.y in kai_hitbox
@@ -109,7 +109,6 @@ func attack_character():
 	if bettany_aligned : bettany.take_damage(attack_damage)
 	
 	anim.pause()
-	anim.flip_h = false
 	anim.play("attack")
 	
 func is_blocked() -> bool:

@@ -1,7 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://b03oo28kniiu7"]
+[gd_scene load_steps=35 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_6jaq7"]
-[ext_resource type="Texture2D" uid="uid://dg0nqhaf8byg3" path="res://tempus_assets/virulent-spritesheet.png" id="2_yfrvh"]
+[ext_resource type="Material" uid="uid://dxuo7x8nqwf5q" path="res://shaders/hit_effect_shader_material.tres" id="2_kaun5"]
+[ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_yfrvh"]
+[ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="4_32egy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3ea"]
 corner_radius_top_left = 10
@@ -76,29 +78,41 @@ region = Rect2(48, 0, 48, 48)
 atlas = ExtResource("2_yfrvh")
 region = Rect2(96, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iiv2u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rp81p"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(0, 144, 48, 48)
+region = Rect2(0, 96, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v81vr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ialp"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(48, 144, 48, 48)
+region = Rect2(48, 96, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n4c13"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ac78"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(96, 144, 48, 48)
+region = Rect2(96, 96, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_srshh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_o755h"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(144, 144, 48, 48)
+region = Rect2(0, 192, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m6wbw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnplh"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(192, 144, 48, 48)
+region = Rect2(48, 192, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p1rg8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygupi"]
 atlas = ExtResource("2_yfrvh")
-region = Rect2(240, 144, 48, 48)
+region = Rect2(96, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1qlr"]
+atlas = ExtResource("2_yfrvh")
+region = Rect2(144, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m1go"]
+atlas = ExtResource("2_yfrvh")
+region = Rect2(192, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snjlh"]
+atlas = ExtResource("2_yfrvh")
+region = Rect2(240, 192, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6nsju"]
 animations = [{
@@ -164,27 +178,78 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_iiv2u")
+"texture": SubResource("AtlasTexture_rp81p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v81vr")
+"texture": SubResource("AtlasTexture_0ialp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n4c13")
+"texture": SubResource("AtlasTexture_8ac78")
+}],
+"loop": true,
+"name": &"side_idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o755h")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_srshh")
+"texture": SubResource("AtlasTexture_fnplh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_m6wbw")
+"texture": SubResource("AtlasTexture_ygupi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p1rg8")
+"texture": SubResource("AtlasTexture_k1qlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m1go")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snjlh")
 }],
 "loop": false,
 "name": &"walk",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_01oad"]
+resource_name = "hit_flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tx1uk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wl8wq"]
+_data = {
+"RESET": SubResource("Animation_tx1uk"),
+"hit_flash": SubResource("Animation_01oad")
+}
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 y_sort_enabled = true
@@ -208,10 +273,16 @@ step = 0.001
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
+material = ExtResource("2_kaun5")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_6nsju")
-animation = &"idle"
+animation = &"walk"
+frame_progress = 1.0
 offset = Vector2(0, -5)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("4_32egy")
 
 [node name="Area2D" type="ColorRect" parent="."]
 visible = false
@@ -226,3 +297,8 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Effect" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wl8wq")
+}

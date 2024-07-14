@@ -1,9 +1,10 @@
-[gd_scene load_steps=69 format=3 uid="uid://bfbclphhqo4h6"]
+[gd_scene load_steps=70 format=3 uid="uid://bfbclphhqo4h6"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l0wft"]
 [ext_resource type="Texture2D" uid="uid://cx7xnvhy3p4hp" path="res://sprites/characters/player.png" id="2_qth4g"]
 [ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="3_32cwt"]
 [ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_6hgmu"]
+[ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="4_ajuoq"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]
 [ext_resource type="PackedScene" uid="uid://47cvcw1uidxf" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
 [ext_resource type="FontFile" uid="uid://blbxp1op7o1yv" path="res://tempus_assets/font/alagard.ttf" id="6_jm0yp"]
@@ -495,6 +496,11 @@ shape = SubResource("RectangleShape2D_vmphf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -6)
+texture = ExtResource("4_ajuoq")
 
 [node name="InteractUI" type="CanvasLayer" parent="."]
 visible = false

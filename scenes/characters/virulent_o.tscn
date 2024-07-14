@@ -1,7 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://c0b8likh8uvor"]
+[gd_scene load_steps=44 format=3 uid="uid://c0b8likh8uvor"]
 
 [ext_resource type="Script" path="res://scripts/virulent_o.gd" id="1_mkmqa"]
 [ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_gkmho"]
+[ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="3_bja2p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_evrff"]
 atlas = ExtResource("2_gkmho")
@@ -336,6 +337,10 @@ autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FightRange"]
 shape = SubResource("CircleShape2D_bxc68")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("3_bja2p")
 
 [connection signal="body_entered" from="Detection_Range" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="Detection_Range" to="." method="_on_detection_range_body_exited"]
