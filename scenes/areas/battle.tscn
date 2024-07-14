@@ -884,21 +884,18 @@ layer_5/tile_data = PackedInt32Array(5, 720899, 8, 6, 851971, 8, 65541, 589825, 
 position = Vector2(120, 13)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_82kpx")
 
 [node name="PointLight2D3" type="PointLight2D" parent="TileMap2"]
 position = Vector2(424, 236)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_82kpx")
 
 [node name="PointLight2D" type="PointLight2D" parent="TileMap2"]
 position = Vector2(183, 238)
 scale = Vector2(0.546875, 0.546875)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_y51p6")
 
 [node name="PointLight2D4" type="PointLight2D" parent="TileMap2"]
@@ -908,6 +905,7 @@ color = Color(1, 1, 0.0352941, 1)
 texture = SubResource("GradientTexture2D_hvymv")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="TileMap2"]
+visible = false
 color = Color(0, 0, 0, 1)
 energy = 0.3
 blend_mode = 2

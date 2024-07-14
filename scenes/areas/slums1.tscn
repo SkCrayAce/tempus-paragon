@@ -85,59 +85,52 @@ layer_5/tile_data = PackedInt32Array(37, 851971, 0, 393255, 983043, 5, 458791, 9
 position = Vector2(215, 31)
 scale = Vector2(0.546875, 0.546875)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_gxpnj")
 
 [node name="PointLight2D2" type="PointLight2D" parent="TileMap"]
 position = Vector2(248, 29)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D3" type="PointLight2D" parent="TileMap"]
 position = Vector2(616, 14)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D4" type="PointLight2D" parent="TileMap"]
 position = Vector2(167, 188)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D6" type="PointLight2D" parent="TileMap"]
 position = Vector2(536, 252)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D7" type="PointLight2D" parent="TileMap"]
 position = Vector2(584, 238)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.5
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D8" type="PointLight2D" parent="TileMap"]
 position = Vector2(601, 7)
 scale = Vector2(0.697265, 0.697265)
 color = Color(0.91486, 0.000683842, 0.915628, 1)
-energy = 0.6
 texture = SubResource("GradientTexture2D_f4wx6")
 
 [node name="PointLight2D5" type="PointLight2D" parent="TileMap"]
 position = Vector2(368, 16)
 scale = Vector2(1.39063, 1)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_cnocb")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2

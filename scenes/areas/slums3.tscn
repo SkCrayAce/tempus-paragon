@@ -1,19 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ygregg6wuaqa"]
+[gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
 [ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_rlgrv"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_g78kc"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_8r5dt"]
-
-[sub_resource type="Gradient" id="Gradient_jcj7u"]
-offsets = PackedFloat32Array(0.0362319, 0.746377)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_f23at"]
-gradient = SubResource("Gradient_jcj7u")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_awyw1"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -81,56 +72,44 @@ layer_5/y_sort_enabled = true
 layer_5/z_index = 1
 layer_5/tile_data = PackedInt32Array(852001, 851971, 268435462, 852000, 917507, 268435462, 852002, 851971, 6, 1114139, 720899, 7, 1114140, 786435, 7, 983060, 983043, 7, 1048596, 983043, 8, 720899, 983043, 5, 786435, 983043, 6, 1114120, 851971, 6, 1114121, 917507, 6, 1114119, 851971, 268435462, 1114118, 917507, 268435462, 1245189, 720899, 8, 1245190, 786435, 8, 1245191, 851971, 8, 196643, 589825, 1, 262179, 589825, 2, 196646, 851971, 268435462, 196645, 917507, 268435462, 262182, 851971, 268435462, 262181, 917507, 268435462, 29, 983043, 5, 65565, 983043, 6, 65547, 983043, 268435461, 131083, 983043, 268435462, 327683, 917507, 6, 327682, 851971, 6, 327681, 851971, 6, 327680, 917507, 268435462)
 
-[node name="PointLight2D" type="PointLight2D" parent="TileMap"]
-position = Vector2(55, 63)
-scale = Vector2(0.546875, 0.546875)
-color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
-texture = SubResource("GradientTexture2D_f23at")
-
 [node name="PointLight2D2" type="PointLight2D" parent="TileMap"]
 position = Vector2(120, 78)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_5jkon")
 
 [node name="PointLight2D7" type="PointLight2D" parent="TileMap"]
 position = Vector2(361, 168)
 scale = Vector2(1.19238, 1.11426)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_5jkon")
 
 [node name="PointLight2D3" type="PointLight2D" parent="TileMap"]
 position = Vector2(504, 111)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_5jkon")
 
 [node name="PointLight2D4" type="PointLight2D" parent="TileMap"]
 position = Vector2(599, 303)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_5jkon")
 
 [node name="PointLight2D5" type="PointLight2D" parent="TileMap"]
 position = Vector2(392, 302)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_5jkon")
 
 [node name="PointLight2D6" type="PointLight2D" parent="TileMap"]
 position = Vector2(193, 318)
 scale = Vector2(1.39063, 1)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_gfxxm")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2

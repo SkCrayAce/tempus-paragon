@@ -87,62 +87,55 @@ layer_5/tile_data = PackedInt32Array(1179662, 720899, 8, 1179663, 786435, 8, 117
 position = Vector2(104, 254)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D4" type="PointLight2D" parent="TileMap"]
 position = Vector2(280, 302)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D8" type="PointLight2D" parent="TileMap"]
 position = Vector2(393, 303)
 scale = Vector2(0.489258, 0.489258)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D5" type="PointLight2D" parent="TileMap"]
 position = Vector2(569, 254)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D" type="PointLight2D" parent="TileMap"]
 position = Vector2(488, 15)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D2" type="PointLight2D" parent="TileMap"]
 position = Vector2(376, 14)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D6" type="PointLight2D" parent="TileMap"]
 position = Vector2(232, 15)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="PointLight2D7" type="PointLight2D" parent="TileMap"]
 position = Vector2(88, 78)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-energy = 0.8
 texture = SubResource("GradientTexture2D_8kl0j")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(0, 0, 0, 1)
 energy = 0.35
 blend_mode = 2
