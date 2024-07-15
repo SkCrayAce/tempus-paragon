@@ -84,7 +84,7 @@ func drop_item(item_data, drop_position):
 	item_instance.global_position = drop_position
 	get_tree().current_scene.add_child(item_instance)
 
-func swap_inventory_items(index1, index2):
+func swap_inventory_items(index1, index2) -> bool:
 	if index1 < 0 or index1 > inventory.size() or index2 < 0 or index2 > inventory.size():
 		return false
 	
