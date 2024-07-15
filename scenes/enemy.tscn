@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b03oo28kniiu7"]
+[gd_scene load_steps=34 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_6jaq7"]
 [ext_resource type="Material" uid="uid://dxuo7x8nqwf5q" path="res://shaders/hit_effect_shader_material.tres" id="2_kaun5"]
@@ -135,7 +135,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xpjcc")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 5.0
 }, {
@@ -230,24 +230,8 @@ tracks/0/keys = {
 "values": [1.0, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_tx1uk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wl8wq"]
 _data = {
-"RESET": SubResource("Animation_tx1uk"),
 "hit_flash": SubResource("Animation_01oad")
 }
 
@@ -277,7 +261,6 @@ material = ExtResource("2_kaun5")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_6nsju")
 animation = &"walk"
-frame_progress = 1.0
 offset = Vector2(0, -5)
 
 [node name="Shadow" type="Sprite2D" parent="."]

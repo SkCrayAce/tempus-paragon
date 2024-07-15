@@ -38,7 +38,6 @@ func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	health = healthbar.max_value
 	healthbar.value = health
-	#global.add_enemy(current_map_position, self)
 
 	anim.play("side_idle_left")
 	
@@ -58,16 +57,17 @@ func hit(damage : int):
 	effect.play("hit_flash")
 	healthbar.value -= damage
 	if healthbar.value <= 0:
-		is_defeated = true
-		anim.play("death")
-		global.delete_enemy(current_map_position)
-		remove_from_group("enemies")
-		await anim.animation_finished
-		anim.stop()
-		emit_signal("enemy_died")
-		queue_free()
+		enemy_defeated()
 		
-		#battle_node.record_enemies()
+func enemy_defeated():
+	is_defeated = true
+	emit_signal("enemy_died")
+	global.delete_enemy(current_map_position)
+	anim.play("death")
+	remove_from_group("enemies")
+	await anim.animation_finished
+	anim.stop()
+	queue_free()
 
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
@@ -83,7 +83,7 @@ func move_animation():
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
-	return
+	prints(current_map_position)
 	
 func stop_animation():
 	if is_instance_valid(tween):
@@ -110,6 +110,7 @@ func attack_character():
 	
 	anim.pause()
 	anim.play("attack")
+	await anim.animation_finished
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)

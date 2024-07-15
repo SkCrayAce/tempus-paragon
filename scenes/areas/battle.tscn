@@ -1,7 +1,6 @@
-[gd_scene load_steps=31 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=30 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
-[ext_resource type="PackedScene" uid="uid://b03oo28kniiu7" path="res://scenes/enemy.tscn" id="2_y3oqw"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_0o1m4"]
@@ -833,7 +832,6 @@ script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
 num_of_forms = 3
-enemy_scene = ExtResource("2_y3oqw")
 x_spawn_range = Array[int]([11, 22])
 y_spawn_range = Array[int]([3, 10])
 

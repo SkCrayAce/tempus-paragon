@@ -4,7 +4,7 @@ extends Node
 @export var grid_length : int
 @export var grid_height : int
 @export var num_of_forms : int
-@export var enemy_scene : PackedScene
+
 @export var x_spawn_range : Array[int]
 @export var y_spawn_range : Array[int]
 
@@ -13,7 +13,7 @@ var dictionary = {}
 var rng
 var count : int
 var waves_cleared : int
-
+var enemy_scene := preload("res://scenes/enemy.tscn")
 
 const EnemyScript = preload("res://scripts/enemy.gd")
 
