@@ -1,6 +1,6 @@
 [gd_scene load_steps=60 format=3 uid="uid://b03oo28kniiu7"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_6jaq7"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_she7g"]
 [ext_resource type="Material" uid="uid://dxuo7x8nqwf5q" path="res://shaders/hit_effect_shader_material.tres" id="2_kaun5"]
 [ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_yfrvh"]
 [ext_resource type="Texture2D" uid="uid://reo6tk4fg7hu" path="res://tempus_assets/virulent2_spritesheet.png" id="4_2bnli"]
@@ -417,12 +417,7 @@ _data = {
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 y_sort_enabled = true
-script = ExtResource("1_6jaq7")
-attack_damage = 100
-kai_hitbox = Array[int]([4, 5])
-emerald_hitbox = Array[int]([6, 7])
-tyrone_hitbox = Array[int]([8, 9])
-bettany_hitbox = Array[int]([10, 11])
+script = ExtResource("1_she7g")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -9.0

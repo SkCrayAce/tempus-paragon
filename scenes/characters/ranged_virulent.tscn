@@ -217,7 +217,7 @@ _data = {
 "hit_flash": SubResource("Animation_01oad")
 }
 
-[node name="RangedVirulent" type="CharacterBody2D"]
+[node name="RangedVirulent" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_drbov")
 attack_damage = 100
 
@@ -236,7 +236,6 @@ step = 0.001
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_xgubh")
 animation = &"side_idle_left"
-frame_progress = 0.233362
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = -1

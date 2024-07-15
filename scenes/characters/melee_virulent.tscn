@@ -223,7 +223,7 @@ _data = {
 "hit_flash": SubResource("Animation_01oad")
 }
 
-[node name="MeleeVirulent" type="CharacterBody2D"]
+[node name="MeleeVirulent" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_87lo2")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -238,7 +238,6 @@ max_value = 3000.0
 step = 0.001
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
-visible = false
 y_sort_enabled = true
 material = ExtResource("1_fi7od")
 position = Vector2(0, -5)

@@ -115,8 +115,8 @@ func delete_enemy(map_position_key : Vector2i):
 	enemy_dict.erase(map_position_key)
 
 func add_enemy(map_position_key : Vector2i, enemy_ref : CharacterBody2D):
-	var enemy_reference = enemy_ref as EnemyBody
+	var enemy_reference = enemy_ref as CharacterBody2D
 	enemy_dict[map_position_key] = enemy_reference
 	
-func get_enemy(map_position_key : Vector2i) -> EnemyBody:
+func get_enemy(map_position_key : Vector2i) -> CharacterBody2D:
 	return enemy_dict.get(map_position_key)

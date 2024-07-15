@@ -13,8 +13,6 @@ var waves_cleared : int
 
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
-
-const EnemyScript = preload("res://scripts/enemy.gd")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -130,7 +128,7 @@ func place_formation():
 	for offset in current_offset_list:
 		var spawn_position = base_position + offset as Vector2i
 		
-		var x_valid = spawn_position.x in range(top_left_tile.x, bottom_right_tile.x + 1) 
+		var x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x + 1) 
 		var y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
 		
 		if spawn_position in global.enemy_dict:
@@ -145,10 +143,12 @@ func place_formation():
 		
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = tilemap.map_to_local(spawn_position)
+	
 	if current_offset_list == kai_offset_list or current_offset_list == bettany_offset_list:
-		enemy_instance = melee_enemy_scene.instantiate() as CharacterBody2D
-	else:
 		enemy_instance = ranged_enemy_scene.instantiate() as CharacterBody2D
+	else:
+		enemy_instance = melee_enemy_scene.instantiate() as CharacterBody2D
+		
 	enemy_list.append(enemy_instance)
 	enemy_instance.position = enemy_local_pos
 	enemy_instance.z_index = enemy_local_pos.y
