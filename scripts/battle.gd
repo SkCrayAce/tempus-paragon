@@ -3,7 +3,7 @@ extends Node
 
 @export var grid_length : int
 @export var grid_height : int
-@export var num_of_forms : int
+@export var num_of_patterns : int
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
@@ -20,6 +20,7 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
+
 
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -110,7 +111,7 @@ func start_wave():
 	used_vectors.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	
-	while count < num_of_forms:
+	while count < num_of_patterns:
 		place_formation()
 		
 func place_formation():
@@ -127,9 +128,15 @@ func place_formation():
 	
 	for offset in current_offset_list:
 		var spawn_position = base_position + offset as Vector2i
+		var x_valid : bool
+		var y_valid : bool
 		
-		var x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x + 1) 
-		var y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
+		if current_offset_list == kai_offset_list or current_offset_list == bettany_offset_list:
+			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x + 1) 
+			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
+		elif current_offset_list == emerald_offset_list or current_offset_list == tyrone_offset_list:
+			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x + 1) 
+			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
 		
 		if spawn_position in global.enemy_dict:
 			prints("intersect exists")

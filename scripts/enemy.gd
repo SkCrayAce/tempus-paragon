@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
 @export var attack_damage : int
+@export var attack_range : int
+@export var animated_sprite : AnimatedSprite2D
 
 const BattleNode = preload("res://scripts/battle.gd")
-
 
 @onready var healthbar = $HealthBar as ProgressBar
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var effect = $Effect as AnimationPlayer
-var used_animated_sprite : AnimatedSprite2D
 
 var health : int
 var player_chase = false
@@ -21,33 +21,41 @@ var is_waiting : bool
 var current_map_position : Vector2i
 var tween : Tween
 var new_position : Vector2
+var anim_sprite_frame
 
 @onready var kai = get_node("../../VBoxContainer/kai") as Node2D
 @onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
 @onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
 @onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
 
-
-@export var kai_hitbox : Array[int]
-@export var emerald_hitbox : Array[int]
-@export var tyrone_hitbox : Array[int]
-@export var bettany_hitbox : Array[int]
+var kai_hitbox : Array[int]
+var emerald_hitbox : Array[int]
+var tyrone_hitbox : Array[int]
+var bettany_hitbox : Array[int]
 
 signal enemy_died
 
 func _ready():
-	current_map_position = tile_map.local_to_map(position)
+	var top_left_tile = battle_node.top_left_tile
+	
+	kai_hitbox = [top_left_tile.y, top_left_tile.y + 1]
+	emerald_hitbox  = [top_left_tile.y + 2, top_left_tile.y + 3]
+	tyrone_hitbox = [top_left_tile.y + 4, top_left_tile.y + 5]
+	bettany_hitbox = [top_left_tile.y + 6, top_left_tile.y + 7]
+
 	health = healthbar.max_value
 	healthbar.value = health
+	animated_sprite.play("side_idle_left")
 
-	
-	
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
+	anim_sprite_frame = animated_sprite.frame
+	prints(anim_sprite_frame)
 
 func action():
 	if is_defeated: return
-	elif current_map_position.x == 9 or is_attacking:
+	
+	elif within_attack_range() or is_attacking:
 		attack_character()
 		return
 
@@ -64,23 +72,21 @@ func enemy_defeated():
 	is_defeated = true
 	emit_signal("enemy_died")
 	global.delete_enemy(current_map_position)
-	#melee_animated_sprite.play("death")
+	animated_sprite.play("death")
 	remove_from_group("enemies")
-	#await melee_animated_sprite.animation_finished
-	#melee_animated_sprite.stop()
+	await animated_sprite.animation_finished
+	animated_sprite.stop()
 	queue_free()
 
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
 	var new_map_position = tile_map.local_to_map(new_position)
 	
-	if is_blocked(): return
-	
-	is_waiting = false
+	if is_blocked() or is_attacking: return
 	
 	tween = create_tween()
-	#melee_animated_sprite.stop()
-	#melee_animated_sprite.play("walk", 2.2)
+	animated_sprite.stop()
+	animated_sprite.play("walk", 2.2)
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
@@ -89,10 +95,10 @@ func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
-		#melee_animated_sprite.play("attack")
+		animated_sprite.play("attack")
 		return
 		
-	#melee_animated_sprite.play("side_idle_left")
+	animated_sprite.play("side_idle_left")
 	
 func attack_character():
 	var kai_aligned = current_map_position.y in kai_hitbox
@@ -101,19 +107,19 @@ func attack_character():
 	var bettany_aligned = current_map_position.y in bettany_hitbox
 	is_attacking = true
 	
-	if current_map_position.x != 9: return
+	if not within_attack_range(): return
 	
-	#melee_animated_sprite.pause()
-	#melee_animated_sprite.play("attack")
+	animated_sprite.pause()
+	animated_sprite.play("attack")
 	
 	
-	#if melee_animated_sprite.frame == 4:
 	if kai_aligned : kai.take_damage(attack_damage)
 	if emerald_aligned : emerald.take_damage(attack_damage)
 	if tyrone_aligned : tyrone.take_damage(attack_damage)
 	if bettany_aligned : bettany.take_damage(attack_damage)
 		
-	#await melee_animated_sprite.animation_finished
+	await animated_sprite.animation_finished
+	prints(animated_sprite.frame)
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)
@@ -123,5 +129,11 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 		
-	return next_map_position.x < 9
-			
+	return next_map_position.x < battle_node.top_left_tile.x
+		
+func within_attack_range() -> bool:
+	if abs(battle_node.top_left_tile.x - current_map_position.x) <= attack_range:
+		return true
+	else:
+		return false
+	

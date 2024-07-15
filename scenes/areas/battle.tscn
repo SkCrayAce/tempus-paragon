@@ -831,7 +831,7 @@ sources/4 = SubResource("TileSetAtlasSource_s5ets")
 script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
-num_of_forms = 3
+num_of_patterns = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -1063,13 +1063,15 @@ zoom = Vector2(3, 3)
 metadata/_edit_lock_ = true
 
 [node name="EnemyMoveTimer" type="Timer" parent="."]
-wait_time = 4.0
 one_shot = true
 autostart = true
 
 [node name="AnimationTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="AttackRange" type="Marker2D" parent="."]
+position = Vector2(264, 43)
 
 [connection signal="timeout" from="EnemyMoveTimer" to="." method="_on_enemy_move_timer_timeout"]
 

@@ -15,8 +15,8 @@ var mouse_map_position : Vector2
 @export var min_hover_y : int
 @export var max_hover_y : int
 
-const MeleeEnemyScript = preload("res://scripts/melee_virulent.gd")
-const RangedEnemyScript = preload("res://scripts/ranged_virulent.gd")
+const EnemyScript = preload("res://scripts/enemy.gd")
+
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
@@ -74,7 +74,7 @@ func preview_attack_AoE(hovered_tile, offset_list):
 			hover_active = false
 		
 		if Input.is_action_just_released("left_click"):
-			var valid_enemy = detected_enemy is MeleeEnemyScript or detected_enemy is RangedEnemyScript
+			var valid_enemy = detected_enemy is EnemyScript
 			if is_instance_valid(detected_enemy) and valid_enemy:
 				drop_attack(detected_enemy)
 			

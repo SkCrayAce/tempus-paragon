@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=3 uid="uid://bm5tegqqijldj"]
 
-[ext_resource type="Script" path="res://scripts/melee_virulent.gd" id="1_87lo2"]
 [ext_resource type="Material" uid="uid://dxuo7x8nqwf5q" path="res://shaders/hit_effect_shader_material.tres" id="1_fi7od"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_hihgw"]
 [ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_wldsa"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="3_one7t"]
 
@@ -137,7 +137,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -223,8 +223,10 @@ _data = {
 "hit_flash": SubResource("Animation_01oad")
 }
 
-[node name="MeleeVirulent" type="CharacterBody2D" groups=["enemies"]]
-script = ExtResource("1_87lo2")
+[node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
+script = ExtResource("1_hihgw")
+attack_damage = 50
+animated_sprite = NodePath("MeleeAnimatedSprite")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -9.0
