@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=10 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qeil2"]
-[ext_resource type="Texture2D" uid="uid://dwjk7fht6fcp2" path="res://sprites/textures/black_tile.png" id="2_0vgpc"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_rw15f"]
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="3_y1w7v"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_urski"]
+atlas = ExtResource("2_rw15f")
+region = Rect2(160, 0, 64, 48)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
-size = Vector2(100, 100)
+size = Vector2(196, 100)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_helk3"]
 bg_color = Color(0, 0.2, 0.2, 1)
@@ -21,6 +25,14 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmgi3"]
+atlas = ExtResource("2_rw15f")
+region = Rect2(160, 48, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btn4u"]
+atlas = ExtResource("2_rw15f")
+region = Rect2(160, 80, 64, 16)
+
 [node name="character_icon" type="Node2D"]
 script = ExtResource("1_qeil2")
 attack_damage = 1000
@@ -28,6 +40,27 @@ min_hover_x = 9
 max_hover_x = 22
 min_hover_y = 3
 max_hover_y = 10
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(200, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -51.0
+offset_right = 100.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_urski")
+region_rect = Rect2(0, 0, 64, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 metadata/_edit_lock_ = true
@@ -49,11 +82,12 @@ layout_mode = 3
 anchors_preset = 0
 metadata/_edit_lock_ = true
 
-[node name="HealthBar" type="ProgressBar" parent="Control"]
+[node name="HealthBarOld" type="ProgressBar" parent="Control"]
+visible = false
 layout_mode = 0
-offset_left = -50.0
+offset_left = -98.0
 offset_top = 52.0
-offset_right = 50.0
+offset_right = 99.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 10
 theme_override_styles/background = SubResource("StyleBoxFlat_helk3")
@@ -81,11 +115,9 @@ step = 0.01
 value = 60.0
 fill_mode = 5
 nine_patch_stretch = true
-texture_under = ExtResource("2_0vgpc")
 texture_progress = ExtResource("3_y1w7v")
 tint_under = Color(1, 1, 1, 0.501961)
 tint_progress = Color(1, 1, 1, 0.490196)
-metadata/_edit_lock_ = true
 
 [node name="DefeatFilter" type="ColorRect" parent="Control"]
 visible = false
@@ -95,13 +127,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = -95.0
+offset_top = -46.0
+offset_right = 95.0
+offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.470588)
+metadata/_edit_lock_ = true
+
+[node name="HealthBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -99.0
+offset_top = 52.0
+offset_right = 99.0
+offset_bottom = 75.0
+max_value = 1000.0
+step = 0.001
+nine_patch_stretch = true
+stretch_margin_left = 4
+stretch_margin_top = 7
+stretch_margin_right = 4
+stretch_margin_bottom = 7
+texture_under = SubResource("AtlasTexture_hmgi3")
+texture_progress = SubResource("AtlasTexture_btn4u")
 metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
