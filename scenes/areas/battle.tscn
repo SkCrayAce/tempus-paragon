@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=36 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
@@ -17,8 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
 [ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
-[ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="18_ive0k"]
-[ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="19_6ux0w"]
+[ext_resource type="PackedScene" uid="uid://do2rfqob42c1l" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
 atlas = ExtResource("3_ypaqq")
@@ -837,42 +836,6 @@ sources/2 = SubResource("TileSetAtlasSource_hp3yx")
 sources/3 = SubResource("TileSetAtlasSource_ry1ya")
 sources/4 = SubResource("TileSetAtlasSource_s5ets")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ykcob"]
-atlas = ExtResource("18_ive0k")
-region = Rect2(0, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7p63k"]
-atlas = ExtResource("18_ive0k")
-region = Rect2(48, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0cjbk"]
-atlas = ExtResource("18_ive0k")
-region = Rect2(96, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q7ijh"]
-atlas = ExtResource("18_ive0k")
-region = Rect2(144, 48, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kmimj"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ykcob")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7p63k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0cjbk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q7ijh")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
-
 [node name="Battle" type="Node"]
 script = ExtResource("1_30h06")
 grid_length = 120
@@ -1157,49 +1120,14 @@ texture = ExtResource("13_lbq7u")
 
 [node name="Characters" type="Node2D" parent="."]
 
-[node name="Kai" type="AnimatedSprite2D" parent="Characters"]
-position = Vector2(128, 61)
-sprite_frames = SubResource("SpriteFrames_kmimj")
-animation = &"idle"
-frame_progress = 0.819203
+[node name="kai" parent="Characters" instance=ExtResource("18_r0bk5")]
+position = Vector2(134, 69)
 
-[node name="Shadow" type="Sprite2D" parent="Characters/Kai"]
-z_index = -1
-position = Vector2(0, 10)
-texture = ExtResource("19_6ux0w")
+[node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
+metadata/_edit_lock_ = true
 
-[node name="Emerald" type="AnimatedSprite2D" parent="Characters"]
-position = Vector2(128, 91)
-sprite_frames = SubResource("SpriteFrames_kmimj")
-animation = &"idle"
-frame_progress = 0.145949
-
-[node name="Shadow" type="Sprite2D" parent="Characters/Emerald"]
-z_index = -1
-position = Vector2(0, 10)
-texture = ExtResource("19_6ux0w")
-
-[node name="Tyrone" type="AnimatedSprite2D" parent="Characters"]
-position = Vector2(128, 121)
-sprite_frames = SubResource("SpriteFrames_kmimj")
-animation = &"idle"
-frame_progress = 0.145949
-
-[node name="Shadow" type="Sprite2D" parent="Characters/Tyrone"]
-z_index = -1
-position = Vector2(0, 10)
-texture = ExtResource("19_6ux0w")
-
-[node name="Bettany" type="AnimatedSprite2D" parent="Characters"]
-position = Vector2(128, 151)
-sprite_frames = SubResource("SpriteFrames_kmimj")
-animation = &"idle"
-frame_progress = 0.145949
-
-[node name="Shadow" type="Sprite2D" parent="Characters/Bettany"]
-z_index = -1
-position = Vector2(0, 10)
-texture = ExtResource("19_6ux0w")
+[node name="Shadow" parent="Characters/kai" index="1"]
+metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
@@ -1225,3 +1153,4 @@ one_shot = true
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]
 [editable path="VBoxContainer/bettany"]
+[editable path="Characters/kai"]

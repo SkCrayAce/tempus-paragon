@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dxuo7x8nqwf5q"]
 
-[ext_resource type="Shader" path="res://shaders/enemy_effect.gdshader" id="1_lrmgp"]
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="1_lrmgp"]
 
 [resource]
 resource_local_to_scene = true
