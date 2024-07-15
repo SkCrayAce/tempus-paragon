@@ -5,17 +5,18 @@ extends Node
 @export var grid_height : int
 @export var num_of_forms : int
 
-@export var x_spawn_range : Array[int]
-@export var y_spawn_range : Array[int]
-
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 var rng
 var count : int
 var waves_cleared : int
-var enemy_scene := preload("res://scenes/enemy.tscn")
+
+const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
+const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
 
 const EnemyScript = preload("res://scripts/enemy.gd")
+const top_left_tile = Vector2i(9, 3)
+const bottom_right_tile = Vector2i(23, 10)
 
 @onready var enemy_move_timer = $EnemyMoveTimer as Timer
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
@@ -27,6 +28,7 @@ var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
+var current_offset_list : Array
 
 
 @onready var kai = $VBoxContainer/kai
@@ -114,24 +116,22 @@ func start_wave():
 		place_formation()
 		
 func place_formation():
-	prints("Place formation")
 	var base_position = generate_random_vector()
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 4)
-	var offset_list : Array	
+	var random_pattern = rng.randi_range(0, 4)	
 	
 	match random_pattern:
-		0 : offset_list = kai_offset_list
-		1 : offset_list = emerald_offset_list
-		2 : offset_list = tyrone_offset_list
-		3 : offset_list = bettany_offset_list
+		0 : current_offset_list = kai_offset_list
+		1 : current_offset_list = emerald_offset_list
+		2 : current_offset_list = tyrone_offset_list
+		3 : current_offset_list = bettany_offset_list
 	
-	for offset in offset_list:
+	for offset in current_offset_list:
 		var spawn_position = base_position + offset as Vector2i
 		
-		var x_valid = spawn_position.x in range(x_spawn_range.min(), x_spawn_range.max() + 1) 
-		var y_valid = spawn_position.y in range(y_spawn_range.min(), y_spawn_range.max() + 1) 
+		var x_valid = spawn_position.x in range(top_left_tile.x, bottom_right_tile.x + 1) 
+		var y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
 		
 		if spawn_position in global.enemy_dict:
 			prints("intersect exists")
@@ -145,7 +145,10 @@ func place_formation():
 		
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = tilemap.map_to_local(spawn_position)
-	enemy_instance = enemy_scene.instantiate() as CharacterBody2D
+	if current_offset_list == kai_offset_list or current_offset_list == bettany_offset_list:
+		enemy_instance = melee_enemy_scene.instantiate() as CharacterBody2D
+	else:
+		enemy_instance = ranged_enemy_scene.instantiate() as CharacterBody2D
 	enemy_list.append(enemy_instance)
 	enemy_instance.position = enemy_local_pos
 	enemy_instance.z_index = enemy_local_pos.y
@@ -178,8 +181,8 @@ func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
 	while true:
 		rng.randomize()
-		var random_x = rng.randi_range(x_spawn_range.min(), x_spawn_range.max())
-		var random_y = rng.randi_range(y_spawn_range.min(), y_spawn_range.max())
+		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x + 1) 
+		var random_y = rng.randi_range(top_left_tile.y, bottom_right_tile.y + 1) 
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if not used_vectors.has(random_vector):

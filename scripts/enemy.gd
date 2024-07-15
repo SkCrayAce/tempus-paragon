@@ -4,12 +4,15 @@ extends CharacterBody2D
 
 const BattleNode = preload("res://scripts/battle.gd")
 
-@onready var anim = $AnimatedSprite2D as AnimatedSprite2D
+
 @onready var healthbar = $HealthBar as ProgressBar
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
-@onready var effect = $Effect
+@onready var effect = $Effect as AnimationPlayer
+@onready var melee_animated_sprite = $MeleeAnimatedSprite as AnimatedSprite2D
+@onready var ranged_animated_sprite = $RangedAnimatedSprite as AnimatedSprite2D
+var used_animated_sprite : AnimatedSprite2D
 
 var health : int
 var player_chase = false
@@ -39,9 +42,10 @@ func _ready():
 	health = healthbar.max_value
 	healthbar.value = health
 
-	anim.play("side_idle_left")
+	melee_animated_sprite.play("side_idle_left")
 	
 func _process(delta):
+	prints(melee_animated_sprite.frame)
 	current_map_position = tile_map.local_to_map(position)
 
 func action():
@@ -63,10 +67,10 @@ func enemy_defeated():
 	is_defeated = true
 	emit_signal("enemy_died")
 	global.delete_enemy(current_map_position)
-	anim.play("death")
+	melee_animated_sprite.play("death")
 	remove_from_group("enemies")
-	await anim.animation_finished
-	anim.stop()
+	await melee_animated_sprite.animation_finished
+	melee_animated_sprite.stop()
 	queue_free()
 
 func move_animation():
@@ -78,21 +82,20 @@ func move_animation():
 	is_waiting = false
 	
 	tween = create_tween()
-	anim.stop()
-	anim.play("walk", 2.2)
+	melee_animated_sprite.stop()
+	melee_animated_sprite.play("walk", 2.2)
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
-	prints(current_map_position)
 	
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
-		anim.play("attack")
+		melee_animated_sprite.play("attack")
 		return
 		
-	anim.play("side_idle_left")
+	melee_animated_sprite.play("side_idle_left")
 	
 func attack_character():
 	var kai_aligned = current_map_position.y in kai_hitbox
@@ -103,14 +106,17 @@ func attack_character():
 	
 	if current_map_position.x != 9: return
 	
-	if kai_aligned : kai.take_damage(attack_damage)
-	if emerald_aligned : emerald.take_damage(attack_damage)
-	if tyrone_aligned : tyrone.take_damage(attack_damage)
-	if bettany_aligned : bettany.take_damage(attack_damage)
+	melee_animated_sprite.pause()
+	melee_animated_sprite.play("attack")
 	
-	anim.pause()
-	anim.play("attack")
-	await anim.animation_finished
+	
+	if melee_animated_sprite.frame == 4:
+		if kai_aligned : kai.take_damage(attack_damage)
+		if emerald_aligned : emerald.take_damage(attack_damage)
+		if tyrone_aligned : tyrone.take_damage(attack_damage)
+		if bettany_aligned : bettany.take_damage(attack_damage)
+		
+	await melee_animated_sprite.animation_finished
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)

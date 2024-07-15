@@ -832,8 +832,6 @@ script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
 num_of_forms = 3
-x_spawn_range = Array[int]([11, 22])
-y_spawn_range = Array[int]([3, 10])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
