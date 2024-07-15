@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b03oo28kniiu7"]
+[gd_scene load_steps=63 format=3 uid="uid://b03oo28kniiu7"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_she7g"]
 [ext_resource type="Material" uid="uid://dxuo7x8nqwf5q" path="res://shaders/hit_effect_shader_material.tres" id="2_kaun5"]

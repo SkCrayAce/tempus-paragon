@@ -11,7 +11,7 @@ const BattleNode = preload("res://scripts/battle.gd")
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
-@onready var effect = $Effect as AnimationPlayer
+@onready var effect = $AnimationPlayer as AnimationPlayer
 
 var health : int
 var player_chase = false
