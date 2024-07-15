@@ -17,7 +17,6 @@ var mouse_map_position : Vector2
 
 const EnemyScript = preload("res://scripts/enemy.gd")
 
-
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
 @onready var sprite = $Sprite2D
@@ -74,8 +73,7 @@ func preview_attack_AoE(hovered_tile, offset_list):
 			hover_active = false
 		
 		if Input.is_action_just_released("left_click"):
-			var valid_enemy = detected_enemy is EnemyScript
-			if is_instance_valid(detected_enemy) and valid_enemy:
+			if is_instance_valid(detected_enemy) and detected_enemy is EnemyScript:
 				drop_attack(detected_enemy)
 			
 			if hover_active:
