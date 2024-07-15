@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=3 uid="uid://cbbigy34cyy77"]
+
+[ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="1_b8fap"]
+[ext_resource type="Script" path="res://scripts/ability_panel.gd" id="1_b11cn"]
+[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="1_mnwur"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_maaoy"]
+[ext_resource type="FontFile" uid="uid://hdche2nivxw2" path="res://tempus_assets/font/Alkhemikal.ttf" id="3_r4pq6"]
+[ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_7pkx6"]
+[ext_resource type="Texture2D" uid="uid://bp4nweo24u3vx" path="res://tempus_assets/chibi heads/kai_chibi_head.png" id="6_uttqa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0io6"]
+atlas = ExtResource("1_b8fap")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n1u4k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_35x3o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cf615"]
+atlas = ExtResource("1_mnwur")
+region = Rect2(40, 88, 176, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt1t7"]
+atlas = ExtResource("2_maaoy")
+region = Rect2(32, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a28th"]
+atlas = ExtResource("2_maaoy")
+region = Rect2(0, 48, 32, 32)
+
+[node name="AbilityPanel" type="TextureRect"]
+custom_minimum_size = Vector2(80, 50)
+texture = SubResource("AtlasTexture_d0io6")
+script = ExtResource("1_b11cn")
+
+[node name="UseAbilityBtn" type="Button" parent="."]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 50.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n1u4k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_35x3o")
+
+[node name="AbilityIcon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(41, 25)
+scale = Vector2(0.321023, 0.295455)
+texture = SubResource("AtlasTexture_cf615")
+
+[node name="DetailsPanel" type="NinePatchRect" parent="."]
+visible = false
+z_index = 5
+layout_mode = 0
+offset_left = -10.0
+offset_top = -15.0
+offset_right = 90.0
+offset_bottom = 25.0
+texture = SubResource("AtlasTexture_kt1t7")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="AbilityName" type="Label" parent="DetailsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 176.0
+offset_bottom = 23.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("3_r4pq6")
+text = "Slow Down"
+
+[node name="AbilityDescription" type="Label" parent="DetailsPanel"]
+custom_minimum_size = Vector2(840, 170)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 848.0
+offset_bottom = 186.0
+scale = Vector2(0.1, 0.1)
+theme_override_fonts/font = ExtResource("4_7pkx6")
+theme_override_font_sizes/font_size = 40
+text = "This ability causes testicular torsion to everyone in a 10 mile radius"
+autowrap_mode = 3
+
+[node name="HeadContainer" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_top = 20.0
+offset_right = 30.0
+offset_bottom = 50.0
+texture = SubResource("AtlasTexture_a28th")
+
+[node name="Sprite2D" type="Sprite2D" parent="HeadContainer"]
+position = Vector2(15, 15)
+scale = Vector2(0.84375, 0.84375)
+texture = ExtResource("6_uttqa")
+offset = Vector2(0, -1)
+
+[connection signal="mouse_entered" from="UseAbilityBtn" to="." method="_on_use_ability_btn_mouse_entered"]
+[connection signal="mouse_exited" from="UseAbilityBtn" to="." method="_on_use_ability_btn_mouse_exited"]

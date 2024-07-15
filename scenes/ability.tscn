@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://73eipjppxth6"]
+
+[ext_resource type="Script" path="res://scripts/ability.gd" id="1_bajlg"]
+
+[node name="ability" type="Node2D" groups=["Ability"]]
+script = ExtResource("1_bajlg")
+ability_by = null
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
