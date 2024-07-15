@@ -5,11 +5,11 @@ extends CharacterBody2D
 const BattleNode = preload("res://scripts/battle.gd")
 
 @onready var anim = $AnimatedSprite2D as AnimatedSprite2D
-@onready var healthbar = $HealthBar as ProgressBar
+@onready var healthbar = $HealthBar as TextureProgressBar
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
-@onready var effect = $Effect
+@onready var effect = $Effect as AnimationPlayer
 
 var health : int
 var player_chase = false

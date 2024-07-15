@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iwbnr"]
 atlas = ExtResource("1_e4lfn")
-region = Rect2(0, 41, 256, 39)
+region = Rect2(0, 40, 256, 40)
 
 [node name="AbilitiesContainer" type="TextureRect"]
 offset_left = 8.0

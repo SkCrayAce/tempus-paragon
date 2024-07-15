@@ -31,7 +31,7 @@ region = Rect2(160, 48, 64, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_btn4u"]
 atlas = ExtResource("2_rw15f")
-region = Rect2(160, 80, 64, 16)
+region = Rect2(160, 64, 64, 16)
 
 [node name="character_icon" type="Node2D"]
 script = ExtResource("1_qeil2")
