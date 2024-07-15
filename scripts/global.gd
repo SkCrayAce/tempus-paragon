@@ -84,7 +84,7 @@ func drop_item(item_data, drop_position):
 	item_instance.global_position = drop_position
 	get_tree().current_scene.add_child(item_instance)
 
-func swap_inventory_items(index1, index2):
+func swap_inventory_items(index1, index2) -> bool:
 	if index1 < 0 or index1 > inventory.size() or index2 < 0 or index2 > inventory.size():
 		return false
 	
@@ -115,8 +115,8 @@ func delete_enemy(map_position_key : Vector2i):
 	enemy_dict.erase(map_position_key)
 
 func add_enemy(map_position_key : Vector2i, enemy_ref : CharacterBody2D):
-	var enemy_reference = enemy_ref as EnemyBody
+	var enemy_reference = enemy_ref as CharacterBody2D
 	enemy_dict[map_position_key] = enemy_reference
 	
-func get_enemy(map_position_key : Vector2i) -> EnemyBody:
+func get_enemy(map_position_key : Vector2i) -> CharacterBody2D:
 	return enemy_dict.get(map_position_key)
