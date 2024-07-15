@@ -2,7 +2,7 @@ extends Node2D
 
 var draggable : bool = false
 var on_cooldown : bool = false
-var defeated : bool = false
+var is_defeated : bool = false
 var is_dragging : bool = false
 var hover_active : bool = false
 var ground_layer = 0
@@ -35,7 +35,7 @@ func _ready():
 func _process(delta):
 	mouse_map_position = tile_map.local_to_map(get_global_mouse_position())
 	
-	if draggable and !on_cooldown and !defeated:
+	if draggable and !on_cooldown and !is_defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
 			global.dragged_char_name = name
@@ -52,7 +52,7 @@ func _process(delta):
 func _on_area_2d_mouse_entered():
 	var tween := create_tween()
 	# prints("mouse entered")
-	if !global.is_dragging and !on_cooldown and !defeated:
+	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
 		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_ease(Tween.EASE_OUT)
 
@@ -91,7 +91,7 @@ func start_cooldown():
 	on_cooldown = true
 	global.is_dragging = false
 	
-	if not on_cooldown or defeated: return 
+	if not on_cooldown or is_defeated: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
@@ -106,13 +106,13 @@ func _on_cooldown_timer_timeout():
 func take_damage(damage : int):
 	health_bar.value -= damage
 	
-	if defeated: return
+	if is_defeated: return
 	
 	if health_bar.value <= 0:
 		character_defeated()
 
 func character_defeated():
-	defeated = true
+	is_defeated = true
 	defeat_filter.show()
 	is_dragging = false
 	global.is_dragging = false

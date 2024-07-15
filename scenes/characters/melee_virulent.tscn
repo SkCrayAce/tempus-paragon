@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c04vklf11enqx"]
+[gd_scene load_steps=37 format=3 uid="uid://c04vklf11enqx"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_hihgw"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_kc0rx"]
@@ -221,7 +221,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeleeAnimatedSprite:material:shader_parameter/hit_opacity")
+tracks/0/path = NodePath("RangedAnimatedSprite:material:shader_parameter/hit_opacity")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -230,9 +230,49 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeAnimatedSprite:material:shader_parameter/hit_opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dyj5y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RangedAnimatedSprite:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeAnimatedSprite:material:shader_parameter/hit_opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fg8ri"]
 _data = {
+"RESET": SubResource("Animation_dyj5y"),
 "hit_flash": SubResource("Animation_48jd8")
 }
 
@@ -246,7 +286,9 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_k11vb")
-animation = &"attack"
+animation = &"side_idle_left"
+frame = 2
+frame_progress = 0.735954
 offset = Vector2(0, -5)
 
 [node name="Shadow" type="Sprite2D" parent="."]

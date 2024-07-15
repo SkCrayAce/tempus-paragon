@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
 [ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
-[ext_resource type="PackedScene" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
+[ext_resource type="PackedScene" uid="uid://cqk4esgo6srm1" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
 atlas = ExtResource("3_ypaqq")
@@ -854,7 +854,6 @@ offset_left = 390.0
 offset_top = 49.0
 offset_right = 408.0
 offset_bottom = 178.0
-max_value = 3.0
 step = 0.01
 fill_mode = 3
 nine_patch_stretch = true
