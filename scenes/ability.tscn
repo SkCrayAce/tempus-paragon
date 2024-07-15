@@ -6,4 +6,6 @@
 script = ExtResource("1_bajlg")
 ability_by = null
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="ability_icon" type="Sprite2D" parent="."]
+
+[node name="ability_user" type="Sprite2D" parent="."]
