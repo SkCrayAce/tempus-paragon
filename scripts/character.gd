@@ -8,6 +8,8 @@ var hover_active : bool = false
 var ground_layer = 0
 var hover_layer = 1
 var mouse_map_position : Vector2
+var tween : Tween
+var kai_initial_pos : Vector2
 
 @export var attack_damage : int
 @export var min_hover_x : int
@@ -20,24 +22,27 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
-@onready var sprite = $Sprite2D
+@onready var sprite = $SpriteContainer
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle_node = get_node("../..") as BattleScript
 @onready var slums_tile_map = $"../../SlumsTileMap"
+@onready var kai_sprite = $"../../Characters/kai"
+@onready var kai_animated_sprite = $"../../Characters/kai/AnimatedSprite2D" as AnimatedSprite2D
+@onready var enemy_move_timer = $"../../EnemyMoveTimer"
+@onready var animation_timer = $"../../AnimationTimer"
 
 var tile_map : TileMap
-var kai_sprite : Node2D
 
 signal character_damaged
 signal character_killed
+
 
 func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
 	health_bar.value = health_bar.max_value
-	
-	kai_sprite = battle_node.kai_sprite
+	kai_initial_pos = kai_sprite.position
 
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,7 +55,7 @@ func _process(delta):
 		if Input.is_action_pressed("left_click"):
 			global.dragged_char_name = name
 		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
-			sprite.scale = Vector2(0.2, 0.2)
+			#sprite.scale = Vector2(0.2, 0.2)
 			global.is_dragging = false
 			global.dragged_char_name = ""
 
@@ -73,23 +78,48 @@ func _on_area_2d_mouse_exited():
 func preview_attack_AoE(hovered_tile, offset_list):
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
-		var detected_enemy = global.enemy_dict.get(target_pos)
-		
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
 		else:
 			hover_active = false
 		
-		if Input.is_action_just_released("left_click"):
+	if Input.is_action_just_released("left_click"):
+		for offset in offset_list:
+			var target_pos : Vector2i = hovered_tile + offset as Vector2i
+			var detected_enemy = global.enemy_dict.get(target_pos)
 			var valid_enemy = detected_enemy is EnemyScript
 			if is_instance_valid(detected_enemy) and valid_enemy:
 				drop_attack(detected_enemy)
-			
-			if hover_active:
-				start_cooldown()
-			
+		
+		if hover_active:
+			tween = create_tween()
+		
+			enemy_move_timer.set_paused(true)
+			animation_timer.set_paused(true)
+			kai_animated_sprite.play("walk")
+			tween.tween_property(kai_sprite, "position", tile_map.map_to_local(hovered_tile), 0.5)
+			tween.finished.connect(attack_animation)
+			start_cooldown()
 
+func attack_animation():
+	kai_animated_sprite.play("attack")
+	kai_animated_sprite.animation_finished.connect(return_to_position)
+		
+func return_to_position():
+	var back_to_idle = func(): 
+		kai_animated_sprite.flip_h = false
+		kai_animated_sprite.play("idle")
+		enemy_move_timer.set_paused(false)
+		animation_timer.set_paused(false)
+	tween = create_tween()
+	prints("nakabalik na ko")
+	kai_animated_sprite.flip_h = true
+	kai_animated_sprite.play("walk")
+	tween.tween_property(kai_sprite, "position", kai_initial_pos, 0.5)
+	tween.finished.connect(back_to_idle)
+	
+	
 func drop_attack(detected_enemy : CharacterBody2D):
 	detected_enemy.hit(attack_damage)
 	start_cooldown()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=35 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="Texture2D" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
@@ -14,9 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bb6aexrlbyn3v" path="res://tempus_assets/ability sprites/skill_icons13.png" id="7_libma"]
 [ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="8_wh81y"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
-[ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
-[ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
-[ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
 [ext_resource type="PackedScene" uid="uid://bpln5gb07f22y" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
@@ -1121,35 +1118,19 @@ metadata/_edit_lock_ = true
 position = Vector2(132, 116)
 attack_damage = 2000
 
-[node name="Sprite2D" parent="VBoxContainer/kai" index="1"]
-position = Vector2(-1.14441e-05, -2)
-scale = Vector2(0.923077, 0.958333)
-
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
-
-[node name="Sprite2D" parent="VBoxContainer/emerald" index="1"]
-position = Vector2(3.99999, 5.72205e-06)
-scale = Vector2(0.183984, 0.183984)
-texture = ExtResource("11_mh8dm")
 
 [node name="tyrone" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
 
-[node name="Sprite2D" parent="VBoxContainer/tyrone" index="1"]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("12_5dqlu")
-
 [node name="bettany" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
-
-[node name="Sprite2D" parent="VBoxContainer/bettany" index="1"]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("13_lbq7u")
 
 [node name="Characters" type="Node2D" parent="."]
 
 [node name="kai" parent="Characters" instance=ExtResource("18_r0bk5")]
+z_index = 1
 position = Vector2(134, 69)
 
 [node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
@@ -1159,6 +1140,8 @@ metadata/_edit_lock_ = true
 
 [node name="Shadow" parent="Characters/kai" index="1"]
 metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/kai"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)

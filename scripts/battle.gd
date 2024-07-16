@@ -114,7 +114,7 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	prints("before place formation")
-	
+	used_vectors.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	prints("number of groups:", num_of_groups)
 	while count < num_of_groups:
