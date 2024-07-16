@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=19 format=3 uid="uid://b402elnhsyiy8"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://b402elnhsyiy8"]
 
 [ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="1_lyyui"]
 
@@ -29,6 +29,30 @@ region = Rect2(240, 384, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcc36"]
 atlas = ExtResource("1_lyyui")
 region = Rect2(288, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofc1a"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(0, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4yic"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(48, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4kmm"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(96, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsfla"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(144, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyub8"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(192, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5c4h"]
+atlas = ExtResource("1_lyyui")
+region = Rect2(240, 432, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2a40i"]
 atlas = ExtResource("1_lyyui")
@@ -96,7 +120,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 10.0
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofc1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4yic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4kmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsfla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyub8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5c4h")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 2.0,
@@ -136,5 +183,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 12.0
 }]

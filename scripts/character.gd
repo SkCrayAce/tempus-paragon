@@ -25,6 +25,8 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var tile_map = get_node("../../TileMap2") as TileMap
 
+signal character_damaged
+signal character_killed
 
 func _ready():
 	on_cooldown = false
@@ -103,11 +105,13 @@ func _on_cooldown_timer_timeout():
 	draggable = false
 
 func take_damage(damage : int):
+	character_damaged.emit()
 	health_bar.value -= damage
 	
 	if is_defeated: return
 	
 	if health_bar.value <= 0:
+		character_killed.emit()
 		character_defeated()
 
 func character_defeated():

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuqvl510vql7"]
+
+[ext_resource type="PackedScene" uid="uid://bvw1dpdysu56x" path="res://scenes/areas/battle.tscn" id="1_yg4cr"]
+
+[node name="SlumsBattleBossfightTemp" instance=ExtResource("1_yg4cr")]
+
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
+[editable path="VBoxContainer/kai"]
+[editable path="VBoxContainer/emerald"]
+[editable path="VBoxContainer/tyrone"]
+[editable path="VBoxContainer/bettany"]
+[editable path="Characters/kai"]
