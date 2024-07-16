@@ -195,7 +195,10 @@ func battle_ended():
 	trans_screen.play_animation()
 	await get_tree().create_timer(1).timeout
 	trans_screen.queue_free()
-	get_tree().change_scene_to_file(global.current_scene)
+	if global.current_scene:
+		get_tree().change_scene_to_file(global.current_scene)
+	else:
+		get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
 
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
