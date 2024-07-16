@@ -6,6 +6,7 @@
 [ext_resource type="SpriteFrames" uid="uid://b402elnhsyiy8" path="res://scenes/characters/spriteframes/kai_battle.tres" id="2_ugool"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bdr6u"]
+resource_local_to_scene = true
 shader = ExtResource("2_3grbc")
 shader_parameter/hit_opacity = 0.0
 
@@ -53,9 +54,7 @@ script = ExtResource("1_cyntd")
 material = SubResource("ShaderMaterial_bdr6u")
 position = Vector2(0, -10)
 sprite_frames = ExtResource("2_ugool")
-animation = &"attack"
-frame = 5
-frame_progress = 0.0847959
+animation = &"death"
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = -1

@@ -1145,6 +1145,7 @@ texture = ExtResource("13_lbq7u")
 position = Vector2(134, 69)
 
 [node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
+frame_progress = 0.710744
 metadata/_edit_lock_ = true
 
 [node name="Shadow" parent="Characters/kai" index="1"]

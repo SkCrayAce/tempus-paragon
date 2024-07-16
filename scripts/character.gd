@@ -26,6 +26,7 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var tile_map = get_node("../../TileMap2") as TileMap
 
 signal character_damaged
+signal character_killed
 
 func _ready():
 	on_cooldown = false
@@ -111,6 +112,7 @@ func take_damage(damage : int):
 	if is_defeated: return
 	
 	if health_bar.value <= 0:
+		character_killed.emit()
 		character_defeated()
 
 func character_defeated():

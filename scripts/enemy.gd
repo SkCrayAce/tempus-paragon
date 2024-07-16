@@ -51,7 +51,7 @@ func _ready():
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
 	anim_sprite_frame = animated_sprite.frame
-	prints(anim_sprite_frame)
+	#prints(anim_sprite_frame)
 
 func action():
 	if is_defeated: return
