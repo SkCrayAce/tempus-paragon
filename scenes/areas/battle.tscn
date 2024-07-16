@@ -1,10 +1,10 @@
 [gd_scene load_steps=36 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
-[ext_resource type="Texture2D" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
+[ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
-[ext_resource type="PackedScene" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
+[ext_resource type="PackedScene" uid="uid://cbbigy34cyy77" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_0o1m4"]
 [ext_resource type="Texture2D" uid="uid://djt1cd4owv1my" path="res://tempus_assets/ability sprites/skill_icons33.png" id="5_4aa5m"]
 [ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="5_e7aj3"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
 [ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
-[ext_resource type="PackedScene" uid="uid://cqk4esgo6srm1" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
+[ext_resource type="PackedScene" uid="uid://do2rfqob42c1l" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
 atlas = ExtResource("3_ypaqq")
@@ -881,26 +881,50 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AbilityPanel" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+[node name="KaiAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
 
-[node name="AbilityPanel2" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/DetailsPanel" index="0"]
+text = "Spatial Push"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/DetailsPanel" index="1"]
+text = "Pushes all enemies away using Kai's ability."
+
+[node name="EmeraldAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
 
-[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel2" index="1"]
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="1"]
 texture = ExtResource("5_4aa5m")
 
-[node name="AbilityPanel3" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/DetailsPanel" index="0"]
+text = "Flintlock Shower"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/DetailsPanel" index="1"]
+text = "Showers enemies with bullets. Deal big damage in a large area."
+
+[node name="TyroneAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
 
-[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel3" index="1"]
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="1"]
 texture = ExtResource("6_y5ml1")
 
-[node name="AbilityPanel4" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/DetailsPanel" index="0"]
+text = "Hands of the Healer"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/DetailsPanel" index="1"]
+text = "Heals everyone in the party by a significant amount,"
+
+[node name="BettanyAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
 
-[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel4" index="1"]
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility" index="1"]
 texture = ExtResource("7_libma")
+
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/DetailsPanel" index="0"]
+text = "Focused Chaos"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/DetailsPanel" index="1"]
+text = "Deal burning damage to every enemy."
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
@@ -1145,9 +1169,10 @@ position = Vector2(264, 43)
 
 [connection signal="timeout" from="EnemyMoveTimer" to="." method="_on_enemy_move_timer_timeout"]
 
-[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel2"]
-[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel3"]
-[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/AbilityPanel4"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]
