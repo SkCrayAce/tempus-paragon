@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
-[ext_resource type="PackedScene" uid="uid://cbbigy34cyy77" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
+[ext_resource type="PackedScene" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_0o1m4"]
 [ext_resource type="Texture2D" uid="uid://djt1cd4owv1my" path="res://tempus_assets/ability sprites/skill_icons33.png" id="5_4aa5m"]
 [ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="5_e7aj3"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
 [ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
-[ext_resource type="PackedScene" uid="uid://do2rfqob42c1l" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
-[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_n0b32"]
+[ext_resource type="PackedScene" uid="uid://cqk4esgo6srm1" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
 atlas = ExtResource("3_ypaqq")
@@ -837,16 +837,17 @@ sources/2 = SubResource("TileSetAtlasSource_hp3yx")
 sources/3 = SubResource("TileSetAtlasSource_ry1ya")
 sources/4 = SubResource("TileSetAtlasSource_s5ets")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p4w53"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1q0gg"]
 resource_local_to_scene = true
-shader = ExtResource("19_n0b32")
+shader = ExtResource("19_13vx5")
 shader_parameter/hit_opacity = 0.0
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
-num_of_patterns = 5
+min_num_of_groups = 2
+max_num_of_groups = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -1151,44 +1152,11 @@ texture = ExtResource("13_lbq7u")
 position = Vector2(134, 69)
 
 [node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
-material = SubResource("ShaderMaterial_p4w53")
+material = SubResource("ShaderMaterial_1q0gg")
 frame_progress = 0.710744
 metadata/_edit_lock_ = true
 
 [node name="Shadow" parent="Characters/kai" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="emerald" parent="Characters" instance=ExtResource("18_r0bk5")]
-position = Vector2(134, 99)
-
-[node name="AnimatedSprite2D" parent="Characters/emerald" index="0"]
-material = SubResource("ShaderMaterial_p4w53")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/emerald" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="tyrone" parent="Characters" instance=ExtResource("18_r0bk5")]
-position = Vector2(134, 129)
-
-[node name="AnimatedSprite2D" parent="Characters/tyrone" index="0"]
-material = SubResource("ShaderMaterial_p4w53")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/tyrone" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="bettany" parent="Characters" instance=ExtResource("18_r0bk5")]
-position = Vector2(134, 159)
-
-[node name="AnimatedSprite2D" parent="Characters/bettany" index="0"]
-material = SubResource("ShaderMaterial_p4w53")
-animation = &"attack"
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/bettany" index="1"]
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -1219,6 +1187,3 @@ position = Vector2(264, 43)
 [editable path="VBoxContainer/tyrone"]
 [editable path="VBoxContainer/bettany"]
 [editable path="Characters/kai"]
-[editable path="Characters/emerald"]
-[editable path="Characters/tyrone"]
-[editable path="Characters/bettany"]

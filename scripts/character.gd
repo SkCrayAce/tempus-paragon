@@ -87,7 +87,6 @@ func preview_attack_AoE(hovered_tile, offset_list):
 func drop_attack(detected_enemy : CharacterBody2D):
 	detected_enemy.hit(attack_damage)
 	start_cooldown()
-	prints("nakadrop na")
 	
 func start_cooldown():
 	on_cooldown = true
