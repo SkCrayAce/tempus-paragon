@@ -21,6 +21,4 @@ func _on_character_damaged():
 
 func _on_character_killed():
 	anim.play("death")
-	await anim.animation_looped
-	anim.stop()
 	print("anim stopped")

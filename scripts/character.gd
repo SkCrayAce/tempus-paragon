@@ -4,12 +4,13 @@ var draggable : bool = false
 var on_cooldown : bool = false
 var is_defeated : bool = false
 var is_dragging : bool = false
-var hover_active : bool = false
 var ground_layer = 0
 var hover_layer = 1
 var mouse_map_position : Vector2
 var tween : Tween
 var kai_initial_pos : Vector2
+var hovered_tile
+var offset_list : Array
 
 @export var attack_damage : int
 @export var min_hover_x : int
@@ -43,6 +44,7 @@ func _ready():
 	on_cooldown = false
 	health_bar.value = health_bar.max_value
 	kai_initial_pos = kai_sprite.position
+	kai_animated_sprite.frame_changed.connect(inflict_damage)
 
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -74,23 +76,22 @@ func _on_area_2d_mouse_exited():
 	if !global.is_dragging:
 		draggable = false
 		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
-		
-func preview_attack_AoE(hovered_tile, offset_list):
+
+func preview_attack_AoE(new_hovered_tile, new_offset_list):
+	offset_list = new_offset_list
+	hovered_tile = new_hovered_tile
+	var hover_active : bool = false
+	var attack_animation = func():
+		kai_animated_sprite.play("attack")
+		kai_animated_sprite.animation_finished.connect(return_to_position)
+
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
-		else:
-			hover_active = false
 		
 	if Input.is_action_just_released("left_click"):
-		for offset in offset_list:
-			var target_pos : Vector2i = hovered_tile + offset as Vector2i
-			var detected_enemy = global.enemy_dict.get(target_pos)
-			var valid_enemy = detected_enemy is EnemyScript
-			if is_instance_valid(detected_enemy) and valid_enemy:
-				drop_attack(detected_enemy)
 		
 		if hover_active:
 			tween = create_tween()
@@ -101,11 +102,19 @@ func preview_attack_AoE(hovered_tile, offset_list):
 			tween.tween_property(kai_sprite, "position", tile_map.map_to_local(hovered_tile), 0.5)
 			tween.finished.connect(attack_animation)
 			start_cooldown()
+	
+func inflict_damage():
+	if not kai_animated_sprite.animation == "attack" or not kai_animated_sprite.frame == 5:
+		return
+	
+	prints(offset_list)
+	for offset in offset_list:
+		var target_pos : Vector2i = hovered_tile + offset as Vector2i
+		var detected_enemy = global.enemy_dict.get(target_pos)
+		var valid_enemy = detected_enemy is EnemyScript
+		if is_instance_valid(detected_enemy) and valid_enemy:
+			detected_enemy.hit(attack_damage)
 
-func attack_animation():
-	kai_animated_sprite.play("attack")
-	kai_animated_sprite.animation_finished.connect(return_to_position)
-		
 func return_to_position():
 	var back_to_idle = func(): 
 		kai_animated_sprite.flip_h = false
@@ -118,11 +127,6 @@ func return_to_position():
 	kai_animated_sprite.play("walk")
 	tween.tween_property(kai_sprite, "position", kai_initial_pos, 0.5)
 	tween.finished.connect(back_to_idle)
-	
-	
-func drop_attack(detected_enemy : CharacterBody2D):
-	detected_enemy.hit(attack_damage)
-	start_cooldown()
 	
 func start_cooldown():
 	on_cooldown = true

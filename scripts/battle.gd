@@ -61,9 +61,9 @@ func _ready():
 	
 	
 func _process(delta):
-	if anim_start == false:
-		start_anim()
-		anim_start = true
+	#if anim_start == false:
+		#start_anim()
+		#anim_start = true
 		
 	var hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position())
 	
@@ -113,12 +113,9 @@ func start_wave():
 	prints("new wave")
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
-	prints("before place formation")
 	used_vectors.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
-	prints("number of groups:", num_of_groups)
 	while count < num_of_groups:
-		prints("after place formation, count:", count)
 		place_formation()
 		
 func place_formation():
@@ -148,7 +145,6 @@ func place_formation():
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
 			
 		if spawn_position in global.enemy_dict:
-			prints("intersect exists")
 			spawn_positions.clear()
 			return
 		else:
@@ -159,7 +155,6 @@ func place_formation():
 			wave_spawner(position)
 			record_enemies()
 		else:
-			prints("out of bounds")
 			return
 	count += 1
 	spawn_positions.clear()
@@ -184,6 +179,7 @@ func wave_spawner(spawn_position : Vector2i):
 func wave_cleared(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
 	global.enemy_dict.erase(slums_tile_map.local_to_map(enemy_ref.position))
+	record_enemies()
 	
 	if enemy_list.size() == 0: 
 		waves_cleared += 1

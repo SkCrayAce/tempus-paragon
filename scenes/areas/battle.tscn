@@ -1116,16 +1116,19 @@ metadata/_edit_lock_ = true
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 116)
-attack_damage = 2000
+attack_damage = 3000
 
 [node name="emerald" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
+attack_damage = 3000
 
 [node name="tyrone" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
+attack_damage = 3000
 
 [node name="bettany" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
+attack_damage = 3000
 
 [node name="Characters" type="Node2D" parent="."]
 
@@ -1150,6 +1153,7 @@ zoom = Vector2(3, 3)
 metadata/_edit_lock_ = true
 
 [node name="EnemyMoveTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 autostart = true
 

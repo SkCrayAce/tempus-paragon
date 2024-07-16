@@ -6,12 +6,12 @@ extends CharacterBody2D
 
 const BattleNode = preload("res://scripts/battle.gd")
 
-@onready var anim = $AnimatedSprite2D as AnimatedSprite2D
 @onready var healthbar = $HealthBar as TextureProgressBar
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var effect = $AnimationPlayer as AnimationPlayer
+
 
 var health : int
 var player_chase = false
@@ -47,6 +47,7 @@ func _ready():
 	health = healthbar.max_value
 	healthbar.value = health
 	animated_sprite.play("side_idle_left")
+	animated_sprite.frame_changed.connect(inflict_damage)
 
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
@@ -63,20 +64,22 @@ func action():
 	current_map_position = tile_map.local_to_map(position)
 
 func hit(damage : int):
-	effect.play("hit_flash")
-	healthbar.value -= damage
-	if healthbar.value <= 0:
-		enemy_defeated()
+	if is_defeated:
+		return
+	if is_instance_valid(effect):
+		effect.play("hit_flash")
+		prints("enemy path", get_path())
+		healthbar.value -= damage
+		if healthbar.value <= 0:
+			enemy_defeated()
 		
 func enemy_defeated():
 	is_defeated = true
-	emit_signal("enemy_died")
 	global.delete_enemy(current_map_position)
+	emit_signal("enemy_died")
 	animated_sprite.play("death")
 	remove_from_group("enemies")
-	await animated_sprite.animation_finished
-	animated_sprite.stop()
-	queue_free()
+	animated_sprite.animation_finished.connect(queue_free)
 
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
@@ -101,33 +104,29 @@ func stop_animation():
 	animated_sprite.play("side_idle_left")
 	
 func attack_character():
-	var kai_aligned = current_map_position.y in kai_hitbox
-	var emerald_aligned = current_map_position.y in emerald_hitbox
-	var tyrone_aligned = current_map_position.y in tyrone_hitbox
-	var bettany_aligned = current_map_position.y in bettany_hitbox
 	
 	is_attacking = true
 	
 	if not within_attack_range(): return
 	
-	if kai_aligned and not kai.is_defeated : 
-		animated_sprite.pause()
-		animated_sprite.play("attack")
-		kai.take_damage(attack_damage)
-	if emerald_aligned and not emerald.is_defeated: 
-		animated_sprite.pause()
-		animated_sprite.play("attack")
-		emerald.take_damage(attack_damage)
-	if tyrone_aligned and not tyrone.is_defeated : 
-		animated_sprite.pause()
-		animated_sprite.play("attack")
-		tyrone.take_damage(attack_damage)
-	if bettany_aligned and not bettany.is_defeated : 
-		animated_sprite.pause()
-		animated_sprite.play("attack")
-		bettany.take_damage(attack_damage)
+	animated_sprite.pause()
+	animated_sprite.play("attack")
+
+	
+func inflict_damage():
+	var kai_aligned = current_map_position.y in kai_hitbox
+	var emerald_aligned = current_map_position.y in emerald_hitbox
+	var tyrone_aligned = current_map_position.y in tyrone_hitbox
+	var bettany_aligned = current_map_position.y in bettany_hitbox
+	
+	if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
+		return
 		
-	await animated_sprite.animation_finished
+	if kai_aligned and not kai.is_defeated : kai.take_damage(attack_damage)
+	if emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
+	if tyrone_aligned and not tyrone.is_defeated : tyrone.take_damage(attack_damage)
+	if bettany_aligned and not bettany.is_defeated : bettany.take_damage(attack_damage)
+	pass
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)

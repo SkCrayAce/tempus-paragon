@@ -130,7 +130,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 12.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -238,7 +238,7 @@ _data = {
 
 [node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_hihgw")
-attack_damage = 10
+attack_damage = 50
 animated_sprite = NodePath("MeleeAnimatedSprite")
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
@@ -246,9 +246,7 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_k11vb")
-animation = &"side_idle_left"
-frame = 2
-frame_progress = 0.735954
+animation = &"attack"
 offset = Vector2(0, -5)
 
 [node name="Shadow" type="Sprite2D" parent="."]
