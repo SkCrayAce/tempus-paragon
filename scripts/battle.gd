@@ -19,8 +19,8 @@ const bottom_right_tile = Vector2i(23, 10)
 
 @onready var enemy_move_timer = $EnemyMoveTimer as Timer
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
-@onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
+@onready var slums_tile_map = $SlumsTileMap
 
 
 
@@ -35,6 +35,9 @@ var current_offset_list : Array
 @onready var emerald = $VBoxContainer/emerald
 @onready var tyrone = $VBoxContainer/tyrone
 @onready var bettany = $VBoxContainer/bettany
+
+@onready var kai_sprite = $Characters/kai
+
 
 @onready var trans_scene = preload("res://scenes/transitionto_battle.tscn")
 
@@ -62,13 +65,13 @@ func _process(delta):
 		start_anim()
 		anim_start = true
 		
-	var hovered_tile = tilemap.local_to_map(tilemap.get_global_mouse_position())
+	var hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position())
 	
 	move_timer_bar.value = enemy_move_timer.time_left
 
 	for x in grid_length:
 		for y in grid_height:
-			tilemap.erase_cell(1, Vector2(x, y))
+			slums_tile_map.erase_cell(1, Vector2(x, y))
 	
 	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
@@ -100,7 +103,7 @@ func record_enemies():
 
 
 func add_enemy(enemy : CharacterBody2D):
-	var enemy_map_pos = tilemap.local_to_map(enemy.position)
+	var enemy_map_pos = slums_tile_map.local_to_map(enemy.position)
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
@@ -114,6 +117,7 @@ func start_wave():
 	prints("before place formation")
 	
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
+	prints("number of groups:", num_of_groups)
 	while count < num_of_groups:
 		prints("after place formation, count:", count)
 		place_formation()
@@ -162,7 +166,7 @@ func place_formation():
 	spawn_positions.clear()
 			
 func wave_spawner(spawn_position : Vector2i):	
-	var enemy_local_pos = tilemap.map_to_local(spawn_position)
+	var enemy_local_pos = slums_tile_map.map_to_local(spawn_position)
 	
 	if current_offset_list == bettany_offset_list:
 		enemy_instance = ranged_enemy_scene.instantiate() as CharacterBody2D
@@ -172,7 +176,7 @@ func wave_spawner(spawn_position : Vector2i):
 	enemy_list.append(enemy_instance)
 	enemy_instance.position = enemy_local_pos
 	enemy_instance.z_index = enemy_local_pos.y
-	tilemap.add_child.call_deferred(enemy_instance) 
+	slums_tile_map.add_child.call_deferred(enemy_instance) 
 	enemy_instance.enemy_died.connect(wave_cleared.bind(enemy_instance))
 	used_vectors.append(spawn_position)
 	add_enemy(enemy_instance)
@@ -180,7 +184,7 @@ func wave_spawner(spawn_position : Vector2i):
 	
 func wave_cleared(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
-	global.enemy_dict.erase(tilemap.local_to_map(enemy_ref.position))
+	global.enemy_dict.erase(slums_tile_map.local_to_map(enemy_ref.position))
 	
 	if enemy_list.size() == 0: 
 		waves_cleared += 1
@@ -197,8 +201,8 @@ func battle_ended():
 	trans_screen.queue_free()
 	if global.current_scene:
 		get_tree().change_scene_to_file(global.current_scene)
-	else:
-		get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
+	#else:
+		#get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
 
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()

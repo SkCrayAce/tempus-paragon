@@ -1,7 +1,7 @@
 [gd_scene load_steps=38 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
-[ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
+[ext_resource type="Texture2D" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
 [ext_resource type="PackedScene" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://clea0we5qe0uv" path="res://sprites/textures/emerald.png" id="11_mh8dm"]
 [ext_resource type="Texture2D" uid="uid://bkjglp3yu5pfk" path="res://sprites/textures/tyrone.png" id="12_5dqlu"]
 [ext_resource type="Texture2D" uid="uid://7d1hgok86c2d" path="res://sprites/textures/bettany.png" id="13_lbq7u"]
-[ext_resource type="PackedScene" uid="uid://cqk4esgo6srm1" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
+[ext_resource type="PackedScene" uid="uid://bpln5gb07f22y" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
@@ -937,7 +937,7 @@ text = "Deal burning damage to every enemy."
 visible = false
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
-[node name="TileMap2" type="TileMap" parent="."]
+[node name="SlumsTileMap" type="TileMap" parent="."]
 tile_set = ExtResource("4_6mqeq")
 format = 2
 layer_0/name = "L1"
@@ -961,35 +961,35 @@ layer_5/z_index = 1
 layer_5/tile_data = PackedInt32Array(5, 720899, 8, 6, 851971, 8, 65541, 589825, 3, 131077, 589825, 5, 131078, 458753, 5, 131079, 458753, 5, 131080, 524289, 5, 65544, 524289, 3, 720897, 851971, 6, 720898, 917507, 6, 720896, 851971, 6, 720899, 983043, 7, 786435, 983043, 8, 851982, 720899, 7, 851983, 786435, 7, 786455, 851971, 268435462, 786454, 917507, 268435462, 786457, 917507, 6, 786456, 851971, 6, 655387, 851971, 268435462, 655386, 917507, 268435462, 655388, 851971, 6, 655389, 851971, 6, 720904, 983043, 6, 786450, 983043, 268435461, 851986, 983043, 268435462, 720923, 983043, 7, 786459, 983043, 8, 655390, 851971, 6, 655391, 851971, 6, 655392, 851971, 6, 655393, 851971, 6)
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D2" type="PointLight2D" parent="TileMap2"]
+[node name="PointLight2D2" type="PointLight2D" parent="SlumsTileMap"]
 position = Vector2(120, 13)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
 texture = SubResource("GradientTexture2D_82kpx")
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D3" type="PointLight2D" parent="TileMap2"]
+[node name="PointLight2D3" type="PointLight2D" parent="SlumsTileMap"]
 position = Vector2(424, 236)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
 texture = SubResource("GradientTexture2D_82kpx")
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D" type="PointLight2D" parent="TileMap2"]
+[node name="PointLight2D" type="PointLight2D" parent="SlumsTileMap"]
 position = Vector2(183, 238)
 scale = Vector2(0.546875, 0.546875)
 color = Color(1, 1, 0.0352941, 1)
 texture = SubResource("GradientTexture2D_y51p6")
 metadata/_edit_lock_ = true
 
-[node name="PointLight2D4" type="PointLight2D" parent="TileMap2"]
+[node name="PointLight2D4" type="PointLight2D" parent="SlumsTileMap"]
 position = Vector2(448, 31)
 scale = Vector2(1.39063, 1)
 color = Color(1, 1, 0.0352941, 1)
 texture = SubResource("GradientTexture2D_hvymv")
 metadata/_edit_lock_ = true
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="TileMap2"]
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="SlumsTileMap"]
 visible = false
 color = Color(0, 0, 0, 1)
 energy = 0.3
@@ -998,9 +998,9 @@ range_z_max = 2
 shadow_color = Color(0, 0, 0, 0.486275)
 shadow_item_cull_mask = 2
 
-[node name="Smokes" type="Node" parent="TileMap2"]
+[node name="Smokes" type="Node" parent="SlumsTileMap"]
 
-[node name="Smoke" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(57, 182)
 amount = 10
@@ -1015,7 +1015,7 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_qypai")
 
-[node name="Smoke2" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke2" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(104, 183)
 amount = 10
@@ -1030,7 +1030,7 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_qypai")
 
-[node name="Smoke3" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke3" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(169, 199)
 amount = 10
@@ -1045,7 +1045,7 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_qypai")
 
-[node name="Smoke4" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke4" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(313, 215)
 amount = 10
@@ -1060,7 +1060,7 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_qypai")
 
-[node name="Smoke5" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke5" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(441, 182)
 amount = 10
@@ -1075,7 +1075,7 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_qypai")
 
-[node name="Smoke6" type="CPUParticles2D" parent="TileMap2/Smokes"]
+[node name="Smoke6" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
 z_index = 3
 position = Vector2(505, 199)
 amount = 10
@@ -1119,6 +1119,7 @@ metadata/_edit_lock_ = true
 
 [node name="kai" parent="VBoxContainer" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 116)
+attack_damage = 2000
 
 [node name="Sprite2D" parent="VBoxContainer/kai" index="1"]
 position = Vector2(-1.14441e-05, -2)

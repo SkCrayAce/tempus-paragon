@@ -15,27 +15,33 @@ var mouse_map_position : Vector2
 @export var min_hover_y : int
 @export var max_hover_y : int
 
+const BattleScript = preload("res://scripts/battle.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
-
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
 @onready var sprite = $Sprite2D
 @onready var health_bar = $Control/HealthBar
 @onready var defeat_filter = $Control/DefeatFilter
-@onready var tile_map = get_node("../../TileMap2") as TileMap
+@onready var battle_node = get_node("../..") as BattleScript
+@onready var slums_tile_map = $"../../SlumsTileMap"
+
+var tile_map : TileMap
+var kai_sprite : Node2D
 
 signal character_damaged
 signal character_killed
 
 func _ready():
+	tile_map = slums_tile_map
 	on_cooldown = false
-	health_bar.value = health_bar.max_value # health_bar.max_value
+	health_bar.value = health_bar.max_value
+	
+	kai_sprite = battle_node.kai_sprite
 
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	mouse_map_position = tile_map.local_to_map(get_global_mouse_position())
 	
 	if draggable and !on_cooldown and !is_defeated:
 		if Input.is_action_just_pressed("left_click"):

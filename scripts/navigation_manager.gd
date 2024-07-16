@@ -76,6 +76,6 @@ func load_levels():
 	city_levels.append(load("res://scenes/areas/city.tscn"))
 	city_levels.append(load("res://scenes/areas/city1.tscn"))
 	city_bossfight_area = load("res://scenes/areas/city_bf.tscn")
-	underground_levels.append(preload("res://scenes/areas/underground.tscn"))
-	underground_levels.append(preload("res://scenes/areas/underground2.tscn"))
+	underground_levels.append(load("res://scenes/areas/underground.tscn"))
+	underground_levels.append(load("res://scenes/areas/underground2.tscn"))
 
