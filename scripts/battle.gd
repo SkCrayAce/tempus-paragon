@@ -112,7 +112,6 @@ func start_wave():
 		
 	prints("new wave")
 	count = 0
-	global.enemy_dict.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	prints("before place formation")
 	
