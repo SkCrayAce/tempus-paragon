@@ -3,13 +3,12 @@ extends CharacterBody2D
 
 const BattleNode = preload("res://scripts/battle.gd")
 
-@export var test = 0.0
-
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var anim : AnimatedSprite2D = $AnimatedSprite2D
-@onready var health_bar : TextureProgressBar = $BossHealthContainer/HealthBar
+@onready var healthbar : TextureProgressBar = $BossHealthContainer/HealthBar
+@onready var hit_effect = $HitEffect
 
 #FSM References---------------------------------------
 @onready var fsm = $FiniteStateMachine as FiniteStateMachine
@@ -23,6 +22,17 @@ const BattleNode = preload("res://scripts/battle.gd")
 @onready var return_to_grid_state = $FiniteStateMachine/ReturnToGridState as ReturnToGridState
 #-----------------------------------------------------
 
+@onready var kai = get_node("../../VBoxContainer/kai") as Node2D
+@onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
+@onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
+@onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
+
+var kai_hitbox : Array[int]
+var emerald_hitbox : Array[int]
+var tyrone_hitbox : Array[int]
+var bettany_hitbox : Array[int]
+
+#Boss Data
 var health : int
 var current_map_position : Vector2i
 var tween : Tween
@@ -58,6 +68,9 @@ func _ready():
 	#will return to idle after returning
 	return_to_grid_state.returned_to_grid.connect(fsm.change_state.bind(idle_state))
 	
+	
+	health = healthbar.max_value
+	healthbar.value = health
 	
 func _process(delta):
 	pass

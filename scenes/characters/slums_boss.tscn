@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://by6rsmk71ao26"]
+[gd_scene load_steps=30 format=3 uid="uid://by6rsmk71ao26"]
 
 [ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_aflqb"]
 [ext_resource type="Texture2D" uid="uid://mpnqspfbw55f" path="res://temp_assets/boss_slums_temp.png" id="2_wk1o2"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/finite_state_machine.gd" id="3_sxhaw"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/idle_state.gd" id="4_s750d"]
@@ -13,6 +14,10 @@
 [ext_resource type="Script" path="res://scripts/slums_boss AI/stunned_state.gd" id="9_3we5v"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/avoid_state.gd" id="10_1c0bj"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/return_to_grid_state.gd" id="11_cf2wi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsc2j"]
+shader = ExtResource("2_aflqb")
+shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vj52p"]
 atlas = ExtResource("2_wk1o2")
@@ -121,10 +126,48 @@ region = Rect2(0, 112, 64, 16)
 atlas = ExtResource("5_tiois")
 region = Rect2(64, 112, 64, 16)
 
+[sub_resource type="Animation" id="Animation_3x2on"]
+resource_name = "hit_flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x5a1d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7q6jt"]
+_data = {
+"RESET": SubResource("Animation_x5a1d"),
+"hit_flash": SubResource("Animation_3x2on")
+}
+
 [node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
 animation = &"stunned"
 offset = Vector2(-10, -20)
@@ -143,23 +186,35 @@ script = ExtResource("5_10usg")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 
-[node name="RangedAttackState" type="Node" parent="FiniteStateMachine"]
+[node name="RangedAttackState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("6_y8s0n")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
-[node name="MeleeAttackState" type="Node" parent="FiniteStateMachine"]
+[node name="MeleeAttackState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("7_4idyx")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
-[node name="PowerAttackState" type="Node" parent="FiniteStateMachine"]
+[node name="PowerAttackState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("8_fcru1")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
-[node name="StunnedState" type="Node" parent="FiniteStateMachine"]
+[node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("9_3we5v")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
-[node name="AvoidState" type="Node" parent="FiniteStateMachine"]
+[node name="AvoidState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("10_1c0bj")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
-[node name="ReturnToGridState" type="Node" parent="FiniteStateMachine"]
+[node name="ReturnToGridState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
 script = ExtResource("11_cf2wi")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
 
 [node name="BossHealthContainer" type="CanvasLayer" parent="."]
 
@@ -174,6 +229,8 @@ offset_right = -100.0
 offset_bottom = 32.0
 grow_horizontal = 2
 scale = Vector2(3, 3)
+max_value = 10000.0
+step = 0.001
 value = 100.0
 nine_patch_stretch = true
 stretch_margin_left = 19
@@ -199,3 +256,8 @@ theme_override_fonts/font = ExtResource("6_urd0n")
 theme_override_font_sizes/font_size = 300
 text = "VIRULENT X"
 horizontal_alignment = 1
+
+[node name="HitEffect" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7q6jt")
+}

@@ -10,6 +10,9 @@ extends State
 signal moving_finished
 signal take_many_damage
 
+var top_left_tile = battle_node.top_left_tile
+	
+
 func _enter_state():
 	anim.play("moving")
 

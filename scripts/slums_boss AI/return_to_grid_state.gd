@@ -6,6 +6,7 @@ extends State
 
 #Will return to a random valid position in grid
 
+
 signal returned_to_grid
 
 func _enter_state():
