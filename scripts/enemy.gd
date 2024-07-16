@@ -106,21 +106,29 @@ func attack_character():
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
 	var bettany_aligned = current_map_position.y in bettany_hitbox
+	
 	is_attacking = true
 	
 	if not within_attack_range(): return
 	
-	animated_sprite.pause()
-	animated_sprite.play("attack")
-	
-	
-	if kai_aligned : kai.take_damage(attack_damage)
-	if emerald_aligned : emerald.take_damage(attack_damage)
-	if tyrone_aligned : tyrone.take_damage(attack_damage)
-	if bettany_aligned : bettany.take_damage(attack_damage)
+	if kai_aligned and not kai.is_defeated : 
+		animated_sprite.pause()
+		animated_sprite.play("attack")
+		kai.take_damage(attack_damage)
+	if emerald_aligned and not emerald.is_defeated: 
+		animated_sprite.pause()
+		animated_sprite.play("attack")
+		emerald.take_damage(attack_damage)
+	if tyrone_aligned and not tyrone.is_defeated : 
+		animated_sprite.pause()
+		animated_sprite.play("attack")
+		tyrone.take_damage(attack_damage)
+	if bettany_aligned and not bettany.is_defeated : 
+		animated_sprite.pause()
+		animated_sprite.play("attack")
+		bettany.take_damage(attack_damage)
 		
 	await animated_sprite.animation_finished
-	prints(animated_sprite.frame)
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)
@@ -129,8 +137,14 @@ func is_blocked() -> bool:
 	
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
+	
+	prints(scene_file_path)
+	if scene_file_path == "res://scenes/characters/melee_virulent.tscn":
+		return next_map_position.x < battle_node.top_left_tile.x
+	elif scene_file_path == "res://scenes/characters/ranged_virulent.tscn":
+		return next_map_position.x < battle_node.top_left_tile.x + 8
 		
-	return next_map_position.x < battle_node.top_left_tile.x
+	return true
 		
 func within_attack_range() -> bool:
 	if abs(battle_node.top_left_tile.x - current_map_position.x) <= attack_range:

@@ -131,16 +131,16 @@ func place_formation():
 		var x_valid : bool
 		var y_valid : bool
 		
-		if current_offset_list == kai_offset_list or current_offset_list == bettany_offset_list:
-			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x + 1) 
+		if current_offset_list == bettany_offset_list:
+			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
-		elif current_offset_list == emerald_offset_list or current_offset_list == tyrone_offset_list:
-			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x + 1) 
+		else:
+			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
 		
 		if spawn_position in global.enemy_dict:
 			prints("intersect exists")
-			continue
+			return
 			
 		if x_valid and y_valid:
 			wave_spawner(spawn_position)
@@ -151,7 +151,7 @@ func place_formation():
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = tilemap.map_to_local(spawn_position)
 	
-	if current_offset_list == kai_offset_list or current_offset_list == bettany_offset_list:
+	if current_offset_list == bettany_offset_list:
 		enemy_instance = ranged_enemy_scene.instantiate() as CharacterBody2D
 	else:
 		enemy_instance = melee_enemy_scene.instantiate() as CharacterBody2D
@@ -188,8 +188,8 @@ func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
 	while true:
 		rng.randomize()
-		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x + 1) 
-		var random_y = rng.randi_range(top_left_tile.y, bottom_right_tile.y + 1) 
+		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x) 
+		var random_y = rng.randi_range(top_left_tile.y, bottom_right_tile.y) 
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if not used_vectors.has(random_vector):
