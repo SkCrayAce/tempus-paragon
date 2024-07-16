@@ -73,14 +73,12 @@ func _process(delta):
 		for y in grid_height:
 			slums_tile_map.erase_cell(1, Vector2(x, y))
 	
-	
 	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
 		match global.dragged_char_name:
 			"kai": kai.preview_attack_AoE(hovered_tile, kai_offset_list)
 			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
-
 		
 func _on_enemy_move_timer_timeout(): 
 	record_enemies()

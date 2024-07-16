@@ -3,7 +3,6 @@ extends Node2D
 var draggable : bool = false
 var on_cooldown : bool = false
 var is_defeated : bool = false
-var is_dragging : bool = false
 var ground_layer = 0
 var hover_layer = 1
 var mouse_map_position : Vector2
@@ -28,10 +27,11 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var defeat_filter = $Control/DefeatFilter
 @onready var battle_node = get_node("../..") as BattleScript
 @onready var slums_tile_map = $"../../SlumsTileMap"
-@onready var kai_sprite = $"../../Characters/kai"
-@onready var kai_animated_sprite = $"../../Characters/kai/AnimatedSprite2D" as AnimatedSprite2D
 @onready var enemy_move_timer = $"../../EnemyMoveTimer"
 @onready var animation_timer = $"../../AnimationTimer"
+
+@onready var kai_sprite = $"../../Characters/kai" as Node2D
+@onready var kai_animated_sprite = $"../../Characters/kai/AnimatedSprite2D" as AnimatedSprite2D
 
 var tile_map : TileMap
 
@@ -49,7 +49,6 @@ func _ready():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 	if draggable and !on_cooldown and !is_defeated:
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
@@ -69,7 +68,7 @@ func _on_area_2d_mouse_entered():
 	# prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
-		tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_OUT)
 
 func _on_area_2d_mouse_exited():
 	var tween := create_tween()
@@ -81,6 +80,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	offset_list = new_offset_list
 	hovered_tile = new_hovered_tile
 	var hover_active : bool = false
+	
 	var attack_animation = func():
 		kai_animated_sprite.play("attack")
 		kai_animated_sprite.animation_finished.connect(return_to_position)
@@ -157,13 +157,12 @@ func take_damage(damage : int):
 func character_defeated():
 	is_defeated = true
 	defeat_filter.show()
-	is_dragging = false
 	global.is_dragging = false
 	global.is_released = false
 	global.dragged_char_name = ""
 	
 func within_bounds(coordinate : Vector2) -> bool:
-	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x + 1
 	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
 	
 	if x_valid and y_valid:

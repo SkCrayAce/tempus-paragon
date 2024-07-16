@@ -48,10 +48,11 @@ func _ready():
 	healthbar.value = health
 	animated_sprite.play("side_idle_left")
 	animated_sprite.frame_changed.connect(inflict_damage)
+	current_map_position = tile_map.local_to_map(position)
+	prints("current_map_position:", current_map_position)
 
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
-	anim_sprite_frame = animated_sprite.frame
 
 func action():
 	if is_defeated: return
@@ -68,7 +69,6 @@ func hit(damage : int):
 		return
 	if is_instance_valid(effect):
 		effect.play("hit_flash")
-		prints("enemy path", get_path())
 		healthbar.value -= damage
 		if healthbar.value <= 0:
 			enemy_defeated()
@@ -93,24 +93,24 @@ func move_animation():
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
-	
+	prints("current_map_position:", current_map_position)
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
 		animated_sprite.play("attack")
-		return
+		await animated_sprite.animation_finished
 		
 	animated_sprite.play("side_idle_left")
 	
 func attack_character():
-	
 	is_attacking = true
 	
 	if not within_attack_range(): return
 	
-	animated_sprite.pause()
 	animated_sprite.play("attack")
+	await animated_sprite.animation_finished
+	animated_sprite.play("side_idle_left")
 
 	
 func inflict_damage():
