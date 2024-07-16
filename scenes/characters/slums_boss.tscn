@@ -1,0 +1,197 @@
+[gd_scene load_steps=24 format=3 uid="uid://by6rsmk71ao26"]
+
+[ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
+[ext_resource type="Texture2D" uid="uid://mpnqspfbw55f" path="res://temp_assets/boss_slums_temp.png" id="2_wk1o2"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/finite_state_machine.gd" id="3_sxhaw"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/idle_state.gd" id="4_s750d"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/moving_state.gd" id="5_10usg"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_tiois"]
+[ext_resource type="FontFile" uid="uid://blbxp1op7o1yv" path="res://tempus_assets/font/alagard.ttf" id="6_urd0n"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/ranged_attack_state.gd" id="6_y8s0n"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/melee_attack_state.gd" id="7_4idyx"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/power_attack_state.gd" id="8_fcru1"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/stunned_state.gd" id="9_3we5v"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/avoid_state.gd" id="10_1c0bj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj52p"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8i0id"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abd8c"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxdyc"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ll1g6"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gi0l"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xe7h7"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shh2x"]
+atlas = ExtResource("2_wk1o2")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_el4pk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj52p")
+}],
+"loop": true,
+"name": &"attack_melee",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8i0id")
+}],
+"loop": true,
+"name": &"attack_power",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abd8c")
+}],
+"loop": true,
+"name": &"attack_ranged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxdyc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ll1g6")
+}],
+"loop": true,
+"name": &"laughing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gi0l")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xe7h7")
+}],
+"loop": true,
+"name": &"stunned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shh2x")
+}],
+"loop": true,
+"name": &"wind_up",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ywse"]
+atlas = ExtResource("5_tiois")
+region = Rect2(0, 112, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glohg"]
+atlas = ExtResource("5_tiois")
+region = Rect2(64, 112, 64, 16)
+
+[node name="SlumsBoss" type="CharacterBody2D"]
+script = ExtResource("1_g8sqm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_el4pk")
+animation = &"stunned"
+offset = Vector2(-10, -20)
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("3_sxhaw")
+state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
+script = ExtResource("4_s750d")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
+
+[node name="MovingState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim")]
+script = ExtResource("5_10usg")
+actor = NodePath("../..")
+anim = NodePath("../../AnimatedSprite2D")
+
+[node name="RangedAttackState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_y8s0n")
+
+[node name="MeleeAttackState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("7_4idyx")
+
+[node name="PowerAttackState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("8_fcru1")
+
+[node name="StunnedState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("9_3we5v")
+
+[node name="AvoidState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("10_1c0bj")
+
+[node name="BossHealthContainer" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="TextureProgressBar" parent="BossHealthContainer"]
+custom_minimum_size = Vector2(100, 16)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 16.0
+offset_right = -100.0
+offset_bottom = 32.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 19
+stretch_margin_right = 6
+texture_under = SubResource("AtlasTexture_1ywse")
+texture_progress = SubResource("AtlasTexture_glohg")
+
+[node name="Label" type="Label" parent="BossHealthContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -92.0
+offset_top = 62.0
+offset_right = 1805.0
+offset_bottom = 344.0
+grow_horizontal = 2
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_color = Color(1, 0.965038, 0.95901, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_fonts/font = ExtResource("6_urd0n")
+theme_override_font_sizes/font_size = 300
+text = "VIRULENT X"
+horizontal_alignment = 1
