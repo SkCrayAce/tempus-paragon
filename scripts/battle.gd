@@ -3,7 +3,8 @@ extends Node
 
 @export var grid_length : int
 @export var grid_height : int
-@export var num_of_patterns : int
+@export var min_num_of_groups : int
+@export var max_num_of_groups : int
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
@@ -108,13 +109,20 @@ func start_wave():
 		
 	prints("new wave")
 	count = 0
-	used_vectors.clear()
+	global.enemy_dict.clear()
 	enemy_move_timer.start(enemy_move_timer.wait_time)
+	prints("before place formation")
 	
-	while count < num_of_patterns:
+	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
+	while count < num_of_groups:
+		prints("after place formation, count:", count)
 		place_formation()
 		
 func place_formation():
+	var x_valid : bool
+	var y_valid : bool
+	var spawn_position
+	var spawn_positions : Array[Vector2i]
 	var base_position = generate_random_vector()
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -127,27 +135,32 @@ func place_formation():
 		3 : current_offset_list = bettany_offset_list
 	
 	for offset in current_offset_list:
-		var spawn_position = base_position + offset as Vector2i
-		var x_valid : bool
-		var y_valid : bool
+		spawn_position = base_position + offset as Vector2i
 		
 		if current_offset_list == bettany_offset_list:
 			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x) 
-			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
-		else:
+			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1) 
+		elif current_offset_list != bettany_offset_list:
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
-			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y + 1) 
-		
+			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
+			
 		if spawn_position in global.enemy_dict:
 			prints("intersect exists")
+			spawn_positions.clear()
 			return
-			
-		if x_valid and y_valid:
-			wave_spawner(spawn_position)
-	
-		record_enemies()
-	count += 1
+		else:
+			spawn_positions.append(spawn_position)
 		
+	for position in spawn_positions:
+		if x_valid and y_valid:
+			wave_spawner(position)
+			record_enemies()
+		else:
+			prints("out of bounds")
+			return
+	count += 1
+	spawn_positions.clear()
+			
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = tilemap.map_to_local(spawn_position)
 	
