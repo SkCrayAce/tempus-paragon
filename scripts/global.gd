@@ -95,9 +95,39 @@ func swap_inventory_items(index1, index2) -> bool:
 	inventory_updated.emit()
 	return true
 	
+func get_rarity():
+	var rng = RandomNumberGenerator.new()
+	var rarities = {"Common" : 1500,
+					"Uncommon" : 1000,
+					"Rare" : 500,
+					"Epic" : 200,
+					"Legendary" : 100}
+	rng.randomize()
+	var weighted_sum = 0
+	for i in rarities:
+		weighted_sum += rarities[i]
+	
+	var value = rng.randi_range(0, weighted_sum)
+	for i in rarities:
+		if value <= rarities[i]:
+			return i
+		value -= rarities[i]
+
 func drop_random_item(drop_position):
 	#for now just randomly choose from items without taking rarity in consideration
-	var item = ItemDatabase.items[randi() % ItemDatabase.items.size()]
+	var item
+	match get_rarity():
+		"Common":
+			item = ItemDatabase.items_common[randi() % ItemDatabase.items_common.size()]
+		"Uncommon":
+			item = ItemDatabase.items_uncommon[randi() % ItemDatabase.items_uncommon.size()]
+		"Rare":
+			item = ItemDatabase.items_rare[randi() % ItemDatabase.items_rare.size()]
+		"Epic":
+			item = ItemDatabase.items_epic[randi() % ItemDatabase.items_epic.size()]
+		"Legendary":
+			item = ItemDatabase.items_legendary[randi() % ItemDatabase.items_legendary.size()]
+
 	var item_scene = load("res://scenes/inventory_item.tscn")
 	var item_instance = item_scene.instantiate()
 	item_instance.set_item_data(item)
