@@ -5,8 +5,10 @@ extends State
 @export var anim : AnimatedSprite2D
 
 #Starting state/default state - idle lasts for 1-2 seconds
+#will go to avoid state if took a certain amount of damage
 
 signal idle_finished
+signal take_many_damage
 
 func _enter_state():
 	anim.play("idle")

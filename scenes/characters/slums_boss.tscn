@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://by6rsmk71ao26"]
+[gd_scene load_steps=25 format=3 uid="uid://by6rsmk71ao26"]
 
 [ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
 [ext_resource type="Texture2D" uid="uid://mpnqspfbw55f" path="res://temp_assets/boss_slums_temp.png" id="2_wk1o2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/slums_boss AI/power_attack_state.gd" id="8_fcru1"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/stunned_state.gd" id="9_3we5v"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/avoid_state.gd" id="10_1c0bj"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/return_to_grid_state.gd" id="11_cf2wi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vj52p"]
 atlas = ExtResource("2_wk1o2")
@@ -156,6 +157,9 @@ script = ExtResource("9_3we5v")
 
 [node name="AvoidState" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("10_1c0bj")
+
+[node name="ReturnToGridState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("11_cf2wi")
 
 [node name="BossHealthContainer" type="CanvasLayer" parent="."]
 

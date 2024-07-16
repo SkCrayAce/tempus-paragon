@@ -8,10 +8,10 @@ extends State
 #or after recieving a certain amount of damage
 #Boss gets out of grid and summons a wave of virulents
 
-signal avoiding_finished
+signal summon_finished
 
 func _enter_state():
 	pass
 
 func _exit_state():
-	avoiding_finished.emit()
+	pass

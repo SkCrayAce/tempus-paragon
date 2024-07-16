@@ -8,6 +8,7 @@ extends State
 #if hit during wind up, will go to stun state
 
 signal p_attack_finished
+signal hit_at_wind_up
 
 func _enter_state():
 	pass
