@@ -95,13 +95,6 @@ func _process(delta):
 		if Input.is_action_just_pressed("left_click"):
 			global.is_dragging = true
 			global.dragged_char_name = name
-		if Input.is_action_pressed("left_click"):
-			pass
-			#global.dragged_char_name = name
-		#elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
-			#global.is_dragging = false
-			#prints("dragged:", global.dragged_char_name)
-			#global.dragged_char_name = ""
 
 	cooldown_bar.value = cooldown_timer.time_left
 	
@@ -135,15 +128,12 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
-		else:
-			hover_active = false
 			
 	
 	if Input.is_action_just_released("left_click"):
 		global.is_dragging = false
 		prints("dragged:", global.dragged_char_name)
 		global.dragged_char_name = ""
-		prints("i am called")
 		prints("hover active: ", hover_active)
 		
 		if hover_active:
@@ -155,11 +145,12 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			tween.tween_property(char_sprite, "position", tile_map.map_to_local(hovered_tile), 0.5)
 			tween.finished.connect(attack_animation)
 			prints("start cd")
-			start_cooldown()
 	
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
 		return
+		
+	start_cooldown()
 	
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
