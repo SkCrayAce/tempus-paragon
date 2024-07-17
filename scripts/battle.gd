@@ -22,11 +22,9 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var animation_timer = $AnimationTimer as Timer
 @onready var slums_tile_map = $SlumsTileMap
 
-
-
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
-var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)]
+var tyrone_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var current_offset_list : Array
 
@@ -156,7 +154,7 @@ func place_formation():
 	for position in spawn_positions:
 		if x_valid and y_valid:
 			wave_spawner(position)
-			record_enemies()
+			#record_enemies()
 		else:
 			return
 	count += 1
@@ -174,16 +172,20 @@ func wave_spawner(spawn_position : Vector2i):
 	enemy_instance.position = enemy_local_pos
 	enemy_instance.z_index = enemy_local_pos.y
 	slums_tile_map.add_child.call_deferred(enemy_instance) 
-	enemy_instance.enemy_died.connect(wave_cleared.bind(enemy_instance))
+	enemy_instance.enemy_died.connect(enemy_defeated.bind(enemy_instance))
 	used_vectors.append(spawn_position)
 	add_enemy(enemy_instance)
+	record_enemies()
 
 	
-func wave_cleared(enemy_ref : CharacterBody2D):
+func enemy_defeated(enemy_ref : CharacterBody2D):
 	enemy_list.erase(enemy_ref)
 	global.enemy_dict.erase(slums_tile_map.local_to_map(enemy_ref.position))
 	record_enemies()
 	
+	prints("enemies left in group:", get_tree().get_nodes_in_group("enemies").size())
+	prints("enemies left in array:", enemy_list.size())
+	prints("enemies left in dictionary", global.enemy_dict.size())
 	if enemy_list.size() == 0: 
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
@@ -197,10 +199,10 @@ func battle_ended():
 	trans_screen.play_animation()
 	await get_tree().create_timer(1).timeout
 	trans_screen.queue_free()
+	
 	if global.current_scene:
 		get_tree().change_scene_to_file(global.current_scene)
-	#else:
-		#get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
+	
 
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()

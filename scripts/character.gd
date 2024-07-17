@@ -103,13 +103,14 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 		global.dragged_char_name = ""
 		draggable = false
 		if hover_active:
+			var attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
 			anim_sprite.play("walk")
-			tween.tween_property(char_sprite, "global_position", tile_map.map_to_local(hovered_tile), 0.5).set_ease(Tween.EASE_OUT)
+			tween.tween_property(char_sprite, "global_position", attack_position, 0.5).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
-			prints("start cd")
+			
 	
 func attack_animation():
 		anim_sprite.play("attack")
@@ -129,6 +130,8 @@ func inflict_damage():
 			detected_enemy.hit(attack_damage)
 
 func return_to_position():
+	if is_defeated: return
+	
 	var back_to_idle = func(): 
 		anim_sprite.flip_h = false
 		anim_sprite.play("idle")
@@ -143,7 +146,6 @@ func return_to_position():
 	
 func start_cooldown():
 	on_cooldown = true
-	#global.is_dragging = false
 	draggable = false
 	if not on_cooldown or is_defeated: return 
 	
@@ -152,11 +154,6 @@ func start_cooldown():
 	cooldown_bar.show()
 	cooldown_timer.timeout.connect(end_cooldown)
 	drag_icon.scale = Vector2(1, 1)
-
-#func _on_cooldown_timer_timeout():
-	#on_cooldown = false
-	#cooldown_bar.hide()
-	#draggable = false
 	
 func end_cooldown():
 	on_cooldown = false
@@ -166,10 +163,10 @@ func end_cooldown():
 func take_damage(damage : int):
 	health_bar.value -= damage
 	hit_effect.play("hit_flash")
+	
 	if is_defeated: return
 	
 	if health_bar.value <= 0:
-		character_killed.emit()
 		character_defeated()
 
 func character_defeated():
@@ -177,7 +174,6 @@ func character_defeated():
 	anim_sprite.play("death")
 	defeat_filter.show()
 	global.is_dragging = false
-	global.is_released = false
 	global.dragged_char_name = ""
 	
 func within_bounds(coordinate : Vector2) -> bool:

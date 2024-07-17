@@ -1168,7 +1168,7 @@ one_shot = true
 autostart = true
 
 [node name="AnimationTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 one_shot = true
 
 [node name="AttackRange" type="Marker2D" parent="."]

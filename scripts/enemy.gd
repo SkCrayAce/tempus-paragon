@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
 
 const BattleNode = preload("res://scripts/battle.gd")
+const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
+const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
 
 @onready var healthbar = $HealthBar as TextureProgressBar
 @onready var tile_map = get_parent() as TileMap
@@ -22,7 +24,6 @@ var is_waiting : bool
 var current_map_position : Vector2i
 var tween : Tween
 var new_position : Vector2
-var anim_sprite_frame
 
 @onready var kai = get_node("../../DraggableIcons/kai") as Node2D
 @onready var emerald = get_node("../../DraggableIcons/emerald") as Node2D
@@ -87,8 +88,7 @@ func show_damage_numbers(damage : int):
 	number.position = damage_number_origin.position
 	number.z_index = 30
 	
-	var color = Color.FIREBRICK
-	var font = FontFile.new()
+	var color = Color.RED
 	
 	number.label_settings.font_color = color
 	number.label_settings.font_size = 7
@@ -102,7 +102,7 @@ func show_damage_numbers(damage : int):
 	tween.set_parallel(true)
 	tween.tween_property(number, "position:y", number.position.y - 10, 0.25).set_ease(Tween.EASE_OUT)
 	await tween.finished
-	remove_child(number)
+	number.queue_free()
 	
 func enemy_defeated():
 	is_defeated = true
@@ -140,10 +140,17 @@ func attack_character():
 	
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
-	animated_sprite.play("side_idle_left")
+	#animated_sprite.play("side_idle_left")
 
 	
 func inflict_damage():
+	if scene_file_path == MeleeVirulentScene:
+		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
+			return
+	elif scene_file_path == RangedVirulentScene:
+		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 5:
+			return
+		
 	var kai_aligned = current_map_position.y in kai_hitbox
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
@@ -151,9 +158,6 @@ func inflict_damage():
 	var back_to_idle = func():
 		animated_sprite.stop()
 		animated_sprite.play("side_idle_left")
-		
-	if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
-		return
 		
 	if kai_aligned and not kai.is_defeated : kai.take_damage(attack_damage)
 	if emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
@@ -172,9 +176,9 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 	
-	if scene_file_path == "res://scenes/characters/melee_virulent.tscn":
+	if scene_file_path == MeleeVirulentScene:
 		return next_map_position.x < battle_node.top_left_tile.x
-	elif scene_file_path == "res://scenes/characters/ranged_virulent.tscn":
+	elif scene_file_path == RangedVirulentScene:
 		return next_map_position.x < battle_node.top_left_tile.x + 8
 		
 	return true

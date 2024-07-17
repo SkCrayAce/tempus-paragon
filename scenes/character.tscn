@@ -27,6 +27,21 @@ resource_local_to_scene = true
 shader = ExtResource("4_kp5s0")
 shader_parameter/hit_opacity = 0.0
 
+[sub_resource type="Animation" id="Animation_vuh56"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_sya42"]
 resource_name = "hit_flash"
 length = 0.5
@@ -41,21 +56,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_vuh56"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_suqta"]
@@ -201,6 +201,7 @@ animation = &"death"
 
 [node name="Shadow" type="Sprite2D" parent="BattleSprite"]
 z_index = -1
+position = Vector2(0, -0.25)
 texture = ExtResource("6_oq016")
 
 [node name="HitEffect" type="AnimationPlayer" parent="BattleSprite"]
