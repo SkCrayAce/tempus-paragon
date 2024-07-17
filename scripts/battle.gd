@@ -30,11 +30,10 @@ var tyrone_offset_list = [Vector2i(0, 0), Vector2i(-1, 0), Vector2i(-1, 1), Vect
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var current_offset_list : Array
 
-
-@onready var kai = $VBoxContainer/kai
-@onready var emerald = $VBoxContainer/emerald
-@onready var tyrone = $VBoxContainer/tyrone
-@onready var bettany = $VBoxContainer/bettany
+@onready var kai = $DraggableIcons/kai
+@onready var emerald = $DraggableIcons/emerald
+@onready var tyrone = $DraggableIcons/tyrone
+@onready var bettany = $DraggableIcons/bettany
 
 @onready var kai_sprite = $Characters/kai
 
@@ -48,6 +47,7 @@ var anim_start = false
 func _ready():
 	waves_cleared = 0
 	global.battle_won = false
+	enemy_move_timer.timeout.connect(commence_enemy_action)
 	animation_timer.timeout.connect(animation_ended)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
    
@@ -61,26 +61,18 @@ func _ready():
 	
 	
 func _process(delta):
-	#if anim_start == false:
-		#start_anim()
-		#anim_start = true
+	if anim_start == false:
+		start_anim()
+		anim_start = true
 		
-	var hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position())
-	
 	move_timer_bar.value = enemy_move_timer.time_left
-
-	for x in grid_length:
-		for y in grid_height:
-			slums_tile_map.erase_cell(1, Vector2(x, y))
 	
-	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
-		match global.dragged_char_name:
-			"kai": kai.preview_attack_AoE(hovered_tile, kai_offset_list)
-			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
-			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
-			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
-		
-func _on_enemy_move_timer_timeout(): 
+	#for x in grid_length:
+		#for y in grid_height:
+			#slums_tile_map.erase_cell(1, Vector2(x, y))
+	
+	
+func commence_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()

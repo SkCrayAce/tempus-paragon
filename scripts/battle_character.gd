@@ -4,7 +4,7 @@ extends Node2D
 @onready var shadow = $Shadow
 @onready var hit_effect = $HitEffect
 
-@onready var kai = $"../../VBoxContainer/kai"
+@onready var kai = $"../../DraggableIcons/kai"
 
 
 func _ready():

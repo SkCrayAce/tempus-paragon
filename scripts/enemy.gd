@@ -24,10 +24,11 @@ var tween : Tween
 var new_position : Vector2
 var anim_sprite_frame
 
-@onready var kai = get_node("../../VBoxContainer/kai") as Node2D
-@onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
-@onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
-@onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
+@onready var kai = get_node("../../DraggableIcons/kai") as Node2D
+@onready var emerald = get_node("../../DraggableIcons/emerald") as Node2D
+@onready var tyrone = get_node("../../DraggableIcons/tyrone") as Node2D
+@onready var bettany = get_node("../../DraggableIcons/bettany") as Node2D
+
 
 var kai_hitbox : Array[int]
 var emerald_hitbox : Array[int]
@@ -49,7 +50,6 @@ func _ready():
 	animated_sprite.play("side_idle_left")
 	animated_sprite.frame_changed.connect(inflict_damage)
 	current_map_position = tile_map.local_to_map(position)
-	prints("current_map_position:", current_map_position)
 
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
@@ -93,7 +93,6 @@ func move_animation():
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
-	prints("current_map_position:", current_map_position)
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
