@@ -37,7 +37,7 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var battle_sprite = $BattleSprite as Node2D
 @onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
 @onready var hit_effect = $BattleSprite/HitEffect
-@onready var attack_sfx = $AttackSFX
+@onready var attack_sfx = $AttackSFX as AudioStreamPlayer2D
 
 var char_sprite : Node2D
 
@@ -114,9 +114,14 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
-		attack_sfx.play()
-		anim_sprite.play("attack")
-		anim_sprite.animation_finished.connect(return_to_position)
+	match name:
+		"kai": attack_sfx.stream = load("res://audio/sfx/basicATK_kai_v02.mp3") as AudioStream
+		"emerald" : attack_sfx.stream = load("res://audio/sfx/basicATK_emerald_v03.mp3")
+		"tyrone" : attack_sfx.stream = load("res://audio/sfx/basicATK_tyrone_v01.mp3")
+		"bettany" : attack_sfx.stream = load("res://audio/sfx/basicATK_bettany_v03.mp3")
+	attack_sfx.play()
+	anim_sprite.play("attack")
+	anim_sprite.animation_finished.connect(return_to_position)
 			
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
