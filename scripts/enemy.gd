@@ -51,6 +51,7 @@ func _ready():
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
 	anim_sprite_frame = animated_sprite.frame
+	#prints(anim_sprite_frame)
 
 func action():
 	if is_defeated: return
@@ -67,7 +68,7 @@ func hit(damage : int):
 	healthbar.value -= damage
 	if healthbar.value <= 0:
 		enemy_defeated()
-		
+
 func enemy_defeated():
 	is_defeated = true
 	emit_signal("enemy_died")
@@ -137,6 +138,7 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 	
+	prints(scene_file_path)
 	if scene_file_path == "res://scenes/characters/melee_virulent.tscn":
 		return next_map_position.x < battle_node.top_left_tile.x
 	elif scene_file_path == "res://scenes/characters/ranged_virulent.tscn":

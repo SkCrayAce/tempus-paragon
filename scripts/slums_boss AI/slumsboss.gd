@@ -1,11 +1,6 @@
 class_name Boss
 extends CharacterBody2D
 
-const BattleNode = preload("res://scripts/battle.gd")
-
-@onready var tile_map = get_parent() as TileMap
-@onready var battle_node = get_node("../..") as BattleNode
-@onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var anim : AnimatedSprite2D = $AnimatedSprite2D
 @onready var healthbar : TextureProgressBar = $BossHealthContainer/HealthBar
 @onready var hit_effect = $HitEffect
@@ -37,19 +32,24 @@ var health : int
 var current_map_position : Vector2i
 var tween : Tween
 var new_position : Vector2
-var attack_states = []
-
+var states_to_choose = []
+var new_index
+var rng = RandomNumberGenerator.new()
+	
 
 func _ready():
-	attack_states.append(ranged_attack_state)
-	attack_states.append(melee_attack_state)
-	attack_states.append(power_attack_state)
+	rng.randomize()
+	states_to_choose.append(ranged_attack_state)
+	states_to_choose.append(melee_attack_state)
+	states_to_choose.append(power_attack_state)
+	states_to_choose.append(idle_state)
+	randomize_index()
 	
 	#will go to move state after certain amount of time
 	idle_state.idle_finished.connect(fsm.change_state.bind(moving_state))
 	
 	#randomly select between attack states after moving around
-	moving_state.moving_finished.connect(fsm.change_state.bind(attack_states[randi() % attack_states.size()]))
+	moving_state.moving_finished.connect(randomize_index)
 	
 	#finish attacking goes back to idle
 	ranged_attack_state.r_attack_finished.connect(fsm.change_state.bind(idle_state))
@@ -71,6 +71,14 @@ func _ready():
 	
 	health = healthbar.max_value
 	healthbar.value = health
-	
+
+func randomize_index():
+	new_index = rng.randi() % 3
+	fsm.change_state(states_to_choose[new_index])
+
+func hit(damage : int):
+	hit_effect.play("hit_flash")
+	healthbar.value -= damage
+
 func _process(delta):
 	pass

@@ -137,7 +137,6 @@ func drop_random_item(drop_position):
 #---------------------------------
 
 
-
 func add_level_cleared():
 	levels_cleared += 1
 

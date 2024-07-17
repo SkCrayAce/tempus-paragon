@@ -30,6 +30,7 @@ material = SubResource("ShaderMaterial_tm8l1")
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
+[editable path="TileMap2/SlumsBoss"]
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]

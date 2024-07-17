@@ -16,7 +16,7 @@ var mouse_map_position : Vector2
 @export var max_hover_y : int
 
 const EnemyScript = preload("res://scripts/enemy.gd")
-
+const BossScript = preload("res://scripts/slums_boss AI/slumsboss.gd")
 
 @onready var cooldown_bar = $Control/CooldownBar
 @onready var cooldown_timer = $CooldownTimer
@@ -76,7 +76,8 @@ func preview_attack_AoE(hovered_tile, offset_list):
 			hover_active = false
 		
 		if Input.is_action_just_released("left_click"):
-			var valid_enemy = detected_enemy is EnemyScript
+			var valid_enemy = detected_enemy is EnemyScript #or BossScript
+			print(valid_enemy)
 			if is_instance_valid(detected_enemy) and valid_enemy:
 				drop_attack(detected_enemy)
 			
