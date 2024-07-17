@@ -105,7 +105,7 @@ func stop_animation():
 func attack_character():
 	is_attacking = true
 	
-	if not within_attack_range(): return
+	if not within_attack_range() or not is_attacking: return
 	
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
@@ -117,7 +117,10 @@ func inflict_damage():
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
 	var bettany_aligned = current_map_position.y in bettany_hitbox
-	
+	var back_to_idle = func():
+		animated_sprite.stop()
+		animated_sprite.play("side_idle_left")
+		
 	if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
 		return
 		
@@ -125,7 +128,10 @@ func inflict_damage():
 	if emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
 	if tyrone_aligned and not tyrone.is_defeated : tyrone.take_damage(attack_damage)
 	if bettany_aligned and not bettany.is_defeated : bettany.take_damage(attack_damage)
-	pass
+	else: 
+		is_attacking = false
+		back_to_idle.call()
+
 	
 func is_blocked() -> bool:
 	var next_position = Vector2(position.x - 16, position.y)

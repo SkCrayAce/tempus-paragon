@@ -23,29 +23,22 @@ const grid_height = 68
 const BattleScript = preload("res://scripts/battle.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 
-@onready var cooldown_bar = $Control/CooldownBar 
+@onready var cooldown_bar = $DragIcon/CooldownBar 
 @onready var cooldown_timer = $CooldownTimer
-@onready var sprite = $SpriteContainer
-@onready var health_bar = $Control/HealthBar
-@onready var defeat_filter = $Control/DefeatFilter
+@onready var sprite = $DragIcon/SpriteContainer
+@onready var health_bar = $DragIcon/HealthBar
+@onready var defeat_filter = $DragIcon/DefeatFilter
 @onready var battle_node = get_node("../..") as BattleScript
 @onready var slums_tile_map = $"../../SlumsTileMap"
 @onready var enemy_move_timer = $"../../EnemyMoveTimer"
 @onready var animation_timer = $"../../AnimationTimer"
+@onready var drag_icon = $DragIcon
 
-# Character Sprite Node
-@onready var kai_sprite = $"../../Characters/kai" as Node2D
-@onready var emerald_sprite = $"../../Characters/emerald" as Node2D
-@onready var tyrone_sprite = $"../../Characters/tyrone" as Node2D
-@onready var bettany_sprite = $"../../Characters/bettany" as Node2D
+@onready var battle_sprite = $BattleSprite as Node2D
+@onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
+
 var char_sprite : Node2D
 
-# Animated Sprites
-@onready var kai_anim_sprite = $"../../Characters/kai/AnimatedSprite2D" as AnimatedSprite2D
-@onready var emerald_anim_sprite = $"../../Characters/emerald/AnimatedSprite2D" as AnimatedSprite2D
-@onready var tyrone_anim_sprite = $"../../Characters/tyrone/AnimatedSprite2D" as AnimatedSprite2D
-@onready var bettany_anim_sprite = $"../../Characters/bettany/AnimatedSprite2D" as AnimatedSprite2D
-var anim_sprite : AnimatedSprite2D
 
 # offsets
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -64,27 +57,14 @@ func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
 	health_bar.value = health_bar.max_value
-	
 	for x in grid_length:
 		for y in grid_height:
 			tilemap_dict[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-			
-	match name:
-		"kai":
-			char_sprite = kai_sprite
-			anim_sprite = kai_anim_sprite
-		"emerald":
-			char_sprite = emerald_sprite
-			anim_sprite = emerald_anim_sprite
-		"tyrone":
-			char_sprite = tyrone_sprite
-			anim_sprite = tyrone_anim_sprite
-		"bettany":
-			char_sprite = bettany_sprite
-			anim_sprite = bettany_anim_sprite
-			
+		
+	char_sprite = battle_sprite
+	
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
 
@@ -103,28 +83,23 @@ func _on_area_2d_mouse_entered():
 	var tween := create_tween()
 	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
-		tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_OUT)
+		tween.tween_property(drag_icon, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_OUT)
 
 func _on_area_2d_mouse_exited():
 	var tween := create_tween()
 	if !global.is_dragging:
 		draggable = false
-		tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
+		tween.tween_property(drag_icon, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 
 func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	hovered_tile = new_hovered_tile
 	offset_list = new_offset_list
 	
 	var hover_active : bool
-	
-	var attack_animation = func():
-		anim_sprite.play("attack")
-		anim_sprite.animation_finished.connect(return_to_position)
-	prints(hovered_tile)
-	prints("bago mag loop:", offset_list)
+
+
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
-		prints("within bounds:", within_bounds(target_pos))
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
@@ -132,9 +107,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	
 	if Input.is_action_just_released("left_click"):
 		global.is_dragging = false
-		prints("dragged:", global.dragged_char_name)
 		global.dragged_char_name = ""
-		prints("hover active: ", hover_active)
 		
 		if hover_active:
 			tween = create_tween()
@@ -142,10 +115,16 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
 			anim_sprite.play("walk")
-			tween.tween_property(char_sprite, "position", tile_map.map_to_local(hovered_tile), 0.5)
+			tween.tween_property(char_sprite, "global_position", tile_map.map_to_local(hovered_tile), 0.5)
 			tween.finished.connect(attack_animation)
 			prints("start cd")
 	
+func attack_animation():
+		anim_sprite.play("attack")
+		anim_sprite.animation_finished.connect(return_to_position)
+			
+			
+			
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
 		return
@@ -169,7 +148,7 @@ func return_to_position():
 	tween = create_tween()
 	anim_sprite.flip_h = true
 	anim_sprite.play("walk")
-	tween.tween_property(char_sprite, "position", initial_pos, 0.5)
+	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5)
 	tween.finished.connect(back_to_idle)
 	
 func start_cooldown():
@@ -181,18 +160,18 @@ func start_cooldown():
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
 	cooldown_bar.show()
-	#cooldown_timer.timeout.connect(end_cooldown)
-	scale = Vector2(1, 1)
+	cooldown_timer.timeout.connect(end_cooldown)
+	drag_icon.scale = Vector2(1, 1)
 
-func _on_cooldown_timer_timeout():
-	on_cooldown = false
-	cooldown_bar.hide()
-	draggable = false
-	
-#func end_cooldown():
+#func _on_cooldown_timer_timeout():
 	#on_cooldown = false
 	#cooldown_bar.hide()
 	#draggable = false
+	
+func end_cooldown():
+	on_cooldown = false
+	cooldown_bar.hide()
+	draggable = false
 
 func take_damage(damage : int):
 	character_damaged.emit()

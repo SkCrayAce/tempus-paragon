@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=37 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bb6aexrlbyn3v" path="res://tempus_assets/ability sprites/skill_icons13.png" id="7_libma"]
 [ext_resource type="Texture2D" uid="uid://ckcs8shxa58ty" path="res://tempus_assets/slums_buildings.png" id="8_wh81y"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
-[ext_resource type="PackedScene" uid="uid://bpln5gb07f22y" path="res://scenes/characters/battle_character.tscn" id="18_r0bk5"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
@@ -834,7 +833,22 @@ sources/2 = SubResource("TileSetAtlasSource_hp3yx")
 sources/3 = SubResource("TileSetAtlasSource_ry1ya")
 sources/4 = SubResource("TileSetAtlasSource_s5ets")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1q0gg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c73iv"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l6fur"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tb7un"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dh8o6"]
 resource_local_to_scene = true
 shader = ExtResource("19_13vx5")
 shader_parameter/hit_opacity = 0.0
@@ -1118,75 +1132,29 @@ metadata/_edit_lock_ = true
 position = Vector2(132, 116)
 attack_damage = 3000
 
+[node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_c73iv")
+
 [node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
 attack_damage = 3000
+
+[node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_l6fur")
 
 [node name="tyrone" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
 attack_damage = 3000
 
+[node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_tb7un")
+
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
 attack_damage = 3000
 
-[node name="Characters" type="Node2D" parent="."]
-
-[node name="kai" parent="Characters" instance=ExtResource("18_r0bk5")]
-z_index = 1
-position = Vector2(134, 69)
-
-[node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
-material = SubResource("ShaderMaterial_1q0gg")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/kai" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/kai"]
-
-[node name="emerald" parent="Characters" instance=ExtResource("18_r0bk5")]
-z_index = 1
-position = Vector2(134, 102)
-
-[node name="AnimatedSprite2D" parent="Characters/emerald" index="0"]
-material = SubResource("ShaderMaterial_1q0gg")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/emerald" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/emerald"]
-
-[node name="tyrone" parent="Characters" instance=ExtResource("18_r0bk5")]
-z_index = 1
-position = Vector2(134, 135)
-
-[node name="AnimatedSprite2D" parent="Characters/tyrone" index="0"]
-material = SubResource("ShaderMaterial_1q0gg")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/tyrone" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/tyrone"]
-
-[node name="bettany" parent="Characters" instance=ExtResource("18_r0bk5")]
-z_index = 1
-position = Vector2(134, 166)
-
-[node name="AnimatedSprite2D" parent="Characters/bettany" index="0"]
-material = SubResource("ShaderMaterial_1q0gg")
-frame_progress = 0.710744
-metadata/_edit_lock_ = true
-
-[node name="Shadow" parent="Characters/bettany" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/bettany"]
+[node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_dh8o6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
@@ -1214,7 +1182,3 @@ position = Vector2(264, 43)
 [editable path="DraggableIcons/emerald"]
 [editable path="DraggableIcons/tyrone"]
 [editable path="DraggableIcons/bettany"]
-[editable path="Characters/kai"]
-[editable path="Characters/emerald"]
-[editable path="Characters/tyrone"]
-[editable path="Characters/bettany"]
