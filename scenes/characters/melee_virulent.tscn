@@ -283,3 +283,6 @@ texture_progress = SubResource("AtlasTexture_pqn8h")
 libraries = {
 "": SubResource("AnimationLibrary_fg8ri")
 }
+
+[node name="DamageNumberOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -18)

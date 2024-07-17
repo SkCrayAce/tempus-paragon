@@ -36,6 +36,7 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 
 @onready var battle_sprite = $BattleSprite as Node2D
 @onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
+@onready var hit_effect = $BattleSprite/HitEffect
 
 var char_sprite : Node2D
 
@@ -57,16 +58,11 @@ func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
 	health_bar.value = health_bar.max_value
-	for x in grid_length:
-		for y in grid_height:
-			tilemap_dict[str(Vector2(x, y))] = {
-				"Type" : "Battle Area"
-			}
-		
 	char_sprite = battle_sprite
 	
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
+	anim_sprite.play("idle")
 
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -94,36 +90,30 @@ func _on_area_2d_mouse_exited():
 func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	hovered_tile = new_hovered_tile
 	offset_list = new_offset_list
-	
 	var hover_active : bool
-
-
+	
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
 			
-	
 	if Input.is_action_just_released("left_click"):
 		global.is_dragging = false
 		global.dragged_char_name = ""
-		
+		draggable = false
 		if hover_active:
 			tween = create_tween()
-			
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
 			anim_sprite.play("walk")
-			tween.tween_property(char_sprite, "global_position", tile_map.map_to_local(hovered_tile), 0.5)
+			tween.tween_property(char_sprite, "global_position", tile_map.map_to_local(hovered_tile), 0.5).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
 			prints("start cd")
 	
 func attack_animation():
 		anim_sprite.play("attack")
 		anim_sprite.animation_finished.connect(return_to_position)
-			
-			
 			
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
@@ -148,13 +138,13 @@ func return_to_position():
 	tween = create_tween()
 	anim_sprite.flip_h = true
 	anim_sprite.play("walk")
-	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5)
+	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(back_to_idle)
 	
 func start_cooldown():
 	on_cooldown = true
-	global.is_dragging = false
-	
+	#global.is_dragging = false
+	draggable = false
 	if not on_cooldown or is_defeated: return 
 	
 	cooldown_bar.max_value = cooldown_timer.wait_time
@@ -174,9 +164,8 @@ func end_cooldown():
 	draggable = false
 
 func take_damage(damage : int):
-	character_damaged.emit()
 	health_bar.value -= damage
-	
+	hit_effect.play("hit_flash")
 	if is_defeated: return
 	
 	if health_bar.value <= 0:
@@ -185,6 +174,7 @@ func take_damage(damage : int):
 
 func character_defeated():
 	is_defeated = true
+	anim_sprite.play("death")
 	defeat_filter.show()
 	global.is_dragging = false
 	global.is_released = false

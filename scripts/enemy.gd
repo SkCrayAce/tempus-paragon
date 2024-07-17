@@ -11,7 +11,7 @@ const BattleNode = preload("res://scripts/battle.gd")
 @onready var battle_node = get_node("../..") as BattleNode
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var effect = $AnimationPlayer as AnimationPlayer
-
+@onready var damage_number_origin = $DamageNumberOrigin
 
 var health : int
 var player_chase = false
@@ -28,6 +28,7 @@ var anim_sprite_frame
 @onready var emerald = get_node("../../DraggableIcons/emerald") as Node2D
 @onready var tyrone = get_node("../../DraggableIcons/tyrone") as Node2D
 @onready var bettany = get_node("../../DraggableIcons/bettany") as Node2D
+
 
 
 var kai_hitbox : Array[int]
@@ -65,6 +66,8 @@ func action():
 	current_map_position = tile_map.local_to_map(position)
 
 func hit(damage : int):
+	show_damage_numbers.call_deferred(damage)
+	
 	if is_defeated:
 		return
 	if is_instance_valid(effect):
@@ -72,7 +75,35 @@ func hit(damage : int):
 		healthbar.value -= damage
 		if healthbar.value <= 0:
 			enemy_defeated()
-		
+			
+
+func show_damage_numbers(damage : int):
+	var number = Label.new()
+	
+	if not is_instance_valid(number): return
+	
+	number.label_settings = LabelSettings.new()
+	number.text = str(damage)
+	number.position = damage_number_origin.position
+	number.z_index = 30
+	
+	var color = Color.FIREBRICK
+	var font = FontFile.new()
+	
+	number.label_settings.font_color = color
+	number.label_settings.font_size = 7
+	number.label_settings.outline_color = Color.BLACK
+	number.label_settings.outline_size = 2
+	
+	add_child.call_deferred(number)
+	number.pivot_offset = Vector2(number.size/2)
+	
+	tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(number, "position:y", number.position.y - 10, 0.25).set_ease(Tween.EASE_OUT)
+	await tween.finished
+	remove_child(number)
+	
 func enemy_defeated():
 	is_defeated = true
 	global.delete_enemy(current_map_position)
