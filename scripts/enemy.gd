@@ -111,6 +111,9 @@ func enemy_defeated():
 	animated_sprite.play("death")
 	remove_from_group("enemies")
 	animated_sprite.animation_finished.connect(queue_free)
+	
+	if get_tree().get_node_count() <= 5 :
+		tree_exited.connect(battle_node.start_wave)
 
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
@@ -150,7 +153,7 @@ func inflict_damage():
 	elif scene_file_path == RangedVirulentScene:
 		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 5:
 			return
-		
+	
 	var kai_aligned = current_map_position.y in kai_hitbox
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox

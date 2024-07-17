@@ -26,6 +26,11 @@ var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
 var tyrone_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]
 var bettany_offset_list = [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1)]
+var sqaure_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2)]
+var v_rect_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1),  Vector2i(0, 2), Vector2i(1, 2)]
+var h_rect_offset_list = [Vector2i(0, 0), Vector2i(0, 1),  Vector2i(1, 0),  Vector2i(1, 1),  Vector2i(2, 0),  Vector2i(2, 1)]
+
+
 var current_offset_list : Array
 
 @onready var kai = $DraggableIcons/kai
@@ -127,21 +132,24 @@ func place_formation():
 	var base_position = generate_random_vector()
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 4)	
+	var random_pattern = rng.randi_range(0, 7)	
 	
 	match random_pattern:
 		0 : current_offset_list = kai_offset_list
 		1 : current_offset_list = emerald_offset_list
 		2 : current_offset_list = tyrone_offset_list
 		3 : current_offset_list = bettany_offset_list
+		4 : current_offset_list = sqaure_offset_list
+		5 : current_offset_list = h_rect_offset_list
+		6 : current_offset_list = v_rect_offset_list
 	
 	for offset in current_offset_list:
 		spawn_position = base_position + offset as Vector2i
 		
-		if current_offset_list == bettany_offset_list:
+		if current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list:
 			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1) 
-		elif current_offset_list != bettany_offset_list:
+		elif not (current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list):
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
 			
@@ -163,7 +171,7 @@ func place_formation():
 func wave_spawner(spawn_position : Vector2i):	
 	var enemy_local_pos = slums_tile_map.map_to_local(spawn_position)
 	
-	if current_offset_list == bettany_offset_list:
+	if current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list:
 		enemy_instance = ranged_enemy_scene.instantiate() as CharacterBody2D
 	else:
 		enemy_instance = melee_enemy_scene.instantiate() as CharacterBody2D
@@ -174,7 +182,7 @@ func wave_spawner(spawn_position : Vector2i):
 	slums_tile_map.add_child.call_deferred(enemy_instance) 
 	enemy_instance.enemy_died.connect(enemy_defeated.bind(enemy_instance))
 	used_vectors.append(spawn_position)
-	add_enemy(enemy_instance)
+	#add_enemy(enemy_instance)
 	record_enemies()
 
 	
