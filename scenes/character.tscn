@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=16 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qeil2"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_rw15f"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="4_kp5s0"]
 [ext_resource type="SpriteFrames" uid="uid://b402elnhsyiy8" path="res://scenes/characters/spriteframes/kai_battle.tres" id="5_62wyn"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="6_oq016"]
+[ext_resource type="AudioStream" uid="uid://cfwa63ap55xx0" path="res://audio/sfx/basicATK_kai_v02.mp3" id="7_78h10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
 size = Vector2(197, 100)
@@ -208,6 +209,9 @@ texture = ExtResource("6_oq016")
 libraries = {
 "": SubResource("AnimationLibrary_suqta")
 }
+
+[node name="AttackSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_78h10")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

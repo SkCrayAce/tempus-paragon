@@ -37,6 +37,7 @@ const EnemyScript = preload("res://scripts/enemy.gd")
 @onready var battle_sprite = $BattleSprite as Node2D
 @onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
 @onready var hit_effect = $BattleSprite/HitEffect
+@onready var attack_sfx = $AttackSFX
 
 var char_sprite : Node2D
 
@@ -113,6 +114,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
+		attack_sfx.play()
 		anim_sprite.play("attack")
 		anim_sprite.animation_finished.connect(return_to_position)
 			
