@@ -1,17 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=8 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qeil2"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_rw15f"]
-[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="3_sc7yj"]
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="3_y1w7v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_urski"]
 atlas = ExtResource("2_rw15f")
 region = Rect2(160, 0, 64, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5hyox"]
-atlas = ExtResource("3_sc7yj")
-region = Rect2(24, 80, 208, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
 size = Vector2(197, 100)
@@ -56,7 +51,6 @@ metadata/_edit_lock_ = true
 [node name="Sprite2D" type="Sprite2D" parent="SpriteContainer"]
 position = Vector2(101, 50)
 scale = Vector2(0.9375, 0.9375)
-texture = SubResource("AtlasTexture_5hyox")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -67,7 +61,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 metadata/_edit_lock_ = true
 
 [node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 one_shot = true
 
 [node name="Control" type="Control" parent="."]

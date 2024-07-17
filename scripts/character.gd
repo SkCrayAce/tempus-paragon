@@ -85,8 +85,7 @@ func _ready():
 			char_sprite = bettany_sprite
 			anim_sprite = bettany_anim_sprite
 			
-	initial_pos = char_sprite.position
-	
+	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
 
 		
@@ -97,32 +96,18 @@ func _process(delta):
 			global.is_dragging = true
 			global.dragged_char_name = name
 		if Input.is_action_pressed("left_click"):
-			global.dragged_char_name = name
-		elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
-			#sprite.scale = Vector2(0.2, 0.2)
-			global.is_dragging = false
-			prints("dragged:", global.dragged_char_name)
-			global.dragged_char_name = ""
+			pass
+			#global.dragged_char_name = name
+		#elif Input.is_action_just_released("left_click") and name == global.dragged_char_name:
+			#global.is_dragging = false
+			#prints("dragged:", global.dragged_char_name)
+			#global.dragged_char_name = ""
 
 	cooldown_bar.value = cooldown_timer.time_left
-	
-	var hovered_tile = tile_map.local_to_map(slums_tile_map.get_global_mouse_position())
-	
-	for x in grid_length:
-		for y in grid_height:
-			tile_map.erase_cell(1, Vector2(x, y))
-			
-	if tilemap_dict.has(str(hovered_tile)) and global.is_dragging: 
-		match global.dragged_char_name:
-			"kai": preview_attack_AoE(hovered_tile, kai_offset_list)
-			"emerald": preview_attack_AoE(hovered_tile, emerald_offset_list)
-			"tyrone": preview_attack_AoE(hovered_tile, tyrone_offset_list)
-			"bettany": preview_attack_AoE(hovered_tile, bettany_offset_list)
 	
 	
 func _on_area_2d_mouse_entered():
 	var tween := create_tween()
-	# prints("mouse entered")
 	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
 		tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1).set_ease(Tween.EASE_OUT)
@@ -137,27 +122,39 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	hovered_tile = new_hovered_tile
 	offset_list = new_offset_list
 	
-	var hover_active : bool = false
+	var hover_active : bool
 	
 	var attack_animation = func():
 		anim_sprite.play("attack")
 		anim_sprite.animation_finished.connect(return_to_position)
-
+	prints(hovered_tile)
+	prints("bago mag loop:", offset_list)
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
+		prints("within bounds:", within_bounds(target_pos))
 		if within_bounds(target_pos):
 			tile_map.set_cell(hover_layer, target_pos, 2, Vector2i(0, 0), 0)
 			hover_active = true
-		
+		else:
+			hover_active = false
+			
+	
 	if Input.is_action_just_released("left_click"):
+		global.is_dragging = false
+		prints("dragged:", global.dragged_char_name)
+		global.dragged_char_name = ""
+		prints("i am called")
+		prints("hover active: ", hover_active)
+		
 		if hover_active:
 			tween = create_tween()
-		
+			
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "position", tile_map.map_to_local(hovered_tile), 0.5)
 			tween.finished.connect(attack_animation)
+			prints("start cd")
 			start_cooldown()
 	
 func inflict_damage():
@@ -177,6 +174,7 @@ func return_to_position():
 		anim_sprite.play("idle")
 		enemy_move_timer.set_paused(false)
 		animation_timer.set_paused(false)
+		
 	tween = create_tween()
 	anim_sprite.flip_h = true
 	anim_sprite.play("walk")
@@ -192,13 +190,18 @@ func start_cooldown():
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	cooldown_timer.start()
 	cooldown_bar.show()
-	cooldown_timer.timeout.connect(end_cooldown)
+	#cooldown_timer.timeout.connect(end_cooldown)
 	scale = Vector2(1, 1)
-	
-func end_cooldown():
+
+func _on_cooldown_timer_timeout():
 	on_cooldown = false
 	cooldown_bar.hide()
 	draggable = false
+	
+#func end_cooldown():
+	#on_cooldown = false
+	#cooldown_bar.hide()
+	#draggable = false
 
 func take_damage(damage : int):
 	character_damaged.emit()
@@ -224,3 +227,6 @@ func within_bounds(coordinate : Vector2) -> bool:
 	if x_valid and y_valid:
 		return true
 	return false
+
+
+

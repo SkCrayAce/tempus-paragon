@@ -47,8 +47,8 @@ var anim_start = false
 func _ready():
 	waves_cleared = 0
 	global.battle_won = false
-	enemy_move_timer.timeout.connect(commence_enemy_action)
-	animation_timer.timeout.connect(animation_ended)
+	enemy_move_timer.timeout.connect(start_enemy_action)
+	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
    
 	for x in grid_length:
@@ -67,12 +67,25 @@ func _process(delta):
 		
 	move_timer_bar.value = enemy_move_timer.time_left
 	
-	#for x in grid_length:
-		#for y in grid_height:
-			#slums_tile_map.erase_cell(1, Vector2(x, y))
+	for x in grid_length:
+		for y in grid_height:
+			slums_tile_map.erase_cell(1, Vector2(x, y))
+			
+	var hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position())
+	
+	for x in grid_length:
+		for y in grid_height:
+			slums_tile_map.erase_cell(1, Vector2(x, y))
+	
+	if dictionary.has(str(hovered_tile)) and global.is_dragging: 
+		match global.dragged_char_name:
+			"kai": kai.preview_attack_AoE(hovered_tile, kai_offset_list)
+			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
+			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
+			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
 	
 	
-func commence_enemy_action(): 
+func start_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
@@ -80,7 +93,7 @@ func commence_enemy_action():
 	animation_timer.start()
 
 
-func animation_ended():
+func end_enemy_action():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.stop_animation()
 	record_enemies()
