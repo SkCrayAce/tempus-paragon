@@ -12,12 +12,12 @@ extends State
 @export var rush_to_character_time : int
 @export var wait_anim_time : float
 
-@onready var tile_map = get_parent().get_parent().get_parent() as TileMap
+@onready var tile_map = get_node("../../..") as TileMap
 
-@onready var kai = get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("kai") as Node2D
-@onready var emerald =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("emerald") as Node2D
-@onready var tyrone =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("tyrone") as Node2D
-@onready var bettany =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("bettany") as Node2D
+@onready var kai = get_node("../../../../DraggableIcons/kai") as Node2D
+@onready var emerald =  get_node("../../../../DraggableIcons/emerald") as Node2D
+@onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
+@onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
 
 signal m_attack_finished
 
@@ -35,6 +35,10 @@ var bettany_hitbox : Array[int]
 
 func _ready():
 	set_physics_process(false)
+	anim.frame_changed.connect(inflict_damage)
+
+func _process(delta):
+	record_position()
 
 func _enter_state():
 	set_physics_process(true)
@@ -49,7 +53,6 @@ func _enter_state():
 	await get_tree().create_timer(1.1).timeout
 	
 	if actor.position == melee_position:
-		attack_character()
 		record_position()
 		anim.play("attack_melee")
 		await anim.animation_finished
@@ -77,31 +80,6 @@ func set_up_hitbox():
 	tyrone_hitbox = [top_left_tile.y + 4, top_left_tile.y + 5]
 	bettany_hitbox = [top_left_tile.y + 6, top_left_tile.y + 7]
 
-func attack_character():
-	var kai_aligned = current_map_position.y in kai_hitbox
-	var emerald_aligned = current_map_position.y in emerald_hitbox
-	var tyrone_aligned = current_map_position.y in tyrone_hitbox
-	var bettany_aligned = current_map_position.y in bettany_hitbox
-	
-	if not within_attack_range(): return
-	
-	if kai_aligned and not kai.is_defeated: 
-		await get_tree().create_timer(wait_anim_time).timeout
-		kai.take_damage(attack_damage)
-		
-	if emerald_aligned and not emerald.is_defeated:
-		await get_tree().create_timer(wait_anim_time).timeout 
-		emerald.take_damage(attack_damage)
-	
-	if tyrone_aligned and not tyrone.is_defeated:
-		await get_tree().create_timer(wait_anim_time).timeout 
-		tyrone.take_damage(attack_damage)
-	
-	if bettany_aligned and not bettany.is_defeated: 
-		await get_tree().create_timer(wait_anim_time).timeout
-		bettany.take_damage(attack_damage)
-		
-	await anim.animation_finished
 
 func within_attack_range() -> bool:
 	if abs(top_left_tile.x - current_map_position.x) <= melee_attack_range:
@@ -110,11 +88,35 @@ func within_attack_range() -> bool:
 		return false
 
 func record_position():
-	global.enemy_dict.erase(tile_map.local_to_map(old_position))
+	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
 	global.enemy_dict[boss_map_pos] = actor
-	print("position recorded! ", boss_map_pos)
 
+func inflict_damage():
+	if not anim.animation == "attack_melee" or not anim.frame == 4:
+		return
+		
+	var kai_aligned = current_map_position.y in kai_hitbox
+	var emerald_aligned = current_map_position.y in emerald_hitbox
+	var tyrone_aligned = current_map_position.y in tyrone_hitbox
+	var bettany_aligned = current_map_position.y in bettany_hitbox
+	
+	if not within_attack_range(): return
+	
+	if kai_aligned and not kai.is_defeated:
+		kai.take_damage(attack_damage)
+		
+	if emerald_aligned and not emerald.is_defeated:
+		emerald.take_damage(attack_damage)
+	
+	if tyrone_aligned and not tyrone.is_defeated:
+		tyrone.take_damage(attack_damage)
+	
+	if bettany_aligned and not bettany.is_defeated: 
+		bettany.take_damage(attack_damage)
+		
+	await anim.animation_finished
+	
 
 func _exit_state():
 	prints("Exited Melee Attack State")

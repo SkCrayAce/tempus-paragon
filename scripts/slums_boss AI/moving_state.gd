@@ -7,11 +7,10 @@ const BattleNode = preload("res://scripts/battle.gd")
 @export var anim: AnimatedSprite2D
 @export var healthbar : TextureProgressBar
 
-@onready var tile_map = get_parent().get_parent().get_parent() as TileMap
+@onready var tile_map = get_node("../../..") as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
 
 var current_map_position : Vector2i
-var old_position
 var tween : Tween
 var new_position : Vector2
 var moving_time : int
@@ -33,7 +32,6 @@ func _enter_state():
 	prints("Entered Moving State")
 	set_physics_process(true)
 	curr_health = healthbar.value
-	old_position = tile_map.local_to_map(actor.position)
 	#record_position()
 	
 	anim.play("moving")
@@ -43,21 +41,16 @@ func _enter_state():
 	await get_tree().create_timer(float(moving_time)+0.1).timeout
 	
 	if actor.position == new_position:
-		#prints("moving finished")
 		record_position()
 		moving_finished.emit()
 
 func move_to_new_pos():
-	#prints("moving to new pos")
-	#random position in grid
 	new_position = tile_map.map_to_local(Vector2(randi_range(top_left_tile.x, bottom_right_tile.x), randi_range(top_left_tile.y, bottom_right_tile.y)))
-	#prints(new_position, " in ", moving_time, " seconds")
 	var new_map_position = tile_map.local_to_map(new_position)
-	#prints("new_map_positon: ", new_map_position)
-	
+
 	if new_position.distance_to(actor.position) <= 50:
 		moving_time = 1
-		#prints("moving time set to 1")
+
 	
 	tween = create_tween()
 	anim.play("moving")
@@ -75,12 +68,13 @@ func _physics_process(delta):
 			take_many_damage.emit()
 
 func record_position():
-	global.enemy_dict.erase(old_position)
+	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
 	global.enemy_dict[boss_map_pos] = actor
 	#print("position recorded", boss_map_pos)
 
 func _process(delta):
+	record_position()
 	current_map_position = tile_map.local_to_map(actor.position)
 	
 func _exit_state():

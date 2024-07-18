@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://by6rsmk71ao26"]
+[gd_scene load_steps=124 format=3 uid="uid://by6rsmk71ao26"]
 
 [ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_aflqb"]
@@ -179,50 +179,6 @@ region = Rect2(1152, 256, 96, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_c1avm"]
 atlas = ExtResource("3_4mw02")
 region = Rect2(1248, 256, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1tgjl"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(0, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_earnu"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(96, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4yv77"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(192, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v6tdl"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(288, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h1dyb"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(384, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rjvo"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(480, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ov32s"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(576, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_664tk"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(672, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oy27s"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(768, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lebj6"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(864, 576, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rbpke"]
-atlas = ExtResource("3_4mw02")
-region = Rect2(960, 576, 96, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_al2rc"]
 atlas = ExtResource("3_4mw02")
@@ -607,44 +563,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1tgjl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_earnu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4yv77")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v6tdl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h1dyb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2rjvo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ov32s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_664tk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oy27s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lebj6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rbpke")
-}],
-"loop": false,
-"name": &"death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_al2rc")
 }, {
 "duration": 1.0,
@@ -909,13 +827,12 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
-health = 10000
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
-animation = &"moving"
+animation = &"attack_melee"
 offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
@@ -963,7 +880,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 400
+attack_damage = 100
 wait_anim_time = 1.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]

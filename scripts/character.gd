@@ -23,6 +23,7 @@ const grid_height = 68
 
 const BattleScript = preload("res://scripts/battle.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
+const BossScript = preload("res://scripts/slums_boss AI/slumsboss.gd")
 
 @onready var cooldown_bar = $DragIcon/CooldownBar 
 @onready var cooldown_timer = $CooldownTimer
@@ -134,7 +135,7 @@ func inflict_damage():
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
 		var detected_enemy = global.enemy_dict.get(target_pos)
-		var valid_enemy = detected_enemy is EnemyScript
+		var valid_enemy = detected_enemy is EnemyScript or detected_enemy is BossScript
 		if is_instance_valid(detected_enemy) and valid_enemy:
 			detected_enemy.hit(attack_damage)
 

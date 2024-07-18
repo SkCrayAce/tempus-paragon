@@ -1,46 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuqvl510vql7"]
+[gd_scene load_steps=7 format=3 uid="uid://cuqvl510vql7"]
 
 [ext_resource type="PackedScene" uid="uid://bvw1dpdysu56x" path="res://scenes/areas/battle.tscn" id="1_yg4cr"]
-[ext_resource type="PackedScene" uid="uid://by6rsmk71ao26" path="res://scenes/characters/slums_boss.tscn" id="2_6vipv"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_ong3m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tm8l1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mft8e"]
+resource_local_to_scene = true
+shader = ExtResource("2_ong3m")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1iacd"]
+resource_local_to_scene = true
+shader = ExtResource("2_ong3m")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iye43"]
+resource_local_to_scene = true
+shader = ExtResource("2_ong3m")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ms5d6"]
 resource_local_to_scene = true
 shader = ExtResource("2_ong3m")
 shader_parameter/hit_opacity = 0.0
 
 [node name="SlumsBattleBossfightTemp" instance=ExtResource("1_yg4cr")]
 
-[node name="SlumsBoss" parent="TileMap2" index="6" instance=ExtResource("2_6vipv")]
-position = Vector2(344, 119)
-
-[node name="AvoidToPoint" type="Marker2D" parent="TileMap2" index="7"]
+[node name="AvoidToPoint2" type="Marker2D" parent="SlumsTileMap" index="6"]
 position = Vector2(435, 118)
 
-[node name="Characters" parent="." index="5"]
-metadata/_edit_lock_ = true
+[node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_mft8e")
 
-[node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
-material = SubResource("ShaderMaterial_tm8l1")
+[node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_1iacd")
 
-[node name="AnimatedSprite2D" parent="Characters/emerald" index="0"]
-material = SubResource("ShaderMaterial_tm8l1")
+[node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_iye43")
 
-[node name="AnimatedSprite2D" parent="Characters/tyrone" index="0"]
-material = SubResource("ShaderMaterial_tm8l1")
-
-[node name="AnimatedSprite2D" parent="Characters/bettany" index="0"]
-material = SubResource("ShaderMaterial_tm8l1")
+[node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_ms5d6")
 
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
-[editable path="VBoxContainer/kai"]
-[editable path="VBoxContainer/emerald"]
-[editable path="VBoxContainer/tyrone"]
-[editable path="VBoxContainer/bettany"]
-[editable path="Characters/kai"]
-[editable path="Characters/emerald"]
-[editable path="Characters/tyrone"]
-[editable path="Characters/bettany"]
+[editable path="DraggableIcons/kai"]
+[editable path="DraggableIcons/emerald"]
+[editable path="DraggableIcons/tyrone"]
+[editable path="DraggableIcons/bettany"]

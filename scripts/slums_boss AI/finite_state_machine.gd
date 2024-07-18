@@ -3,9 +3,12 @@ extends Node
 
 @export var state: State
 
+
 func _ready():
+	if global.boss_is_defeated:
+		return
 	change_state(state)
-	pass
+
 	
 func change_state(new_state: State):
 	if state is State:

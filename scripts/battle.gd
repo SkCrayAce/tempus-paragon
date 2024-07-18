@@ -14,6 +14,7 @@ var waves_cleared : int
 
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
+const slums_boss_scene := preload("res://scenes/characters/slums_boss.tscn")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -48,6 +49,7 @@ var used_vectors : Array[Vector2i]
 var anim_start = false
 
 func _ready():
+	spawn_boss()
 	waves_cleared = 0
 	global.battle_won = false
 	enemy_move_timer.timeout.connect(start_enemy_action)
@@ -59,7 +61,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-	start_wave()
+	#start_wave()
 	prints("battle started:")
 	
 	
@@ -114,7 +116,8 @@ func add_enemy(enemy : CharacterBody2D):
 	
 func start_wave():
 	if waves_cleared == 1:
-		battle_ended()
+		#battle_ended()
+		pass
 		
 	prints("new wave")
 	count = 0
@@ -162,7 +165,8 @@ func place_formation():
 	for position in spawn_positions:
 		if x_valid and y_valid:
 			wave_spawner(position)
-			#record_enemies()
+			record_enemies()
+			pass
 		else:
 			return
 	count += 1
@@ -232,3 +236,10 @@ func start_anim():
 	await get_tree().create_timer(1).timeout
 	trans_screen.queue_free()
 	global.transition_commence = false
+	
+
+func spawn_boss():
+	var boss_instance = slums_boss_scene.instantiate() as CharacterBody2D
+	boss_instance.position = slums_tile_map.map_to_local(Vector2i(21, 7))
+	slums_tile_map.add_child.call_deferred(boss_instance)
+	

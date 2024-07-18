@@ -7,12 +7,12 @@ extends State
 @export var attack_damage : int
 @export var wait_anim_time : float
 
-@onready var tile_map = get_parent().get_parent().get_parent() as TileMap
+@onready var tile_map = get_node("../../..") as TileMap
 
-@onready var kai = get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("kai") as Node2D
-@onready var emerald =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("emerald") as Node2D
-@onready var tyrone =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("tyrone") as Node2D
-@onready var bettany =  get_parent().get_parent().get_parent().get_parent().find_child("VBoxContainer").find_child("bettany") as Node2D
+@onready var kai = get_node("../../../../DraggableIcons/kai") as Node2D
+@onready var emerald =  get_node("../../../../DraggableIcons/emerald") as Node2D
+@onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
+@onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
 
 
 const top_left_tile = Vector2i(9, 3)

@@ -10,6 +10,7 @@ var is_dragging = false
 var dragged_char_name : String
 var enemy_position : Vector2
 var enemy_dict : Dictionary 
+var boss_is_defeated : bool
 
 #Overworld Data
 var levels_cleared = 0
