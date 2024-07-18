@@ -48,6 +48,8 @@ var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
 var anim_start = false
 
+signal wave_finished
+
 func _ready():
 	spawn_boss()
 	waves_cleared = 0
@@ -202,7 +204,10 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 	if enemy_list.size() == 0: 
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
-		start_wave()
+		if global.boss_spawning:
+			wave_finished.emit()
+		if not global.boss_spawning:
+			start_wave()
 
 func battle_ended():
 	global.battle_won = true

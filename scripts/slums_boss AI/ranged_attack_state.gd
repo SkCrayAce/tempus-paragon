@@ -75,6 +75,14 @@ func inflict_damage():
 		
 	await anim.animation_finished
 
+func _physics_process(delta):
+	record_position()
+
+func record_position():
+	global.enemy_dict.clear()
+	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos] = actor
+
 func within_attack_range() -> bool:
 	if abs(top_left_tile.x - current_map_position.x) <= ranged_attack_range:
 		return true

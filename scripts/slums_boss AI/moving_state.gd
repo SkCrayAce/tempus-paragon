@@ -62,20 +62,20 @@ func randomize_moving_time():
 	moving_time = randi_range(2, 3)
 
 func _physics_process(delta):
+	record_position()
 	#idk if this correctly checks if certain damage has been recieved
 	if curr_health != null:
 		if healthbar.value <= curr_health * 0.7:
 			take_many_damage.emit()
-
+	current_map_position = tile_map.local_to_map(actor.position)
+	
 func record_position():
 	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
 	global.enemy_dict[boss_map_pos] = actor
 	#print("position recorded", boss_map_pos)
 
-func _process(delta):
-	record_position()
-	current_map_position = tile_map.local_to_map(actor.position)
+	
 	
 func _exit_state():
 	prints("Exited Moving State")

@@ -914,7 +914,7 @@ script = ExtResource("1_g8sqm")
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
-animation = &"attack_ranged"
+animation = &"attack_power"
 offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
