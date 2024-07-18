@@ -129,6 +129,7 @@ func move_animation():
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
 	
 	current_map_position = tile_map.local_to_map(position)
+
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
@@ -153,7 +154,7 @@ func inflict_damage():
 		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
 			return
 	elif scene_file_path == RangedVirulentScene:
-		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 5:
+		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 6:
 			return
 	
 	var kai_aligned = current_map_position.y in kai_hitbox

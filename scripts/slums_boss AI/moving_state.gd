@@ -68,6 +68,7 @@ func _physics_process(delta):
 	#idk if this correctly checks if certain damage has been recieved
 	if curr_health != null:
 		if healthbar.value <= curr_health * 0.7:
+			print("took a lot of damage")
 			take_many_damage.emit()
 	current_map_position = tile_map.local_to_map(actor.position)
 	

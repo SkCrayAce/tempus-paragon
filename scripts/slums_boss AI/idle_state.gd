@@ -21,12 +21,12 @@ func _ready():
 	if global.boss_is_defeated:
 		return
 	set_physics_process(false)
-	curr_health = healthbar.value
-
+	
 func _enter_state():
 	prints("Entered Idle State")
 	set_physics_process(true)
-	
+	curr_health = healthbar.value
+
 	var boss_map_pos = tile_map.local_to_map(actor.position)
 	#print("idle, current position is: ", boss_map_pos)
 	global.enemy_dict[boss_map_pos] = actor
@@ -41,6 +41,7 @@ func _physics_process(delta):
 	record_position()
 	#idk if this correctly checks if certain damage has been recieved
 	if healthbar.value <= curr_health * 0.7:
+		print("took a lot of damage")
 		take_many_damage.emit()
 
 	
