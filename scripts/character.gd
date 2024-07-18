@@ -70,8 +70,7 @@ func _ready():
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
 	anim_sprite.play("idle")
-
-		
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if draggable and !on_cooldown and !is_defeated:
@@ -95,6 +94,8 @@ func _on_area_2d_mouse_exited():
 		tween.tween_property(drag_icon, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 
 func preview_attack_AoE(new_hovered_tile, new_offset_list):
+	if not draggable: return
+	
 	hovered_tile = new_hovered_tile
 	offset_list = new_offset_list
 	var hover_active : bool
@@ -150,6 +151,7 @@ func return_to_position():
 		anim_sprite.play("idle")
 		enemy_move_timer.set_paused(false)
 		animation_timer.set_paused(false)
+		draggable = true
 		
 	tween = create_tween()
 	anim_sprite.flip_h = true
@@ -176,7 +178,7 @@ func end_cooldown():
 func take_damage(damage : int):
 	health_bar.value -= damage
 	hit_effect.play("hit_flash")
-	
+	battle_node.update_team_health()
 	if is_defeated: return
 	
 	if health_bar.value <= 0:
