@@ -32,7 +32,9 @@ func _physics_process(delta):
 func record_position():
 	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos + Vector2i.LEFT] = actor
 	global.enemy_dict[boss_map_pos] = actor
+	global.enemy_dict[boss_map_pos + Vector2i.RIGHT] = actor
 
 func _exit_state():
 	set_physics_process(false)

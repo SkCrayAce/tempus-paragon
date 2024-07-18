@@ -91,7 +91,9 @@ func within_attack_range() -> bool:
 func record_position():
 	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos + Vector2i.LEFT] = actor
 	global.enemy_dict[boss_map_pos] = actor
+	global.enemy_dict[boss_map_pos + Vector2i.RIGHT] = actor
 
 func inflict_damage():
 	if not anim.animation == "attack_melee" or not anim.frame == 4:

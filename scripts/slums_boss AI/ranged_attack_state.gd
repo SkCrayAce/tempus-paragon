@@ -83,7 +83,9 @@ func _physics_process(delta):
 func record_position():
 	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos + Vector2i.LEFT] = actor
 	global.enemy_dict[boss_map_pos] = actor
+	global.enemy_dict[boss_map_pos + Vector2i.RIGHT] = actor
 
 func within_attack_range() -> bool:
 	if abs(top_left_tile.x - current_map_position.x) <= ranged_attack_range:

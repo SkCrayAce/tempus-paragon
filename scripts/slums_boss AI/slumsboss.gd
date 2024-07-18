@@ -2,12 +2,14 @@ class_name Boss
 extends CharacterBody2D
 
 @export var health : int
+@export var attack_damage : int
+
 
 
 @onready var anim : AnimatedSprite2D = $AnimatedSprite2D
 @onready var healthbar : TextureProgressBar = $BossHealthContainer/HealthBar
 @onready var hit_effect = $HitEffect
-
+@onready var damage_number_origin = $DamageNumberOrigin
 @onready var tile_map = get_parent() as TileMap
 
 
@@ -89,17 +91,45 @@ func randomize_index():
 
 func hit(damage : int):
 	hit_effect.play("hit_flash")
+	show_damage_numbers(damage)
 	healthbar.value -= damage
 	
 	if healthbar.value <= 0:
 		death()
-
+		
+func show_damage_numbers(damage : int):
+	
+	var number = Label.new()
+	
+	if not is_instance_valid(number): return
+	
+	number.label_settings = LabelSettings.new()
+	number.text = str(damage)
+	number.position = damage_number_origin.position
+	number.z_index = 30
+	
+	var color = Color.RED
+	
+	number.label_settings.font_color = color
+	number.label_settings.font_size = 7
+	number.label_settings.outline_color = Color.BLACK
+	number.label_settings.outline_size = 2
+	add_child.call_deferred(number)
+	number.pivot_offset = Vector2(number.size/2)
+	
+	tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(number, "position:y", number.position.y - 10, 1).set_ease(Tween.EASE_OUT)
+	await tween.finished
+	number.queue_free()
 func death():
 	global.delete_enemy(current_map_position)
 	anim.stop()
 	global.boss_is_defeated = true
 	boss_killed.emit()
 	queue_free()
+	get_tree().get_node("HitEffect").PROCESS_MODE_PAUSABLE
+	
 	
 
 

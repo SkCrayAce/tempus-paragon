@@ -909,15 +909,14 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
-health = 30
+health = 100000
+attack_damage = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
-animation = &"death"
-frame = 10
-frame_progress = 1.0
+animation = &"attack_ranged"
 offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
@@ -1029,3 +1028,5 @@ horizontal_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_7q6jt")
 }
+
+[node name="DamageNumberOrigin" type="Marker2D" parent="."]
