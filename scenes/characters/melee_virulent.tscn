@@ -238,6 +238,7 @@ _data = {
 
 [node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_hihgw")
+health = 6000
 attack_damage = 200
 animated_sprite = NodePath("MeleeAnimatedSprite")
 
@@ -273,7 +274,6 @@ offset_left = -7.0
 offset_top = 8.0
 offset_right = 7.0
 offset_bottom = 13.0
-max_value = 3000.0
 step = 0.001
 value = 100.0
 nine_patch_stretch = true

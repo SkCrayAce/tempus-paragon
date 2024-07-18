@@ -67,6 +67,7 @@ _data = {
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_qeil2")
+health = 2000
 attack_damage = 1000
 min_hover_x = 9
 max_hover_x = 22
@@ -179,7 +180,6 @@ offset_left = -99.0
 offset_top = 52.0
 offset_right = 99.0
 offset_bottom = 75.0
-max_value = 1000.0
 step = 0.001
 nine_patch_stretch = true
 stretch_margin_left = 4

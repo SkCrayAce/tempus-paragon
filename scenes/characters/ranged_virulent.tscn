@@ -233,8 +233,9 @@ _data = {
 
 [node name="RangedVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_4ip0e")
+health = 6000
 attack_damage = 20
-attack_range = 8
+attack_range = 12
 animated_sprite = NodePath("RangedAnimatedSprite")
 
 [node name="RangedAnimatedSprite" type="AnimatedSprite2D" parent="."]

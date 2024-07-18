@@ -14,6 +14,7 @@ var offset_list : Array
 const grid_length = 120
 const grid_height = 68
 
+@export var health : int
 @export var attack_damage : int
 @export var min_hover_x : int
 @export var max_hover_x : int
@@ -58,6 +59,7 @@ signal character_killed
 func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
+	health_bar.max_value = health
 	health_bar.value = health_bar.max_value
 	char_sprite = battle_sprite
 	

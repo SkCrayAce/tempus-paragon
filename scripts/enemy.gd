@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
+@export var health : int
 @export var attack_damage : int
 @export var attack_range : int
 @export var animated_sprite : AnimatedSprite2D
+
 
 const BattleNode = preload("res://scripts/battle.gd")
 const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
@@ -15,7 +17,7 @@ const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
 
-var health : int
+
 var player_chase = false
 var player = null
 var is_defeated : bool
@@ -47,8 +49,8 @@ func _ready():
 	tyrone_hitbox = [top_left_tile.y + 4, top_left_tile.y + 5]
 	bettany_hitbox = [top_left_tile.y + 6, top_left_tile.y + 7]
 
-	health = healthbar.max_value
-	healthbar.value = health
+	healthbar.max_value = health
+	healthbar.value = healthbar.max_value
 	animated_sprite.play("side_idle_left")
 	animated_sprite.frame_changed.connect(inflict_damage)
 	current_map_position = tile_map.local_to_map(position)
@@ -182,7 +184,7 @@ func is_blocked() -> bool:
 	if scene_file_path == MeleeVirulentScene:
 		return next_map_position.x < battle_node.top_left_tile.x
 	elif scene_file_path == RangedVirulentScene:
-		return next_map_position.x < battle_node.top_left_tile.x + 8
+		return next_map_position.x < battle_node.top_left_tile.x + attack_range
 		
 	return true
 		

@@ -60,7 +60,7 @@ func _ready():
 				"Type" : "Battle Area"
 			}
 	start_wave()
-	prints("battle started")
+	prints("battle started:")
 	
 	
 func _process(delta):
@@ -182,7 +182,7 @@ func wave_spawner(spawn_position : Vector2i):
 	slums_tile_map.add_child.call_deferred(enemy_instance) 
 	enemy_instance.enemy_died.connect(enemy_defeated.bind(enemy_instance))
 	used_vectors.append(spawn_position)
-	#add_enemy(enemy_instance)
+	add_enemy(enemy_instance)
 	record_enemies()
 
 	
