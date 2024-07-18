@@ -55,7 +55,6 @@ func _ready():
 	states_to_choose.append(power_attack_state)
 	states_to_choose.append(idle_state)
 	states_to_choose.append(moving_state)
-	randomize_index()
 	
 	if not global.boss_is_defeated:
 		#will go to move state after certain amount of time
@@ -122,6 +121,8 @@ func show_damage_numbers(damage : int):
 	tween.tween_property(number, "position:y", number.position.y - 10, 1).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	number.queue_free()
+	
+
 func death():
 	global.delete_enemy(current_map_position)
 	anim.stop()

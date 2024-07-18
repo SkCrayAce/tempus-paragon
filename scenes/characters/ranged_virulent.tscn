@@ -139,7 +139,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 8.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -243,6 +243,8 @@ material = SubResource("ShaderMaterial_x58oj")
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_xgubh")
 animation = &"attack"
+frame = 8
+frame_progress = 1.0
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = -1
