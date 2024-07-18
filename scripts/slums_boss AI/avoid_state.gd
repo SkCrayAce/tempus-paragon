@@ -19,9 +19,14 @@ var tween
 
 signal summon_finished
 
+func _ready():
+	set_physics_process(false)
+
 func _enter_state():
+	set_physics_process(true)
 	print("avoiding")
 	move_to_new_pos()
+	await get_tree().create_timer(2).timeout
 	anim.play("laughing")
 
 
@@ -30,11 +35,11 @@ func move_to_new_pos():
 	
 	tween = create_tween()
 	anim.speed_scale = 2.0
-	anim.play("moving")
 	tween.tween_property(actor, "position", new_position, 2).set_ease(Tween.EASE_OUT)
+	anim.play("moving")
 	await get_tree().create_timer(2).timeout
 	anim.speed_scale = 1.0
 	battle_node.start_wave()
 
 func _exit_state():
-	pass
+	set_physics_process(false)

@@ -61,7 +61,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-	#start_wave()
+
 	prints("battle started:")
 	
 	

@@ -909,13 +909,13 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
-health = 10000
+health = 100000
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
-animation = &"moving"
+animation = &"attack_ranged"
 offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
@@ -944,7 +944,7 @@ script = ExtResource("6_y8s0n")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-ranged_attack_range = 100
+ranged_attack_range = 200
 wait_anim_time = 0.5
 attack_damage = 200
 
@@ -954,7 +954,7 @@ actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 melee_attack_range = 1
-attack_damage = 100
+attack_damage = 300
 rush_to_character_time = 1
 wait_anim_time = 0.5
 
@@ -963,7 +963,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 400
+attack_damage = 500
 wait_anim_time = 1.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]

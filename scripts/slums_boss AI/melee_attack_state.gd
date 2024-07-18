@@ -37,12 +37,11 @@ func _ready():
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
 
-func _process(delta):
+func _physics_process(delta):
 	record_position()
 
 func _enter_state():
 	set_physics_process(true)
-	old_position = actor.position
 	
 	prints("Entered Melee Attack State")
 	set_up_hitbox()

@@ -29,6 +29,7 @@ signal hit_at_wind_up
 
 func _ready():
 	set_physics_process(false)
+	anim.frame_changed.connect(inflict_damage)
 
 func _enter_state():
 	prints("Entered Power Attack State")
@@ -42,13 +43,13 @@ func _enter_state():
 	
 	#shake camera?
 	anim.play("attack_power")
-	attack_character()
 	await anim.animation_finished
 	if anim.animation == "attack_power" and anim.animation_finished:
 		p_attack_finished.emit()
 
-func attack_character():
-	#temporary code for now
+func inflict_damage():
+	if not anim.animation == "attack_power" or not anim.frame == 7:
+		return
 	if !kai.is_defeated and !emerald.is_defeated and !tyrone.is_defeated and !bettany.is_defeated : 
 		await get_tree().create_timer(wait_anim_time).timeout
 		kai.take_damage(attack_damage)

@@ -28,7 +28,8 @@ var bettany_hitbox : Array[int]
 signal r_attack_finished
 
 func _ready():
-		set_physics_process(false)
+	set_physics_process(false)
+	anim.frame_changed.connect(inflict_damage)
 
 func _enter_state():
 	prints("Entered Ranged Attack State")
@@ -40,7 +41,6 @@ func _enter_state():
 	await anim.animation_finished
 	
 	anim.play("attack_ranged")
-	attack_character()
 	await anim.animation_finished
 	r_attack_finished.emit()
 
@@ -50,29 +50,27 @@ func set_up_hitbox():
 	tyrone_hitbox = [top_left_tile.y + 4, top_left_tile.y + 5]
 	bettany_hitbox = [top_left_tile.y + 6, top_left_tile.y + 7]
 
-func attack_character():
+func inflict_damage():
+	if not anim.animation == "attack_ranged" or not anim.frame == 7:
+		return
+		
 	var kai_aligned = current_map_position.y in kai_hitbox
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
 	var bettany_aligned = current_map_position.y in bettany_hitbox
 	
-	print(within_attack_range())
 	if not within_attack_range(): return
 	
-	if kai_aligned and not kai.is_defeated: 
-		await get_tree().create_timer(wait_anim_time).timeout
+	if kai_aligned and not kai.is_defeated:
 		kai.take_damage(attack_damage)
 		
 	if emerald_aligned and not emerald.is_defeated:
-		await get_tree().create_timer(wait_anim_time).timeout 
 		emerald.take_damage(attack_damage)
 	
 	if tyrone_aligned and not tyrone.is_defeated:
-		await get_tree().create_timer(wait_anim_time).timeout 
 		tyrone.take_damage(attack_damage)
 	
 	if bettany_aligned and not bettany.is_defeated: 
-		await get_tree().create_timer(wait_anim_time).timeout
 		bettany.take_damage(attack_damage)
 		
 	await anim.animation_finished

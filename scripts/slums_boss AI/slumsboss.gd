@@ -81,7 +81,7 @@ func _ready():
 	healthbar.value = health
 
 func randomize_index():
-	new_index = rng.randi() % 1
+	new_index = rng.randi() % 5
 	fsm.change_state(states_to_choose[new_index])
 
 func hit(damage : int):
@@ -99,6 +99,4 @@ func death():
 	queue_free()
 	
 
-func _process(delta):
-	current_map_position = tile_map.local_to_map(position)
 
