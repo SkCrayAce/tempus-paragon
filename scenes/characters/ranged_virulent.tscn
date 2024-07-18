@@ -1,14 +1,14 @@
-[gd_scene load_steps=37 format=3 uid="uid://c8d4rup8wq1ny"]
+[gd_scene load_steps=36 format=3 uid="uid://c8d4rup8wq1ny"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_4ip0e"]
-[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_xbl2d"]
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_w5a83"]
 [ext_resource type="Texture2D" uid="uid://reo6tk4fg7hu" path="res://tempus_assets/virulent2_spritesheet.png" id="3_37igj"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="4_1xwbx"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="4_vo8b6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x58oj"]
 resource_local_to_scene = true
-shader = ExtResource("2_xbl2d")
+shader = ExtResource("2_w5a83")
 shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_stp6r"]
@@ -139,7 +139,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 12.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -210,21 +210,6 @@ region = Rect2(160, 48, 64, 16)
 atlas = ExtResource("4_vo8b6")
 region = Rect2(160, 80, 64, 16)
 
-[sub_resource type="Animation" id="Animation_dyj5y"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RangedAnimatedSprite:material:shader_parameter/hit_opacity")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="Animation" id="Animation_48jd8"]
 resource_name = "hit_flash"
 length = 0.5
@@ -240,29 +225,17 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 0.0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MeleeAnimatedSprite:material:shader_parameter/hit_opacity")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fg8ri"]
 _data = {
-"RESET": SubResource("Animation_dyj5y"),
 "hit_flash": SubResource("Animation_48jd8")
 }
 
 [node name="RangedVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_4ip0e")
+health = 6000
 attack_damage = 20
-attack_range = 8
+attack_range = 12
 animated_sprite = NodePath("RangedAnimatedSprite")
 
 [node name="RangedAnimatedSprite" type="AnimatedSprite2D" parent="."]
@@ -290,9 +263,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -9.0
+offset_left = -7.0
 offset_top = 8.0
-offset_right = 9.0
+offset_right = 7.0
 offset_bottom = 13.0
 max_value = 3000.0
 step = 0.001
@@ -305,3 +278,6 @@ texture_progress = SubResource("AtlasTexture_lspsd")
 libraries = {
 "": SubResource("AnimationLibrary_fg8ri")
 }
+
+[node name="DamageNumberOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -18)

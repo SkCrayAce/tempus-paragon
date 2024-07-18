@@ -1,34 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=16 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qeil2"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_rw15f"]
-[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="3_sc7yj"]
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="3_y1w7v"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_urski"]
-atlas = ExtResource("2_rw15f")
-region = Rect2(160, 0, 64, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5hyox"]
-atlas = ExtResource("3_sc7yj")
-region = Rect2(24, 80, 208, 96)
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="4_kp5s0"]
+[ext_resource type="SpriteFrames" uid="uid://b402elnhsyiy8" path="res://scenes/characters/spriteframes/kai_battle.tres" id="5_62wyn"]
+[ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="6_oq016"]
+[ext_resource type="AudioStream" uid="uid://8kqgobb1a1rd" path="res://audio/sfx/basicATK_bettany_v03.mp3" id="7_n586q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlow2"]
 size = Vector2(197, 100)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_helk3"]
-bg_color = Color(0, 0.2, 0.2, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upwom"]
-bg_color = Color(0.352941, 0.647059, 0.207843, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="AtlasTexture" id="AtlasTexture_urski"]
+atlas = ExtResource("2_rw15f")
+region = Rect2(160, 0, 64, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hmgi3"]
 atlas = ExtResource("2_rw15f")
@@ -38,16 +23,117 @@ region = Rect2(160, 48, 64, 16)
 atlas = ExtResource("2_rw15f")
 region = Rect2(160, 64, 64, 16)
 
-[node name="character_icon" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e22j2"]
+resource_local_to_scene = true
+shader = ExtResource("4_kp5s0")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="Animation" id="Animation_vuh56"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_sya42"]
+resource_name = "hit_flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_suqta"]
+_data = {
+"RESET": SubResource("Animation_vuh56"),
+"hit_flash": SubResource("Animation_sya42")
+}
+
+[node name="Character" type="Node2D"]
 script = ExtResource("1_qeil2")
+health = 2000
 attack_damage = 1000
 min_hover_x = 9
 max_hover_x = 22
 min_hover_y = 3
 max_hover_y = 10
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_vlow2")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+metadata/_edit_lock_ = true
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="DragIcon" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="CooldownBar" type="TextureProgressBar" parent="DragIcon"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.01
+value = 60.0
+fill_mode = 5
+nine_patch_stretch = true
+stretch_margin_left = 3
+texture_progress = ExtResource("3_y1w7v")
+tint_under = Color(1, 1, 1, 0.501961)
+tint_progress = Color(1, 1, 1, 0.490196)
+
+[node name="CooldownFilter" type="ColorRect" parent="DragIcon/CooldownBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -46.0
+offset_right = 95.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.470588)
+metadata/_edit_lock_ = true
+
+[node name="SpriteContainer" type="NinePatchRect" parent="DragIcon"]
 custom_minimum_size = Vector2(200, 100)
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -67,66 +153,11 @@ patch_margin_right = 8
 patch_margin_bottom = 8
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1, -1)
+[node name="Sprite2D" type="Sprite2D" parent="DragIcon/SpriteContainer"]
+position = Vector2(101, 50)
 scale = Vector2(0.9375, 0.9375)
-texture = SubResource("AtlasTexture_5hyox")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_vlow2")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-metadata/_edit_lock_ = true
-
-[node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-metadata/_edit_lock_ = true
-
-[node name="HealthBarOld" type="ProgressBar" parent="Control"]
-visible = false
-layout_mode = 0
-offset_left = -98.0
-offset_top = 52.0
-offset_right = 99.0
-offset_bottom = 70.0
-theme_override_font_sizes/font_size = 10
-theme_override_styles/background = SubResource("StyleBoxFlat_helk3")
-theme_override_styles/fill = SubResource("StyleBoxFlat_upwom")
-max_value = 1000.0
-step = 0.001
-metadata/_edit_lock_ = true
-
-[node name="CooldownBar" type="TextureProgressBar" parent="Control"]
-visible = false
-z_index = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-step = 0.01
-value = 60.0
-fill_mode = 5
-nine_patch_stretch = true
-texture_progress = ExtResource("3_y1w7v")
-tint_under = Color(1, 1, 1, 0.501961)
-tint_progress = Color(1, 1, 1, 0.490196)
-
-[node name="DefeatFilter" type="ColorRect" parent="Control"]
+[node name="DefeatFilter" type="ColorRect" parent="DragIcon"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -143,13 +174,12 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.470588)
 metadata/_edit_lock_ = true
 
-[node name="HealthBar" type="TextureProgressBar" parent="Control"]
+[node name="HealthBar" type="TextureProgressBar" parent="DragIcon"]
 layout_mode = 0
 offset_left = -99.0
 offset_top = 52.0
 offset_right = 99.0
 offset_bottom = 75.0
-max_value = 1000.0
 step = 0.001
 nine_patch_stretch = true
 stretch_margin_left = 4
@@ -160,8 +190,30 @@ texture_under = SubResource("AtlasTexture_hmgi3")
 texture_progress = SubResource("AtlasTexture_btn4u")
 metadata/_edit_lock_ = true
 
+[node name="BattleSprite" type="Node2D" parent="."]
+position = Vector2(195, 35)
+scale = Vector2(4, 4)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BattleSprite"]
+material = SubResource("ShaderMaterial_e22j2")
+position = Vector2(0, -10)
+sprite_frames = ExtResource("5_62wyn")
+animation = &"death"
+
+[node name="Shadow" type="Sprite2D" parent="BattleSprite"]
+z_index = -1
+position = Vector2(0, -0.25)
+texture = ExtResource("6_oq016")
+
+[node name="HitEffect" type="AnimationPlayer" parent="BattleSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_suqta")
+}
+
+[node name="AttackSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_n586q")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
-[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

@@ -7,7 +7,6 @@ var player_input_enabled = true
 
 # battle scene vars
 var is_dragging = false
-var is_released = false
 var dragged_char_name : String
 var enemy_position : Vector2
 var enemy_dict : Dictionary 

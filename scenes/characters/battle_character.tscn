@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqk4esgo6srm1"]
+[gd_scene load_steps=9 format=3 uid="uid://bpln5gb07f22y"]
 
 [ext_resource type="Script" path="res://scripts/battle_character.gd" id="1_cyntd"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_3grbc"]
@@ -10,12 +10,12 @@ resource_local_to_scene = true
 shader = ExtResource("2_3grbc")
 shader_parameter/hit_opacity = 0.0
 
-[sub_resource type="Animation" id="Animation_vaomq"]
+[sub_resource type="Animation" id="Animation_83f0r"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/0/path = NodePath("BattleSprite/AnimatedSprite2D:material:shader_parameter/hit_opacity")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -40,10 +40,22 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BattleSprite/AnimatedSprite2D:material:shader_parameter/hit_opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rxffi"]
 _data = {
-"RESET": SubResource("Animation_vaomq"),
+"RESET": SubResource("Animation_83f0r"),
 "hit_flash": SubResource("Animation_q2fxq")
 }
 
@@ -53,8 +65,9 @@ script = ExtResource("1_cyntd")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_bdr6u")
 position = Vector2(0, -10)
+scale = Vector2(3, 3)
 sprite_frames = ExtResource("2_ugool")
-animation = &"death"
+animation = &"idle"
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = -1
