@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var healthbar : TextureProgressBar = $BossHealthContainer/HealthBar
 @onready var hit_effect = $HitEffect
 
+@onready var tile_map = get_parent() as TileMap
+
 #FSM References---------------------------------------
 @onready var fsm = $FiniteStateMachine as FiniteStateMachine
 @onready var idle_state = $FiniteStateMachine/IdleState as IdleState
@@ -17,10 +19,6 @@ extends CharacterBody2D
 @onready var return_to_grid_state = $FiniteStateMachine/ReturnToGridState as ReturnToGridState
 #-----------------------------------------------------
 
-@onready var kai = get_node("../../VBoxContainer/kai") as Node2D
-@onready var emerald = get_node("../../VBoxContainer/emerald") as Node2D
-@onready var tyrone = get_node("../../VBoxContainer/tyrone") as Node2D
-@onready var bettany = get_node("../../VBoxContainer/bettany") as Node2D
 
 var kai_hitbox : Array[int]
 var emerald_hitbox : Array[int]
@@ -38,11 +36,17 @@ var rng = RandomNumberGenerator.new()
 	
 
 func _ready():
+	var enemy_map_pos = tile_map.local_to_map(position)
+	global.enemy_dict[enemy_map_pos] = position
+	
+	#fsm.change_state(idle_state)
+	
 	rng.randomize()
 	states_to_choose.append(ranged_attack_state)
 	states_to_choose.append(melee_attack_state)
 	states_to_choose.append(power_attack_state)
 	states_to_choose.append(idle_state)
+	states_to_choose.append(moving_state)
 	randomize_index()
 	
 	#will go to move state after certain amount of time
@@ -73,7 +77,7 @@ func _ready():
 	healthbar.value = health
 
 func randomize_index():
-	new_index = rng.randi() % 3
+	new_index = rng.randi() % 4
 	fsm.change_state(states_to_choose[new_index])
 
 func hit(damage : int):
@@ -81,4 +85,5 @@ func hit(damage : int):
 	healthbar.value -= damage
 
 func _process(delta):
-	pass
+	current_map_position = tile_map.local_to_map(position)
+

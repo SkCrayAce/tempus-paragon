@@ -14,6 +14,12 @@ shader_parameter/hit_opacity = 0.0
 [node name="SlumsBoss" parent="TileMap2" index="6" instance=ExtResource("2_6vipv")]
 position = Vector2(344, 119)
 
+[node name="AvoidToPoint" type="Marker2D" parent="TileMap2" index="7"]
+position = Vector2(435, 118)
+
+[node name="Characters" parent="." index="5"]
+metadata/_edit_lock_ = true
+
 [node name="AnimatedSprite2D" parent="Characters/kai" index="0"]
 material = SubResource("ShaderMaterial_tm8l1")
 
@@ -30,7 +36,6 @@ material = SubResource("ShaderMaterial_tm8l1")
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
 [editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
-[editable path="TileMap2/SlumsBoss"]
 [editable path="VBoxContainer/kai"]
 [editable path="VBoxContainer/emerald"]
 [editable path="VBoxContainer/tyrone"]

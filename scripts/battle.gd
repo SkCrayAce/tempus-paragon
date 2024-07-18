@@ -1,6 +1,5 @@
 extends Node
 
-
 @export var grid_length : int
 @export var grid_height : int
 @export var min_num_of_groups : int
@@ -14,6 +13,7 @@ var waves_cleared : int
 
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
+const boss_scene := preload("res://scenes/characters/slums_boss.tscn")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -21,7 +21,6 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var tilemap = $TileMap2 as TileMap
 @onready var animation_timer = $AnimationTimer as Timer
-
 
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]

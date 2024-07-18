@@ -76,11 +76,13 @@ func preview_attack_AoE(hovered_tile, offset_list):
 			hover_active = false
 		
 		if Input.is_action_just_released("left_click"):
-			var valid_enemy = detected_enemy is EnemyScript #or BossScript
-			print(valid_enemy)
+			var valid_enemy = detected_enemy is EnemyScript or BossScript
+			#print(detected_enemy)
+			#if detected_enemy != null:
+				#print(detected_enemy.position)
+			#print(is_instance_valid(detected_enemy)) 
 			if is_instance_valid(detected_enemy) and valid_enemy:
 				drop_attack(detected_enemy)
-			
 			if hover_active:
 				start_cooldown()
 			
