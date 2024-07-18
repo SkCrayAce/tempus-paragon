@@ -24,6 +24,7 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var animation_timer = $AnimationTimer as Timer
 @onready var slums_tile_map = $SlumsTileMap
 @onready var boss_defeated_anim = $BossDefeatedAnim
+@onready var battle_start_popup = $CanvasLayer/BattleStartPopup
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -53,6 +54,7 @@ var anim_start = false
 signal wave_finished
 
 func _ready():
+	show_start_screen()
 	spawn_boss()
 	waves_cleared = 0
 	global.battle_won = false
@@ -93,7 +95,15 @@ func _process(delta):
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
 	
-	
+func show_start_screen():
+	var hide_start_screen = func():
+		battle_start_popup.hide()
+		get_tree().paused = false
+	battle_start_popup.show()
+	get_tree().paused = true
+	get_tree().create_timer(2).timeout.connect(hide_start_screen)
+
+
 func start_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -204,6 +214,7 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 	prints("enemies left in array:", enemy_list.size())
 	prints("enemies left in dictionary", global.enemy_dict.size())
 	if enemy_list.size() == 0: 
+		enemy_move_timer.stop()
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
 		if global.boss_spawning:

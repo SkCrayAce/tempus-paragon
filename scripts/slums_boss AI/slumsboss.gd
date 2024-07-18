@@ -128,7 +128,7 @@ func death():
 	global.boss_is_defeated = true
 	boss_killed.emit()
 	queue_free()
-	get_tree().get_node("HitEffect").PROCESS_MODE_PAUSABLE
+
 	
 	
 
