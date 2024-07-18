@@ -842,7 +842,7 @@ offset = Vector2(-10, -20)
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("3_sxhaw")
-state = NodePath("AvoidState")
+state = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
 script = ExtResource("4_s750d")
@@ -871,7 +871,7 @@ actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 melee_attack_range = 1
-attack_damage = 100
+attack_damage = 300
 rush_to_character_time = 1
 wait_anim_time = 0.5
 
@@ -880,7 +880,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 100
+attack_damage = 400
 wait_anim_time = 1.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
