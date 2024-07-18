@@ -13,13 +13,16 @@ var offset_list : Array
 
 const grid_length = 120
 const grid_height = 68
+const top_left_tile = Vector2i(9, 3)
+const bottom_right_tile = Vector2i(23, 10)
 
 @export var health : int
 @export var attack_damage : int
-@export var min_hover_x : int
-@export var max_hover_x : int
-@export var min_hover_y : int
-@export var max_hover_y : int
+
+var min_hover_x : int = top_left_tile.x
+var max_hover_x : int = bottom_right_tile.x
+var min_hover_y : int = top_left_tile.y
+var max_hover_y : int = bottom_right_tile.y
 
 const BattleScript = preload("res://scripts/battle.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
@@ -187,12 +190,13 @@ func character_defeated():
 	global.dragged_char_name = ""
 	
 func within_bounds(coordinate : Vector2) -> bool:
-	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x + 1
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 
 	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
 	
 	if x_valid and y_valid:
 		return true
-	return false
+	else:
+		return false
 
 
 

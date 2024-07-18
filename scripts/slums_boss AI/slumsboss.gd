@@ -92,11 +92,11 @@ func hit(damage : int):
 		death()
 
 func death():
+	global.delete_enemy(current_map_position)
 	anim.stop()
 	anim.play("death")
-	await anim.animation_finished
+	anim.animation_finished.connect(queue_free)
 	global.boss_is_defeated = true
-	queue_free()
 	
 
 
