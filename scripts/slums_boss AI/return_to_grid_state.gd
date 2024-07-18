@@ -17,6 +17,8 @@ const bottom_right_tile = Vector2i(23, 10)
 signal returned_to_grid
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 
 

@@ -28,6 +28,8 @@ var bettany_hitbox : Array[int]
 signal r_attack_finished
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
 

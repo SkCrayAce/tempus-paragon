@@ -34,6 +34,8 @@ var tyrone_hitbox : Array[int]
 var bettany_hitbox : Array[int]
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
 

@@ -13,6 +13,8 @@ extends State
 signal stun_done
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 
 func _enter_state():

@@ -28,6 +28,8 @@ signal p_attack_finished
 signal hit_at_wind_up
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
 

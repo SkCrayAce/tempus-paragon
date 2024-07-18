@@ -1,0 +1,94 @@
+[gd_scene load_steps=15 format=3 uid="uid://bx7kxjsytdn3"]
+
+[ext_resource type="Texture2D" uid="uid://d21askene7pne" path="res://tempus_assets/boss_slums-sheet.png" id="1_rv3eu"]
+[ext_resource type="Script" path="res://scripts/slums_boss AI/boss_death.gd" id="2_7a45x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hs03d"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(0, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8j0mu"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(96, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7scd0"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(192, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ucwt"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(288, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mj42"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(384, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bfgv"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(480, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1t2r2"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(576, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nof51"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(672, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyv6a"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(768, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pybkl"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(864, 576, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ioye"]
+atlas = ExtResource("1_rv3eu")
+region = Rect2(960, 576, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6aiqs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hs03d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8j0mu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7scd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ucwt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mj42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bfgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1t2r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nof51")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyv6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pybkl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ioye")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_6aiqs")
+animation = &"death"
+script = ExtResource("2_7a45x")

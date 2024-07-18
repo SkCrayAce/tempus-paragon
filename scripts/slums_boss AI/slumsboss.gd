@@ -37,8 +37,11 @@ var new_index
 var rng = RandomNumberGenerator.new()
 var is_defeated : bool
 
+signal boss_killed
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	var enemy_map_pos = tile_map.local_to_map(position)
 	global.enemy_dict[enemy_map_pos] = position
 	healthbar.max_value = health
@@ -93,9 +96,8 @@ func hit(damage : int):
 
 func death():
 	anim.stop()
-	anim.play("death")
-	await anim.animation_finished
 	global.boss_is_defeated = true
+	boss_killed.emit()
 	queue_free()
 	
 

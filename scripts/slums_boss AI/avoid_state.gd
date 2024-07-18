@@ -20,6 +20,8 @@ var tween
 signal summon_finished
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 	battle_node.wave_finished.connect(_on_goons_defeated)
 

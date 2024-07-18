@@ -18,6 +18,8 @@ signal take_many_damage
 var curr_health
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 	curr_health = healthbar.value
 

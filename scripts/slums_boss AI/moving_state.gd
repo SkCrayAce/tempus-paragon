@@ -26,6 +26,8 @@ const top_left_tile = Vector2i(9+1, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
 func _ready():
+	if global.boss_is_defeated:
+		return
 	set_physics_process(false)
 
 func _enter_state():

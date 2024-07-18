@@ -15,6 +15,7 @@ var waves_cleared : int
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
 const slums_boss_scene := preload("res://scenes/characters/slums_boss.tscn")
+const boss_death_scene := preload("res://scenes/characters/boss_death.tscn")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -22,6 +23,7 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var animation_timer = $AnimationTimer as Timer
 @onready var slums_tile_map = $SlumsTileMap
+@onready var boss_defeated_anim = $BossDefeatedAnim
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -247,4 +249,24 @@ func spawn_boss():
 	var boss_instance = slums_boss_scene.instantiate() as CharacterBody2D
 	boss_instance.position = slums_tile_map.map_to_local(Vector2i(21, 7))
 	slums_tile_map.add_child.call_deferred(boss_instance)
+	boss_instance.boss_killed.connect(_on_boss_killed)
+
+func _on_boss_killed():
+	var dead_boss_instance = boss_death_scene.instantiate() as AnimatedSprite2D
+	add_child(dead_boss_instance)
+	dead_boss_instance.position = Vector2(250, 112)
+	slums_tile_map.modulate = Color.BLACK
+	boss_defeated_anim.play("boss_defeated_anim")
+	
+	await get_tree().create_timer(0.5).timeout
+	dead_boss_instance.play("death")
+	var tween = create_tween()
+	await dead_boss_instance.animation_finished
+	tween.tween_property(dead_boss_instance, "modulate", Color(0, 0, 0, 0), 3)
+	await get_tree().create_timer(3).timeout
+	dead_boss_instance.queue_free()
+	
+	battle_ended()
+	
+	
 	
