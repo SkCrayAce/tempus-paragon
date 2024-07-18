@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://by6rsmk71ao26"]
+[gd_scene load_steps=135 format=3 uid="uid://c01hbhvd1ndpk"]
 
 [ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_aflqb"]

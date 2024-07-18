@@ -130,6 +130,7 @@ func start_wave():
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		place_formation()
+	enemy_move_timer.start()
 		
 func place_formation():
 	var x_valid : bool
