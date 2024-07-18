@@ -23,6 +23,14 @@ func _enter_state():
 	await get_tree().create_timer(5).timeout
 	#await anim.animation_finished
 	stun_done.emit()
+	
+func _physics_process(delta):
+	record_position()
+	
+func record_position():
+	global.enemy_dict.clear()
+	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos] = actor
 
 func _exit_state():
 	set_physics_process(false)

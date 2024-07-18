@@ -60,10 +60,17 @@ func inflict_damage():
 	await anim.animation_finished
 
 func _physics_process(delta):
+	record_position()
 	wind_up_check()
+
+func record_position():
+	global.enemy_dict.clear()
+	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos] = actor
 
 func wind_up_check():
 	if healthbar.value < curr_health and stun_signal_emitted == false:
+		anim.stop()
 		hit_at_wind_up.emit()
 		stun_signal_emitted = true
 		set_physics_process(false)

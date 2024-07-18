@@ -36,9 +36,16 @@ func _enter_state():
 
 
 func _physics_process(delta):
+	record_position()
 	#idk if this correctly checks if certain damage has been recieved
 	if healthbar.value <= curr_health * 0.7:
 		take_many_damage.emit()
+
+	
+func record_position():
+	global.enemy_dict.clear()
+	var boss_map_pos = tile_map.local_to_map(actor.position)
+	global.enemy_dict[boss_map_pos] = actor
 
 	
 func _exit_state():

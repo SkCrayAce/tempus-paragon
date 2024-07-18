@@ -21,6 +21,7 @@ signal summon_finished
 
 func _ready():
 	set_physics_process(false)
+	battle_node.wave_finished.connect(_on_goons_defeated)
 
 func _enter_state():
 	set_physics_process(true)
@@ -39,7 +40,13 @@ func move_to_new_pos():
 	anim.play("moving")
 	await get_tree().create_timer(2).timeout
 	anim.speed_scale = 1.0
+	
 	battle_node.start_wave()
+	global.boss_spawning = true
+
+
+func _on_goons_defeated():
+	summon_finished.emit()
 
 func _exit_state():
 	set_physics_process(false)
