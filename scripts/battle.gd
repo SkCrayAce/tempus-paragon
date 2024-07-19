@@ -145,14 +145,39 @@ func ui_start_animation():
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
 func set_up_character_health():
-	kai.health_bar.max_value = global.kai_max_hp
-	kai.health_bar.value = global.kai_curr_hp
-	emerald.health_bar.max_value = global.emerald_max_hp
-	emerald.health_bar.value = global.emerald_max_hp
-	tyrone.health_bar.max_value = global.tyrone_max_hp
-	tyrone.health_bar.value = global.tyrone_curr_hp
-	bettany.health_bar.max_value = global.bettany_max_hp
-	bettany.health_bar.value = global.bettany_curr_hp
+	
+	if global.kai_curr_hp == 0:
+		kai.character_defeated()
+		kai.anim_sprite.visible = false
+	else:
+		kai.health_bar.max_value = global.kai_max_hp
+		kai.health_bar.value = global.kai_curr_hp
+		
+	if global.emerald_curr_hp == 0:
+		emerald.character_defeated()
+		emerald.anim_sprite.visible = false
+	else:
+		emerald.health_bar.max_value = global.emerald_max_hp
+		emerald.health_bar.value = global.emerald_curr_hp
+		
+	if global.tyrone_curr_hp == 0:
+		tyrone.character_defeated()
+		tyrone.anim_sprite.visible = false
+	else:
+		tyrone.health_bar.max_value = global.tyrone_max_hp
+		tyrone.health_bar.value = global.tyrone_curr_hp
+	
+	if global.bettany_curr_hp == 0:
+		bettany.character_defeated()
+		bettany.anim_sprite.visible = false
+	else:
+		bettany.health_bar.max_value = global.bettany_max_hp
+		bettany.health_bar.value = global.bettany_curr_hp
+	
+	print(kai.health_bar.value)
+	print(emerald.health_bar.value)
+	print(tyrone.health_bar.value)
+	print(bettany.health_bar.value)
 	
 func update_team_health():
 	team_health = 0

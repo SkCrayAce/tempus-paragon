@@ -195,9 +195,9 @@ position = Vector2(0, -10)
 sprite_frames = ExtResource("5_62wyn")
 animation = &"death"
 
-[node name="Shadow" type="Sprite2D" parent="BattleSprite"]
+[node name="Shadow" type="Sprite2D" parent="BattleSprite/AnimatedSprite2D"]
 z_index = -1
-position = Vector2(0, -0.25)
+position = Vector2(0, 9.75)
 texture = ExtResource("6_oq016")
 
 [node name="HitEffect" type="AnimationPlayer" parent="BattleSprite"]
