@@ -272,7 +272,6 @@ zoom = Vector2(5, 5)
 position = Vector2(369, 140)
 
 [node name="AnimatedSprite2D" parent="slumsboss_o" index="0"]
-visible = false
 animation = &"idle"
 frame = 0
 frame_progress = 0.0

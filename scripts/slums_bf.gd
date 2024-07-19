@@ -7,6 +7,7 @@ extends "res://scripts/slums_control.gd"
 @onready var tile_map = $TileMap
 @onready var bossfight_start_anim = $BossfightStartAnim
 @onready var slumsboss = $slumsboss_o
+@onready var bossfight_trigger = $BossfightTrigger
 
 
 func _ready():
@@ -20,6 +21,12 @@ func _ready():
 		add_child(player_instance)
 		play_entry_anim()
 		
+	elif global.battle_won:
+		global.player_input_enabled = true
+		super.despawn_enemy(slumsboss)
+		camera_zoom.queue_free()
+		bossfight_trigger.queue_free()
+		zoom.queue_free()
 
 func _process(delta):
 	pass
@@ -27,22 +34,25 @@ func _process(delta):
 
 
 func play_entry_anim():
-	setup_cam()
-	global.player_input_enabled = false
-	tween = create_tween()
-	tween.tween_property(player_instance, "position", player_animation_end.position, 2)
+	if not global.battle_won:
+		setup_cam()
+		global.player_input_enabled = false
+		tween = create_tween()
+		tween.tween_property(player_instance, "position", player_animation_end.position, 2)
+		
+		player_instance.cam.enabled = false
+		player_instance.anim.play("side_walk_right")
+		await get_tree().create_timer(2).timeout
+		
+		player_instance.anim.play("side_idle_right")
+		camera_zoom.play("Zoom")
+		await get_tree().create_timer(1).timeout
+		
+		zoom.enabled = false
+		player_instance.cam.enabled = true
+		global.player_input_enabled = true
+		
 	
-	player_instance.cam.enabled = false
-	player_instance.anim.play("side_walk_right")
-	await get_tree().create_timer(2).timeout
-	
-	player_instance.anim.play("side_idle_right")
-	camera_zoom.play("Zoom")
-	await get_tree().create_timer(1).timeout
-	
-	zoom.enabled = false
-	player_instance.cam.enabled = true
-	global.player_input_enabled = true
 
 func setup_cam():
 	zoom.position = player_animation_end.position
@@ -55,28 +65,29 @@ func setup_cam():
 
 
 func _on_bossfight_trigger_body_entered(body):
-	if body is Player:
-		global.slums_boss_battle = true
-		global.player_input_enabled = false
-		player_instance.cam.enabled = false
-		player_instance.anim.play("side_idle_right")
-		zoom.enabled = true
-		zoom.position = player_instance.position
-	
-		tween = create_tween()
-		tween.tween_property(zoom, "position", slumsboss.position - Vector2(0, slumsboss.position.y - player_animation_end.position.y), 3).set_ease(Tween.EASE_IN_OUT)
-		await get_tree().create_timer(3).timeout
-		slumsboss.anim.play("laugh")
-		await get_tree().create_timer(3).timeout
-		slumsboss.anim.play("idle")
-		print(global.transition_commence)
+	if not global.battle_won:
+		if body is Player:
+			global.slums_boss_battle = true
+			global.player_input_enabled = false
+			player_instance.cam.enabled = false
+			player_instance.anim.play("side_idle_right")
+			zoom.enabled = true
+			zoom.position = player_instance.position
 		
-		if global.transition_commence == false:
-			global.transition_commence = true
-			var trans_screen_scene = load("res://scenes/transitionto_battle.tscn")
-			var trans_screen = trans_screen_scene.instantiate()
-			get_tree().get_root().add_child(trans_screen)
-			trans_screen.play_animation()
-			await trans_screen.animation_player.animation_finished
-			trans_screen.queue_free()
-			get_tree().change_scene_to_file(BattleScene)
+			tween = create_tween()
+			tween.tween_property(zoom, "position", slumsboss.position - Vector2(0, slumsboss.position.y - player_animation_end.position.y), 3).set_ease(Tween.EASE_IN_OUT)
+			await get_tree().create_timer(3).timeout
+			slumsboss.anim.play("laugh")
+			await get_tree().create_timer(3).timeout
+			slumsboss.anim.play("idle")
+			print(global.transition_commence)
+			
+			if global.transition_commence == false:
+				global.transition_commence = true
+				var trans_screen_scene = load("res://scenes/transitionto_battle.tscn")
+				var trans_screen = trans_screen_scene.instantiate()
+				get_tree().get_root().add_child(trans_screen)
+				trans_screen.play_animation()
+				await trans_screen.animation_player.animation_finished
+				trans_screen.queue_free()
+				get_tree().change_scene_to_file(BattleScene)
