@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/mainmenu.gd" id="1_drxc3"]
 [ext_resource type="Texture2D" uid="uid://b2hwgpt6su2mu" path="res://tempus_assets/title.png" id="1_eowjy"]
+[ext_resource type="AudioStream" uid="uid://bce36kdaa1g41" path="res://audio/music/main_menu_music.mp3" id="2_4xbrc"]
 [ext_resource type="Theme" uid="uid://dsn1ed1mngin" path="res://theme/mainmenu.tres" id="2_ffp8h"]
-[ext_resource type="AudioStream" uid="uid://7rj0pdl2cl1s" path="res://audio/music/mainmenu-remake_v01.wav" id="2_g2iij"]
 
 [node name="mainmenu" type="Control"]
 layout_mode = 3
@@ -15,8 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_drxc3")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_g2iij")
-volume_db = -15.0
+stream = ExtResource("2_4xbrc")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

@@ -30,6 +30,12 @@ var max_hover_y : int = bottom_right_tile.y
 @onready var slums_tile_map = $SlumsTileMap
 @onready var boss_defeated_anim = $BossDefeatedAnim
 @onready var battle_start_popup = $CanvasLayer/BattleStartPopup
+@onready var abilities_container = $CanvasLayer/AbilitiesContainer
+
+@onready var kai_drag_icon = $DraggableIcons/kai/DragIcon
+@onready var emerald_drag_icon = $DraggableIcons/emerald/DragIcon
+@onready var tyrone_drag_icon = $DraggableIcons/tyrone/DragIcon
+@onready var bettany_drag_icon = $DraggableIcons/bettany/DragIcon
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -58,6 +64,9 @@ signal wave_finished
 
 func _ready():
 	show_start_screen()
+	ui_start_animation()
+	
+	AudioPlayer.play_battle_music()
 	
 	waves_cleared = 0
 	global.battle_won = false
@@ -109,6 +118,29 @@ func show_start_screen():
 	get_tree().paused = true
 	get_tree().create_timer(2).timeout.connect(hide_start_screen)
 
+func ui_start_animation():
+	var ac_old_pos = abilities_container.position
+	var mtb_old_pos = move_timer_bar.position
+	var kai_da_old_pos = kai_drag_icon.position
+	var emerald_da_old_pos = emerald_drag_icon.position
+	var tyrone_da_old_pos = tyrone_drag_icon.position
+	var bettany_da_old_pos = bettany_drag_icon.position
+	
+	abilities_container.position.y = abilities_container.position.y + 100
+	move_timer_bar.position.x = move_timer_bar.position.x + 100
+	kai_drag_icon.position.x = kai_drag_icon.position.x - 500
+	emerald_drag_icon.position.x = emerald_drag_icon.position.x - 500
+	tyrone_drag_icon.position.x = tyrone_drag_icon.position.x - 500
+	bettany_drag_icon.position.x = bettany_drag_icon.position.x - 500
+	
+	var tween = create_tween().set_parallel()
+	tween.tween_property(abilities_container, "position", ac_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(move_timer_bar, "position", mtb_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	
+	tween.tween_property(kai_drag_icon, "position", kai_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(emerald_drag_icon, "position", emerald_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
 func start_enemy_action(): 
 	record_enemies()

@@ -1005,7 +1005,7 @@ stretch_margin_right = 6
 texture_under = SubResource("AtlasTexture_1ywse")
 texture_progress = SubResource("AtlasTexture_glohg")
 
-[node name="Label" type="Label" parent="BossHealthContainer"]
+[node name="BossName" type="Label" parent="BossHealthContainer"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

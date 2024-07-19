@@ -1,10 +1,11 @@
 [gd_scene load_steps=71 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
+[ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
-[ext_resource type="PackedScene" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
+[ext_resource type="PackedScene" uid="uid://cbbigy34cyy77" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_0o1m4"]
 [ext_resource type="Texture2D" uid="uid://djt1cd4owv1my" path="res://tempus_assets/ability sprites/skill_icons33.png" id="5_4aa5m"]
 [ext_resource type="Texture2D" uid="uid://dlak4ut1fiwud" path="res://sprites/textures/tile_selected.png" id="5_e7aj3"]
@@ -17,10 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://bn366nvk4g5d2" path="res://tempus_assets/emeraldchibi_spritesheet.png" id="16_1s33v"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohpq2"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ufa2d"]
-font_size = 32
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvbrj"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(0, 136, 224, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
 atlas = ExtResource("3_ypaqq")
@@ -1190,31 +1190,45 @@ max_num_of_groups = 5
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
-[node name="BattleStartPopup" type="PanelContainer" parent="CanvasLayer"]
-visible = false
-self_modulate = Color(0, 0, 0, 0.823529)
+[node name="BattleStartPopup" type="TextureRect" parent="CanvasLayer"]
 top_level = true
-z_index = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -837.0
-offset_bottom = -474.0
+z_index = 2
+anchors_preset = -1
+anchor_left = 0.177
+anchor_top = 0.163
+anchor_right = 0.177
+anchor_bottom = 0.163
+offset_left = -169.56
+offset_top = -36.36
+offset_right = 171.44
+offset_bottom = 39.64
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ohpq2")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_mvbrj")
 
 [node name="Label" type="Label" parent="CanvasLayer/BattleStartPopup"]
 layout_mode = 2
-text = "Defeat all enemies!"
-label_settings = SubResource("LabelSettings_ufa2d")
+offset_left = 31.0
+offset_top = 19.0
+offset_right = 2856.0
+offset_bottom = 419.0
+scale = Vector2(0.1, 0.1)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.890196, 0.741176, 0.454902, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 100
+theme_override_fonts/font = ExtResource("3_755tb")
+theme_override_font_sizes/font_size = 400
+text = "BATTLE START!"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MoveTimerBar" type="TextureProgressBar" parent="CanvasLayer"]
-top_level = true
 light_mask = 2
 visibility_layer = 2
-z_index = 3
+z_index = 1
 offset_left = 390.0
 offset_top = 49.0
 offset_right = 408.0
@@ -1267,8 +1281,18 @@ text = "Flintlock Shower"
 [node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/DetailsPanel" index="1"]
 text = "Showers enemies with bullets. Deal big damage in a large area."
 
+[node name="HeadContainer" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="3"]
+offset_top = 15.0
+offset_right = 35.0
+
 [node name="TyroneAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
+
+[node name="UseAbilityBtn" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="0"]
+offset_left = 6.0
+offset_top = -62.0
+offset_right = 86.0
+offset_bottom = -12.0
 
 [node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="1"]
 texture = ExtResource("6_y5ml1")

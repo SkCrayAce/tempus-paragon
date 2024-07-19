@@ -5,12 +5,12 @@ extends CharacterBody2D
 @export var attack_damage : int
 
 
-
 @onready var anim : AnimatedSprite2D = $AnimatedSprite2D
 @onready var healthbar : TextureProgressBar = $BossHealthContainer/HealthBar
 @onready var hit_effect = $HitEffect
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var tile_map = get_parent() as TileMap
+@onready var boss_name = $BossHealthContainer/BossName
 
 
 #FSM References---------------------------------------
@@ -44,6 +44,15 @@ signal boss_killed
 func _ready():
 	if global.boss_is_defeated:
 		return
+	
+	var end_hb_pos = healthbar.position
+	var end_bn_pos = boss_name.position
+	healthbar.position.y = -100
+	boss_name.position.y = -100
+	var tween = create_tween().set_parallel()
+	tween.tween_property(healthbar, "position", end_hb_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(boss_name, "position", end_bn_pos, 2).set_trans(Tween.TRANS_EXPO)
+	
 	var enemy_map_pos = tile_map.local_to_map(position)
 	global.enemy_dict[enemy_map_pos] = position
 	healthbar.max_value = health
