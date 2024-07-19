@@ -65,16 +65,17 @@ func _ready():
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
    	
-	if global.slums_boss_battle == false:
-		start_wave()
+	
 	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-	#spawn_boss()
-	start_wave()
+	
+	if global.slums_boss_battle == false:
+		start_wave()
+		
 	prints("battle started:")
 	
 	

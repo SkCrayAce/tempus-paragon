@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]
 [ext_resource type="PackedScene" uid="uid://47cvcw1uidxf" path="res://scenes/inventory_ui.tscn" id="6_6xlyy"]
 [ext_resource type="FontFile" uid="uid://blbxp1op7o1yv" path="res://tempus_assets/font/alagard.ttf" id="6_jm0yp"]
-[ext_resource type="PackedScene" uid="uid://c7xxpu06r504" path="res://scenes/overworld_ui.tscn" id="8_nfne6"]
+[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="8_nfne6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sau1d"]
 atlas = ExtResource("2_qth4g")
