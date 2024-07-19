@@ -3,6 +3,7 @@ extends Node2D
 var draggable : bool = false
 var on_cooldown : bool = false
 var is_defeated : bool = false
+var is_attacking : bool
 var ground_layer = 0
 var hover_layer = 1
 var mouse_map_position : Vector2
@@ -18,6 +19,11 @@ const bottom_right_tile = Vector2i(23, 10)
 
 @export var health : int
 @export var attack_damage : int
+
+const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
+const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
+const KaiAtkSfx = preload("res://audio/sfx/basicATK_kai_v02.mp3")
+const TyroneAtkSfx = preload("res://audio/sfx/basicATK_tyrone_v01.mp3")
 
 var min_hover_x : int = top_left_tile.x
 var max_hover_x : int = bottom_right_tile.x
@@ -82,6 +88,7 @@ func _process(delta):
 	
 	
 func _on_area_2d_mouse_entered():
+	if is_attacking : return
 	var tween := create_tween()
 	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
@@ -115,6 +122,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
+			is_attacking = !is_attacking
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "global_position", attack_position, 0.5).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
@@ -122,10 +130,10 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	
 func attack_animation():
 	match name:
-		"kai": attack_sfx.stream = load("res://audio/sfx/basicATK_kai_v02.mp3") as AudioStream
-		"emerald" : attack_sfx.stream = load("res://audio/sfx/basicATK_emerald_v03.mp3")
-		"tyrone" : attack_sfx.stream = load("res://audio/sfx/basicATK_tyrone_v01.mp3")
-		"bettany" : attack_sfx.stream = load("res://audio/sfx/basicATK_bettany_v03.mp3")
+		"kai": attack_sfx.stream = KaiAtkSfx
+		"emerald" : attack_sfx.stream = EmeraldAtkSfx
+		"tyrone" : attack_sfx.stream = TyroneAtkSfx
+		"bettany" : attack_sfx.stream = BettanyAtkSfx
 	attack_sfx.play()
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
@@ -151,7 +159,7 @@ func return_to_position():
 		anim_sprite.play("idle")
 		enemy_move_timer.set_paused(false)
 		animation_timer.set_paused(false)
-		draggable = true
+		is_attacking = !is_attacking
 		
 	tween = create_tween()
 	anim_sprite.flip_h = true

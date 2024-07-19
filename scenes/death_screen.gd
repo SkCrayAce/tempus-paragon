@@ -11,8 +11,9 @@ func _ready():
 	button_fade = get_node("ColorRect/VBoxContainer/ReturnButton/AnimationPlayer")
 	return_button.self_modulate = Color(1, 1, 1, 0)
 	TransitionScreen.transition_node.play("fade_in", -1, 0.1)
-	#await TransitionScreen.transition_finished
+	await TransitionScreen.fade_in_finished
 	button_fade.play("fade_in")
+	
 	return_button.pressed.connect(get_tree().change_scene_to_file.bind("res://scenes/mainmenu.tscn"))
 	
 	pass # Replace with function body.

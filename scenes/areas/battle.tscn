@@ -1185,7 +1185,7 @@ script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
 min_num_of_groups = 2
-max_num_of_groups = 5
+max_num_of_groups = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -1478,7 +1478,6 @@ metadata/_edit_lock_ = true
 
 [node name="kai" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 116)
-attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_c73iv")
@@ -1486,7 +1485,6 @@ animation = &"attack"
 
 [node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
-attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_l6fur")
@@ -1497,14 +1495,12 @@ frame_progress = 1.0
 
 [node name="tyrone" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
-attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_tb7un")
 
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
-attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")

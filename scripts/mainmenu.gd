@@ -6,7 +6,7 @@ var breakloop = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	main_menu_play_anim()
-	TransitionScreen.transition_finished.connect(scene_transition)
+	TransitionScreen.fade_out_finished.connect(scene_transition)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -23,6 +23,7 @@ func main_menu_play_anim():
 		tween.tween_property(texture_rect, "position", Vector2(texture_rect.position.x,texture_rect.position.y+10), 1).set_trans(Tween.TRANS_SINE)
 		await tween.finished
 		if breakloop == true:
+			tween.kill()
 			break
 
 func _on_play_btn_pressed():
@@ -34,4 +35,4 @@ func _on_button_3_pressed():
 	get_tree().quit()
 
 func scene_transition():
-	get_tree().change_scene_to_file("res://scenes/areas/slums0.tscn")
+	get_tree().change_scene_to_packed(load("res://scenes/areas/slums0.tscn"))

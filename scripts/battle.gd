@@ -57,7 +57,6 @@ var anim_start = false
 signal wave_finished
 
 func _ready():
-	battle_victory(false)
 	show_start_screen()
 	
 	waves_cleared = 0
@@ -152,13 +151,13 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
-	var num_of_groups = 5 #randi_range(min_num_of_groups, max_num_of_groups)
+	var num_of_groups = 4 #randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		prints("patterns formed:", count)
 		place_formation()
 		
-	if global.enemy_dict.size() == 0:
-		start_wave()
+	#if global.enemy_dict.size() == 0:
+		#start_wave()
 		
 	enemy_move_timer.start()
 
@@ -171,16 +170,16 @@ func place_formation():
 	var base_position = generate_random_vector()
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 7)	
+	var random_pattern = rng.randi_range(0, 4)	
 	
 	match random_pattern:
 		0 : current_offset_list = kai_offset_list
 		1 : current_offset_list = emerald_offset_list
 		2 : current_offset_list = tyrone_offset_list
 		3 : current_offset_list = bettany_offset_list
-		4 : current_offset_list = sqaure_offset_list
-		5 : current_offset_list = h_rect_offset_list
-		6 : current_offset_list = v_rect_offset_list
+		#4 : current_offset_list = sqaure_offset_list
+		#5 : current_offset_list = h_rect_offset_list
+		#6 : current_offset_list = v_rect_offset_list
 	
 	for offset in current_offset_list:
 		spawn_position = base_position + offset as Vector2i
@@ -255,11 +254,12 @@ func battle_victory(victory : bool):
 		prints("current scene before if", global.current_scene)
 		if global.current_scene != "":
 			prints("current scene after if", global.current_scene)
-			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
+			#get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
 		TransitionScreen.transition_node.play("fade_out")
-		TransitionScreen.transition_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
+		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
+
 	
 
 func generate_random_vector() -> Vector2i :
