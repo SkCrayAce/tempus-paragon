@@ -5,6 +5,18 @@ const EnemyBody = preload("res://scripts/enemy.gd")
 
 var player_input_enabled = true
 
+#health data
+var hp_initialized : bool = false
+var kai_max_hp : int
+var emerald_max_hp : int
+var tyrone_max_hp : int
+var bettany_max_hp: int
+
+var kai_curr_hp : int
+var emerald_curr_hp : int
+var tyrone_curr_hp : int
+var bettany_curr_hp : int
+
 # battle scene vars
 var is_dragging = false
 var dragged_char_name : String
@@ -39,6 +51,7 @@ signal inventory_updated
 
 func _ready():
 	inventory.resize(12)
+	
 
 func add_item(item):
 	for i in range(inventory.size()):

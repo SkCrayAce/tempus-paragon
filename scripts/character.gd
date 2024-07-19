@@ -18,7 +18,7 @@ const grid_height = 68
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
-@export var health : int
+@export var max_health : int
 @export var attack_damage : int
 
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
@@ -70,8 +70,7 @@ signal character_killed
 func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
-	health_bar.max_value = health
-	health_bar.value = health_bar.max_value
+	set_up_max_hp()
 	char_sprite = battle_sprite
 	
 	initial_pos = char_sprite.global_position
@@ -91,6 +90,21 @@ func _process(delta):
 			global.dragged_char_name = name
 
 	cooldown_bar.value = cooldown_timer.time_left
+
+func set_up_max_hp():
+	
+	global.kai_max_hp = max_health
+	global.emerald_max_hp = max_health
+	global.tyrone_max_hp = max_health
+	global.bettany_max_hp = max_health
+	
+	if global.hp_initialized == false:
+		global.kai_curr_hp = max_health
+		global.emerald_curr_hp = max_health
+		global.tyrone_curr_hp = max_health
+		global.bettany_curr_hp = max_health
+		global.hp_initialized = true
+		print("health initialized")
 	
 	
 func _on_area_2d_mouse_entered():
@@ -194,6 +208,7 @@ func end_cooldown():
 	draggable = false
 
 func take_damage(damage : int):
+	
 	health_bar.value -= damage
 	hit_effect.play("hit_flash")
 	battle_node.update_team_health()

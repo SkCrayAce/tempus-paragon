@@ -118,6 +118,7 @@ func show_start_screen():
 	battle_start_popup.show()
 	get_tree().paused = true
 	get_tree().create_timer(2).timeout.connect(hide_start_screen)
+	set_up_character_health()
 
 func ui_start_animation():
 	var ac_old_pos = abilities_container.position
@@ -143,6 +144,41 @@ func ui_start_animation():
 	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
+func set_up_character_health():
+	
+	if global.kai_curr_hp == 0:
+		kai.character_defeated()
+		kai.anim_sprite.visible = false
+	else:
+		kai.health_bar.max_value = global.kai_max_hp
+		kai.health_bar.value = global.kai_curr_hp
+		
+	if global.emerald_curr_hp == 0:
+		emerald.character_defeated()
+		emerald.anim_sprite.visible = false
+	else:
+		emerald.health_bar.max_value = global.emerald_max_hp
+		emerald.health_bar.value = global.emerald_curr_hp
+		
+	if global.tyrone_curr_hp == 0:
+		tyrone.character_defeated()
+		tyrone.anim_sprite.visible = false
+	else:
+		tyrone.health_bar.max_value = global.tyrone_max_hp
+		tyrone.health_bar.value = global.tyrone_curr_hp
+	
+	if global.bettany_curr_hp == 0:
+		bettany.character_defeated()
+		bettany.anim_sprite.visible = false
+	else:
+		bettany.health_bar.max_value = global.bettany_max_hp
+		bettany.health_bar.value = global.bettany_curr_hp
+	
+	print(kai.health_bar.value)
+	print(emerald.health_bar.value)
+	print(tyrone.health_bar.value)
+	print(bettany.health_bar.value)
+	
 func update_team_health():
 	team_health = 0
 	for character in get_node("DraggableIcons").get_children():
@@ -275,6 +311,7 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 func battle_victory(victory : bool):
 	var tween = create_tween()
 	if victory:
+		record_char_health()
 		global.battle_won = true
 		prints("battle ended")
 		
@@ -319,6 +356,12 @@ func start_anim():
 	trans_screen.queue_free()
 	global.transition_commence = false
 	
+func record_char_health():
+	global.kai_curr_hp = kai.health_bar.value
+	global.emerald_curr_hp = emerald.health_bar.value
+	global.tyrone_curr_hp = tyrone.health_bar.value
+	global.bettany_curr_hp = bettany.health_bar.value
+	print("health recorded")
 
 func spawn_boss():
 	var boss_instance = slums_boss_scene.instantiate() as CharacterBody2D
