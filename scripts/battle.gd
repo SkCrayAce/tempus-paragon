@@ -118,6 +118,7 @@ func show_start_screen():
 	battle_start_popup.show()
 	get_tree().paused = true
 	get_tree().create_timer(2).timeout.connect(hide_start_screen)
+	set_up_character_health()
 
 func ui_start_animation():
 	var ac_old_pos = abilities_container.position
@@ -143,6 +144,16 @@ func ui_start_animation():
 	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
+func set_up_character_health():
+	kai.health_bar.max_value = global.kai_max_hp
+	kai.health_bar.value = global.kai_curr_hp
+	emerald.health_bar.max_value = global.emerald_max_hp
+	emerald.health_bar.value = global.emerald_max_hp
+	tyrone.health_bar.max_value = global.tyrone_max_hp
+	tyrone.health_bar.value = global.tyrone_curr_hp
+	bettany.health_bar.max_value = global.bettany_max_hp
+	bettany.health_bar.value = global.bettany_curr_hp
+	
 func start_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -182,6 +193,7 @@ func start_wave():
 		print("formation placing")
 		
 	if global.enemy_dict.size() == 0:
+		print(global.enemy_dict.size())
 		start_wave()
 		
 	enemy_move_timer.start()
@@ -271,6 +283,7 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 
 func battle_victory(victory : bool):
 	if victory:
+		record_char_health()
 		global.battle_won = true
 		prints("battle ended")
 		var tween = create_tween()
@@ -308,6 +321,12 @@ func start_anim():
 	trans_screen.queue_free()
 	global.transition_commence = false
 	
+func record_char_health():
+	global.kai_curr_hp = kai.health_bar.value
+	global.emerald_curr_hp = emerald.health_bar.value
+	global.tyrone_curr_hp = tyrone.health_bar.value
+	global.bettany_curr_hp = bettany.health_bar.value
+	print("health recorded")
 
 func spawn_boss():
 	var boss_instance = slums_boss_scene.instantiate() as CharacterBody2D

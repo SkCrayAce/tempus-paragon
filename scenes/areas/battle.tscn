@@ -1509,6 +1509,7 @@ metadata/_edit_lock_ = true
 
 [node name="kai" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 116)
+max_health = 5000
 attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
@@ -1517,6 +1518,7 @@ animation = &"attack"
 
 [node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
+max_health = 5000
 attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
@@ -1528,6 +1530,7 @@ frame_progress = 1.0
 
 [node name="tyrone" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
+max_health = 5000
 attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
@@ -1535,6 +1538,7 @@ material = SubResource("ShaderMaterial_tb7un")
 
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
+max_health = 5000
 attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
