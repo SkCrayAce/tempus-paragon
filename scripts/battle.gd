@@ -19,6 +19,11 @@ const boss_death_scene := preload("res://scenes/characters/boss_death.tscn")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
+var min_hover_x : int = top_left_tile.x
+var max_hover_x : int = bottom_right_tile.x
+var min_hover_y : int = top_left_tile.y
+var max_hover_y : int = bottom_right_tile.y
+
 @onready var enemy_move_timer = $EnemyMoveTimer as Timer
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var animation_timer = $AnimationTimer as Timer
@@ -56,25 +61,21 @@ signal wave_finished
 func _ready():
 	show_start_screen()
 	
-	if global.slums_boss_battle == true:
-		spawn_boss()
-		
 	waves_cleared = 0
 	global.battle_won = false
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-   	
-	if global.slums_boss_battle == false:
-		start_wave()
-	
+   
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-	#spawn_boss()
-	start_wave()
+	if global.slums_boss_battle:
+		spawn_boss()
+	else:
+		start_wave()
 	prints("battle started:")
 	
 	
@@ -138,7 +139,8 @@ func add_enemy(enemy : CharacterBody2D):
 func start_wave():
 	if waves_cleared == 1:
 		battle_victory(true)
-		pass
+	if global.enemy_dict.size() == 0:
+		start_wave()
 		
 	prints("new wave")
 	count = 0
@@ -186,15 +188,15 @@ func place_formation():
 		
 	for position in spawn_positions:
 		if x_valid and y_valid:
-			wave_spawner(position)
-			record_enemies()
-			pass
+			spawn_enemy(position)
+			record_enemies()	
 		else:
+			count += 1
 			return
 	count += 1
 	spawn_positions.clear()
 			
-func wave_spawner(spawn_position : Vector2i):	
+func spawn_enemy(spawn_position : Vector2i):	
 	var enemy_local_pos = slums_tile_map.map_to_local(spawn_position)
 	
 	if current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list:
@@ -240,9 +242,10 @@ func battle_victory(victory : bool):
 		trans_screen.play_animation()
 		await get_tree().create_timer(1).timeout
 		trans_screen.queue_free()
-		
-		if global.current_scene:
-			get_tree().change_scene_to_file(global.current_scene)
+		prints("current scene before if", global.current_scene)
+		if global.current_scene != "":
+			prints("current scene after if", global.current_scene)
+			get_tree().change_scene_to_packed(load("res://scenes/mainmenu.tscn"))
 	
 
 func generate_random_vector() -> Vector2i :
@@ -257,7 +260,18 @@ func generate_random_vector() -> Vector2i :
 			used_vectors.append(random_vector)
 			return random_vector
 	return Vector2i(0, 0)
-
+	
+	
+func within_bounds(coordinate : Vector2) -> bool:
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 
+	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
+	
+	if x_valid and y_valid:
+		return true
+	else:
+		return false
+		
+		
 func start_anim():
 	var trans_screen = trans_scene.instantiate()
 	add_child(trans_screen)

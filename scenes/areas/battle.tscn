@@ -1184,8 +1184,8 @@ _data = {
 script = ExtResource("1_30h06")
 grid_length = 120
 grid_height = 68
-min_num_of_groups = 2
-max_num_of_groups = 4
+min_num_of_groups = 3
+max_num_of_groups = 3
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true

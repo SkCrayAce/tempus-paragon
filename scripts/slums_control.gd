@@ -31,7 +31,7 @@ func _ready():
 		player_instance.position = global.player_position
 		add_child(player_instance)
 		global.drop_random_item(player_instance.position)
-		global.current_scene = ""
+		#global.current_scene = ""
 	
 	
 func _process(delta):
