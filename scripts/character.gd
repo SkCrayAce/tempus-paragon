@@ -11,6 +11,7 @@ var tween : Tween
 var tilemap_dict : Dictionary
 var hovered_tile : Vector2i
 var offset_list : Array
+var attack_frame : int
 
 const grid_length = 120
 const grid_height = 68
@@ -77,6 +78,11 @@ func _ready():
 	anim_sprite.frame_changed.connect(inflict_damage)
 	anim_sprite.play("idle")
 	
+	match name :
+		"kai" : attack_frame = 4
+		"emerald" : attack_frame = 5
+		_ : attack_frame = 4
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if draggable and !on_cooldown and !is_defeated:
@@ -118,7 +124,11 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 		global.dragged_char_name = ""
 		draggable = false
 		if hover_active:
-			var attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
+			var attack_position 
+			if name == "kai" or name == "tyrone":
+				attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
+			else:
+				attack_position = tile_map.map_to_local(hovered_tile + 4*Vector2i(-1, 0))
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
@@ -134,14 +144,14 @@ func attack_animation():
 		"emerald" : attack_sfx.stream = EmeraldAtkSfx
 		"tyrone" : attack_sfx.stream = TyroneAtkSfx
 		"bettany" : attack_sfx.stream = BettanyAtkSfx
-	attack_sfx.play()
+	
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
 			
 func inflict_damage():
-	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
+	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
 		return
-		
+	attack_sfx.play()
 	start_cooldown()
 	
 	for offset in offset_list:

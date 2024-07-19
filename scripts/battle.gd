@@ -1,10 +1,8 @@
 extends Node
 
-
-@export var grid_length : int
-@export var grid_height : int
-@export var min_num_of_groups : int
-@export var max_num_of_groups : int
+@export var min_num_of_groups : int = 2
+@export var max_num_of_groups : int = 4
+@export var num_of_waves : int = 1
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
@@ -13,6 +11,8 @@ var count : int
 var waves_cleared : int
 var team_health : int
 
+const grid_length : int = 120
+const grid_height : int = 68
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
 const slums_boss_scene := preload("res://scenes/characters/slums_boss.tscn")
@@ -176,8 +176,8 @@ func add_enemy(enemy : CharacterBody2D):
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
-	if global.slums_boss_battle == false:
-		if waves_cleared == 1:
+	if not global.slums_boss_battle:
+		if waves_cleared == num_of_waves:
 			battle_victory(true)
 			return
 		
@@ -191,8 +191,6 @@ func start_wave():
 		place_formation()
 		print("formation placing")
 		
-	#if global.enemy_dict.size() == 0:
-		#start_wave()
 		
 	enemy_move_timer.start()
 
@@ -226,20 +224,17 @@ func place_formation():
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
 			
-		if spawn_position in global.enemy_dict:
+		if spawn_position in global.enemy_dict or not x_valid or not y_valid:
 			spawn_positions.clear()
-			prints("intersect exists")
+			prints("invalid position")
 			return
 		else:
 			spawn_positions.append(spawn_position)
 		
 	for position in spawn_positions:
-		if x_valid and y_valid:
-			spawn_enemy(position)
-			record_enemies()	
-		else:
-			prints("exceeded bounds")
-			return
+		spawn_enemy(position)
+		record_enemies()	
+
 	count += 1
 	spawn_positions.clear()
 			
@@ -271,17 +266,18 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
 		if not global.slums_boss_battle:
-			start_wave()
+			start_wave.call_deferred()
 		if global.boss_spawning:
 			wave_finished.emit()
 		if not global.boss_spawning:
-			start_wave()
+			start_wave.call_deferred()
 
 func battle_victory(victory : bool):
+	var tween = create_tween()
 	if victory:
 		global.battle_won = true
 		prints("battle ended")
-		var tween = create_tween()
+		
 		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
 		await tween.finished
 		var trans_screen = trans_scene.instantiate()
@@ -295,9 +291,11 @@ func battle_victory(victory : bool):
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
+		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+		await tween.finished
 		TransitionScreen.transition_node.play("fade_out")
 		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
-
+		#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
 	
 
 func generate_random_vector() -> Vector2i :

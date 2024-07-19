@@ -1,6 +1,8 @@
 extends Node
 
 @onready var texture_rect = %TextureRect
+const Slums0 = preload("res://scenes/areas/slums0.tscn")
+
 var breakloop = false
 
 # Called when the node enters the scene tree for the first time.
@@ -35,5 +37,4 @@ func _on_button_3_pressed():
 	get_tree().quit()
 
 func scene_transition():
-	#get_tree().change_scene_to_file.call_deferred(load("res://scenes/areas/slums0.tscn"))
-	get_tree().change_scene_to_file.bind("res://scenes/areas/slums0.tscn").call_deferred()
+	get_tree().change_scene_to_packed(Slums0)
