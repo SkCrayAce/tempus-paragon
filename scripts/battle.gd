@@ -254,7 +254,7 @@ func battle_victory(victory : bool):
 		prints("current scene before if", global.current_scene)
 		if global.current_scene != "":
 			prints("current scene after if", global.current_scene)
-			#get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
+			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
 		TransitionScreen.transition_node.play("fade_out")
