@@ -16,6 +16,7 @@ const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
+@onready var appear_smoke = $AppearSmoke
 
 
 var player_chase = false
@@ -42,6 +43,8 @@ var bettany_hitbox : Array[int]
 signal enemy_died
 
 func _ready():
+	poof()
+	
 	var top_left_tile = battle_node.top_left_tile
 	
 	kai_hitbox = [top_left_tile.y, top_left_tile.y + 1]
@@ -57,6 +60,11 @@ func _ready():
 
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
+
+func poof():
+	appear_smoke.play("appear")
+	await appear_smoke.animation_finished
+	appear_smoke.visible = false
 
 func action():
 	if is_defeated: return

@@ -1,10 +1,131 @@
-[gd_scene load_steps=36 format=3 uid="uid://c04vklf11enqx"]
+[gd_scene load_steps=54 format=3 uid="uid://c04vklf11enqx"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_hihgw"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_qxg8c"]
+[ext_resource type="Texture2D" uid="uid://b3qt5t8bhsrmy" path="res://tempus_assets/particles/explosion (2).png" id="2_tkn82"]
 [ext_resource type="Texture2D" uid="uid://340iccghhvmp" path="res://tempus_assets/virulent-spritesheet.png" id="2_wldsa"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="3_one7t"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_jhagn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tybua"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqw6k"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gtf7"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3kkd"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr0j0"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q438u"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3meu"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0a2h"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20lfb"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8uko"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38kna"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp88m"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b4ec"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v51i"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7mhr"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xx8vu"]
+atlas = ExtResource("2_tkn82")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sceaf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tybua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqw6k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gtf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3kkd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gr0j0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q438u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3meu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0a2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20lfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8uko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38kna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gp88m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7b4ec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v51i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7mhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xx8vu")
+}],
+"loop": false,
+"name": &"appear",
+"speed": 60.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tyvp3"]
 resource_local_to_scene = true
@@ -241,6 +362,15 @@ script = ExtResource("1_hihgw")
 health = 6000
 attack_damage = 200
 animated_sprite = NodePath("MeleeAnimatedSprite")
+
+[node name="AppearSmoke" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(1.42109e-14, -5)
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_sceaf")
+animation = &"appear"
+frame = 15
+frame_progress = 1.0
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)

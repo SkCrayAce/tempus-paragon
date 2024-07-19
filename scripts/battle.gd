@@ -82,6 +82,7 @@ func _ready():
 	if global.slums_boss_battle:
 		spawn_boss()
 	else:
+		await get_tree().create_timer(3).timeout
 		start_wave()
 	prints("battle started:")
 	
@@ -149,7 +150,6 @@ func start_enemy_action():
 		
 	animation_timer.start()
 
-
 func end_enemy_action():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.stop_animation()
@@ -167,8 +167,10 @@ func add_enemy(enemy : CharacterBody2D):
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
-	if waves_cleared == 1:
-		battle_victory(true)
+	if global.slums_boss_battle == false:
+		if waves_cleared == 1:
+			battle_victory(true)
+			return
 		
 	prints("new wave")
 	count = 0
@@ -177,6 +179,7 @@ func start_wave():
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		place_formation()
+		print("formation placing")
 		
 	if global.enemy_dict.size() == 0:
 		start_wave()
@@ -270,6 +273,9 @@ func battle_victory(victory : bool):
 	if victory:
 		global.battle_won = true
 		prints("battle ended")
+		var tween = create_tween()
+		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+		await tween.finished
 		var trans_screen = trans_scene.instantiate()
 		add_child(trans_screen)
 		trans_screen.play_animation()

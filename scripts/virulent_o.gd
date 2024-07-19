@@ -59,6 +59,7 @@ func _on_fight_range_body_entered(body):
 	if body is Player:
 		global.player_position = body.position
 		global.enemy_pos_at_contact = position
+		global.player_input_enabled = false
 		
 		if global.transition_commence == false:
 			global.transition_commence = true
@@ -69,5 +70,6 @@ func _on_fight_range_body_entered(body):
 			await trans_screen.animation_player.animation_finished
 			trans_screen.queue_free()
 			get_tree().change_scene_to_file(BattleScene)
+			global.player_input_enabled = true
 
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=72 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -33,6 +33,10 @@ region = Rect2(144, 0, 16, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_muk67"]
 atlas = ExtResource("3_wcxqr")
 region = Rect2(0, 40, 256, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8t05s"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(96, 80, 32, 32)
 
 [sub_resource type="Gradient" id="Gradient_k253i"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -1284,6 +1288,9 @@ text = "Showers enemies with bullets. Deal big damage in a large area."
 [node name="HeadContainer" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="3"]
 offset_top = 15.0
 offset_right = 35.0
+
+[node name="Sprite2D" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/HeadContainer" index="0"]
+texture = SubResource("AtlasTexture_8t05s")
 
 [node name="TyroneAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
