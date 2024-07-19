@@ -19,7 +19,7 @@ var next_scene
 
 func _ready():
 	load_levels()
-	TransitionScreen.on_transition_finished.connect(scene_transition)
+	TransitionScreen.fade_out_finished.connect(scene_transition)
 
 
 func next_level(levels_cleared):

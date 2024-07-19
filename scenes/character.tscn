@@ -65,10 +65,10 @@ _data = {
 "hit_flash": SubResource("Animation_sya42")
 }
 
-[node name="Character" type="Node2D"]
+[node name="Character" type="Node2D" groups=["characters"]]
 script = ExtResource("1_qeil2")
 health = 2000
-attack_damage = 1000
+attack_damage = 3000
 
 [node name="Area2D" type="Area2D" parent="."]
 
