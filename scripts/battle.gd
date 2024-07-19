@@ -1,17 +1,18 @@
 extends Node
 
-
-@export var grid_length : int
-@export var grid_height : int
-@export var min_num_of_groups : int
-@export var max_num_of_groups : int
+@export var min_num_of_groups : int = 2
+@export var max_num_of_groups : int = 4
+@export var num_of_waves : int = 1
 
 var enemy_instance : CharacterBody2D
 var dictionary = {}
 var rng
 var count : int
 var waves_cleared : int
+var team_health : int
 
+const grid_length : int = 120
+const grid_height : int = 68
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
 const slums_boss_scene := preload("res://scenes/characters/slums_boss.tscn")
@@ -54,7 +55,6 @@ var current_offset_list : Array
 @onready var bettany = $DraggableIcons/bettany
 
 @onready var trans_scene = preload("res://scenes/transitionto_battle.tscn")
-@onready var current_scene = preload("res://scenes/areas/slums1.tscn") as PackedScene
 
 var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
@@ -73,7 +73,7 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-   
+
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -154,6 +154,15 @@ func set_up_character_health():
 	bettany.health_bar.max_value = global.bettany_max_hp
 	bettany.health_bar.value = global.bettany_curr_hp
 	
+func update_team_health():
+	team_health = 0
+	for character in get_node("DraggableIcons").get_children():
+		team_health += character.health_bar.value
+		
+	if team_health <= 0:
+		global.battle_won = false
+		battle_victory(false)
+		
 func start_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -178,8 +187,8 @@ func add_enemy(enemy : CharacterBody2D):
 	global.enemy_dict[enemy_map_pos] = enemy
 	
 func start_wave():
-	if global.slums_boss_battle == false:
-		if waves_cleared == 1:
+	if not global.slums_boss_battle:
+		if waves_cleared == num_of_waves:
 			battle_victory(true)
 			return
 		
@@ -187,14 +196,12 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
-	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
+	var num_of_groups = 4 #randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
+		prints("patterns formed:", count)
 		place_formation()
 		print("formation placing")
 		
-	if global.enemy_dict.size() == 0:
-		print(global.enemy_dict.size())
-		start_wave()
 		
 	enemy_move_timer.start()
 
@@ -207,16 +214,16 @@ func place_formation():
 	var base_position = generate_random_vector()
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 7)	
+	var random_pattern = rng.randi_range(0, 4)	
 	
 	match random_pattern:
 		0 : current_offset_list = kai_offset_list
 		1 : current_offset_list = emerald_offset_list
 		2 : current_offset_list = tyrone_offset_list
 		3 : current_offset_list = bettany_offset_list
-		4 : current_offset_list = sqaure_offset_list
-		5 : current_offset_list = h_rect_offset_list
-		6 : current_offset_list = v_rect_offset_list
+		#4 : current_offset_list = sqaure_offset_list
+		#5 : current_offset_list = h_rect_offset_list
+		#6 : current_offset_list = v_rect_offset_list
 	
 	for offset in current_offset_list:
 		spawn_position = base_position + offset as Vector2i
@@ -228,19 +235,17 @@ func place_formation():
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
 			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
 			
-		if spawn_position in global.enemy_dict:
+		if spawn_position in global.enemy_dict or not x_valid or not y_valid:
 			spawn_positions.clear()
+			prints("invalid position")
 			return
 		else:
 			spawn_positions.append(spawn_position)
 		
 	for position in spawn_positions:
-		if x_valid and y_valid:
-			spawn_enemy(position)
-			record_enemies()	
-		else:
-			count += 1
-			return
+		spawn_enemy(position)
+		record_enemies()	
+
 	count += 1
 	spawn_positions.clear()
 			
@@ -267,26 +272,24 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 	global.enemy_dict.erase(slums_tile_map.local_to_map(enemy_ref.position))
 	record_enemies()
 	
-	prints("enemies left in group:", get_tree().get_nodes_in_group("enemies").size())
-	prints("enemies left in array:", enemy_list.size())
-	prints("enemies left in dictionary", global.enemy_dict.size())
 	if enemy_list.size() == 0: 
 		enemy_move_timer.stop()
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
 		if not global.slums_boss_battle:
-			start_wave()
+			start_wave.call_deferred()
 		if global.boss_spawning:
 			wave_finished.emit()
 		if not global.boss_spawning:
-			start_wave()
+			start_wave.call_deferred()
 
 func battle_victory(victory : bool):
+	var tween = create_tween()
 	if victory:
 		record_char_health()
 		global.battle_won = true
 		prints("battle ended")
-		var tween = create_tween()
+		
 		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
 		await tween.finished
 		var trans_screen = trans_scene.instantiate()
@@ -298,6 +301,13 @@ func battle_victory(victory : bool):
 		if global.current_scene != "":
 			prints("current scene after if", global.current_scene)
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
+	else:
+		global.battle_won = false
+		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+		await tween.finished
+		TransitionScreen.transition_node.play("fade_out")
+		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
+		#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
 	
 
 func generate_random_vector() -> Vector2i :

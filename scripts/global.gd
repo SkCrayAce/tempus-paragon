@@ -22,7 +22,7 @@ var is_dragging = false
 var dragged_char_name : String
 var enemy_position : Vector2
 var enemy_dict : Dictionary 
-
+var team_health : int
 
 #for boss
 var slums_boss_battle : bool = false

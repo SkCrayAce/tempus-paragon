@@ -64,7 +64,7 @@ func _process(delta):
 func poof():
 	appear_smoke.play("appear")
 	await appear_smoke.animation_finished
-	appear_smoke.visible = false
+	appear_smoke.hide()
 
 func action():
 	if is_defeated: return

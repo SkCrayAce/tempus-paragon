@@ -3,6 +3,7 @@ extends Node2D
 var draggable : bool = false
 var on_cooldown : bool = false
 var is_defeated : bool = false
+var is_attacking : bool
 var ground_layer = 0
 var hover_layer = 1
 var mouse_map_position : Vector2
@@ -10,6 +11,7 @@ var tween : Tween
 var tilemap_dict : Dictionary
 var hovered_tile : Vector2i
 var offset_list : Array
+var attack_frame : int
 
 const grid_length = 120
 const grid_height = 68
@@ -18,6 +20,11 @@ const bottom_right_tile = Vector2i(23, 10)
 
 @export var max_health : int
 @export var attack_damage : int
+
+const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
+const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
+const KaiAtkSfx = preload("res://audio/sfx/basicATK_kai_v02.mp3")
+const TyroneAtkSfx = preload("res://audio/sfx/basicATK_tyrone_v01.mp3")
 
 var min_hover_x : int = top_left_tile.x
 var max_hover_x : int = bottom_right_tile.x
@@ -69,8 +76,12 @@ func _ready():
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
 	anim_sprite.play("idle")
-
-		
+	
+	match name :
+		"kai" : attack_frame = 4
+		"emerald" : attack_frame = 5
+		_ : attack_frame = 4
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if draggable and !on_cooldown and !is_defeated:
@@ -97,6 +108,7 @@ func set_up_max_hp():
 	
 	
 func _on_area_2d_mouse_entered():
+	if is_attacking : return
 	var tween := create_tween()
 	if !global.is_dragging and !on_cooldown and !is_defeated:
 		draggable = true
@@ -109,6 +121,8 @@ func _on_area_2d_mouse_exited():
 		tween.tween_property(drag_icon, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT)
 
 func preview_attack_AoE(new_hovered_tile, new_offset_list):
+	if not draggable: return
+	
 	hovered_tile = new_hovered_tile
 	offset_list = new_offset_list
 	var hover_active : bool
@@ -124,10 +138,15 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 		global.dragged_char_name = ""
 		draggable = false
 		if hover_active:
-			var attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
+			var attack_position 
+			if name == "kai" or name == "tyrone":
+				attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
+			else:
+				attack_position = tile_map.map_to_local(hovered_tile + 4*Vector2i(-1, 0))
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
+			is_attacking = !is_attacking
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "global_position", attack_position, 0.5).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
@@ -135,18 +154,18 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 	
 func attack_animation():
 	match name:
-		"kai": attack_sfx.stream = load("res://audio/sfx/basicATK_kai_v02.mp3") as AudioStream
-		"emerald" : attack_sfx.stream = load("res://audio/sfx/basicATK_emerald_v03.mp3")
-		"tyrone" : attack_sfx.stream = load("res://audio/sfx/basicATK_tyrone_v01.mp3")
-		"bettany" : attack_sfx.stream = load("res://audio/sfx/basicATK_bettany_v03.mp3")
-	attack_sfx.play()
+		"kai": attack_sfx.stream = KaiAtkSfx
+		"emerald" : attack_sfx.stream = EmeraldAtkSfx
+		"tyrone" : attack_sfx.stream = TyroneAtkSfx
+		"bettany" : attack_sfx.stream = BettanyAtkSfx
+	
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
 			
 func inflict_damage():
-	if not anim_sprite.animation == "attack" or not anim_sprite.frame == 5:
+	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
 		return
-		
+	attack_sfx.play()
 	start_cooldown()
 	
 	for offset in offset_list:
@@ -164,6 +183,7 @@ func return_to_position():
 		anim_sprite.play("idle")
 		enemy_move_timer.set_paused(false)
 		animation_timer.set_paused(false)
+		is_attacking = !is_attacking
 		
 	tween = create_tween()
 	anim_sprite.flip_h = true
@@ -191,7 +211,7 @@ func take_damage(damage : int):
 	
 	health_bar.value -= damage
 	hit_effect.play("hit_flash")
-	
+	battle_node.update_team_health()
 	if is_defeated: return
 	
 	if health_bar.value <= 0:

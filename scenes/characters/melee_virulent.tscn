@@ -359,8 +359,8 @@ _data = {
 
 [node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_hihgw")
-health = 6000
-attack_damage = 200
+health = 3000
+attack_damage = 2000
 animated_sprite = NodePath("MeleeAnimatedSprite")
 
 [node name="AppearSmoke" type="AnimatedSprite2D" parent="."]
