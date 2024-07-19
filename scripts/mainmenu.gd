@@ -6,7 +6,7 @@ var breakloop = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	main_menu_play_anim()
-	TransitionScreen.on_transition_finished.connect(scene_transition)
+	TransitionScreen.transition_finished.connect(scene_transition)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

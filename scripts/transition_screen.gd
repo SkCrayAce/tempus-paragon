@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-signal on_transition_finished
+signal transition_finished
 
 @onready var animation_player = $AnimationPlayer
 @onready var transition_screen = $Transition/ColorRect
@@ -11,5 +11,5 @@ func _ready():
 	pass
 	
 func _on_transition_animation_finished(anim_name):
-	if anim_name == "fade_out":
-		on_transition_finished.emit()
+	if anim_name == "fade_out" or anim_name == "fade_in":
+		transition_finished.emit()

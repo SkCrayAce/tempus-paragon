@@ -11,6 +11,7 @@ var dictionary = {}
 var rng
 var count : int
 var waves_cleared : int
+var team_health : int
 
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
@@ -48,7 +49,6 @@ var current_offset_list : Array
 @onready var bettany = $DraggableIcons/bettany
 
 @onready var trans_scene = preload("res://scenes/transitionto_battle.tscn")
-@onready var current_scene = preload("res://scenes/areas/slums1.tscn") as PackedScene
 
 var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
@@ -57,6 +57,7 @@ var anim_start = false
 signal wave_finished
 
 func _ready():
+	battle_victory(false)
 	show_start_screen()
 	
 	waves_cleared = 0
@@ -64,7 +65,7 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-   
+
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -109,6 +110,15 @@ func show_start_screen():
 	get_tree().paused = true
 	get_tree().create_timer(2).timeout.connect(hide_start_screen)
 
+func update_team_health():
+	team_health = 0
+	for character in get_node("DraggableIcons").get_children():
+		team_health += character.health_bar.value
+	prints("team health", team_health)
+	
+	if team_health <= 0:
+		battle_victory(false)
+	
 
 func start_enemy_action(): 
 	record_enemies()
@@ -142,8 +152,9 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
-	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
+	var num_of_groups = 5 #randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
+		prints("patterns formed:", count)
 		place_formation()
 		
 	if global.enemy_dict.size() == 0:
@@ -183,6 +194,7 @@ func place_formation():
 			
 		if spawn_position in global.enemy_dict:
 			spawn_positions.clear()
+			prints("intersect exists")
 			return
 		else:
 			spawn_positions.append(spawn_position)
@@ -192,7 +204,7 @@ func place_formation():
 			spawn_enemy(position)
 			record_enemies()	
 		else:
-			count += 1
+			prints("exceeded bounds")
 			return
 	count += 1
 	spawn_positions.clear()
@@ -220,9 +232,6 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 	global.enemy_dict.erase(slums_tile_map.local_to_map(enemy_ref.position))
 	record_enemies()
 	
-	prints("enemies left in group:", get_tree().get_nodes_in_group("enemies").size())
-	prints("enemies left in array:", enemy_list.size())
-	prints("enemies left in dictionary", global.enemy_dict.size())
 	if enemy_list.size() == 0: 
 		enemy_move_timer.stop()
 		waves_cleared += 1
@@ -247,6 +256,10 @@ func battle_victory(victory : bool):
 		if global.current_scene != "":
 			prints("current scene after if", global.current_scene)
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
+	else:
+		global.battle_won = false
+		TransitionScreen.transition_node.play("fade_out")
+		TransitionScreen.transition_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
 	
 
 func generate_random_vector() -> Vector2i :
