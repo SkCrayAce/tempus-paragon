@@ -55,13 +55,19 @@ signal wave_finished
 
 func _ready():
 	show_start_screen()
-	spawn_boss()
+	
+	if global.slums_boss_battle == true:
+		spawn_boss()
+		
 	waves_cleared = 0
 	global.battle_won = false
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-   
+   	
+	if global.slums_boss_battle == false:
+		start_wave()
+	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -130,7 +136,7 @@ func add_enemy(enemy : CharacterBody2D):
 	
 func start_wave():
 	if waves_cleared == 1:
-		#battle_ended()
+		battle_ended()
 		pass
 		
 	prints("new wave")
@@ -217,6 +223,8 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		enemy_move_timer.stop()
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
+		if not global.slums_boss_battle:
+			start_wave()
 		if global.boss_spawning:
 			wave_finished.emit()
 		if not global.boss_spawning:

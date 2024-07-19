@@ -12,6 +12,7 @@ var tween
 @onready var player_instance = player_scene.instantiate() as CharacterBody2D
 @onready var virulent_instance : CharacterBody2D
 @onready var item_instance: Node2D
+@onready var BattleScene = "res://scenes/areas/battle.tscn"
 
 @export var top_leftmost_spawn_coords : Vector2i
 @export var bottom_rightmost_spawn_coords : Vector2i
@@ -19,7 +20,7 @@ var tween
 func _ready():
 	super._ready()
 	used_vectors.clear()
-	prints(global.current_scene)
+	prints(global.current_scene, " is the scene mf")
 	AudioPlayer.play_music_level()
 	prints("would you lose?")
 	#for variety
@@ -68,4 +69,5 @@ func player_entry_animation(player_instance, end_position : Vector2):
 	tween = create_tween()
 	tween.tween_property(player_instance, "position", end_position, 1)
 	await get_tree().create_timer(1).timeout
+	player_instance.anim.play("idle")
 	global.player_input_enabled = true

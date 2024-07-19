@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7jbw0occe62j"]
+[gd_scene load_steps=14 format=3 uid="uid://c7jbw0occe62j"]
 
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="1_cnpn1"]
 [ext_resource type="Script" path="res://scripts/slums_bf.gd" id="1_tq53k"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="2_gy0yb"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="4_v8daa"]
+[ext_resource type="PackedScene" uid="uid://bmgy7oxhcqxo1" path="res://scenes/characters/slumsboss_o.tscn" id="5_6e751"]
 
 [sub_resource type="Gradient" id="Gradient_fjf4m"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -16,21 +17,6 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_litt0"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="Animation" id="Animation_caomp"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Zoom:zoom")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(5, 5)]
-}
 
 [sub_resource type="Animation" id="Animation_i23kg"]
 resource_name = "Zoom"
@@ -49,8 +35,30 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_el763"]
 _data = {
-"RESET": SubResource("Animation_caomp"),
 "Zoom": SubResource("Animation_i23kg")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ddvmv"]
+size = Vector2(20, 110)
+
+[sub_resource type="Animation" id="Animation_xn7bj"]
+resource_name = "bossfight_start"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("slumsboss_o/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uru2l"]
+_data = {
+"bossfight_start": SubResource("Animation_xn7bj")
 }
 
 [node name="slums_bf" type="Node2D"]
@@ -260,7 +268,31 @@ position = Vector2(110, 149)
 position = Vector2(2, 149)
 zoom = Vector2(5, 5)
 
+[node name="slumsboss_o" parent="." instance=ExtResource("5_6e751")]
+position = Vector2(369, 140)
+
+[node name="AnimatedSprite2D" parent="slumsboss_o" index="0"]
+visible = false
+animation = &"idle"
+frame = 0
+frame_progress = 0.0
+
 [node name="CameraZoom" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_el763")
 }
+
+[node name="BossfightTrigger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossfightTrigger"]
+position = Vector2(218, 152)
+shape = SubResource("RectangleShape2D_ddvmv")
+
+[node name="BossfightStartAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uru2l")
+}
+
+[connection signal="body_entered" from="BossfightTrigger" to="." method="_on_bossfight_trigger_body_entered"]
+
+[editable path="slumsboss_o"]

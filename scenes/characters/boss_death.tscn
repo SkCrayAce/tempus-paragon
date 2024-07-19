@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://bx7kxjsytdn3"]
+[gd_scene load_steps=14 format=3 uid="uid://bx7kxjsytdn3"]
 
 [ext_resource type="Texture2D" uid="uid://d21askene7pne" path="res://tempus_assets/boss_slums-sheet.png" id="1_rv3eu"]
-[ext_resource type="Script" path="res://scripts/slums_boss AI/boss_death.gd" id="2_7a45x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hs03d"]
 atlas = ExtResource("1_rv3eu")
@@ -91,4 +90,3 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_6aiqs")
 animation = &"death"
-script = ExtResource("2_7a45x")

@@ -13,6 +13,7 @@ var enemy_dict : Dictionary
 
 
 #for boss
+var slums_boss_battle : bool = false
 var boss_spawning : bool
 var boss_is_defeated : bool
 

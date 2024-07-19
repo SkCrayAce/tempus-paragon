@@ -45,6 +45,9 @@ func get_input():
 	return input.normalized()
 
 func player_movement(delta):
+	if global.player_input_enabled == false:
+		return
+	
 	input = get_input()
 
 	if input == Vector2.ZERO:
@@ -75,6 +78,9 @@ func player_movement(delta):
 			play_anim(0)
 
 func play_anim(movement):
+	if global.player_input_enabled == false:
+		return
+	
 	var dir = current_dir
 
 	if dir == "right":

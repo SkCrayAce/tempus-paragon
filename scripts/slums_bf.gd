@@ -5,6 +5,8 @@ extends "res://scripts/slums_control.gd"
 @onready var camera_zoom = $CameraZoom
 @onready var zoom = $Zoom
 @onready var tile_map = $TileMap
+@onready var bossfight_start_anim = $BossfightStartAnim
+@onready var slumsboss = $slumsboss_o
 
 
 func _ready():
@@ -50,3 +52,31 @@ func setup_cam():
 	zoom.limit_right = tilemap_rect.end.x * tilemap_cell_size.x
 	zoom.limit_bottom = tilemap_rect.end.y * tilemap_cell_size.y 
 	zoom.limit_top = tilemap_rect.position.y * tilemap_cell_size.y 
+
+
+func _on_bossfight_trigger_body_entered(body):
+	if body is Player:
+		global.slums_boss_battle = true
+		global.player_input_enabled = false
+		player_instance.cam.enabled = false
+		player_instance.anim.play("side_idle_right")
+		zoom.enabled = true
+		zoom.position = player_instance.position
+	
+		tween = create_tween()
+		tween.tween_property(zoom, "position", slumsboss.position - Vector2(0, slumsboss.position.y - player_animation_end.position.y), 3).set_ease(Tween.EASE_IN_OUT)
+		await get_tree().create_timer(3).timeout
+		slumsboss.anim.play("laugh")
+		await get_tree().create_timer(3).timeout
+		slumsboss.anim.play("idle")
+		print(global.transition_commence)
+		
+		if global.transition_commence == false:
+			global.transition_commence = true
+			var trans_screen_scene = load("res://scenes/transitionto_battle.tscn")
+			var trans_screen = trans_screen_scene.instantiate()
+			get_tree().get_root().add_child(trans_screen)
+			trans_screen.play_animation()
+			await trans_screen.animation_player.animation_finished
+			trans_screen.queue_free()
+			get_tree().change_scene_to_file(BattleScene)
