@@ -143,6 +143,15 @@ func ui_start_animation():
 	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
+func update_team_health():
+	team_health = 0
+	for character in get_node("DraggableIcons").get_children():
+		team_health += character.health_bar.value
+		
+	if team_health <= 0:
+		global.battle_won = false
+		battle_victory(false)
+		
 func start_enemy_action(): 
 	record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
