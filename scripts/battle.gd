@@ -73,7 +73,8 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-
+	#spawn_boss()
+	start_wave()
 	prints("battle started:")
 	
 	
@@ -136,7 +137,7 @@ func add_enemy(enemy : CharacterBody2D):
 	
 func start_wave():
 	if waves_cleared == 1:
-		battle_ended()
+		battle_victory(true)
 		pass
 		
 	prints("new wave")
@@ -230,17 +231,18 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		if not global.boss_spawning:
 			start_wave()
 
-func battle_ended():
-	global.battle_won = true
-	prints("battle ended")
-	var trans_screen = trans_scene.instantiate()
-	add_child(trans_screen)
-	trans_screen.play_animation()
-	await get_tree().create_timer(1).timeout
-	trans_screen.queue_free()
-	
-	if global.current_scene:
-		get_tree().change_scene_to_file(global.current_scene)
+func battle_victory(victory : bool):
+	if victory:
+		global.battle_won = true
+		prints("battle ended")
+		var trans_screen = trans_scene.instantiate()
+		add_child(trans_screen)
+		trans_screen.play_animation()
+		await get_tree().create_timer(1).timeout
+		trans_screen.queue_free()
+		
+		if global.current_scene:
+			get_tree().change_scene_to_file(global.current_scene)
 	
 
 func generate_random_vector() -> Vector2i :
@@ -286,7 +288,7 @@ func _on_boss_killed():
 	await get_tree().create_timer(3).timeout
 	dead_boss_instance.queue_free()
 	
-	battle_ended()
+	battle_victory(true)
 	
 	
 	
