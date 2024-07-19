@@ -84,6 +84,10 @@ func _ready():
 	health = healthbar.max_value
 	healthbar.value = health
 
+func _physics_process(delta):
+	if velocity.x < 0 :
+		anim.flip_h = true
+		
 func randomize_index():
 	new_index = rng.randi() % 5
 	fsm.change_state(states_to_choose[new_index])
