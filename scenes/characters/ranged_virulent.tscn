@@ -235,7 +235,7 @@ _data = {
 script = ExtResource("1_4ip0e")
 health = 6000
 attack_damage = 20
-attack_range = 12
+attack_range = 8
 animated_sprite = NodePath("RangedAnimatedSprite")
 
 [node name="RangedAnimatedSprite" type="AnimatedSprite2D" parent="."]

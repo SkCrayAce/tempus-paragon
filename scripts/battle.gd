@@ -47,10 +47,8 @@ var current_offset_list : Array
 @onready var tyrone = $DraggableIcons/tyrone
 @onready var bettany = $DraggableIcons/bettany
 
-@onready var kai_sprite = $Characters/kai
-
-
 @onready var trans_scene = preload("res://scenes/transitionto_battle.tscn")
+@onready var current_scene = preload("res://scenes/areas/slums1.tscn") as PackedScene
 
 var enemy_list : Array[CharacterBody2D]
 var used_vectors : Array[Vector2i]
@@ -139,8 +137,6 @@ func add_enemy(enemy : CharacterBody2D):
 func start_wave():
 	if waves_cleared == 1:
 		battle_victory(true)
-	if global.enemy_dict.size() == 0:
-		start_wave()
 		
 	prints("new wave")
 	count = 0
@@ -149,7 +145,12 @@ func start_wave():
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		place_formation()
+		
+	if global.enemy_dict.size() == 0:
+		start_wave()
+		
 	enemy_move_timer.start()
+
 		
 func place_formation():
 	var x_valid : bool
@@ -245,7 +246,7 @@ func battle_victory(victory : bool):
 		prints("current scene before if", global.current_scene)
 		if global.current_scene != "":
 			prints("current scene after if", global.current_scene)
-			get_tree().change_scene_to_packed(load("res://scenes/mainmenu.tscn"))
+			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	
 
 func generate_random_vector() -> Vector2i :
@@ -260,17 +261,6 @@ func generate_random_vector() -> Vector2i :
 			used_vectors.append(random_vector)
 			return random_vector
 	return Vector2i(0, 0)
-	
-	
-func within_bounds(coordinate : Vector2) -> bool:
-	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 
-	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
-	
-	if x_valid and y_valid:
-		return true
-	else:
-		return false
-		
 		
 func start_anim():
 	var trans_screen = trans_scene.instantiate()
