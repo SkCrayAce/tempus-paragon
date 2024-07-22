@@ -360,7 +360,7 @@ _data = {
 [node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_hihgw")
 health = 3000
-attack_damage = 2000
+attack_damage = 1000
 animated_sprite = NodePath("MeleeAnimatedSprite")
 
 [node name="AppearSmoke" type="AnimatedSprite2D" parent="."]
@@ -374,6 +374,7 @@ frame_progress = 1.0
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
+z_index = -1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)

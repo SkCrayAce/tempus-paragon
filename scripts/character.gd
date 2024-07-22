@@ -80,7 +80,7 @@ func _ready():
 	match name :
 		"kai" : attack_frame = 4
 		"emerald" : attack_frame = 5
-		_ : attack_frame = 4
+		"tyrone" : attack_frame = 10
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -186,8 +186,8 @@ func return_to_position():
 		is_attacking = !is_attacking
 		
 	tween = create_tween()
-	anim_sprite.flip_h = true
-	anim_sprite.play("walk")
+	#anim_sprite.flip_h = true
+	anim_sprite.play("walk_back")
 	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(back_to_idle)
 	

@@ -909,7 +909,7 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
-health = 100000
+health = 150000
 attack_damage = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -947,7 +947,7 @@ anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 ranged_attack_range = 200
 wait_anim_time = 0.5
-attack_damage = 200
+attack_damage = 1000
 
 [node name="MeleeAttackState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
 script = ExtResource("7_4idyx")
@@ -955,7 +955,7 @@ actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 melee_attack_range = 1
-attack_damage = 300
+attack_damage = 1000
 rush_to_character_time = 1
 wait_anim_time = 0.5
 
@@ -964,7 +964,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 500
+attack_damage = 3000
 wait_anim_time = 1.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]

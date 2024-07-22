@@ -59,11 +59,11 @@ func _ready():
 	healthbar.value = healthbar.max_value
 	
 	rng.randomize()
-	#states_to_choose.append(ranged_attack_state)
-	#states_to_choose.append(melee_attack_state)
+	states_to_choose.append(ranged_attack_state)
+	states_to_choose.append(melee_attack_state)
 	states_to_choose.append(power_attack_state)
-	#states_to_choose.append(idle_state)
-	#states_to_choose.append(moving_state)
+	states_to_choose.append(idle_state)
+	states_to_choose.append(moving_state)
 	
 	if not global.boss_is_defeated:
 		#will go to move state after certain amount of time
@@ -98,7 +98,7 @@ func _physics_process(delta):
 		anim.flip_h = true
 		
 func randomize_index():
-	new_index = rng.randi() % 1
+	new_index = rng.randi() % states_to_choose.size()
 	fsm.change_state(states_to_choose[new_index])
 
 func hit(damage : int):

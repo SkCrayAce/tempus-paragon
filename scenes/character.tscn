@@ -78,7 +78,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 metadata/_edit_lock_ = true
 
 [node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 3.0
 one_shot = true
 
 [node name="DragIcon" type="Control" parent="."]
@@ -190,6 +190,7 @@ position = Vector2(195, 35)
 scale = Vector2(4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BattleSprite"]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_e22j2")
 position = Vector2(0, -10)
 sprite_frames = ExtResource("5_62wyn")
