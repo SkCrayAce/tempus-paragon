@@ -12,13 +12,14 @@ var tilemap_dict : Dictionary
 var hovered_tile : Vector2i
 var offset_list : Array
 var attack_frame : int
+var current_health : int
 
 const grid_length = 120
 const grid_height = 68
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
-@export var max_health : int
+@export var max_health : int = 3000
 @export var attack_damage : int
 
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
@@ -90,6 +91,7 @@ func _process(delta):
 			global.dragged_char_name = name
 
 	cooldown_bar.value = cooldown_timer.time_left
+	current_health = health_bar.value
 
 func set_up_max_hp():
 	
@@ -98,7 +100,7 @@ func set_up_max_hp():
 	global.tyrone_max_hp = max_health
 	global.bettany_max_hp = max_health
 	
-	if global.hp_initialized == false:
+	if not global.hp_initialized:
 		global.kai_curr_hp = max_health
 		global.emerald_curr_hp = max_health
 		global.tyrone_curr_hp = max_health

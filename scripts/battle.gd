@@ -28,7 +28,8 @@ var max_hover_y : int = bottom_right_tile.y
 @onready var enemy_move_timer = $EnemyMoveTimer as Timer
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
 @onready var animation_timer = $AnimationTimer as Timer
-@onready var slums_tile_map = $SlumsTileMap
+@onready var push_timer = $PushTimer as Timer
+@onready var slums_tile_map = $SlumsTileMap as TileMap
 @onready var boss_defeated_anim = $BossDefeatedAnim
 @onready var battle_start_popup = $CanvasLayer/BattleStartPopup
 @onready var abilities_container = $CanvasLayer/AbilitiesContainer
@@ -37,6 +38,11 @@ var max_hover_y : int = bottom_right_tile.y
 @onready var emerald_drag_icon = $DraggableIcons/emerald/DragIcon
 @onready var tyrone_drag_icon = $DraggableIcons/tyrone/DragIcon
 @onready var bettany_drag_icon = $DraggableIcons/bettany/DragIcon
+
+@onready var kai_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/UseAbilityBtn
+@onready var emerald_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/UseAbilityBtn
+@onready var tyrone_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/UseAbilityBtn
+@onready var bettany_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/UseAbilityBtn
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -73,7 +79,12 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
-
+	
+	tyrone_ability_btn.pressed.connect(tyrone_skill)
+	#kai_ability_btn.pressed.connect(kai_skill)
+	bettany_ability_btn.pressed.connect(bettany_skill)
+	emerald_ability_btn.pressed.connect(emerald_skill)
+	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -223,9 +234,7 @@ func start_wave():
 	used_vectors.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
-		prints("patterns formed:", count)
 		place_formation()
-		print("formation placing")
 		
 		
 	enemy_move_timer.start()
@@ -385,6 +394,29 @@ func _on_boss_killed():
 	dead_boss_instance.queue_free()
 	
 	battle_victory(true)
+
+func kai_skill():
+	var update_positions = func():
+		for enemy in get_tree().get_nodes_in_group("enemies"):
+			enemy.stop_animation()
+		prints("nablow na kami!")
+		enemy_move_timer.start(enemy_move_timer.time_left)
+		record_enemies()
+		
+	push_timer.timeout.connect(update_positions)
+	enemy_move_timer.stop()
+	push_timer.start()
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.blown_back()
 	
+func tyrone_skill():
+	for character in get_node("DraggableIcons").get_children():
+		character.health_bar.value += character.health_bar.max_value * 0.70
+	update_team_health()
 	
+func bettany_skill():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.burn(600)
 	
+func emerald_skill():
+	pass
