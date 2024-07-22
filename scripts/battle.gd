@@ -157,28 +157,28 @@ func ui_start_animation():
 
 func set_up_character_health():
 	
-	if global.kai_curr_hp == 0:
+	if global.kai_curr_hp <= 0:
 		kai.character_defeated()
 		kai.anim_sprite.visible = false
 	else:
 		kai.health_bar.max_value = global.kai_max_hp
 		kai.health_bar.value = global.kai_curr_hp
 		
-	if global.emerald_curr_hp == 0:
+	if global.emerald_curr_hp <= 0:
 		emerald.character_defeated()
 		emerald.anim_sprite.visible = false
 	else:
 		emerald.health_bar.max_value = global.emerald_max_hp
 		emerald.health_bar.value = global.emerald_curr_hp
 		
-	if global.tyrone_curr_hp == 0:
+	if global.tyrone_curr_hp <= 0:
 		tyrone.character_defeated()
 		tyrone.anim_sprite.visible = false
 	else:
 		tyrone.health_bar.max_value = global.tyrone_max_hp
 		tyrone.health_bar.value = global.tyrone_curr_hp
 	
-	if global.bettany_curr_hp == 0:
+	if global.bettany_curr_hp <= 0:
 		bettany.character_defeated()
 		bettany.anim_sprite.visible = false
 	else:
