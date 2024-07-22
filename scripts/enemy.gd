@@ -136,13 +136,16 @@ func enemy_defeated():
 		
 func blown_back():
 	if position.x == bottom_right_tile.x : return
-	
-	if is_followed(): return
-		
+	var push_position = Vector2(position.x + 16, position.y)
+	#global.delete_enemy(current_map_position)
 	tween = create_tween()
-	animated_sprite.stop()
-	tween.tween_property(self, "position", new_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
-	global.add_enemy(current_map_position, self)
+	
+	for i in 3:
+		if is_followed(): return
+			
+		animated_sprite.stop()
+		tween.tween_property(self, "position", push_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
+		#global.add_enemy(current_map_position, self)
 		
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
@@ -219,7 +222,7 @@ func is_followed() -> bool:
 	if is_instance_valid(rear_enemy):
 		return rear_enemy.is_followed()
 	
-	return rear_map_position.x >= bottom_right_tile.x
+	return rear_map_position.x > bottom_right_tile.x
 		
 func within_attack_range() -> bool:
 	if abs(battle_node.top_left_tile.x - current_map_position.x) <= attack_range:

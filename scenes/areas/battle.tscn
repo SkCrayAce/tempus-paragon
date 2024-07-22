@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=73 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bb6aexrlbyn3v" path="res://tempus_assets/ability sprites/skill_icons13.png" id="7_libma"]
 [ext_resource type="PackedScene" uid="uid://cqrt5njcuob82" path="res://scenes/skill_pop_up.tscn" id="9_eowdg"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
-[ext_resource type="SpriteFrames" uid="uid://cqinysat17sxj" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
+[ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
 [ext_resource type="Texture2D" uid="uid://yrpk7q8fovny" path="res://tempus_assets/tyrone-chibi-spritesheet.png" id="18_s6lim"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
@@ -300,7 +300,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_awrfq")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -817,16 +817,17 @@ frame_progress = 0.571598
 [node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
 attack_damage = 3000
+attack_frame = 5
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_l6fur")
 sprite_frames = ExtResource("17_01l8e")
-animation = &"walk_back"
-frame_progress = 0.703648
+animation = &"attack"
 
 [node name="tyrone" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 372)
 attack_damage = 3000
+attack_frame = 9
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_tb7un")

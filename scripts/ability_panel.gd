@@ -15,8 +15,11 @@ var ability = null
 func _ready():
 	use_ability_btn.pressed.connect(start_cooldown)
 	cooldown_bar.max_value = cooldown_timer.wait_time
+	prints(Vector2i.UP*2)
 	
 func start_cooldown():
+	if name == "EmeraldAbility": return
+	
 	cooldown_filter.show()
 	cooldown_timer.start()
 	cooldown_bar.show()

@@ -10,9 +10,14 @@ var rng
 var count : int
 var waves_cleared : int
 var team_health : int
+var eme_skill_active : bool
+var eme_skill_AoE : Array[Vector2i]
+
 
 const grid_length : int = 120
 const grid_height : int = 68
+const ground_layer = 0
+const hover_layer = 1
 const melee_enemy_scene := preload("res://scenes/characters/melee_virulent.tscn")
 const ranged_enemy_scene := preload("res://scenes/characters/ranged_virulent.tscn")
 const slums_boss_scene := preload("res://scenes/characters/slums_boss.tscn")
@@ -20,10 +25,10 @@ const boss_death_scene := preload("res://scenes/characters/boss_death.tscn")
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
-var min_hover_x : int = top_left_tile.x
-var max_hover_x : int = bottom_right_tile.x
-var min_hover_y : int = top_left_tile.y
-var max_hover_y : int = bottom_right_tile.y
+const min_hover_x : int = top_left_tile.x
+const max_hover_x : int = bottom_right_tile.x
+const min_hover_y : int = top_left_tile.y
+const max_hover_y : int = bottom_right_tile.y
 
 @onready var enemy_move_timer = $EnemyMoveTimer as Timer
 @onready var move_timer_bar = $CanvasLayer/MoveTimerBar as TextureProgressBar
@@ -85,6 +90,12 @@ func _ready():
 	bettany_ability_btn.pressed.connect(bettany_skill)
 	emerald_ability_btn.pressed.connect(emerald_skill)
 	
+	#initializing emerald's skill aoe
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			eme_skill_AoE.append(Vector2i(x, y))
+	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
+	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -96,6 +107,7 @@ func _ready():
 		await get_tree().create_timer(3).timeout
 		start_wave()
 	prints("battle started:")
+	
 	
 	
 func _process(delta):
@@ -121,6 +133,18 @@ func _process(delta):
 			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
+			
+	if eme_skill_active:
+		hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position()) as Vector2i
+		var hover_active : bool
+	
+		for offset in eme_skill_AoE:
+			var target_pos : Vector2i = hovered_tile + offset as Vector2i
+			if within_bounds(target_pos):
+				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
+				hover_active = true
+			hover_active = false
+		
 	
 func show_start_screen():
 	var hide_start_screen = func():
@@ -319,26 +343,27 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 
 func battle_victory(victory : bool):
 	var tween = create_tween()
+	tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+	await tween.finished
 	if victory:
 		record_char_health()
 		global.battle_won = true
 		prints("battle ended")
 		
-		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
-		await tween.finished
+		#tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+		#await tween.finished
 		var trans_screen = trans_scene.instantiate()
 		add_child(trans_screen)
 		trans_screen.play_animation()
 		await get_tree().create_timer(1).timeout
 		trans_screen.queue_free()
-		prints("current scene before if", global.current_scene)
+
 		if global.current_scene != "":
-			prints("current scene after if", global.current_scene)
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
-		tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
-		await tween.finished
+		#tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
+		#await tween.finished
 		TransitionScreen.transition_node.play("fade_out")
 		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
 		#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
@@ -419,4 +444,16 @@ func bettany_skill():
 		enemy.burn(600)
 	
 func emerald_skill():
-	pass
+	eme_skill_active = ! eme_skill_active
+	global.is_dragging = !global.is_dragging
+	
+	prints(eme_skill_AoE)
+
+func within_bounds(coordinate : Vector2) -> bool:
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 
+	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
+	
+	if x_valid and y_valid:
+		return true
+	else:
+		return false

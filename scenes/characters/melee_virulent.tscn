@@ -375,7 +375,6 @@ frame_progress = 1.0
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
-z_index = -1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
