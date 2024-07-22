@@ -221,7 +221,7 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
-	var num_of_groups = 4 #randi_range(min_num_of_groups, max_num_of_groups)
+	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		prints("patterns formed:", count)
 		place_formation()
@@ -255,10 +255,10 @@ func place_formation():
 		
 		if current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list:
 			x_valid = spawn_position.x in range(top_left_tile.x + 11, bottom_right_tile.x) 
-			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1) 
 		elif not (current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list):
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
-			y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y - 1 ) 
+			
+		y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y) 
 			
 		if spawn_position in global.enemy_dict or not x_valid or not y_valid:
 			spawn_positions.clear()
