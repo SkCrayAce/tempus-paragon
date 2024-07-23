@@ -4,16 +4,21 @@ extends CharacterBody2D
 @export var attack_damage : int
 @export var attack_range : int
 @export var animated_sprite : AnimatedSprite2D
+@export var attack_frame : int
 
 
 const BattleNode = preload("res://scripts/battle.gd")
 const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
 const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
+const top_left_tile = Vector2i(9, 3)
+const bottom_right_tile = Vector2i(23, 10)
 
 @onready var healthbar = $HealthBar as TextureProgressBar
 @onready var tile_map = get_parent() as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
+@onready var enemy_move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
+@onready var push_timer = get_node("../../PushTimer") as Timer
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var appear_smoke = $AppearSmoke
@@ -44,8 +49,6 @@ signal enemy_died
 
 func _ready():
 	poof()
-	
-	var top_left_tile = battle_node.top_left_tile
 	
 	kai_hitbox = [top_left_tile.y, top_left_tile.y + 1]
 	emerald_hitbox  = [top_left_tile.y + 2, top_left_tile.y + 3]
@@ -86,7 +89,13 @@ func hit(damage : int):
 		healthbar.value -= damage
 		if healthbar.value <= 0:
 			enemy_defeated()
-			
+
+func burn(damage : int):
+	for i in 5:
+		hit(damage)	
+		await get_tree().create_timer(1).timeout
+		prints("burn")
+		continue
 
 func show_damage_numbers(damage : int):
 	var number = Label.new()
@@ -96,7 +105,7 @@ func show_damage_numbers(damage : int):
 	number.label_settings = LabelSettings.new()
 	number.text = str(damage)
 	number.position = damage_number_origin.position
-	number.z_index = 30
+	number.z_index = z_index + 1
 	
 	var color = Color.RED
 	
@@ -124,7 +133,20 @@ func enemy_defeated():
 	
 	if get_tree().get_node_count() <= 5 :
 		tree_exited.connect(battle_node.start_wave)
-
+		
+func blown_back():
+	if position.x == bottom_right_tile.x : return
+	var push_position = Vector2(position.x + 16, position.y)
+	#global.delete_enemy(current_map_position)
+	tween = create_tween()
+	
+	for i in 3:
+		if is_followed(): return
+			
+		animated_sprite.stop()
+		tween.tween_property(self, "position", push_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
+		#global.add_enemy(current_map_position, self)
+		
 func move_animation():
 	new_position = Vector2(position.x - 16, position.y)
 	var new_map_position = tile_map.local_to_map(new_position)
@@ -158,13 +180,8 @@ func attack_character():
 
 	
 func inflict_damage():
-	if scene_file_path == MeleeVirulentScene:
-		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 4:
-			return
-	elif scene_file_path == RangedVirulentScene:
-		if not animated_sprite.animation == "attack" or not animated_sprite.frame == 6:
-			return
-	
+	if not animated_sprite.animation == "attack" or not animated_sprite.frame == attack_frame:
+		return
 	var kai_aligned = current_map_position.y in kai_hitbox
 	var emerald_aligned = current_map_position.y in emerald_hitbox
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
@@ -174,9 +191,9 @@ func inflict_damage():
 		animated_sprite.play("side_idle_left")
 		
 	if kai_aligned and not kai.is_defeated : kai.take_damage(attack_damage)
-	if emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
-	if tyrone_aligned and not tyrone.is_defeated : tyrone.take_damage(attack_damage)
-	if bettany_aligned and not bettany.is_defeated : bettany.take_damage(attack_damage)
+	elif emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
+	elif tyrone_aligned and not tyrone.is_defeated : tyrone.take_damage(attack_damage)
+	elif bettany_aligned and not bettany.is_defeated : bettany.take_damage(attack_damage)
 	else: 
 		is_attacking = false
 		back_to_idle.call()
@@ -191,11 +208,21 @@ func is_blocked() -> bool:
 		return next_enemy.is_blocked()
 	
 	if scene_file_path == MeleeVirulentScene:
-		return next_map_position.x < battle_node.top_left_tile.x
+		return next_map_position.x < top_left_tile.x
 	elif scene_file_path == RangedVirulentScene:
-		return next_map_position.x < battle_node.top_left_tile.x + attack_range
+		return next_map_position.x < top_left_tile.x + attack_range
 		
 	return true
+
+func is_followed() -> bool:
+	var rear_position = Vector2(position.x + 16, position.y)
+	var rear_map_position = tile_map.local_to_map(rear_position)
+	var rear_enemy := global.get_enemy(rear_map_position)
+	
+	if is_instance_valid(rear_enemy):
+		return rear_enemy.is_followed()
+	
+	return rear_map_position.x > bottom_right_tile.x
 		
 func within_attack_range() -> bool:
 	if abs(battle_node.top_left_tile.x - current_map_position.x) <= attack_range:

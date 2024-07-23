@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbbigy34cyy77"]
+[gd_scene load_steps=14 format=3 uid="uid://b6qiham7oh4rh"]
 
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="1_b8fap"]
 [ext_resource type="Script" path="res://scripts/ability_panel.gd" id="1_b11cn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://kddmxf5m788b" path="res://tempus_assets/ability sprites/skill_icons24.png" id="3_inr8c"]
 [ext_resource type="FontFile" uid="uid://hdche2nivxw2" path="res://tempus_assets/font/Alkhemikal.ttf" id="3_r4pq6"]
 [ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_7pkx6"]
+[ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="4_ygavq"]
 [ext_resource type="Texture2D" uid="uid://bp4nweo24u3vx" path="res://tempus_assets/chibi heads/kai_chibi_head.png" id="6_uttqa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0io6"]
@@ -42,6 +43,44 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_35x3o")
 position = Vector2(52, 25)
 scale = Vector2(1.22917, 1.22917)
 texture = ExtResource("3_inr8c")
+
+[node name="CooldownFilter" type="ColorRect" parent="AbilityIcon"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.2034
+offset_top = -24.2034
+offset_right = -0.203396
+offset_bottom = -0.2034
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.784314)
+
+[node name="CooldownBar" type="TextureProgressBar" parent="AbilityIcon"]
+visible = false
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.01
+value = 60.0
+fill_mode = 5
+nine_patch_stretch = true
+texture_progress = ExtResource("4_ygavq")
+tint_progress = Color(1, 1, 1, 0.588235)
+
+[node name="CooldownTimer" type="Timer" parent="AbilityIcon/CooldownBar"]
+wait_time = 30.0
+one_shot = true
 
 [node name="DetailsPanel" type="NinePatchRect" parent="."]
 visible = false
