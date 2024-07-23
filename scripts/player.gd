@@ -13,6 +13,7 @@ const accel = 2000
 @onready var inventory_panel = $InventoryUI/Panel
 @onready var init_point = $InventoryUI/Init_point
 @onready var end_point = $InventoryUI/End_point
+@onready var overworld_ui = $PlayerUI/Overworld_UI
 @onready var current_tile_map = get_parent().get_node("TileMap") as TileMap
 
 @onready var control = $Control
@@ -109,7 +110,9 @@ func play_anim(movement):
 func _input(event):
 	if event.is_action_pressed("ui_inventory"):
 		inventory_ui_anim()
-		#get_tree().paused = !get_tree().paused
+	if event.is_action_pressed("ui_playermenu"):
+		print("pressed")
+		overworld_ui.toggle_player_menu()
 
 func apply_item_effect(item):
 	match item["name"]:
