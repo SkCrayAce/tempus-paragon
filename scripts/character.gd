@@ -142,8 +142,10 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 		draggable = false
 		if hover_active:
 			var attack_position 
+			
 			if name == "kai" or name == "tyrone": attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
 			else: attack_position = tile_map.map_to_local(hovered_tile + 2*Vector2i(-1, 0))
+			
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
@@ -206,7 +208,7 @@ func start_cooldown():
 func end_cooldown():
 	on_cooldown = false
 	cooldown_bar.hide()
-	draggable = false
+	#draggable = false
 
 func take_damage(damage : int):
 	

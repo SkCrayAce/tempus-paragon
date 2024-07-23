@@ -85,17 +85,6 @@ func _ready():
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
 	
-	tyrone_ability_btn.pressed.connect(tyrone_skill)
-	#kai_ability_btn.pressed.connect(kai_skill)
-	bettany_ability_btn.pressed.connect(bettany_skill)
-	emerald_ability_btn.pressed.connect(emerald_skill)
-	
-	#initializing emerald's skill aoe
-	for x in range(-1, 2):
-		for y in range(-1, 2):
-			eme_skill_AoE.append(Vector2i(x, y))
-	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
-	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -133,19 +122,9 @@ func _process(delta):
 			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
-			
-	if eme_skill_active:
-		hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position()) as Vector2i
-		var hover_active : bool
-	
-		for offset in eme_skill_AoE:
-			var target_pos : Vector2i = hovered_tile + offset as Vector2i
-			if within_bounds(target_pos):
-				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
-				hover_active = true
-			hover_active = false
-		
-	
+
+
+				
 func show_start_screen():
 	var hide_start_screen = func():
 		battle_start_popup.hide()
@@ -419,35 +398,6 @@ func _on_boss_killed():
 	dead_boss_instance.queue_free()
 	
 	battle_victory(true)
-
-func kai_skill():
-	var update_positions = func():
-		for enemy in get_tree().get_nodes_in_group("enemies"):
-			enemy.stop_animation()
-		prints("nablow na kami!")
-		enemy_move_timer.start(enemy_move_timer.time_left)
-		record_enemies()
-		
-	push_timer.timeout.connect(update_positions)
-	enemy_move_timer.stop()
-	push_timer.start()
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.blown_back()
-	
-func tyrone_skill():
-	for character in get_node("DraggableIcons").get_children():
-		character.health_bar.value += character.health_bar.max_value * 0.70
-	update_team_health()
-	
-func bettany_skill():
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.burn(600)
-	
-func emerald_skill():
-	eme_skill_active = ! eme_skill_active
-	global.is_dragging = !global.is_dragging
-	
-	prints(eme_skill_AoE)
 
 func within_bounds(coordinate : Vector2) -> bool:
 	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 

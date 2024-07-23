@@ -1,5 +1,12 @@
 extends TextureRect
 
+const Battle = preload("res://scripts/battle.gd")
+const Enemy = preload("res://scripts/enemy.gd")
+
+var eme_skill_active : bool
+var hovered_tile : Vector2i
+var eme_skill_AoE : Array[Vector2i]
+
 @onready var use_ability_btn = $UseAbilityBtn
 @onready var ability_icon = $"AbilityIcon"
 @onready var details_panel = $DetailsPanel
@@ -8,18 +15,85 @@ extends TextureRect
 @onready var cooldown_bar = $AbilityIcon/CooldownBar
 @onready var cooldown_timer = $AbilityIcon/CooldownBar/CooldownTimer
 @onready var cooldown_filter = $AbilityIcon/CooldownFilter
+@onready var battle = get_node("../../../..") as Battle
+@onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
 
 #Ability
 var ability = null
 
+
 func _ready():
-	use_ability_btn.pressed.connect(start_cooldown)
+	use_ability_btn.pressed.connect(switch_ability)
 	cooldown_bar.max_value = cooldown_timer.wait_time
 	prints(Vector2i.UP*2)
 	
-func start_cooldown():
-	if name == "EmeraldAbility": return
+	#initializing emerald's skill aoe
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			eme_skill_AoE.append(Vector2i(x, y))
+	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
 	
+func _process(delta):
+	cooldown_bar.value = cooldown_timer.time_left
+	
+	if eme_skill_active:
+		hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position()) as Vector2i
+		var hover_active : bool
+	
+		for offset in eme_skill_AoE:
+			var target_pos : Vector2i = hovered_tile + offset as Vector2i
+			var detected_enemy = global.get_enemy(target_pos)
+			if battle.within_bounds(target_pos):
+				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
+				hover_active = true
+				if Input.is_action_just_pressed("left_click"):
+					prints("hovered tile: ", hovered_tile)
+					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
+						detected_enemy.hit(3000)
+					eme_skill_active = false
+					global.is_dragging = false
+					start_cooldown()
+					
+			hover_active = false	
+		
+			
+func switch_ability():
+	match name:
+		#"KaiAbility": kai_skill()
+		"EmeraldAbility": emerald_skill()
+		"TyroneAbility": tyrone_skill()
+		"BettanyAbility": bettany_skill()
+
+#func kai_skill():
+	#var update_positions = func():
+		#for enemy in get_tree().get_nodes_in_group("enemies"):
+			#enemy.stop_animation()
+		#prints("nablow na kami!")
+		#enemy_move_timer.start(enemy_move_timer.time_left)
+		#record_enemies()
+		#
+	#push_timer.timeout.connect(update_positions)
+	#enemy_move_timer.stop()
+	#push_timer.start()
+	#for enemy in get_tree().get_nodes_in_group("enemies"):
+		#enemy.blown_back()
+	
+func tyrone_skill():
+	for character in get_node("DraggableIcons").get_children():
+		character.health_bar.value += character.health_bar.max_value * 0.70
+	battle.update_team_health()
+	start_cooldown()
+	
+func bettany_skill():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.burn(600)
+	start_cooldown()
+	
+func emerald_skill():
+	eme_skill_active = ! eme_skill_active
+	global.is_dragging = !global.is_dragging
+	
+func start_cooldown():
 	cooldown_filter.show()
 	cooldown_timer.start()
 	cooldown_bar.show()
@@ -31,8 +105,7 @@ func end_cooldown():
 	cooldown_filter.hide()
 	use_ability_btn.disabled = false
 	
-func _process(delta):
-	cooldown_bar.value = cooldown_timer.time_left
+	
 
 func _on_use_ability_btn_mouse_entered():
 	#if ability != null:
