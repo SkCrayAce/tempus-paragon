@@ -1,7 +1,7 @@
 extends Control
 
 @onready var mc_health_bar = $MainCharacter/HealthBar
-@onready var current_head = $NinePatchRect/TextureRect
+@onready var current_head = $MainCharacter/Character/TextureRect
 @onready var character = $MainCharacter/Character
 @onready var button = $Button
 @onready var party_container = $PartyContainer
@@ -17,6 +17,8 @@ const pc_end_pos  = Vector2(2, 2)
 const c_init_pos = Vector2(2, 2)
 const c_end_pos = Vector2(2, -50)
 var playermenu_isopen = false
+
+signal switched_character(character : String)
 
 func _ready():
 	setup_health()
@@ -36,9 +38,29 @@ func setup_health():
 	
 	#mc_health_bar.max_value = 
 
-func switch_player():
+func switch_player(character : String):
 	#TODO: check if player dead, switch sprite textures, switch health value
-	pass
+	
+	match character:
+		"kai":
+			mc_health_bar.max_value = global.kai_max_hp
+			mc_health_bar.value = global.kai_curr_hp
+			current_head.texture = load("res://tempus_assets/chibi heads/kai_chibi_head.png")
+			emit_signal("switched_character", "kai")
+		"emerald" :
+			mc_health_bar.max_value = global.emerald_max_hp
+			mc_health_bar.value = global.emerald_curr_hp
+			current_head.texture = load("res://tempus_assets/chibi heads/emerald_chibi_head.png")
+			emit_signal("switched_character", "emerald")
+		"tyrone" :
+			mc_health_bar.max_value = global.tyrone_max_hp
+			mc_health_bar.value = global.tyrone_curr_hp
+			current_head.texture = load("res://tempus_assets/chibi heads/tyrone_chibi_head.png")
+			emit_signal("switched_character", "tyrone")
+		"bettany" :
+			mc_health_bar.max_value = global.bettany_max_hp
+			mc_health_bar.value = global.bettany_curr_hp
+			emit_signal("switched_character", "bettany")
 
 
 func _on_button_mouse_entered():
@@ -66,3 +88,19 @@ func toggle_player_menu():
 		tween.tween_property(main_character, "position", c_end_pos, 1).set_trans(Tween.TRANS_EXPO)
 		tween.tween_property(party_container, "position", pc_end_pos, 1).set_trans(Tween.TRANS_EXPO)
 		playermenu_isopen = true
+
+
+func _on_kai_button_pressed():
+	switch_player("kai")
+
+
+func _on_emerald_button_pressed():
+	switch_player("emerald")
+
+
+func _on_tyrone_button_pressed():
+	switch_player("tyrone")
+
+
+func _on_bettany_button_pressed():
+	switch_player("bettany")

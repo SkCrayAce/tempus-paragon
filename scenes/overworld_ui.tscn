@@ -1,18 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxvi8ck80rriv"]
+[gd_scene load_steps=18 format=3 uid="uid://dxvi8ck80rriv"]
 
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="1_i2umm"]
 [ext_resource type="Script" path="res://scripts/overworld_ui.gd" id="1_l5k8l"]
+[ext_resource type="Texture2D" uid="uid://bp4nweo24u3vx" path="res://tempus_assets/chibi heads/kai_chibi_head.png" id="3_pl13g"]
+[ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_ycf64"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h227n"]
 atlas = ExtResource("1_i2umm")
 region = Rect2(0, 48, 32, 32)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4xv6n"]
-load_path = "res://.godot/imported/ui_assets.png-433b1873b2c84711ad45927338c5a1a4.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4r760"]
-atlas = SubResource("CompressedTexture2D_4xv6n")
-region = Rect2(128, 80, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6bnp0"]
 atlas = ExtResource("1_i2umm")
@@ -30,6 +25,19 @@ region = Rect2(0, 96, 32, 16)
 atlas = ExtResource("1_i2umm")
 region = Rect2(224, 0, 48, 48)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4xv6n"]
+load_path = "res://.godot/imported/ui_assets.png-433b1873b2c84711ad45927338c5a1a4.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r760"]
+atlas = SubResource("CompressedTexture2D_4xv6n")
+region = Rect2(128, 80, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pkyr5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ud2x1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3oj7i"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ysxu2"]
 atlas = ExtResource("1_i2umm")
 region = Rect2(96, 80, 32, 32)
@@ -43,6 +51,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 54.0
+offset_top = 4.0
+offset_right = 54.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(3, 3)
@@ -76,7 +88,7 @@ offset_top = -1.66667
 offset_bottom = -1.66667
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_4r760")
+texture = ExtResource("3_pl13g")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="MainCharacter"]
@@ -99,6 +111,7 @@ offset_top = 2.0
 offset_right = 39.0
 offset_bottom = 37.0
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dp5xf")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_hl0l3")
 
@@ -106,7 +119,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_hl0l3")
 layout_mode = 0
 offset_left = -100.0
 offset_top = 2.0
-offset_bottom = 142.0
+offset_bottom = 151.0
 texture = SubResource("AtlasTexture_a431t")
 region_rect = Rect2(0, 0, 48, 48)
 patch_margin_left = 16
@@ -115,6 +128,7 @@ patch_margin_right = 16
 patch_margin_bottom = 16
 
 [node name="kai" type="NinePatchRect" parent="PartyContainer"]
+layout_mode = 0
 offset_left = 4.66666
 offset_top = 4.0
 offset_right = 37.6667
@@ -145,6 +159,7 @@ texture = SubResource("AtlasTexture_4r760")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="PartyContainer/kai"]
+layout_mode = 0
 offset_left = 35.0
 offset_top = -2.0
 offset_right = 89.0
@@ -157,7 +172,31 @@ stretch_margin_right = 5
 texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
+[node name="kaiButton" type="Button" parent="PartyContainer/kai"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 32.0
+offset_bottom = 31.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pkyr5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
+
+[node name="Name" type="Label" parent="PartyContainer/kai"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 11.0
+offset_right = 54.0
+offset_bottom = 24.0
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("4_ycf64")
+theme_override_font_sizes/font_size = 1000
+text = "Kai"
+
 [node name="emerald" type="NinePatchRect" parent="PartyContainer"]
+layout_mode = 0
 offset_left = 4.66666
 offset_top = 37.3333
 offset_right = 37.6667
@@ -188,6 +227,7 @@ texture = SubResource("AtlasTexture_ysxu2")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="PartyContainer/emerald"]
+layout_mode = 0
 offset_left = 35.0
 offset_top = -2.0
 offset_right = 89.0
@@ -200,7 +240,29 @@ stretch_margin_right = 5
 texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
+[node name="emeraldButton" type="Button" parent="PartyContainer/emerald"]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 32.0
+offset_bottom = 31.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pkyr5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
+
+[node name="Name" type="Label" parent="PartyContainer/emerald"]
+offset_left = 36.0
+offset_top = 11.0
+offset_right = 54.0
+offset_bottom = 24.0
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("4_ycf64")
+theme_override_font_sizes/font_size = 1000
+text = "Emerald"
+
 [node name="tyrone" type="NinePatchRect" parent="PartyContainer"]
+layout_mode = 0
 offset_left = 4.66666
 offset_top = 69.6667
 offset_right = 37.6667
@@ -231,6 +293,7 @@ texture = SubResource("AtlasTexture_epkp3")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="PartyContainer/tyrone"]
+layout_mode = 0
 offset_left = 35.0
 offset_top = -2.0
 offset_right = 89.0
@@ -243,7 +306,29 @@ stretch_margin_right = 5
 texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
+[node name="tyroneButton" type="Button" parent="PartyContainer/tyrone"]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 32.0
+offset_bottom = 31.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pkyr5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
+
+[node name="Name" type="Label" parent="PartyContainer/tyrone"]
+offset_left = 36.0
+offset_top = 11.0
+offset_right = 54.0
+offset_bottom = 24.0
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("4_ycf64")
+theme_override_font_sizes/font_size = 1000
+text = "Tyrone"
+
 [node name="bettany" type="NinePatchRect" parent="PartyContainer"]
+layout_mode = 0
 offset_left = 5.0
 offset_top = 102.667
 offset_right = 38.0
@@ -274,6 +359,7 @@ texture = SubResource("AtlasTexture_4r760")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="PartyContainer/bettany"]
+layout_mode = 0
 offset_left = 35.0
 offset_top = -2.0
 offset_right = 89.0
@@ -286,6 +372,43 @@ stretch_margin_right = 5
 texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
+[node name="bettanyButton" type="Button" parent="PartyContainer/bettany"]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 32.0
+offset_bottom = 31.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pkyr5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
+
+[node name="Name" type="Label" parent="PartyContainer/bettany"]
+offset_left = 36.0
+offset_top = 11.0
+offset_right = 54.0
+offset_bottom = 24.0
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("4_ycf64")
+theme_override_font_sizes/font_size = 1000
+text = "Bettany"
+
+[node name="Name" type="Label" parent="PartyContainer"]
+offset_left = 8.66667
+offset_top = 136.667
+offset_right = 8424.67
+offset_bottom = 928.667
+scale = Vector2(0.01, 0.01)
+theme_override_fonts/font = ExtResource("4_ycf64")
+theme_override_font_sizes/font_size = 700
+text = "[Click character icon to switch]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="MainCharacter/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="MainCharacter/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="MainCharacter/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PartyContainer/kai/kaiButton" to="." method="_on_kai_button_pressed"]
+[connection signal="pressed" from="PartyContainer/emerald/emeraldButton" to="." method="_on_emerald_button_pressed"]
+[connection signal="pressed" from="PartyContainer/tyrone/tyroneButton" to="." method="_on_tyrone_button_pressed"]
+[connection signal="pressed" from="PartyContainer/bettany/bettanyButton" to="." method="_on_bettany_button_pressed"]

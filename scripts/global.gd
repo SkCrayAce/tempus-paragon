@@ -4,6 +4,7 @@ const snap_position : Vector2 = Vector2(16, 16)
 const EnemyBody = preload("res://scripts/enemy.gd") 
 
 var player_input_enabled = true
+var current_overworld_character : String = "kai"
 
 #health data
 var hp_initialized : bool = false

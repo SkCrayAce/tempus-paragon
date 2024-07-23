@@ -15,8 +15,14 @@ const accel = 2000
 @onready var end_point = $InventoryUI/End_point
 @onready var overworld_ui = $PlayerUI/Overworld_UI
 @onready var current_tile_map = get_parent().get_node("TileMap") as TileMap
+@onready var poof = $Poof
 
 @onready var control = $Control
+
+@onready var kai_sf = preload("res://scenes/characters/spriteframes/kai_sprite_frames.tres")
+@onready var emerald_sf = preload("res://scenes/characters/spriteframes/emerald_sprite_frames.tres")
+@onready var tyrone_sf = preload("res://scenes/characters/spriteframes/tyrone_sprite_frames.tres")
+@onready var bettany_sf
 
 var inventory_isopen = false
 var input = Vector2.ZERO
@@ -24,6 +30,9 @@ var current_dir = "none"
 
 func _ready():
 	anim.play("front_idle")
+	
+	overworld_ui.switched_character.connect(_on_switch_character_signal_recieved)
+	set_character(global.current_overworld_character)
 	
 	#Set Camera Bound to Tilemap Size
 	var tilemap_rect = current_tile_map.get_used_rect()
@@ -133,4 +142,28 @@ func inventory_ui_anim():
 		inventory_isopen = false
 		await tween.finished
 		inventory_ui.visible = false
-		
+
+func set_character(character: String):
+	overworld_ui.switch_player(character)
+
+func _on_switch_character_signal_recieved(character : String):
+	print("signal recieved ", character)
+
+	print("poof! ", poof.visible)
+	poof.play("poof")
+	
+	match character:
+		"kai":
+			anim.sprite_frames = kai_sf
+			global.current_overworld_character = "kai"
+		"emerald":
+			anim.sprite_frames = emerald_sf
+			global.current_overworld_character = "emerald"
+		"tyrone":
+			anim.sprite_frames = tyrone_sf
+			global.current_overworld_character = "tyrone"
+		"bettany":
+			anim.sprite_frames = bettany_sf
+			global.current_overworld_character = "bettany"
+	
+	await poof.animation_finished
