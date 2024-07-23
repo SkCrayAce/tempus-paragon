@@ -81,6 +81,7 @@ func _ready():
 		"kai" : attack_frame = 4
 		"emerald" : attack_frame = 5
 		"tyrone" : attack_frame = 10
+		"bettany" : attack_frame = 4
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

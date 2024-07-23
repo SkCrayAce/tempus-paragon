@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://ygregg6wuaqa"]
+[gd_scene load_steps=10 format=3 uid="uid://ygregg6wuaqa"]
 
 [ext_resource type="Script" path="res://scripts/slums3.gd" id="1_41wgy"]
-[ext_resource type="PackedScene" uid="uid://dxvi8ck80rriv" path="res://scenes/overworld_ui.tscn" id="1_hb4mb"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_rlgrv"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="4_g78kc"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_8r5dt"]
@@ -32,16 +31,6 @@ y_sort_enabled = true
 script = ExtResource("1_41wgy")
 top_leftmost_spawn_coords = Vector2i(13, 10)
 bottom_rightmost_spawn_coords = Vector2i(29, 14)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Overworld_UI" parent="CanvasLayer" instance=ExtResource("1_hb4mb")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)

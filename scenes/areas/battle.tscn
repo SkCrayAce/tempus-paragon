@@ -1078,7 +1078,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_awrfq")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -1611,7 +1611,6 @@ attack_damage = 3000
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_tb7un")
 sprite_frames = SubResource("SpriteFrames_y0dk6")
-animation = &"attack"
 
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
