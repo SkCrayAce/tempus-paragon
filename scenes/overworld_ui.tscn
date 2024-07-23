@@ -66,8 +66,10 @@ script = ExtResource("1_l5k8l")
 
 [node name="MainCharacter" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 42.0
+offset_bottom = 42.0
 
 [node name="Character" type="NinePatchRect" parent="MainCharacter"]
 layout_mode = 2
