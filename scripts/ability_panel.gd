@@ -79,7 +79,7 @@ func switch_ability():
 		#enemy.blown_back()
 	
 func tyrone_skill():
-	for character in get_node("DraggableIcons").get_children():
+	for character in get_tree().get_nodes_in_group("characters"):
 		character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()
 	start_cooldown()
