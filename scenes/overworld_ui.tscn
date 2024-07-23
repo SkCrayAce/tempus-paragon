@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dxvi8ck80rriv"]
+[gd_scene load_steps=19 format=3 uid="uid://dxvi8ck80rriv"]
 
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="1_i2umm"]
 [ext_resource type="Script" path="res://scripts/overworld_ui.gd" id="1_l5k8l"]
@@ -45,6 +45,10 @@ region = Rect2(96, 80, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_epkp3"]
 atlas = ExtResource("1_i2umm")
 region = Rect2(64, 80, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxisn"]
+atlas = ExtResource("1_i2umm")
+region = Rect2(32, 80, 32, 32)
 
 [node name="Overworld_UI" type="Control"]
 layout_mode = 3
@@ -355,7 +359,7 @@ offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.8, 0.8)
-texture = SubResource("AtlasTexture_4r760")
+texture = SubResource("AtlasTexture_jxisn")
 metadata/_edit_lock_ = true
 
 [node name="HealthBar" type="TextureProgressBar" parent="PartyContainer/bettany"]

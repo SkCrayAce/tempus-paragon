@@ -60,6 +60,7 @@ func switch_player(character : String):
 		"bettany" :
 			mc_health_bar.max_value = global.bettany_max_hp
 			mc_health_bar.value = global.bettany_curr_hp
+			current_head.texture = load("res://tempus_assets/chibi heads/bettany_chibi_head.png")
 			emit_signal("switched_character", "bettany")
 
 

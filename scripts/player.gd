@@ -22,7 +22,7 @@ const accel = 2000
 @onready var kai_sf = preload("res://scenes/characters/spriteframes/kai_sprite_frames.tres")
 @onready var emerald_sf = preload("res://scenes/characters/spriteframes/emerald_sprite_frames.tres")
 @onready var tyrone_sf = preload("res://scenes/characters/spriteframes/tyrone_sprite_frames.tres")
-@onready var bettany_sf
+@onready var bettany_sf = preload("res://scenes/characters/spriteframes/bettany_sprite_frames.tres")
 
 var inventory_isopen = false
 var input = Vector2.ZERO
