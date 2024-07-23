@@ -147,7 +147,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			var attack_position 
 			
 			if name == "kai" or name == "tyrone": attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
-			else: attack_position = tile_map.map_to_local(hovered_tile + 2*Vector2i(-1, 0))
+			else: attack_position = tile_map.map_to_local(hovered_tile + 3*Vector2i(-1, 0))
 			
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
@@ -169,7 +169,7 @@ func play_sfx():
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
 		return
-	attack_sfx.play()
+		
 	start_cooldown()
 	
 	for offset in offset_list:

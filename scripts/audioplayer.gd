@@ -32,5 +32,6 @@ func play_music_level():
 		#_play_music(underground_music)
 
 func _process(delta):
-	if playing == false:
+	if playing == false or get_tree().paused:
 		playing = true
+		

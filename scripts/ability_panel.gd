@@ -133,6 +133,7 @@ func slide_in(pop_up : ColorRect):
 	pop_up.show()
 	tween.tween_property(pop_up, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
+	get_tree().paused = true
 	get_tree().create_timer(1).timeout.connect(slide_out.bind(pop_up))
 	
 func slide_out(pop_up : ColorRect):
@@ -140,7 +141,7 @@ func slide_out(pop_up : ColorRect):
 		pop_up.hide()
 		pop_up.position.x = -SlideDistance
 		return
-		
+	get_tree().paused = false
 	tween = create_tween()
 	tween.tween_property(pop_up, "position:x", 490, 0.5).set_trans(Tween.TRANS_EXPO)
 	tween.finished.connect(reset_popup.bind(pop_up))
