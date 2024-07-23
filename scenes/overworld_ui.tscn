@@ -245,6 +245,7 @@ texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
 [node name="emeraldButton" type="Button" parent="PartyContainer/emerald"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 1.0
 offset_right = 32.0
@@ -256,6 +257,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
 
 [node name="Name" type="Label" parent="PartyContainer/emerald"]
+layout_mode = 0
 offset_left = 36.0
 offset_top = 11.0
 offset_right = 54.0
@@ -311,6 +313,7 @@ texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
 [node name="tyroneButton" type="Button" parent="PartyContainer/tyrone"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 1.0
 offset_right = 32.0
@@ -322,6 +325,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
 
 [node name="Name" type="Label" parent="PartyContainer/tyrone"]
+layout_mode = 0
 offset_left = 36.0
 offset_top = 11.0
 offset_right = 54.0
@@ -377,6 +381,7 @@ texture_under = SubResource("AtlasTexture_6bnp0")
 texture_progress = SubResource("AtlasTexture_21ugs")
 
 [node name="bettanyButton" type="Button" parent="PartyContainer/bettany"]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 1.0
 offset_right = 32.0
@@ -388,6 +393,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ud2x1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3oj7i")
 
 [node name="Name" type="Label" parent="PartyContainer/bettany"]
+layout_mode = 0
 offset_left = 36.0
 offset_top = 11.0
 offset_right = 54.0
@@ -398,6 +404,7 @@ theme_override_font_sizes/font_size = 1000
 text = "Bettany"
 
 [node name="Name" type="Label" parent="PartyContainer"]
+layout_mode = 0
 offset_left = 8.66667
 offset_top = 136.667
 offset_right = 8424.67

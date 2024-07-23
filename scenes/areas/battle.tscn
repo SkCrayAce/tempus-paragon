@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=76 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="10_tfk3o"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
+[ext_resource type="SpriteFrames" uid="uid://b1ghy03xfy1s0" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
 [ext_resource type="Texture2D" uid="uid://yrpk7q8fovny" path="res://tempus_assets/tyrone-chibi-spritesheet.png" id="18_s6lim"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
@@ -878,6 +879,7 @@ attack_damage = 3000
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")
+sprite_frames = ExtResource("18_fu5ue")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
