@@ -235,6 +235,7 @@ func start_wave():
 	count = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
+	global.enemy_dict.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
 	while count < num_of_groups:
 		place_formation()
@@ -270,18 +271,22 @@ func place_formation():
 		elif not (current_offset_list == bettany_offset_list or current_offset_list == v_rect_offset_list):
 			x_valid = spawn_position.x in range(top_left_tile.x + 3, bottom_right_tile.x - 8) 
 			
-		y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y) 
+		y_valid = spawn_position.y in range(top_left_tile.y, bottom_right_tile.y+1) 
 			
-		if spawn_position in global.enemy_dict or not x_valid or not y_valid:
-			spawn_positions.clear()
-			prints("invalid position")
-			return
-		else:
+		if not spawn_position in global.enemy_dict and x_valid and y_valid:
 			spawn_positions.append(spawn_position)
+		else:
+			spawn_positions.clear()
+			#prints("spawn_position in global.enemy_dict", spawn_position in global.enemy_dict)
+			#prints("x valid", x_valid)
+			#prints("y valid", y_valid)
+			#prints("invalid position")
+			return
 		
 	for position in spawn_positions:
 		spawn_enemy(position)
-		record_enemies()	
+		
+	record_enemies()	
 
 	count += 1
 	spawn_positions.clear()
@@ -350,10 +355,11 @@ func battle_victory(victory : bool):
 
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
+	rng.seed
 	while true:
 		rng.randomize()
-		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x) 
-		var random_y = rng.randi_range(top_left_tile.y, bottom_right_tile.y) 
+		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x + 1) 
+		var random_y = rng.randi_range(top_left_tile.y, bottom_right_tile.y + 1) 
 		var random_vector = Vector2i(random_x, random_y)
 		
 		if not used_vectors.has(random_vector):
@@ -400,7 +406,7 @@ func _on_boss_killed():
 	battle_victory(true)
 
 func within_bounds(coordinate : Vector2) -> bool:
-	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x 
+	var x_valid = coordinate.x >= min_hover_x and coordinate.x <= max_hover_x + 1
 	var y_valid = coordinate.y >= min_hover_y and coordinate.y <= max_hover_y
 	
 	if x_valid and y_valid:
