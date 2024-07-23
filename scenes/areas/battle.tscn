@@ -330,6 +330,7 @@ text = "Focused Chaos"
 text = "Deal burning damage to every enemy."
 
 [node name="SkillPopups" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchor_left = 0.012
 anchor_right = 1.0
@@ -554,8 +555,9 @@ attack_damage = 3000
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")
 sprite_frames = ExtResource("16_th862")
-animation = &"walk_back"
-frame_progress = 0.697019
+animation = &"attack"
+frame = 20
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
