@@ -6,6 +6,10 @@ const Enemy = preload("res://scripts/enemy.gd")
 var eme_skill_active : bool
 var hovered_tile : Vector2i
 var eme_skill_AoE : Array[Vector2i]
+var tween
+var init_popup_x_pos : int
+
+const SlideDistance = 427
 
 @onready var use_ability_btn = $UseAbilityBtn
 @onready var ability_icon = $"AbilityIcon"
@@ -18,6 +22,9 @@ var eme_skill_AoE : Array[Vector2i]
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
 
+@onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
+@onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
+
 #Ability
 var ability = null
 
@@ -25,13 +32,17 @@ var ability = null
 func _ready():
 	use_ability_btn.pressed.connect(switch_ability)
 	cooldown_bar.max_value = cooldown_timer.wait_time
-	prints(Vector2i.UP*2)
 	
 	#initializing emerald's skill aoe
 	for x in range(-1, 2):
 		for y in range(-1, 2):
 			eme_skill_AoE.append(Vector2i(x, y))
 	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
+	
+	kai_skill_pop_up.position.x = -SlideDistance
+	tyrone_skill_pop_up.position.x = -SlideDistance
+	
+	
 	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
@@ -59,12 +70,15 @@ func _process(delta):
 			
 func switch_ability():
 	match name:
-		#"KaiAbility": kai_skill()
+		"KaiAbility": kai_skill()
 		"EmeraldAbility": emerald_skill()
 		"TyroneAbility": tyrone_skill()
 		"BettanyAbility": bettany_skill()
 
-#func kai_skill():
+func kai_skill():
+	slide_in.call(kai_skill_pop_up)
+	await get_tree().create_timer(2).timeout
+	prints("kai skill activate")
 	#var update_positions = func():
 		#for enemy in get_tree().get_nodes_in_group("enemies"):
 			#enemy.stop_animation()
@@ -79,8 +93,12 @@ func switch_ability():
 		#enemy.blown_back()
 	
 func tyrone_skill():
+	slide_in.call(tyrone_skill_pop_up)
+	await get_tree().create_timer(1).timeout
+	
 	for character in get_tree().get_nodes_in_group("characters"):
-		character.health_bar.value += character.health_bar.max_value * 0.70
+		if not character.is_defeated:
+			character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()
 	start_cooldown()
 	
@@ -88,7 +106,7 @@ func bettany_skill():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(600)
 	start_cooldown()
-	
+
 func emerald_skill():
 	eme_skill_active = ! eme_skill_active
 	global.is_dragging = !global.is_dragging
@@ -105,6 +123,24 @@ func end_cooldown():
 	cooldown_filter.hide()
 	use_ability_btn.disabled = false
 	
+func slide_in(pop_up : ColorRect):
+	pop_up.position.x = -SlideDistance
+	tween = create_tween()
+	pop_up.show()
+	tween.tween_property(pop_up, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	get_tree().create_timer(1).timeout.connect(slide_out.bind(pop_up))
+	
+func slide_out(pop_up : ColorRect):
+	var reset_popup = func(pop_up : ColorRect):
+		pop_up.hide()
+		pop_up.position.x = -SlideDistance
+		return
+		
+	tween = create_tween()
+	tween.tween_property(pop_up, "position:x", 490, 0.5).set_trans(Tween.TRANS_EXPO)
+	tween.finished.connect(reset_popup.bind(pop_up))
+	#get_tree().paused = false
 	
 
 func _on_use_ability_btn_mouse_entered():
