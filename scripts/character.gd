@@ -22,6 +22,7 @@ const bottom_right_tile = Vector2i(23, 10)
 @export var max_health : int = 3000
 @export var attack_damage : int
 @export var attack_frame : int = 4
+@export var sound_frame : int 
 
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
 const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
@@ -77,6 +78,7 @@ func _ready():
 	
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
+	anim_sprite.frame_changed.connect(play_sfx)
 	anim_sprite.play("idle")
 	
 	match name :
@@ -157,15 +159,13 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
-	match name:
-		"kai": attack_sfx.stream = KaiAtkSfx
-		"emerald" : attack_sfx.stream = EmeraldAtkSfx
-		"tyrone" : attack_sfx.stream = TyroneAtkSfx
-		"bettany" : attack_sfx.stream = BettanyAtkSfx
-	
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
 			
+func play_sfx():
+	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
+		attack_sfx.play()
+	
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
 		return

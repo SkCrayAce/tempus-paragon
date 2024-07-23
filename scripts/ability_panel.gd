@@ -25,6 +25,11 @@ const SlideDistance = 427
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
 
+@onready var kai = get_node("../../../../DraggableIcons/kai") as Node2D
+@onready var emerald = get_node("../../../../DraggableIcons/emerald") as Node2D
+@onready var tyrone = get_node("../../../../DraggableIcons/tyrone") as Node2D
+@onready var bettany = get_node("../../../../DraggableIcons/bettany") as Node2D
+
 #Ability
 var ability = null
 
@@ -66,8 +71,7 @@ func _process(delta):
 					start_cooldown()
 					
 			hover_active = false	
-		
-			
+					
 func switch_ability():
 	match name:
 		"KaiAbility": kai_skill()
