@@ -21,8 +21,8 @@ const bottom_right_tile = Vector2i(23, 10)
 
 @export var max_health : int = 3000
 @export var attack_damage : int
-@export var attack_frame : int = 4
-@export var sound_frame : int 
+var attack_frame : int 
+var sound_frame : int 
 
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
 const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
@@ -82,10 +82,25 @@ func _ready():
 	anim_sprite.play("idle")
 	
 	match name :
-		"kai" : attack_frame = 4
-		"emerald" : attack_frame = 5
-		"tyrone" : attack_frame = 10
-		"bettany" : attack_frame = 15
+		"kai" : 
+			attack_sfx.stream = KaiAtkSfx
+			attack_frame = 5
+			sound_frame = 4
+		"emerald" : 
+			attack_sfx.stream = EmeraldAtkSfx
+			attack_frame = 5
+			sound_frame = 5
+		"tyrone" : 
+			attack_sfx.stream = TyroneAtkSfx
+			attack_frame = 10
+			sound_frame = 8
+		"bettany" : 
+			attack_sfx.stream = BettanyAtkSfx
+			attack_frame = 15
+			sound_frame = 13
+		
+
+		
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

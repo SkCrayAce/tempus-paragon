@@ -12,6 +12,8 @@ var waves_cleared : int
 var team_health : int
 var eme_skill_active : bool
 var eme_skill_AoE : Array[Vector2i]
+var attempts : int
+var force_start : bool
 
 
 const grid_length : int = 120
@@ -233,11 +235,12 @@ func start_wave():
 		
 	prints("new wave")
 	count = 0
+	#attempts = 0
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
 	global.enemy_dict.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
-	while count < num_of_groups:
+	while count < num_of_groups and not force_start:
 		place_formation()
 		
 		
@@ -250,6 +253,7 @@ func place_formation():
 	var spawn_position
 	var spawn_positions : Array[Vector2i]
 	var base_position = generate_random_vector()
+	var attempts : int
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var random_pattern = rng.randi_range(0, 4)	
@@ -262,6 +266,7 @@ func place_formation():
 		#4 : current_offset_list = sqaure_offset_list
 		#5 : current_offset_list = h_rect_offset_list
 		#6 : current_offset_list = v_rect_offset_list
+		
 	
 	for offset in current_offset_list:
 		spawn_position = base_position + offset as Vector2i
@@ -275,13 +280,15 @@ func place_formation():
 			
 		if not spawn_position in global.enemy_dict and x_valid and y_valid:
 			spawn_positions.append(spawn_position)
+			#attempts = 0
 		else:
 			spawn_positions.clear()
-			#prints("spawn_position in global.enemy_dict", spawn_position in global.enemy_dict)
-			#prints("x valid", x_valid)
-			#prints("y valid", y_valid)
-			#prints("invalid position")
+			attempts += 1
+			prints(attempts, "attempts")
+			if attempts == 10:
+				force_start = true
 			return
+			break
 		
 	for position in spawn_positions:
 		spawn_enemy(position)
@@ -289,6 +296,7 @@ func place_formation():
 	record_enemies()	
 
 	count += 1
+	prints(count, "patterns formed")
 	spawn_positions.clear()
 			
 func spawn_enemy(spawn_position : Vector2i):	
