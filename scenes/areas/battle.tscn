@@ -488,12 +488,13 @@ _data = {
 [node name="Battle" type="Node"]
 script = ExtResource("1_30h06")
 min_num_of_groups = 4
-num_of_waves = 7
+num_of_waves = 3
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="BattleStartPopup" type="TextureRect" parent="CanvasLayer"]
+visible = false
 top_level = true
 z_index = 2
 anchors_preset = -1
@@ -730,7 +731,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_mvbrj")
 
-[node name="Label" type="Label" parent="CanvasLayer/NewWavePopup"]
+[node name="NewWaveLabel" type="Label" parent="CanvasLayer/NewWavePopup"]
 layout_mode = 2
 offset_left = 31.0
 offset_top = 19.0
@@ -743,7 +744,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 100
 theme_override_fonts/font = ExtResource("3_755tb")
 theme_override_font_sizes/font_size = 400
-text = "NEW WAVE!"
+text = "WAVE"
 horizontal_alignment = 1
 vertical_alignment = 1
 

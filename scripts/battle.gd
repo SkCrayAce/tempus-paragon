@@ -39,7 +39,9 @@ const max_hover_y : int = bottom_right_tile.y
 @onready var push_timer = $PushTimer as Timer
 @onready var slums_tile_map = $SlumsTileMap as TileMap
 @onready var boss_defeated_anim = $BossDefeatedAnim
-@onready var battle_start_popup = $CanvasLayer/BattleStartPopup
+@onready var battle_start_popup = $CanvasLayer/BattleStartPopup as TextureRect
+@onready var new_wave_popup = $CanvasLayer/NewWavePopup as TextureRect
+@onready var new_wave_label = $CanvasLayer/NewWavePopup/NewWaveLabel as Label
 @onready var abilities_container = $CanvasLayer/AbilitiesContainer
 
 @onready var kai_drag_icon = $DraggableIcons/kai/DragIcon
@@ -88,7 +90,9 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
+	
 	battle_start_popup.process_mode = Node.PROCESS_MODE_ALWAYS
+	new_wave_popup.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	for x in grid_length:
 		for y in grid_height:
@@ -153,7 +157,7 @@ func show_start_screen():
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	battle_start_popup.position.y -= 400
 	battle_start_popup.show()
-	tween.tween_property(battle_start_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(battle_start_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_SPRING)
 	await tween.finished
 	get_tree().create_timer(2).timeout.connect(hide_start_screen.bind(init_y, final_y))
 	set_up_character_health()
@@ -183,7 +187,6 @@ func ui_start_animation():
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 
 func set_up_character_health():
-	
 	if global.kai_curr_hp <= 0:
 		kai.character_defeated()
 		kai.anim_sprite.visible = false
@@ -356,14 +359,42 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
 		if not global.slums_boss_battle:
-			start_wave.call_deferred()
-		if global.boss_spawning:
+			if waves_cleared < num_of_waves:
+				show_new_wave_pop_up()
+			else:
+				battle_victory(true)
+		elif global.boss_spawning:
 			wave_finished.emit()
-		if not global.boss_spawning:
+		elif not global.boss_spawning:
 			start_wave.call_deferred()
 
 func show_new_wave_pop_up():
-	pass
+	var hide_pop_up = func(init_y : int, final_y : int):
+		tween = create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		
+		tween.tween_property(new_wave_popup, "position:y", final_y, 0.5).set_trans(Tween.TRANS_EXPO)
+		await tween.finished
+		new_wave_popup.hide()
+		new_wave_popup.position.y = init_y
+		get_tree().paused = false
+		start_wave.call_deferred()
+		
+	var init_y = new_wave_popup.position.y
+	var final_y = init_y + 400
+	
+	tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	get_tree().paused = true
+	new_wave_popup.position.y -= 400
+	if waves_cleared == num_of_waves - 1:
+		new_wave_label.text = "FINAL WAVE"
+	else:
+		new_wave_label.text = "WAVE " + str(waves_cleared + 1)
+	new_wave_popup.show()
+	tween.tween_property(new_wave_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_SPRING)
+	await tween.finished
+	get_tree().create_timer(2).timeout.connect(hide_pop_up.bind(init_y, final_y))
 	
 func battle_victory(victory : bool):
 	var tween = create_tween()
