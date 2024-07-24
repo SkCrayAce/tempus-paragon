@@ -24,10 +24,17 @@ const bottom_right_tile = Vector2i(23, 10)
 var attack_frame : int 
 var sound_frame : int 
 
+# Attack SFX
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
 const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
 const KaiAtkSfx = preload("res://audio/sfx/basicATK_kai_v02.mp3")
 const TyroneAtkSfx = preload("res://audio/sfx/basicATK_tyrone_v01.mp3")
+
+# Take Damage SFX
+const BETTANY_HURT_SFX = preload("res://audio/03 - Hurt Sound/Bettany/bettany-hurt.mp3")
+const EMERALD_HURT_SFX = preload("res://audio/03 - Hurt Sound/Emerald/emerald-hurt.mp3")
+const KAI_HURT_SFX = preload("res://audio/03 - Hurt Sound/Kai/kai-hurt.mp3")
+const TYRONE_HURT_SFX = preload("res://audio/03 - Hurt Sound/Tyrone/tyrone-hurt_v02.mp3")
 
 var min_hover_x : int = top_left_tile.x
 var max_hover_x : int = bottom_right_tile.x
@@ -52,7 +59,8 @@ const BossScript = preload("res://scripts/slums_boss AI/slumsboss.gd")
 @onready var battle_sprite = $BattleSprite as Node2D
 @onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
 @onready var hit_effect = $BattleSprite/HitEffect
-@onready var attack_sfx = $AttackSFX as AudioStreamPlayer2D
+@onready var attack_sfx_player = $AttackSFXPlayer as AudioStreamPlayer2D
+@onready var hurt_sfx_player = $HurtSFXPlayer as AudioStreamPlayer2D
 
 var char_sprite : Node2D
 
@@ -78,29 +86,31 @@ func _ready():
 	
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
-	anim_sprite.frame_changed.connect(play_sfx)
+	anim_sprite.frame_changed.connect(play_attack_sfx)
 	anim_sprite.play("idle")
 	
 	match name :
 		"kai" : 
-			attack_sfx.stream = KaiAtkSfx
+			attack_sfx_player.stream = KaiAtkSfx
 			attack_frame = 5
 			sound_frame = 4
 		"emerald" : 
-			attack_sfx.stream = EmeraldAtkSfx
+			attack_sfx_player.stream = EmeraldAtkSfx
 			attack_frame = 5
 			sound_frame = 5
 		"tyrone" : 
-			attack_sfx.stream = TyroneAtkSfx
+			attack_sfx_player.stream = TyroneAtkSfx
 			attack_frame = 10
 			sound_frame = 8
 		"bettany" : 
-			attack_sfx.stream = BettanyAtkSfx
+			attack_sfx_player.stream = BettanyAtkSfx
 			attack_frame = 15
-			sound_frame = 13
-		
+			sound_frame = 8
+	
+	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	hurt_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 
-		
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -167,9 +177,9 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
 			animation_timer.set_paused(true)
-			is_attacking = !is_attacking
+			is_attacking = true
 			anim_sprite.play("walk")
-			tween.tween_property(char_sprite, "global_position", attack_position, 0.5).set_ease(Tween.EASE_OUT)
+			tween.tween_property(char_sprite, "global_position", attack_position, 0.25).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
 			
 	
@@ -177,9 +187,9 @@ func attack_animation():
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
 			
-func play_sfx():
+func play_attack_sfx():
 	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
-		attack_sfx.play()
+		attack_sfx_player.play()
 	
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
@@ -202,12 +212,12 @@ func return_to_position():
 		anim_sprite.play("idle")
 		enemy_move_timer.set_paused(false)
 		animation_timer.set_paused(false)
-		is_attacking = !is_attacking
+		is_attacking = false
 		
 	tween = create_tween()
 	#anim_sprite.flip_h = true
 	anim_sprite.play("walk_back")
-	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5).set_ease(Tween.EASE_OUT)
+	tween.tween_property(char_sprite, "global_position", initial_pos, 0.25).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(back_to_idle)
 	
 func start_cooldown():
@@ -227,7 +237,16 @@ func end_cooldown():
 	#draggable = false
 
 func take_damage(damage : int):
-	
+	var play_hurt_sfx = func(stream):
+		hurt_sfx_player.stream = stream
+		hurt_sfx_player.play()
+		
+	match name:
+		"kai" : play_hurt_sfx.call(KAI_HURT_SFX)
+		"emerald" : play_hurt_sfx.call(EMERALD_HURT_SFX)
+		"tyrone" : play_hurt_sfx.call(TYRONE_HURT_SFX)
+		"bettany" : play_hurt_sfx.call(BETTANY_HURT_SFX)
+		
 	health_bar.value -= damage
 	hit_effect.play("hit_flash")
 	battle_node.update_team_health()

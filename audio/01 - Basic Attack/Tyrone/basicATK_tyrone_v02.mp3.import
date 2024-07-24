@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://o0boyl3mhhqw"
+path="res://.godot/imported/basicATK_tyrone_v02.mp3-98b08fe749d8a5803bc926b2cfe8c230.mp3str"
+
+[deps]
+
+source_file="res://audio/01 - Basic Attack/Tyrone/basicATK_tyrone_v02.mp3"
+dest_files=["res://.godot/imported/basicATK_tyrone_v02.mp3-98b08fe749d8a5803bc926b2cfe8c230.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

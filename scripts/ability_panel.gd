@@ -10,7 +10,7 @@ var tween
 var init_popup_x_pos : int
 var disabled : bool
 
-const SlideDistance = 490
+const SlideDistance = 700
 
 @onready var use_ability_btn = $UseAbilityBtn
 @onready var ability_icon = $"AbilityIcon"
@@ -22,6 +22,8 @@ const SlideDistance = 490
 @onready var cooldown_filter = $AbilityIcon/CooldownFilter
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
+@onready var skill_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
+
 
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
@@ -33,6 +35,12 @@ const SlideDistance = 490
 @onready var tyrone = get_node("../../../../DraggableIcons/tyrone") as Node2D
 @onready var bettany = get_node("../../../../DraggableIcons/bettany") as Node2D
 
+@onready var bettany_anim_sprite = get_node("../../../../DraggableIcons/bettany/BattleSprite/AnimatedSprite2D") as AnimatedSprite2D
+
+const BETTANY_SKILL_SFX = preload("res://audio/02 - Skill Attacks/Bettany/bettany-skill.mp3")
+const EMERALD_SKILL_SFX= preload("res://audio/02 - Skill Attacks/Emerald/emerald-skill.mp3")
+const KAI_SKILL_SFX = preload("res://audio/02 - Skill Attacks/Kai/kai-skill_v02.mp3")
+const TYRONE_SKILL_SFX = preload("res://audio/02 - Skill Attacks/Tyrone/tyrone-skill.mp3")
 #Ability
 var ability = null
 
@@ -48,13 +56,16 @@ func _ready():
 	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
 	
 	kai_skill_pop_up.position.x = -SlideDistance
+	emerald_skill_pop_up.position.x = -SlideDistance
 	tyrone_skill_pop_up.position.x = -SlideDistance
+	bettany_skill_pop_up.position.x = -SlideDistance
 	
-	
+	skill_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 	
+	# Emerald Skill
 	if eme_skill_active:
 		hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position()) as Vector2i
 		var hover_active : bool
@@ -66,10 +77,10 @@ func _process(delta):
 				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
 				hover_active = true
 				if Input.is_action_just_pressed("left_click"):
-					prints("hovered tile: ", hovered_tile)
-					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
-						detected_enemy.hit(3000)
 					eme_skill_active = false
+					play_sfx(EMERALD_SKILL_SFX)
+					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
+						detected_enemy.hit_by_eme_skill(3000)
 					global.is_dragging = false
 					start_cooldown()
 					
@@ -82,9 +93,16 @@ func switch_ability():
 		"TyroneAbility": tyrone_skill()
 		"BettanyAbility": bettany_skill()
 
+func play_sfx(sfx_stream : AudioStream):
+	skill_sfx_player.stream = sfx_stream
+	skill_sfx_player.play()
+	await skill_sfx_player.finished
+	return
+		
 func kai_skill():
 	slide_in.call(kai_skill_pop_up)
 	await get_tree().create_timer(2).timeout
+	play_sfx(KAI_SKILL_SFX)
 	prints("kai skill activate")
 	#var update_positions = func():
 		#for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -101,20 +119,29 @@ func kai_skill():
 	
 func tyrone_skill():
 	slide_in.call(tyrone_skill_pop_up)
-	await get_tree().create_timer(3).timeout
-	
+	await get_tree().create_timer(2).timeout
+	play_sfx(TYRONE_SKILL_SFX)
+	tween = create_tween().set_parallel()
 	for character in get_tree().get_nodes_in_group("characters"):
 		if not character.is_defeated:
-			character.health_bar.value += character.health_bar.max_value * 0.70
+			var new_health = character.health_bar.value + character.health_bar.max_value * 0.70
+			tween.tween_property(character.health_bar, "value", new_health, 1)
+			#character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()
 	start_cooldown()
 	
 func bettany_skill():
+	slide_in(bettany_skill_pop_up)
+	await get_tree().create_timer(2).timeout
+	play_sfx(BETTANY_SKILL_SFX)
+	bettany_anim_sprite.play("special_attack")
+	await bettany_anim_sprite.animation_finished
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(600)
-	start_cooldown()
+	#start_cooldown()
 
 func emerald_skill():
+	slide_in(emerald_skill_pop_up)
 	eme_skill_active = ! eme_skill_active
 	global.is_dragging = !global.is_dragging
 	

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bwsfu6p2is42o"
+path="res://.godot/imported/kai-skill_v01.mp3-c9853e8b29aff007efff05f40eb07c5d.mp3str"
+
+[deps]
+
+source_file="res://audio/02 - Skill Attacks/Kai/kai-skill_v01.mp3"
+dest_files=["res://.godot/imported/kai-skill_v01.mp3-c9853e8b29aff007efff05f40eb07c5d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

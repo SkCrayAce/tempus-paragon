@@ -355,7 +355,7 @@ _data = {
 [node name="RangedVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_4ip0e")
 health = 3000
-attack_damage = 300
+attack_damage = 100
 attack_range = 8
 animated_sprite = NodePath("RangedAnimatedSprite")
 attack_frame = 5
@@ -415,3 +415,5 @@ libraries = {
 
 [node name="DamageNumberOrigin" type="Marker2D" parent="."]
 position = Vector2(0, -18)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

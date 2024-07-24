@@ -14,6 +14,7 @@ var eme_skill_active : bool
 var eme_skill_AoE : Array[Vector2i]
 var attempts : int
 var force_start : bool
+var tween : Tween
 
 
 const grid_length : int = 120
@@ -38,7 +39,9 @@ const max_hover_y : int = bottom_right_tile.y
 @onready var push_timer = $PushTimer as Timer
 @onready var slums_tile_map = $SlumsTileMap as TileMap
 @onready var boss_defeated_anim = $BossDefeatedAnim
-@onready var battle_start_popup = $CanvasLayer/BattleStartPopup
+@onready var battle_start_popup = $CanvasLayer/BattleStartPopup as TextureRect
+@onready var new_wave_popup = $CanvasLayer/NewWavePopup as TextureRect
+@onready var new_wave_label = $CanvasLayer/NewWavePopup/NewWaveLabel as Label
 @onready var abilities_container = $CanvasLayer/AbilitiesContainer
 
 @onready var kai_drag_icon = $DraggableIcons/kai/DragIcon
@@ -88,6 +91,9 @@ func _ready():
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
 	
+	battle_start_popup.process_mode = Node.PROCESS_MODE_ALWAYS
+	new_wave_popup.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	for x in grid_length:
 		for y in grid_height:
 			dictionary[str(Vector2(x, y))] = {
@@ -98,7 +104,7 @@ func _ready():
 	else:
 		await get_tree().create_timer(3).timeout
 		start_wave()
-	prints("battle started:")
+	prints("battle started with", enemy_list.size(), "enemies")
 	
 	kai.character_killed.connect(disable_skill.bind("kai"))
 	emerald.character_killed.connect(disable_skill.bind("emerald"))
@@ -132,12 +138,28 @@ func _process(delta):
 
 				
 func show_start_screen():
-	var hide_start_screen = func():
+	var hide_start_screen = func(init_y : int, final_y : int):
+		tween = create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		
+		tween.tween_property(battle_start_popup, "position:y", final_y, 0.5).set_trans(Tween.TRANS_EXPO)
+		await tween.finished
 		battle_start_popup.hide()
+		battle_start_popup.position.y = init_y
 		get_tree().paused = false
-	battle_start_popup.show()
+		
+	var init_y = battle_start_popup.position.y
+	var final_y = init_y + 400
+	
 	get_tree().paused = true
-	get_tree().create_timer(2).timeout.connect(hide_start_screen)
+	
+	tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	battle_start_popup.position.y -= 400
+	battle_start_popup.show()
+	tween.tween_property(battle_start_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_SPRING)
+	await tween.finished
+	get_tree().create_timer(2).timeout.connect(hide_start_screen.bind(init_y, final_y))
 	set_up_character_health()
 
 func ui_start_animation():
@@ -165,7 +187,6 @@ func ui_start_animation():
 	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO).set_delay(0.15)
 
 func set_up_character_health():
-	
 	if global.kai_curr_hp <= 0:
 		kai.character_defeated()
 		kai.anim_sprite.visible = false
@@ -210,10 +231,11 @@ func update_team_health():
 		
 func start_enemy_action(): 
 	record_enemies()
+	animation_timer.start()
+	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
 		
-	animation_timer.start()
 
 func end_enemy_action():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -239,7 +261,8 @@ func start_wave():
 		
 	prints("new wave")
 	count = 0
-	#attempts = 0
+	attempts = 0
+	force_start = false
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
 	global.enemy_dict.clear()
@@ -247,10 +270,17 @@ func start_wave():
 	
 	while count < num_of_groups and not force_start:
 		place_formation()
-		prints(attempts, "attempts after return")
+	
+	if global.enemy_dict.size() == 0:
+		start_wave()
 		
 	enemy_move_timer.start()
 
+func increase_attempt() :
+		attempts += 1
+		prints(attempts, "in function")
+		if attempts == 100:
+			force_start = true
 		
 func place_formation():
 	var x_valid : bool
@@ -263,6 +293,8 @@ func place_formation():
 	rng.randomize()
 	var random_pattern = rng.randi_range(0, 4)	
 	
+	
+		
 	match random_pattern:
 		0 : current_offset_list = kai_offset_list
 		1 : current_offset_list = emerald_offset_list
@@ -287,12 +319,9 @@ func place_formation():
 			spawn_positions.append(spawn_position)
 		else:
 			spawn_positions.clear()
-			attempts = attempts + 1
-			prints(attempts, "attempts before return")
-			if attempts == 10:
-				force_start = true
+			increase_attempt.call()
 			return
-			break
+		
 		
 	for position in spawn_positions:
 		spawn_enemy(position)
@@ -331,12 +360,43 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		waves_cleared += 1
 		prints("wave cleared:", waves_cleared)
 		if not global.slums_boss_battle:
-			start_wave.call_deferred()
-		if global.boss_spawning:
+			if waves_cleared < num_of_waves:
+				show_new_wave_pop_up()
+			else:
+				battle_victory(true)
+		elif global.boss_spawning:
 			wave_finished.emit()
-		if not global.boss_spawning:
+		elif not global.boss_spawning:
 			start_wave.call_deferred()
 
+func show_new_wave_pop_up():
+	var hide_pop_up = func(init_y : int, final_y : int):
+		tween = create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		
+		tween.tween_property(new_wave_popup, "position:y", final_y, 0.5).set_trans(Tween.TRANS_EXPO)
+		await tween.finished
+		new_wave_popup.hide()
+		new_wave_popup.position.y = init_y
+		get_tree().paused = false
+		start_wave.call_deferred()
+		
+	var init_y = new_wave_popup.position.y
+	var final_y = init_y + 400
+	
+	tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	get_tree().paused = true
+	new_wave_popup.position.y -= 400
+	if waves_cleared == num_of_waves - 1:
+		new_wave_label.text = "FINAL WAVE"
+	else:
+		new_wave_label.text = "WAVE " + str(waves_cleared + 1)
+	new_wave_popup.show()
+	tween.tween_property(new_wave_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_SPRING)
+	await tween.finished
+	get_tree().create_timer(2).timeout.connect(hide_pop_up.bind(init_y, final_y))
+	
 func battle_victory(victory : bool):
 	var tween = create_tween()
 	tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)

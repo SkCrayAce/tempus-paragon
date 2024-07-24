@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c5dg3sefv0xir"
+path="res://.godot/imported/bettany-hurt.mp3-e6a5f05b5c1a9acadc7353ee395583fe.mp3str"
+
+[deps]
+
+source_file="res://audio/03 - Hurt Sound/Bettany/bettany-hurt.mp3"
+dest_files=["res://.godot/imported/bettany-hurt.mp3-e6a5f05b5c1a9acadc7353ee395583fe.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

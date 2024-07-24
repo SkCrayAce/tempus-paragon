@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dssl0g3phb7xd"
+path="res://.godot/imported/item-move_drop.mp3-488cb0f9e4dd2bfc16c229580af8c7ad.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/03 - Move Item/item-move_drop.mp3"
+dest_files=["res://.godot/imported/item-move_drop.mp3-488cb0f9e4dd2bfc16c229580af8c7ad.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

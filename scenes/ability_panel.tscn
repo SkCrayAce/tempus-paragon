@@ -137,5 +137,7 @@ texture = ExtResource("6_uttqa")
 offset = Vector2(0, -1)
 metadata/_edit_lock_ = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="mouse_entered" from="UseAbilityBtn" to="." method="_on_use_ability_btn_mouse_entered"]
 [connection signal="mouse_exited" from="UseAbilityBtn" to="." method="_on_use_ability_btn_mouse_exited"]

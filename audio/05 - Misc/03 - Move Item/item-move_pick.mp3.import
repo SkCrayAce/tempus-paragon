@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dfhv1le61tm1r"
+path="res://.godot/imported/item-move_pick.mp3-af5a628592115ad9f8180e4998f60cbb.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/03 - Move Item/item-move_pick.mp3"
+dest_files=["res://.godot/imported/item-move_pick.mp3-af5a628592115ad9f8180e4998f60cbb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

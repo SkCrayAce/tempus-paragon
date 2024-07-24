@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cg5reiesi1v1b"
+path="res://.godot/imported/virulent-hurt.mp3-130aaf06e13a75ca0f93dd93a2635f78.mp3str"
+
+[deps]
+
+source_file="res://audio/03 - Hurt Sound/Virulent/virulent-hurt.mp3"
+dest_files=["res://.godot/imported/virulent-hurt.mp3-130aaf06e13a75ca0f93dd93a2635f78.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

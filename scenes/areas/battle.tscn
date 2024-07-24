@@ -488,11 +488,13 @@ _data = {
 [node name="Battle" type="Node"]
 script = ExtResource("1_30h06")
 min_num_of_groups = 4
+num_of_waves = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="BattleStartPopup" type="TextureRect" parent="CanvasLayer"]
+visible = false
 top_level = true
 z_index = 2
 anchors_preset = -1
@@ -710,6 +712,42 @@ offset_top = -256.0
 offset_right = 296.0
 texture = ExtResource("10_tfk3o")
 
+[node name="NewWavePopup" type="TextureRect" parent="CanvasLayer"]
+visible = false
+top_level = true
+z_index = 2
+anchors_preset = -1
+anchor_left = 0.177
+anchor_top = 0.163
+anchor_right = 0.177
+anchor_bottom = 0.163
+offset_left = -169.56
+offset_top = -36.36
+offset_right = 171.44
+offset_bottom = 39.64
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_mvbrj")
+
+[node name="NewWaveLabel" type="Label" parent="CanvasLayer/NewWavePopup"]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 19.0
+offset_right = 2856.0
+offset_bottom = 419.0
+scale = Vector2(0.1, 0.1)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.890196, 0.741176, 0.454902, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 100
+theme_override_fonts/font = ExtResource("3_755tb")
+theme_override_font_sizes/font_size = 400
+text = "WAVE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0.90921, 0.703457, 0.701886, 0.988235)
@@ -916,7 +954,9 @@ attack_damage = 3000
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")
 sprite_frames = ExtResource("18_fu5ue")
-animation = &"attack"
+animation = &"special_attack"
+frame = 20
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
@@ -924,6 +964,7 @@ anchor_mode = 0
 zoom = Vector2(3, 3)
 
 [node name="EnemyMoveTimer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 2.0
 one_shot = true
 

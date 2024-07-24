@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d5cgl5io3kg8"
+path="res://.godot/imported/boss-stomp.mp3-91be50bd99fa3e1345e88569990a0d07.mp3str"
+
+[deps]
+
+source_file="res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3"
+dest_files=["res://.godot/imported/boss-stomp.mp3-91be50bd99fa3e1345e88569990a0d07.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

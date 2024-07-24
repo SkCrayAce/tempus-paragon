@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
 @export var attack_frame : int
 
-
+const VirulentAttackSfx = preload("res://audio/01 - Basic Attack/Virulent/basicATK_virulent_v01.mp3")
 const BattleNode = preload("res://scripts/battle.gd")
 const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
 const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
@@ -22,12 +22,14 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var appear_smoke = $AppearSmoke
+@onready var attack_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
 
 
 var player_chase = false
 var player = null
 var is_defeated : bool
 var is_attacking : bool
+var finished_attacking : bool
 var is_waiting : bool
 var current_map_position : Vector2i
 var tween : Tween
@@ -60,7 +62,11 @@ func _ready():
 	animated_sprite.play("side_idle_left")
 	animated_sprite.frame_changed.connect(inflict_damage)
 	current_map_position = tile_map.local_to_map(position)
-
+	
+	
+	attack_sfx_player.stream = VirulentAttackSfx
+	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
 
@@ -72,13 +78,32 @@ func poof():
 func action():
 	if is_defeated: return
 	
-	elif within_attack_range() or is_attacking:
-		attack_character()
+	elif within_attack_range() and not finished_attacking:
+		is_attacking = true
+		attack_animation()
 		return
 
 	move_animation()
 	current_map_position = tile_map.local_to_map(position)
 
+func hit_by_eme_skill(damage : int):
+	if is_defeated:
+			return
+	enemy_move_timer.set_paused(true)
+	animation_timer.set_paused(true)
+	
+	for i in 3:
+		show_damage_numbers.call_deferred(damage)
+		if is_instance_valid(effect):
+			effect.play("hit_flash", -1, 1.5)
+			healthbar.value -= damage/3
+			if healthbar.value <= 0:
+				enemy_defeated()
+		await get_tree().create_timer(0.5).timeout
+	enemy_move_timer.set_paused(false)
+	animation_timer.set_paused(false)
+	
+	
 func hit(damage : int):
 	show_damage_numbers.call_deferred(damage)
 	
@@ -147,8 +172,8 @@ func blown_back():
 		#global.add_enemy(current_map_position, self)
 		
 func move_animation():
-	new_position = Vector2(position.x - 16, position.y)
-	var new_map_position = tile_map.local_to_map(new_position)
+	var new_map_position = current_map_position + Vector2i.LEFT
+	new_position = tile_map.map_to_local(new_map_position)
 	
 	if is_blocked() or is_attacking: return
 	
@@ -156,23 +181,26 @@ func move_animation():
 	animated_sprite.stop()
 	animated_sprite.play("walk", 2.2)
 	tween.tween_property(self, "position", new_position, animation_timer.wait_time).set_ease(Tween.EASE_OUT)
+	await tween.finished
 	
+	position = new_position
 	current_map_position = tile_map.local_to_map(position)
 
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
+		pass
 		animated_sprite.play("attack")
 		await animated_sprite.animation_finished
 		
 	animated_sprite.play("side_idle_left")
 	
-func attack_character():
-	is_attacking = true
+func attack_animation():
 	
-	if not within_attack_range() or not is_attacking: return
+	if not within_attack_range() or not is_attacking or finished_attacking: return
 	
+	attack_sfx_player.play()
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
 	#animated_sprite.play("side_idle_left")
@@ -186,6 +214,8 @@ func inflict_damage():
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
 	var bettany_aligned = current_map_position.y in bettany_hitbox
 	var back_to_idle = func():
+		is_attacking = false
+		finished_attacking = true
 		animated_sprite.stop()
 		animated_sprite.play("side_idle_left")
 		
@@ -194,7 +224,6 @@ func inflict_damage():
 	elif tyrone_aligned and not tyrone.is_defeated : tyrone.take_damage(attack_damage)
 	elif bettany_aligned and not bettany.is_defeated : bettany.take_damage(attack_damage)
 	else: 
-		is_attacking = false
 		back_to_idle.call()
 
 	

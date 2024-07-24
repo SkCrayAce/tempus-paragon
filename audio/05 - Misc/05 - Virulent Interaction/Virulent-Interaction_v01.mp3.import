@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dukxs6xppjwue"
+path="res://.godot/imported/Virulent-Interaction_v01.mp3-f4494701ce27e1715a97c06b49f60fd8.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/05 - Virulent Interaction/Virulent-Interaction_v01.mp3"
+dest_files=["res://.godot/imported/Virulent-Interaction_v01.mp3-f4494701ce27e1715a97c06b49f60fd8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

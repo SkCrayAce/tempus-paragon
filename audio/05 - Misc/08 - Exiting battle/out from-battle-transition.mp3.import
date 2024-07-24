@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dhcr2i4pogptm"
+path="res://.godot/imported/out from-battle-transition.mp3-7d180ccb7551639ef4f48b3954a1bd62.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/08 - Exiting battle/out from-battle-transition.mp3"
+dest_files=["res://.godot/imported/out from-battle-transition.mp3-7d180ccb7551639ef4f48b3954a1bd62.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
