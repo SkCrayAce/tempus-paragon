@@ -99,7 +99,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-			
+	global.slums_boss_battle = true
 	if global.slums_boss_battle:
 		spawn_boss()
 	else:
@@ -242,12 +242,14 @@ func start_enemy_action():
 	animation_timer.start()
 	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.action()
+		if not enemy is Boss:
+			enemy.action()
 		
 
 func end_enemy_action():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.stop_animation()
+		if not enemy is Boss:
+			enemy.stop_animation()
 	record_enemies()
 	enemy_move_timer.start()
 
@@ -283,10 +285,11 @@ func start_wave():
 		start_wave()
 		
 	enemy_move_timer.start()
+	prints("wave started with", enemy_list.size(), "enemies")
 
 func increase_attempt() :
 		attempts += 1
-		prints(attempts, "in function")
+		printraw(attempts)
 		if attempts == 100:
 			force_start = true
 		

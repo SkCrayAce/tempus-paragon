@@ -59,6 +59,7 @@ func _ready():
 	global.enemy_dict[enemy_map_pos] = position
 	healthbar.max_value = health
 	healthbar.value = healthbar.max_value
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	rng.randomize()
 	states_to_choose.append(ranged_attack_state)

@@ -63,7 +63,7 @@ func _ready():
 	
 	skill_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	start_cooldown()
+	#start_cooldown()
 	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
