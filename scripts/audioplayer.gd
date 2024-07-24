@@ -7,6 +7,8 @@ const slums_bf_music = preload("res://audio/music/slums_boss_battle.mp3")
 const city_music = preload("res://audio/music/overworld01_v02.wav")
 #const underground_music = preload()
 
+func _ready():
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 func _play_music(music: AudioStream, volume = 0.0):
 	if stream == music:

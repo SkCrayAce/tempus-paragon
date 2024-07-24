@@ -1,0 +1,959 @@
+[gd_scene load_steps=76 format=3 uid="uid://bvw1dpdysu56x"]
+
+[ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
+[ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
+[ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="3_wcxqr"]
+[ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="3_ypaqq"]
+[ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="4_6mqeq"]
+[ext_resource type="PackedScene" uid="uid://b6qiham7oh4rh" path="res://scenes/ability_panel.tscn" id="4_hfq5b"]
+[ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_0o1m4"]
+[ext_resource type="Texture2D" uid="uid://djt1cd4owv1my" path="res://tempus_assets/ability sprites/skill_icons33.png" id="5_4aa5m"]
+[ext_resource type="Texture2D" uid="uid://bm6w5gqxqjq36" path="res://tempus_assets/ability sprites/skill_icons36.png" id="6_y5ml1"]
+[ext_resource type="Texture2D" uid="uid://bb6aexrlbyn3v" path="res://tempus_assets/ability sprites/skill_icons13.png" id="7_libma"]
+[ext_resource type="PackedScene" uid="uid://cqrt5njcuob82" path="res://scenes/skill_pop_up.tscn" id="9_eowdg"]
+[ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
+[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="10_tfk3o"]
+[ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
+[ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
+[ext_resource type="SpriteFrames" uid="uid://b0cxpnsavvq7" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
+[ext_resource type="Texture2D" uid="uid://yrpk7q8fovny" path="res://tempus_assets/tyrone-chibi-spritesheet.png" id="18_s6lim"]
+[ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvbrj"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(0, 136, 224, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dq3t"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(128, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hxf3"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(144, 0, 16, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muk67"]
+atlas = ExtResource("3_wcxqr")
+region = Rect2(0, 40, 256, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8t05s"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(96, 80, 32, 32)
+
+[sub_resource type="Gradient" id="Gradient_k253i"]
+offsets = PackedFloat32Array(0.0362319, 0.746377)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_82kpx"]
+gradient = SubResource("Gradient_k253i")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_h2s1s"]
+offsets = PackedFloat32Array(0.0362319, 0.746377)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y51p6"]
+gradient = SubResource("Gradient_h2s1s")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_4u1jx"]
+offsets = PackedFloat32Array(0.0362319, 0.746377)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hvymv"]
+gradient = SubResource("Gradient_4u1jx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_qypai"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c73iv"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l6fur"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tb7un"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsxyd"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(0, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0phhp"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(48, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chu7b"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(96, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yr4l"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(144, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5whw"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(192, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n518l"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(240, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwo4p"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(288, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qy8x"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(336, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ds61p"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(384, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olqd0"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(432, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jaf6"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(480, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axnl8"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(528, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqrdk"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(576, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb83q"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(624, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_noa6c"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(672, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb15d"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(720, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nabgc"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(0, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kb0jm"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(48, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiirl"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(96, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w3p0"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(144, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awrfq"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(192, 432, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnyxk"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixyp7"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq0xf"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lajcd"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prmfw"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(0, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws42u"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(48, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cdkp"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(96, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap1i3"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(144, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt2sx"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(192, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv5k8"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(240, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r6h6"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(0, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhxy7"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(48, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_116pv"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(96, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rt33"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(144, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcjqa"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(192, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te5tc"]
+atlas = ExtResource("18_s6lim")
+region = Rect2(240, 288, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y0dk6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsxyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0phhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chu7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yr4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5whw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n518l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwo4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qy8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ds61p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olqd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jaf6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axnl8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqrdk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb83q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noa6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb15d")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nabgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kb0jm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiirl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w3p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awrfq")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_fnyxk")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ixyp7")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_gq0xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lajcd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prmfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ws42u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cdkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap1i3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt2sx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv5k8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r6h6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhxy7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_116pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rt33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcjqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te5tc")
+}],
+"loop": true,
+"name": &"walk_back",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dh8o6"]
+resource_local_to_scene = true
+shader = ExtResource("19_13vx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="Animation" id="Animation_2uapa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlumsTileMap:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DraggableIcons:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5qpq8"]
+resource_name = "boss_defeated_anim"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(5, 5), Vector2(5, 5), Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, 35), Vector2(100, 35), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SlumsTileMap:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DraggableIcons:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rsv5v"]
+_data = {
+"RESET": SubResource("Animation_2uapa"),
+"boss_defeated_anim": SubResource("Animation_5qpq8")
+}
+
+[node name="Battle" type="Node"]
+script = ExtResource("1_30h06")
+min_num_of_groups = 4
+num_of_waves = 7
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="BattleStartPopup" type="TextureRect" parent="CanvasLayer"]
+top_level = true
+z_index = 2
+anchors_preset = -1
+anchor_left = 0.177
+anchor_top = 0.163
+anchor_right = 0.177
+anchor_bottom = 0.163
+offset_left = -169.56
+offset_top = -36.36
+offset_right = 171.44
+offset_bottom = 39.64
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_mvbrj")
+
+[node name="Label" type="Label" parent="CanvasLayer/BattleStartPopup"]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 19.0
+offset_right = 2856.0
+offset_bottom = 419.0
+scale = Vector2(0.1, 0.1)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.890196, 0.741176, 0.454902, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 100
+theme_override_fonts/font = ExtResource("3_755tb")
+theme_override_font_sizes/font_size = 400
+text = "BATTLE START!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveTimerBar" type="TextureProgressBar" parent="CanvasLayer"]
+light_mask = 2
+visibility_layer = 2
+z_index = 1
+offset_left = 390.0
+offset_top = 49.0
+offset_right = 408.0
+offset_bottom = 178.0
+step = 0.01
+fill_mode = 3
+nine_patch_stretch = true
+stretch_margin_top = 9
+stretch_margin_bottom = 8
+texture_under = SubResource("AtlasTexture_0dq3t")
+texture_progress = SubResource("AtlasTexture_5hxf3")
+
+[node name="AbilitiesContainer" type="TextureRect" parent="CanvasLayer"]
+offset_left = 25.0
+offset_top = 176.0
+offset_right = 473.0
+offset_bottom = 246.0
+texture = SubResource("AtlasTexture_muk67")
+
+[node name="AbilitiesRow" type="HBoxContainer" parent="CanvasLayer/AbilitiesContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 10.0
+offset_right = -56.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KaiAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+layout_mode = 2
+
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/DetailsPanel" index="0"]
+text = "Spatial Push"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/DetailsPanel" index="1"]
+text = "Pushes all enemies away using Kai's ability."
+
+[node name="EmeraldAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+layout_mode = 2
+
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="1"]
+texture = ExtResource("5_4aa5m")
+
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/DetailsPanel" index="0"]
+text = "Flintlock Shower"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/DetailsPanel" index="1"]
+text = "Showers enemies with bullets. Deal big damage in a large area."
+
+[node name="HeadContainer" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="3"]
+offset_top = 15.0
+offset_right = 35.0
+
+[node name="Sprite2D" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/HeadContainer" index="0"]
+texture = SubResource("AtlasTexture_8t05s")
+
+[node name="TyroneAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+layout_mode = 2
+
+[node name="UseAbilityBtn" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="0"]
+offset_left = 1.0
+offset_right = 81.0
+
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="1"]
+texture = ExtResource("6_y5ml1")
+
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/DetailsPanel" index="0"]
+text = "Hands of the Healer"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/DetailsPanel" index="1"]
+text = "Heals everyone in the party by a significant amount,"
+
+[node name="BettanyAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
+layout_mode = 2
+
+[node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility" index="1"]
+texture = ExtResource("7_libma")
+
+[node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/DetailsPanel" index="0"]
+text = "Focused Chaos"
+
+[node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/DetailsPanel" index="1"]
+text = "Deal burning damage to every enemy."
+
+[node name="SkillPopups" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(427, 240)
+layout_mode = 3
+anchor_left = -0.334
+anchor_top = 0.015
+anchor_right = 1.0
+anchor_bottom = 0.333
+offset_left = 442.52
+offset_top = -9.8
+offset_right = -838.0
+offset_bottom = 1.23999
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="KaiSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
+visible = false
+z_index = 4095
+layout_mode = 1
+anchor_top = 0.0
+anchor_right = 1.002
+anchor_bottom = 0.958
+offset_top = 30.0
+offset_right = -0.854034
+offset_bottom = 0.0799866
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="TextureRect" parent="CanvasLayer/SkillPopups/KaiSkillPopUp" index="0"]
+offset_left = 40.0
+offset_top = -256.0
+offset_right = 296.0
+texture = ExtResource("10_tfk3o")
+
+[node name="EmeraldSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
+visible = false
+z_index = 4095
+layout_mode = 1
+anchor_top = 0.0
+anchor_right = 1.002
+anchor_bottom = 0.958
+offset_top = 30.0
+offset_right = -0.854034
+offset_bottom = 0.0799866
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="TextureRect" parent="CanvasLayer/SkillPopups/EmeraldSkillPopUp" index="0"]
+offset_left = 40.0
+offset_top = -256.0
+offset_right = 296.0
+texture = ExtResource("10_tfk3o")
+
+[node name="TyroneSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
+visible = false
+z_index = 4095
+layout_mode = 1
+anchor_top = 0.0
+anchor_right = 1.002
+anchor_bottom = 0.958
+offset_top = 30.0
+offset_right = -0.854004
+offset_bottom = 0.0800018
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="TextureRect" parent="CanvasLayer/SkillPopups/TyroneSkillPopUp" index="0"]
+offset_left = 40.0
+offset_top = -256.0
+offset_right = 296.0
+texture = ExtResource("11_rum47")
+
+[node name="BettanySkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
+visible = false
+z_index = 4095
+layout_mode = 1
+anchor_top = 0.0
+anchor_right = 1.002
+anchor_bottom = 0.958
+offset_top = 30.0
+offset_right = -0.854004
+offset_bottom = 0.0800171
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="TextureRect" parent="CanvasLayer/SkillPopups/BettanySkillPopUp" index="0"]
+offset_left = 40.0
+offset_top = -256.0
+offset_right = 296.0
+texture = ExtResource("10_tfk3o")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.90921, 0.703457, 0.701886, 0.988235)
+
+[node name="SlumsTileMap" type="TileMap" parent="."]
+self_modulate = Color(0.909804, 0.701961, 0.701961, 0.988235)
+y_sort_enabled = true
+tile_set = ExtResource("4_6mqeq")
+format = 2
+layer_0/name = "L1"
+layer_0/z_index = -2
+layer_0/tile_data = PackedInt32Array(0, 1048579, 9, 851968, 851971, 10, 917504, 1048579, 9, 1, 1048579, 9, 851969, 851971, 10, 917505, 1048579, 9, 2, 1048579, 9, 786434, 983043, 9, 851970, 983043, 10, 917506, 1048579, 9, 3, 1048579, 9, 786435, 786435, 11, 851971, 1048579, 9, 917507, 1048579, 9, 4, 1048579, 9, 786436, 851971, 11, 851972, 1048579, 9, 917508, 1048579, 9, 5, 1048579, 9, 786437, 786435, 10, 851973, 1048579, 9, 917509, 1048579, 9, 6, 1048579, 9, 786438, 786435, 11, 851974, 1048579, 9, 917510, 1048579, 9, 7, 1048579, 9, 786439, 851971, 11, 851975, 1048579, 9, 917511, 1048579, 9, 8, 1048579, 9, 786440, 786435, 10, 851976, 1048579, 9, 917512, 1048579, 9, 9, 1048579, 9, 786441, 786435, 10, 851977, 1048579, 9, 917513, 1048579, 9, 10, 1048579, 9, 786442, 983043, 9, 851978, 983043, 10, 917514, 1048579, 9, 11, 1048579, 9, 851979, 851971, 268435467, 917515, 1048579, 9, 12, 1048579, 9, 851980, 786435, 268435467, 917516, 1048579, 9, 13, 1048579, 9, 851981, 786435, 10, 917517, 1048579, 9, 14, 1048579, 9, 851982, 786435, 10, 917518, 1048579, 9, 15, 1048579, 9, 851983, 786435, 10, 917519, 1048579, 9, 16, 1048579, 9, 851984, 851971, 268435467, 917520, 1048579, 9, 17, 1048579, 9, 851985, 786435, 268435467, 917521, 1048579, 9, 18, 1048579, 9, 851986, 851971, 10, 917522, 1048579, 9, 19, 1048579, 9, 786451, 983043, 9, 851987, 983043, 10, 917523, 1048579, 9, 20, 1048579, 9, 786452, 851971, 268435467, 851988, 1048579, 9, 917524, 1048579, 9, 21, 1048579, 9, 786453, 786435, 268435467, 851989, 1048579, 9, 917525, 1048579, 9, 22, 1048579, 9, 786454, 786435, 10, 851990, 1048579, 9, 917526, 1048579, 9, 23, 1048579, 9, 786455, 851971, 10, 851991, 1048579, 9, 917527, 1048579, 9, 24, 1048579, 9, 786456, 851971, 10, 851992, 1048579, 9, 917528, 1048579, 9, 25, 1048579, 9, 786457, 851971, 268435467, 851993, 1048579, 9, 917529, 1048579, 9, 26, 1048579, 9, 786458, 786435, 268435467, 851994, 1048579, 9, 917530, 1048579, 9, 27, 1048579, 9, 786459, 786435, 10, 851995, 1048579, 9, 917531, 1048579, 9, 28, 1048579, 9, 786460, 851971, 268435467, 851996, 1048579, 9, 917532, 1048579, 9, 29, 1048579, 9, 786461, 786435, 268435467, 851997, 1048579, 9, 917533, 1048579, 9, 65536, 1048579, 9, 131072, 786435, 10, 65537, 1048579, 9, 131073, 851971, 268435467, 65538, 1048579, 9, 131074, 786435, 268435467, 65539, 1048579, 9, 131075, 786435, 10, 65540, 1048579, 9, 131076, 786435, 10, 65541, 1048579, 9, 131077, 851971, 268435467, 65542, 1048579, 9, 131078, 786435, 268435467, 65543, 1048579, 9, 131079, 851971, 10, 65544, 1048579, 9, 131080, 786435, 11, 65545, 1048579, 9, 131081, 851971, 11, 65546, 983043, 9, 131082, 983043, 10, 65547, 851971, 10, 65548, 786435, 10, 65549, 851971, 10, 65550, 851971, 10, 65551, 851971, 10, 65552, 786435, 10, 65553, 851971, 10, 65554, 983043, 268435465, 131090, 983043, 268435466, 65555, 1048579, 9, 131091, 851971, 268435467, 65556, 1048579, 9, 131092, 786435, 268435467, 65557, 1048579, 9, 131093, 786435, 10, 65558, 1048579, 9, 131094, 786435, 10, 65559, 1048579, 9, 131095, 851971, 268435467, 65560, 1048579, 9, 131096, 786435, 268435467, 65561, 1048579, 9, 131097, 983043, 9, 196633, 983043, 10, 65562, 1048579, 9, 131098, 1048579, 9, 196634, 851971, 268435467, 65563, 1048579, 9, 131099, 1048579, 9, 196635, 786435, 268435467, 65564, 1048579, 9, 131100, 1048579, 9, 196636, 851971, 10, 65565, 1048579, 9, 131101, 1048579, 9, 196637, 851971, 10, 655371, 1048579, 9, 589835, 1048579, 9, 524299, 1048579, 9, 458763, 1048579, 9, 393227, 1048579, 9, 327691, 1048579, 9, 262155, 1048579, 9, 196619, 1048579, 9, 131083, 1114115, 805306375, 131084, 1048579, 9, 196620, 1114115, 10, 262156, 1048579, 9, 327692, 1048579, 9, 393228, 1048579, 9, 458764, 1048579, 9, 524300, 1048579, 9, 589836, 1048579, 9, 655372, 1048579, 9, 720908, 1048579, 9, 720907, 1048579, 9, 720906, 1048579, 9, 655370, 1048579, 9, 589834, 1048579, 9, 524298, 1114115, 11, 458762, 1048579, 9, 393226, 1048579, 9, 327690, 1048579, 9, 262154, 1048579, 9, 196618, 1048579, 9, 196617, 1048579, 9, 196616, 1048579, 9, 196615, 1048579, 9, 196614, 1048579, 9, 196613, 720899, 13, 196612, 1048579, 9, 196611, 1048579, 9, 196610, 1048579, 9, 196609, 1048579, 1342177287, 196608, 1048579, 9, 262144, 1048579, 9, 327680, 1048579, 9, 393216, 1114115, 11, 458752, 1048579, 9, 524288, 917507, 268435469, 589824, 917507, 268435470, 655360, 1048579, 9, 720896, 1048579, 9, 786432, 1048579, 9, 786433, 1048579, 9, 720897, 1048579, 9, 655361, 1048579, 9, 589825, 851971, 268435470, 524289, 851971, 268435469, 458753, 1048579, 9, 393217, 1048579, 9, 327681, 1048579, 9, 262145, 1048579, 10, 262146, 1048579, 9, 327682, 1048579, 12, 393218, 1048579, 11, 458754, 1048579, 9, 524290, 1048579, 9, 589826, 1048579, 9, 655362, 1048579, 9, 720898, 1048579, 9, 720899, 1048579, 9, 655363, 1048579, 9, 589827, 1048579, 9, 524291, 1048579, 9, 458755, 1048579, 9, 393219, 1048579, 9, 327683, 1048579, 9, 262147, 1048579, 9, 262148, 1048579, 9, 327684, 1048579, 9, 393220, 1048579, 9, 458756, 1048579, 9, 524292, 1048579, 9, 589828, 1048579, 10, 655364, 1048579, 9, 720900, 1048579, 9, 720901, 1048579, 9, 655365, 1048579, 9, 589829, 1048579, 9, 524293, 1048579, 9, 458757, 1048579, 9, 393221, 1048579, 9, 327685, 1048579, 9, 262149, 1048579, 11, 262150, 1048579, 9, 327686, 1048579, 9, 393222, 1048579, 9, 458758, 1048579, 9, 524294, 1048579, 9, 589830, 1048579, 9, 655366, 1048579, 9, 720902, 1048579, 9, 720903, 1048579, 9, 655367, 1048579, 9, 589831, 1048579, 9, 524295, 1048579, 9, 458759, 1048579, 9, 393223, 1048579, 9, 327687, 1048579, 9, 262151, 1048579, 9, 262152, 1048579, 9, 327688, 851971, 13, 393224, 851971, 14, 458760, 1048579, 9, 524296, 1048579, 9, 589832, 1114115, 11, 655368, 1048579, 9, 720904, 1048579, 9, 720905, 1048579, 9, 655369, 1048579, 9, 589833, 1048579, 9, 524297, 1048579, 9, 458761, 1048579, 9, 393225, 917507, 14, 327689, 917507, 13, 262153, 1048579, 9, 786443, 1114115, 8, 786444, 1048579, 9, 786445, 1048579, 9, 720909, 1048579, 9, 655373, 1114115, 10, 589837, 1048579, 9, 524301, 1048579, 9, 458765, 1048579, 9, 393229, 1048579, 9, 327693, 1048579, 9, 262157, 1048579, 9, 196621, 1048579, 9, 131085, 1048579, 9, 131086, 1048579, 1610612744, 196622, 1048579, 9, 262158, 1048579, 9, 327694, 1048579, 9, 393230, 1048579, 10, 458766, 1048579, 9, 524302, 1048579, 9, 589838, 1048579, 9, 655374, 1048579, 9, 720910, 1048579, 9, 786446, 1048579, 9, 786447, 1048579, 9, 720911, 1048579, 9, 655375, 1048579, 9, 589839, 1048579, 9, 524303, 1048579, 9, 458767, 1048579, 12, 393231, 1048579, 9, 327695, 1048579, 9, 262159, 1048579, 9, 196623, 1048579, 9, 131087, 1048579, 9, 131088, 1048579, 12, 196624, 1048579, 9, 262160, 1048579, 9, 327696, 1048579, 9, 393232, 1048579, 9, 458768, 1048579, 9, 524304, 1048579, 9, 589840, 1048579, 9, 655376, 1048579, 9, 720912, 1048579, 9, 786448, 1048579, 9, 786449, 1048579, 9, 720913, 1048579, 9, 655377, 1048579, 9, 589841, 1048579, 9, 524305, 1048579, 9, 458769, 1048579, 9, 393233, 1048579, 9, 327697, 1048579, 9, 262161, 1048579, 9, 196625, 1048579, 9, 131089, 786435, 268435470, 196626, 1048579, 9, 262162, 1048579, 268435469, 327698, 1048579, 268435470, 393234, 1048579, 9, 458770, 1048579, 9, 524306, 1048579, 9, 589842, 1048579, 9, 655378, 1048579, 9, 720914, 1048579, 9, 786450, 1048579, 9, 720915, 1048579, 9, 655379, 1048579, 9, 589843, 1048579, 9, 524307, 1048579, 9, 458771, 1048579, 9, 393235, 1048579, 9, 327699, 983043, 268435470, 262163, 983043, 268435469, 196627, 1048579, 9, 196628, 1048579, 1342177287, 262164, 1048579, 9, 327700, 1048579, 9, 393236, 1048579, 9, 458772, 1048579, 9, 524308, 1048579, 9, 589844, 1048579, 9, 655380, 1048579, 9, 720916, 1048579, 9, 720917, 1048579, 9, 655381, 1048579, 9, 589845, 1048579, 9, 524309, 1048579, 9, 458773, 1048579, 9, 393237, 1048579, 9, 327701, 1048579, 9, 262165, 1048579, 9, 196629, 1048579, 9, 196630, 1048579, 11, 262166, 1048579, 9, 327702, 1048579, 9, 393238, 1048579, 9, 458774, 1048579, 9, 524310, 1048579, 9, 589846, 1048579, 9, 655382, 1048579, 12, 720918, 1048579, 9, 720919, 1048579, 9, 655383, 1048579, 9, 589847, 983043, 14, 524311, 983043, 13, 458775, 1048579, 9, 393239, 1048579, 9, 327703, 1048579, 9, 262167, 1048579, 9, 196631, 1048579, 9, 196632, 1114115, 1610612743, 262168, 1048579, 9, 327704, 1048579, 9, 393240, 1048579, 9, 458776, 1048579, 9, 524312, 1048579, 13, 589848, 1048579, 14, 655384, 1048579, 9, 720920, 1048579, 9, 720921, 1048579, 9, 655385, 1048579, 9, 589849, 1048579, 9, 524313, 1048579, 9, 458777, 1048579, 9, 393241, 1048579, 9, 327705, 1048579, 9, 262169, 1048579, 9, 262170, 1048579, 9, 327706, 1048579, 9, 393242, 1048579, 9, 458778, 1048579, 9, 524314, 1048579, 9, 589850, 1048579, 9, 655386, 1048579, 9, 720922, 1048579, 9, 720923, 1048579, 9, 655387, 1048579, 9, 589851, 1048579, 9, 524315, 1048579, 11, 458779, 1048579, 9, 393243, 917507, 268435470, 327707, 917507, 268435469, 262171, 1048579, 9, 262172, 1048579, 9, 327708, 851971, 268435469, 393244, 1048579, 9, 458780, 1048579, 9, 524316, 1048579, 9, 589852, 1114115, 11, 655388, 1048579, 9, 720924, 1048579, 9, 720925, 1048579, 9, 655389, 1048579, 9, 589853, 1048579, 9, 524317, 1048579, 9, 458781, 1048579, 9, 393245, 1048579, 9, 327709, 1048579, 9, 262173, 1048579, 12, 30, 1048579, 9, 65566, 1048579, 9, 131102, 1048579, 9, 196638, 851971, 268435467, 262174, 1048579, 9, 327710, 1048579, 9, 393246, 1048579, 9, 458782, 1048579, 9, 524318, 1048579, 9, 589854, 1048579, 9, 655390, 1048579, 9, 720926, 1048579, 9, 786462, 1048579, 9, 851998, 1048579, 9, 917534, 1048579, 9, 31, 1048579, 9, 65567, 1048579, 9, 131103, 1048579, 9, 196639, 786435, 268435467, 262175, 1048579, 9, 327711, 917507, 268435469, 393247, 917507, 268435470, 458783, 1048579, 9, 524319, 1048579, 11, 589855, 1048579, 9, 655391, 1048579, 9, 720927, 1048579, 9, 786463, 786435, 10, 851999, 1048579, 9, 917535, 1048579, 9, 32, 1048579, 9, 65568, 1048579, 9, 131104, 1048579, 9, 196640, 851971, 10, 262176, 1048579, 9, 327712, 851971, 268435469, 393248, 851971, 268435470, 458784, 1048579, 9, 524320, 1048579, 9, 589856, 1114115, 11, 655392, 1048579, 9, 720928, 1048579, 9, 786464, 851971, 268435467, 852000, 1048579, 9, 917536, 1048579, 9, 33, 1048579, 9, 65569, 1048579, 9, 131105, 1048579, 9, 196641, 851971, 10, 262177, 1048579, 12, 327713, 1048579, 9, 393249, 1048579, 9, 458785, 1048579, 9, 524321, 1048579, 9, 589857, 1048579, 9, 655393, 1048579, 9, 720929, 1048579, 9, 786465, 786435, 268435467, 852001, 1048579, 9, 917537, 1048579, 9)
+layer_1/name = "hover_layer"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "battleground_layer"
+layer_2/modulate = Color(0, 0, 0, 0.196078)
+layer_2/tile_data = PackedInt32Array(196617, 327683, 1610612750, 262153, 327683, 14, 327689, 327683, 1610612750, 393225, 327683, 1610612750, 458761, 327683, 1610612750, 524297, 327683, 1610612750, 589833, 327683, 1610612750, 655369, 327683, 1610612750, 196618, 327683, 1610612750, 262154, 327683, 14, 327690, 327683, 14, 393226, 327683, 1610612750, 458762, 327683, 1610612750, 524298, 327683, 1610612750, 589834, 327683, 1610612750, 655370, 327683, 1610612750, 196619, 327683, 1610612750, 262155, 327683, 1610612750, 327691, 327683, 14, 393227, 327683, 14, 458763, 327683, 1610612750, 524299, 327683, 1610612750, 589835, 327683, 1610612750, 655371, 327683, 1610612750, 196620, 327683, 1610612750, 262156, 327683, 1610612750, 327692, 327683, 1610612750, 393228, 327683, 1610612750, 458764, 327683, 1610612750, 524300, 327683, 1610612750, 589836, 327683, 1610612750, 655372, 327683, 1610612750, 196621, 327683, 1610612750, 262157, 327683, 1610612750, 327693, 327683, 1610612750, 393229, 327683, 1610612750, 458765, 327683, 1610612750, 524301, 327683, 1610612750, 589837, 327683, 1610612750, 655373, 327683, 1610612750, 196622, 327683, 1610612750, 262158, 327683, 1610612750, 327694, 327683, 1610612750, 393230, 327683, 1610612750, 458766, 327683, 1610612750, 524302, 327683, 1610612750, 589838, 327683, 1610612750, 655374, 327683, 1610612750, 196623, 327683, 1610612750, 262159, 327683, 1610612750, 327695, 327683, 1610612750, 393231, 327683, 1610612750, 458767, 327683, 1610612750, 524303, 327683, 1610612750, 589839, 327683, 1610612750, 655375, 327683, 1610612750, 196624, 327683, 1610612750, 262160, 327683, 1610612750, 327696, 327683, 1610612750, 393232, 327683, 1610612750, 458768, 327683, 1610612750, 524304, 327683, 1610612750, 589840, 327683, 1610612750, 655376, 327683, 1610612750, 196625, 327683, 1610612750, 262161, 327683, 1610612750, 327697, 327683, 1610612750, 393233, 327683, 1610612750, 458769, 327683, 1610612750, 524305, 327683, 1610612750, 589841, 327683, 1610612750, 655377, 327683, 1610612750, 196626, 327683, 1610612750, 262162, 327683, 1610612750, 327698, 327683, 1610612750, 393234, 327683, 1610612750, 458770, 327683, 1610612750, 524306, 327683, 1610612750, 589842, 327683, 1610612750, 655378, 327683, 1610612750, 196627, 327683, 1610612750, 262163, 327683, 1610612750, 327699, 327683, 1610612750, 393235, 327683, 1610612750, 458771, 327683, 1610612750, 524307, 327683, 1610612750, 589843, 327683, 1610612750, 655379, 327683, 1610612750, 196628, 327683, 1610612750, 262164, 327683, 1610612750, 327700, 327683, 1610612750, 393236, 327683, 1610612750, 458772, 327683, 1610612750, 524308, 327683, 1610612750, 589844, 327683, 1610612750, 655380, 327683, 1610612750, 196629, 327683, 1610612750, 262165, 327683, 1610612750, 327701, 327683, 1610612750, 393237, 327683, 1610612750, 458773, 327683, 1610612750, 524309, 327683, 1610612750, 589845, 327683, 1610612750, 655381, 327683, 1610612750, 196630, 327683, 1610612750, 262166, 327683, 1610612750, 327702, 327683, 1610612750, 393238, 327683, 1610612750, 458774, 327683, 1610612750, 524310, 327683, 1610612750, 589846, 327683, 1610612750, 655382, 327683, 1610612750, 196631, 327683, 1610612750, 262167, 327683, 1610612750, 327703, 327683, 1610612750, 393239, 327683, 1610612750, 458775, 327683, 1610612750, 524311, 327683, 1610612750, 589847, 327683, 1610612750, 655383, 327683, 1610612750)
+layer_3/name = "L2"
+layer_3/tile_data = PackedInt32Array(0, 65539, 4, 65536, 65539, 5, 1, 131075, 4, 65537, 131075, 5, 2, 196611, 4, 65538, 196611, 5, 3, 720899, 1, 65539, 720899, 2, 4, 786435, 1, 65540, 786435, 2, 5, 851971, 268435457, 65541, 851971, 268435458, 6, 851971, 1, 65542, 851971, 2, 7, 983043, 1, 65543, 983043, 2, 9, 917507, 1, 65545, 917507, 2, 8, 851971, 1, 65544, 851971, 2, 10, 3, 14, 11, 65539, 14, 12, 131075, 14, 13, 196611, 14, 26, 262147, 3, 65562, 262147, 4, 131098, 262147, 5, 27, 327683, 3, 65563, 327683, 4, 131099, 327683, 5, 28, 393219, 3, 65564, 393219, 4, 131100, 393219, 5, 29, 458755, 3, 65565, 458755, 4, 131101, 458755, 5, 22, 3, 4, 65558, 3, 5, 23, 65539, 4, 65559, 65539, 5, 24, 131075, 4, 65560, 131075, 5, 25, 196611, 4, 65561, 196611, 5, 18, 196611, 268435458, 17, 262147, 268435458, 16, 327683, 268435458, 15, 393219, 268435458, 14, 458755, 268435458, 19, 3, 13, 65555, 3, 14, 20, 65539, 13, 65556, 65539, 14, 21, 131075, 13, 65557, 131075, 14, 786452, 196611, 268435459, 851988, 196611, 268435460, 786453, 131075, 268435459, 851989, 131075, 268435460, 786454, 65539, 268435459, 851990, 65539, 268435460, 786455, 3, 268435459, 851991, 3, 268435460, 720920, 196611, 0, 786456, 720899, 1, 720921, 458755, 0, 786457, 917507, 1, 720922, 3, 3, 786458, 3, 13, 720923, 65539, 3, 786459, 65539, 13, 720924, 131075, 3, 786460, 131075, 13, 720925, 196611, 3, 786461, 196611, 13, 917524, 196611, 268435461, 917525, 131075, 268435461, 917526, 65539, 268435461, 917527, 3, 268435461, 851992, 720899, 2, 851993, 917507, 2, 851994, 3, 14, 851995, 65539, 14, 851996, 131075, 14, 851997, 196611, 14, 786435, 3, 3, 851971, 3, 4, 786436, 65539, 3, 851972, 65539, 4, 786437, 131075, 3, 851973, 131075, 4, 786438, 196611, 3, 851974, 196611, 4, 786439, 3, 0, 851975, 3, 1, 786440, 65539, 0, 851976, 65539, 1, 786441, 131075, 0, 851977, 131075, 1, 917507, 3, 5, 917508, 65539, 5, 917509, 131075, 5, 917510, 196611, 5, 917511, 3, 2, 917512, 65539, 2, 917513, 131075, 2, 720899, 131075, 6, 720905, 65539, 6, 720904, 524291, 268435461, 720903, 589827, 268435461, 720902, 655363, 268435461, 720900, 524291, 5, 720901, 524291, 5, 720916, 131075, 6, 720917, 524291, 5, 720918, 589827, 5, 720919, 720899, 5, 655384, 393219, 6, 655385, 524291, 7, 655386, 589827, 7, 655388, 524291, 268435463, 655387, 524291, 7, 655389, 524291, 7, 786462, 720899, 1, 851998, 720899, 2, 786465, 917507, 1, 852001, 917507, 2, 720926, 196611, 0, 720927, 262147, 0, 720928, 327683, 0, 720929, 458755, 0, 786464, 786435, 1, 852000, 786435, 2, 786463, 851971, 1, 851999, 851971, 2, 655390, 524291, 7, 655391, 589827, 7, 655392, 524291, 7, 655393, 524291, 7, 65566, 720899, 1, 131102, 720899, 2, 65567, 786435, 1, 131103, 786435, 2, 65568, 851971, 268435457, 131104, 851971, 268435458, 65569, 851971, 1, 131105, 851971, 2, 30, 196611, 268435459, 31, 131075, 268435459, 32, 65539, 268435459, 33, 3, 268435459)
+layer_4/name = "L3"
+layer_4/tile_data = PackedInt32Array(851968, 196611, 0, 917504, 196611, 1, 851969, 262147, 0, 917505, 262147, 1, 851970, 327683, 0, 917506, 327683, 1, 851971, 393219, 0, 917507, 393219, 1, 851972, 458755, 0, 917508, 458755, 1, 851973, 3, 0, 917509, 3, 1, 851974, 65539, 0, 917510, 65539, 1, 851975, 131075, 0, 917511, 131075, 1, 917512, 720899, 3, 917513, 786435, 3, 917514, 851971, 3, 917515, 983043, 3, 851976, 3, 3, 851977, 65539, 3, 851978, 131075, 3, 851979, 196611, 3, 917516, 196611, 0, 917517, 262147, 0, 917518, 327683, 0, 917519, 393219, 0, 917520, 458755, 0, 917521, 3, 3, 917522, 65539, 3, 917523, 131075, 3, 917524, 196611, 3, 851989, 196611, 0, 851990, 262147, 0, 851991, 327683, 0, 851992, 393219, 0, 851993, 262147, 0, 851994, 327683, 0, 851995, 393219, 0, 851996, 458755, 0, 917525, 196611, 1, 917526, 262147, 1, 917527, 327683, 1, 917528, 851971, 1, 917529, 851971, 1, 917530, 983043, 1, 917531, 786435, 268435457, 917532, 917507, 1, 851997, 3, 3, 917533, 3, 4, 851980, 655363, 9, 851981, 524291, 7, 851982, 589827, 7, 851983, 524291, 7, 851984, 327683, 6, 851985, 131075, 6, 851986, 524291, 5, 851987, 655363, 5, 851988, 524291, 5, 786453, 458755, 6, 786454, 524291, 9, 786457, 524291, 268435465, 786455, 524291, 4, 786456, 524291, 4, 786458, 655363, 9, 786461, 720899, 9, 786460, 786435, 5, 786459, 589827, 7, 720900, 262147, 6, 786436, 327683, 7, 720898, 524291, 7, 720899, 589827, 7, 720897, 524291, 7, 720896, 524291, 7, 786434, 524291, 268435464, 786433, 589827, 268435464, 786432, 655363, 268435464, 786435, 524291, 8, 786437, 196611, 6, 786441, 589827, 5, 786442, 655363, 5, 786443, 3, 6, 786440, 196611, 6, 786439, 65539, 6, 786438, 655363, 0, 917534, 65539, 4, 917535, 131075, 4, 917536, 196611, 4, 917537, 720899, 3, 851998, 65539, 3, 851999, 131075, 3, 852000, 196611, 3, 852001, 3, 0, 786463, 655363, 5, 786464, 524291, 5, 786465, 655363, 0, 786462, 524291, 5)
+layer_5/name = "Objects"
+layer_5/modulate = Color(0.909804, 0.701961, 0.701961, 0.988235)
+layer_5/z_index = 1
+layer_5/tile_data = PackedInt32Array(5, 720899, 8, 6, 851971, 8, 720897, 851971, 6, 720898, 917507, 6, 720896, 851971, 6, 720899, 983043, 7, 786435, 983043, 8, 851982, 720899, 7, 851983, 786435, 7, 786455, 851971, 268435462, 786454, 917507, 268435462, 786457, 917507, 6, 786456, 851971, 6, 655387, 851971, 268435462, 655386, 917507, 268435462, 655388, 851971, 6, 655389, 851971, 6, 720904, 983043, 6, 786450, 983043, 268435461, 851986, 983043, 268435462, 720923, 983043, 7, 786459, 983043, 8, 655390, 851971, 6, 655391, 851971, 6, 655392, 851971, 6, 655393, 851971, 6, 65539, 524289, 3, 131075, 524289, 5, 131073, 393217, 5, 131074, 458753, 5, 131072, 458753, 5, 131105, 917507, 7)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D2" type="PointLight2D" parent="SlumsTileMap"]
+position = Vector2(120, 13)
+scale = Vector2(0.697265, 0.697265)
+color = Color(1, 1, 0.0352941, 1)
+texture = SubResource("GradientTexture2D_82kpx")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D3" type="PointLight2D" parent="SlumsTileMap"]
+position = Vector2(424, 236)
+scale = Vector2(0.697265, 0.697265)
+color = Color(1, 1, 0.0352941, 1)
+texture = SubResource("GradientTexture2D_82kpx")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="SlumsTileMap"]
+position = Vector2(183, 238)
+scale = Vector2(0.546875, 0.546875)
+color = Color(1, 1, 0.0352941, 1)
+texture = SubResource("GradientTexture2D_y51p6")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D4" type="PointLight2D" parent="SlumsTileMap"]
+position = Vector2(448, 31)
+scale = Vector2(1.39063, 1)
+color = Color(1, 1, 0.0352941, 1)
+texture = SubResource("GradientTexture2D_hvymv")
+metadata/_edit_lock_ = true
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="SlumsTileMap"]
+visible = false
+color = Color(0, 0, 0, 1)
+energy = 0.3
+blend_mode = 2
+range_z_max = 2
+shadow_color = Color(0, 0, 0, 0.486275)
+shadow_item_cull_mask = 2
+
+[node name="Smokes" type="Node" parent="SlumsTileMap"]
+
+[node name="Smoke" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(57, 182)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="Smoke2" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(104, 183)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="Smoke3" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(169, 199)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="Smoke4" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(313, 215)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="Smoke5" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(441, 182)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="Smoke6" type="CPUParticles2D" parent="SlumsTileMap/Smokes"]
+z_index = 3
+position = Vector2(505, 199)
+amount = 10
+lifetime = 2.0
+preprocess = 1.0
+texture = ExtResource("5_0o1m4")
+direction = Vector2(3, -5)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.3
+color = Color(1, 1, 1, 0.117647)
+color_ramp = SubResource("Gradient_qypai")
+
+[node name="AvoidToPoint" type="Marker2D" parent="SlumsTileMap"]
+position = Vector2(429, 115)
+
+[node name="DraggableIcons" type="VBoxContainer" parent="."]
+y_sort_enabled = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 54.0
+offset_top = 33.0
+offset_right = -794.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+metadata/_edit_lock_ = true
+
+[node name="kai" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
+position = Vector2(132, 116)
+attack_damage = 3000
+
+[node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_c73iv")
+animation = &"attack"
+
+[node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
+position = Vector2(132, 244)
+attack_damage = 3000
+
+[node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_l6fur")
+sprite_frames = ExtResource("17_01l8e")
+animation = &"attack"
+
+[node name="tyrone" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
+position = Vector2(132, 372)
+attack_damage = 3000
+
+[node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_tb7un")
+sprite_frames = SubResource("SpriteFrames_y0dk6")
+animation = &"attack"
+
+[node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
+position = Vector2(132, 500)
+attack_damage = 3000
+
+[node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
+material = SubResource("ShaderMaterial_dh8o6")
+sprite_frames = ExtResource("18_fu5ue")
+animation = &"attack"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(15, 0)
+anchor_mode = 0
+zoom = Vector2(3, 3)
+
+[node name="EnemyMoveTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AnimationTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="PushTimer" type="Timer" parent="."]
+
+[node name="AttackRange" type="Marker2D" parent="."]
+position = Vector2(264, 43)
+
+[node name="BossDeath" type="Marker2D" parent="."]
+position = Vector2(240, 112)
+
+[node name="BossDefeatedAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rsv5v")
+}
+
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility"]
+[editable path="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility"]
+[editable path="CanvasLayer/SkillPopups/KaiSkillPopUp"]
+[editable path="CanvasLayer/SkillPopups/EmeraldSkillPopUp"]
+[editable path="CanvasLayer/SkillPopups/TyroneSkillPopUp"]
+[editable path="CanvasLayer/SkillPopups/BettanySkillPopUp"]
+[editable path="DraggableIcons/kai"]
+[editable path="DraggableIcons/emerald"]
+[editable path="DraggableIcons/tyrone"]
+[editable path="DraggableIcons/bettany"]
