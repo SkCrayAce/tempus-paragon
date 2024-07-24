@@ -909,8 +909,6 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D" groups=["enemies"]]
 process_mode = 3
-process_priority = 1
-process_physics_priority = 1
 script = ExtResource("1_g8sqm")
 health = 150000
 attack_damage = 200
