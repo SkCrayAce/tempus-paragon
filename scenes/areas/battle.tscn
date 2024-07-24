@@ -925,6 +925,7 @@ anchor_mode = 0
 zoom = Vector2(3, 3)
 
 [node name="EnemyMoveTimer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 2.0
 one_shot = true
 

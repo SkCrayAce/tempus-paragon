@@ -23,8 +23,7 @@ const SlideDistance = 700
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
 @onready var skill_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
-@onready var enemy_move_timer = get_node("../../../../EnemyMoveTimer") as Timer
-@onready var animation_timer = get_node("../../../../AnimationTimer") as Timer
+
 
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
@@ -77,14 +76,12 @@ func _process(delta):
 				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
 				hover_active = true
 				if Input.is_action_just_pressed("left_click"):
-					enemy_move_timer.stop()
 					eme_skill_active = false
 					play_sfx(EMERALD_SKILL_SFX)
 					prints("hovered tile: ", hovered_tile)
 					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
 						detected_enemy.hit_by_eme_skill(3000)
 					global.is_dragging = false
-					enemy_move_timer.start()
 					start_cooldown()
 					
 			hover_active = false	

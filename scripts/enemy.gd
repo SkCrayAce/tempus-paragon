@@ -89,7 +89,8 @@ func action():
 func hit_by_eme_skill(damage : int):
 	if is_defeated:
 			return
-			
+	enemy_move_timer.stop()
+	animation_timer.stop()
 	for i in 3:
 		show_damage_numbers.call_deferred(damage)
 		if is_instance_valid(effect):
@@ -98,7 +99,10 @@ func hit_by_eme_skill(damage : int):
 			if healthbar.value <= 0:
 				enemy_defeated()
 		await get_tree().create_timer(0.5).timeout
-
+	enemy_move_timer.start(enemy_move_timer.time_left)
+	animation_timer.start(animation_timer.time_left)
+	
+	
 func hit(damage : int):
 	show_damage_numbers.call_deferred(damage)
 	
