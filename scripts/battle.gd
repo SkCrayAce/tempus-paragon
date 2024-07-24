@@ -46,10 +46,11 @@ const max_hover_y : int = bottom_right_tile.y
 @onready var tyrone_drag_icon = $DraggableIcons/tyrone/DragIcon
 @onready var bettany_drag_icon = $DraggableIcons/bettany/DragIcon
 
-@onready var kai_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/UseAbilityBtn
-@onready var emerald_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility/UseAbilityBtn
-@onready var tyrone_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/UseAbilityBtn
-@onready var bettany_ability_btn = $CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/UseAbilityBtn
+@onready var kai_ability = $CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility as TextureRect
+@onready var emerald_ability = $CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility as TextureRect
+@onready var tyrone_ability = $CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility as TextureRect
+@onready var bettany_ability = $CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility as TextureRect
+
 
 var kai_offset_list = [Vector2i(1, 0), Vector2i(0, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 var emerald_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0)]
@@ -99,7 +100,10 @@ func _ready():
 		start_wave()
 	prints("battle started:")
 	
-	
+	kai.character_killed.connect(disable_skill.bind("kai"))
+	emerald.character_killed.connect(disable_skill.bind("emerald"))
+	tyrone.character_killed.connect(disable_skill.bind("tyrone"))
+	bettany.character_killed.connect(disable_skill.bind("bettany"))
 	
 func _process(delta):
 	if anim_start == false:
@@ -240,9 +244,10 @@ func start_wave():
 	used_vectors.clear()
 	global.enemy_dict.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
+	
 	while count < num_of_groups and not force_start:
 		place_formation()
-		
+		prints(attempts, "attempts after return")
 		
 	enemy_move_timer.start()
 
@@ -280,11 +285,10 @@ func place_formation():
 			
 		if not spawn_position in global.enemy_dict and x_valid and y_valid:
 			spawn_positions.append(spawn_position)
-			#attempts = 0
 		else:
 			spawn_positions.clear()
-			attempts += 1
-			prints(attempts, "attempts")
+			attempts = attempts + 1
+			prints(attempts, "attempts before return")
 			if attempts == 10:
 				force_start = true
 			return
@@ -296,7 +300,7 @@ func place_formation():
 	record_enemies()	
 
 	count += 1
-	prints(count, "patterns formed")
+	#prints(count, "patterns formed")
 	spawn_positions.clear()
 			
 func spawn_enemy(spawn_position : Vector2i):	
@@ -341,9 +345,7 @@ func battle_victory(victory : bool):
 		record_char_health()
 		global.battle_won = true
 		prints("battle ended")
-		
-		#tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
-		#await tween.finished
+	
 		var trans_screen = trans_scene.instantiate()
 		add_child(trans_screen)
 		trans_screen.play_animation()
@@ -354,8 +356,6 @@ func battle_victory(victory : bool):
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
-		#tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
-		#await tween.finished
 		TransitionScreen.transition_node.play("fade_out")
 		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
 		#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
@@ -363,7 +363,7 @@ func battle_victory(victory : bool):
 
 func generate_random_vector() -> Vector2i :
 	rng = RandomNumberGenerator.new()
-	rng.seed
+	
 	while true:
 		rng.randomize()
 		var random_x = rng.randi_range(top_left_tile.x, bottom_right_tile.x + 1) 
@@ -389,6 +389,14 @@ func record_char_health():
 	global.tyrone_curr_hp = tyrone.health_bar.value
 	global.bettany_curr_hp = bettany.health_bar.value
 	print("health recorded")
+
+func disable_skill(character : String):
+	prints("tinawag ko si", character)
+	match character:
+		"kai" : kai_ability.disable()
+		"emerald" : emerald_ability.disable()
+		"tyrone" : tyrone_ability.disable()
+		"bettany" : bettany_ability.disable()
 
 func spawn_boss():
 	var boss_instance = slums_boss_scene.instantiate() as CharacterBody2D

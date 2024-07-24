@@ -237,6 +237,7 @@ func take_damage(damage : int):
 		character_defeated()
 
 func character_defeated():
+	character_killed.emit()
 	is_defeated = true
 	anim_sprite.play("death")
 	defeat_filter.show()

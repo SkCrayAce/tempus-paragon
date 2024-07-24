@@ -8,6 +8,7 @@ var hovered_tile : Vector2i
 var eme_skill_AoE : Array[Vector2i]
 var tween
 var init_popup_x_pos : int
+var disabled : bool
 
 const SlideDistance = 427
 
@@ -147,8 +148,13 @@ func slide_out(pop_up : ColorRect):
 	tween.finished.connect(reset_popup.bind(pop_up))
 	#get_tree().paused = false
 	
+func disable():
+	use_ability_btn.set_disabled(true)
+	disabled = true
+	cooldown_filter.show()
 
 func _on_use_ability_btn_mouse_entered():
+	if disabled : return
 	#if ability != null:
 	details_panel.visible = true
 
