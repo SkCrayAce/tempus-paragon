@@ -239,7 +239,8 @@ func start_wave():
 		
 	prints("new wave")
 	count = 0
-	#attempts = 0
+	attempts = 0
+	force_start = false
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	used_vectors.clear()
 	global.enemy_dict.clear()
@@ -247,10 +248,17 @@ func start_wave():
 	
 	while count < num_of_groups and not force_start:
 		place_formation()
-		prints(attempts, "attempts after return")
+	
+	if global.enemy_dict.size() == 0:
+		start_wave()
 		
 	enemy_move_timer.start()
 
+func increase_attempt() :
+		attempts += 1
+		prints(attempts, "in function")
+		if attempts == 100:
+			force_start = true
 		
 func place_formation():
 	var x_valid : bool
@@ -263,6 +271,8 @@ func place_formation():
 	rng.randomize()
 	var random_pattern = rng.randi_range(0, 4)	
 	
+	
+		
 	match random_pattern:
 		0 : current_offset_list = kai_offset_list
 		1 : current_offset_list = emerald_offset_list
@@ -287,12 +297,9 @@ func place_formation():
 			spawn_positions.append(spawn_position)
 		else:
 			spawn_positions.clear()
-			attempts = attempts + 1
-			prints(attempts, "attempts before return")
-			if attempts == 10:
-				force_start = true
+			increase_attempt.call()
 			return
-			break
+		
 		
 	for position in spawn_positions:
 		spawn_enemy(position)

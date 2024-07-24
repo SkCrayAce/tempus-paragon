@@ -105,10 +105,10 @@ func _ready():
 		"bettany" : 
 			attack_sfx.stream = BettanyAtkSfx
 			attack_frame = 15
-			sound_frame = 13
+			sound_frame = 8
 		
 
-		
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

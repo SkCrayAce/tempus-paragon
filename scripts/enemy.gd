@@ -84,6 +84,19 @@ func action():
 	move_animation()
 	current_map_position = tile_map.local_to_map(position)
 
+func hit_by_eme_skill(damage : int):
+	if is_defeated:
+			return
+			
+	for i in 3:
+		show_damage_numbers.call_deferred(damage)
+		if is_instance_valid(effect):
+			effect.play("hit_flash")
+			healthbar.value -= damage/3
+			if healthbar.value <= 0:
+				enemy_defeated()
+		await get_tree().create_timer(0.5).timeout
+
 func hit(damage : int):
 	show_damage_numbers.call_deferred(damage)
 	
