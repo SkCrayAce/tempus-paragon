@@ -505,8 +505,10 @@ _data = {
 }
 
 [node name="Battle" type="Node"]
+process_mode = 1
 script = ExtResource("1_30h06")
-min_num_of_groups = 4
+min_num_of_groups = 20
+max_num_of_groups = 20
 num_of_waves = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
