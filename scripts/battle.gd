@@ -99,6 +99,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
+			
 	if global.slums_boss_battle:
 		spawn_boss()
 	else:
@@ -134,6 +135,13 @@ func _process(delta):
 			"emerald": emerald.preview_attack_AoE(hovered_tile, emerald_offset_list)
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
+			
+	if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
+		enemy_move_timer.set_paused(true)
+		animation_timer.set_paused(true)
+	else:
+		enemy_move_timer.set_paused(false)
+		animation_timer.set_paused(false)
 
 
 				

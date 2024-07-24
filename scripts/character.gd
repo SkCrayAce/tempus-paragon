@@ -175,8 +175,6 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			else: attack_position = tile_map.map_to_local(hovered_tile + 3*Vector2i(-1, 0))
 			
 			tween = create_tween()
-			enemy_move_timer.set_paused(true)
-			animation_timer.set_paused(true)
 			is_attacking = true
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "global_position", attack_position, 0.25).set_ease(Tween.EASE_OUT)
@@ -210,8 +208,6 @@ func return_to_position():
 	var back_to_idle = func(): 
 		anim_sprite.flip_h = false
 		anim_sprite.play("idle")
-		enemy_move_timer.set_paused(false)
-		animation_timer.set_paused(false)
 		is_attacking = false
 		
 	tween = create_tween()
