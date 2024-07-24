@@ -29,7 +29,7 @@ item_quantity = null
 z_index = 1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_nlixm")
-position = Vector2(0, -5.56066)
+position = Vector2(0, -5.46467)
 
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D"]
 visible = false
