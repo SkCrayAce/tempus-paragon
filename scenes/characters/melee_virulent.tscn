@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c04vklf11enqx"]
+[gd_scene load_steps=60 format=3 uid="uid://c04vklf11enqx"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_hihgw"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_qxg8c"]
@@ -180,6 +180,30 @@ region = Rect2(192, 432, 48, 48)
 atlas = ExtResource("2_wldsa")
 region = Rect2(240, 432, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv5cw"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(0, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e40sg"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(48, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdnle"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(96, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e7uh"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(144, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f0v6"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(192, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ghif"]
+atlas = ExtResource("2_wldsa")
+region = Rect2(240, 480, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_m6l54"]
 atlas = ExtResource("2_wldsa")
 region = Rect2(0, 0, 48, 48)
@@ -273,7 +297,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_s1h51")
 }],
 "loop": false,
-"name": &"death",
+"name": &"death1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv5cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e40sg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdnle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e7uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f0v6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ghif")
+}],
+"loop": false,
+"name": &"death2",
 "speed": 5.0
 }, {
 "frames": [{
@@ -379,7 +426,9 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_k11vb")
-animation = &"attack"
+animation = &"death2"
+frame = 5
+frame_progress = 1.0
 offset = Vector2(0, -5)
 
 [node name="Shadow" type="Sprite2D" parent="."]

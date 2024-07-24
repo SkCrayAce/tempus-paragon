@@ -34,6 +34,7 @@ var is_waiting : bool
 var current_map_position : Vector2i
 var tween : Tween
 var new_position : Vector2
+var death_anims = ["death1", "death2"]
 
 @onready var kai = get_node("../../DraggableIcons/kai") as Node2D
 @onready var emerald = get_node("../../DraggableIcons/emerald") as Node2D
@@ -151,7 +152,7 @@ func enemy_defeated():
 	is_defeated = true
 	global.delete_enemy(current_map_position)
 	emit_signal("enemy_died")
-	animated_sprite.play("death")
+	animated_sprite.play(death_anims[randi() % death_anims.size()])
 	remove_from_group("enemies")
 	animated_sprite.animation_finished.connect(queue_free)
 	
