@@ -99,6 +99,7 @@ position = Vector2(-10, 65)
 
 [node name="CollisionShape2D" parent="Door" index="0"]
 position = Vector2(562, 15)
+metadata/_edit_lock_ = true
 
 [node name="Door2" parent="." instance=ExtResource("4_uuvrj")]
 position = Vector2(-10, 65)
@@ -188,6 +189,9 @@ initial_velocity_max = 20.0
 scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_mnp1n")
+
+[node name="ItemSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(354, 115)
 
 [editable path="Door"]
 [editable path="Door2"]

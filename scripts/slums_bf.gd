@@ -8,6 +8,7 @@ extends "res://scripts/slums_control.gd"
 @onready var bossfight_start_anim = $BossfightStartAnim
 @onready var slumsboss = $slumsboss_o
 @onready var bossfight_trigger = $BossfightTrigger
+@onready var item_spawn_point = $ItemSpawnPoint
 
 
 func _ready():
@@ -27,11 +28,11 @@ func _ready():
 		camera_zoom.queue_free()
 		bossfight_trigger.queue_free()
 		zoom.queue_free()
+		global.drop_random_item(item_spawn_point.position)
 
 func _process(delta):
 	pass
 	
-
 
 func play_entry_anim():
 	if not global.battle_won:

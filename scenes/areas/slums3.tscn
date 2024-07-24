@@ -243,5 +243,8 @@ scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_prri2")
 
+[node name="ItemSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(405, 201)
+
 [editable path="Door"]
 [editable path="Door2"]

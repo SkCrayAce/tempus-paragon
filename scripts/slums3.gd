@@ -3,6 +3,7 @@ extends "res://scripts/slums_control.gd"
 @onready var player_animation_start = $PlayerAnimationStart
 @onready var player_animation_end = $PlayerAnimationEnd
 @onready var tile_map = $TileMap as TileMap
+@onready var item_spawn_point = $ItemSpawnPoint
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,6 +21,7 @@ func _ready():
 		
 	elif global.battle_won:
 		super.despawn_enemy(virulent_instance)
+		global.drop_random_item(item_spawn_point.position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

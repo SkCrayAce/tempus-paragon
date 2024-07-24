@@ -30,7 +30,6 @@ func _ready():
 	if global.battle_won:
 		player_instance.position = global.player_position
 		add_child(player_instance)
-		global.drop_random_item(player_instance.position)
 		#global.current_scene = ""
 	
 	

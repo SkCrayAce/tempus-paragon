@@ -292,6 +292,9 @@ libraries = {
 "": SubResource("AnimationLibrary_uru2l")
 }
 
+[node name="ItemSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(369, 147)
+
 [connection signal="body_entered" from="BossfightTrigger" to="." method="_on_bossfight_trigger_body_entered"]
 
 [editable path="slumsboss_o"]

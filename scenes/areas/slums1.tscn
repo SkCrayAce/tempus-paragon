@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bextdwc3w0yr8"]
+[gd_scene load_steps=11 format=3 uid="uid://bextdwc3w0yr8"]
 
 [ext_resource type="Script" path="res://scripts/slums1.gd" id="1_bewti"]
+[ext_resource type="Texture2D" uid="uid://co4jo0jkhkp7r" path="res://tempus_assets/light textures/radial_light.tres" id="3_7y5io"]
 [ext_resource type="TileSet" uid="uid://xdtkn1161v60" path="res://scenes/areas/tilesets/slums.tres" id="3_43um7"]
 [ext_resource type="PackedScene" uid="uid://duo40oekbica8" path="res://scenes/door.tscn" id="3_u1svb"]
 [ext_resource type="Texture2D" uid="uid://buposkwyqngwj" path="res://tempus_assets/particles/smoke.png" id="5_3yo8p"]
@@ -11,15 +12,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_gxpnj"]
 gradient = SubResource("Gradient_7dbpd")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_idmkm"]
-offsets = PackedFloat32Array(0.0362319, 0.746377)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_f4wx6"]
-gradient = SubResource("Gradient_idmkm")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -80,37 +72,37 @@ texture = SubResource("GradientTexture2D_gxpnj")
 position = Vector2(248, 29)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D3" type="PointLight2D" parent="TileMap"]
 position = Vector2(616, 14)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D4" type="PointLight2D" parent="TileMap"]
 position = Vector2(167, 188)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D6" type="PointLight2D" parent="TileMap"]
 position = Vector2(536, 252)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D7" type="PointLight2D" parent="TileMap"]
 position = Vector2(584, 238)
 scale = Vector2(0.697265, 0.697265)
 color = Color(1, 1, 0.0352941, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D8" type="PointLight2D" parent="TileMap"]
 position = Vector2(601, 7)
 scale = Vector2(0.697265, 0.697265)
 color = Color(0.91486, 0.000683842, 0.915628, 1)
-texture = SubResource("GradientTexture2D_f4wx6")
+texture = ExtResource("3_7y5io")
 
 [node name="PointLight2D5" type="PointLight2D" parent="TileMap"]
 position = Vector2(368, 16)
@@ -344,3 +336,6 @@ initial_velocity_max = 20.0
 scale_amount_min = 0.3
 color = Color(1, 1, 1, 0.117647)
 color_ramp = SubResource("Gradient_656v6")
+
+[node name="ItemSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(550, 79)
