@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=57 format=3 uid="uid://jyatbitas1x6"]
+[gd_resource type="SpriteFrames" load_steps=57 format=3 uid="uid://c0djy5oewi1c6"]
 
 [ext_resource type="Texture2D" uid="uid://cx7xnvhy3p4hp" path="res://sprites/characters/player.png" id="1_3qqvy"]
 [ext_resource type="Texture2D" uid="uid://cbv8rtphk00j3" path="res://tempus_assets/kaichibi.png" id="2_2t5xg"]

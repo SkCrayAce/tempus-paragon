@@ -21,7 +21,8 @@ const bottom_right_tile = Vector2i(23, 10)
 
 @export var max_health : int = 3000
 @export var attack_damage : int
-@export var attack_frame : int = 4
+var attack_frame : int 
+var sound_frame : int 
 
 const BettanyAtkSfx = preload("res://audio/sfx/basicATK_bettany_v03.mp3")
 const EmeraldAtkSfx = preload("res://audio/sfx/basicATK_emerald_v03.mp3")
@@ -77,13 +78,29 @@ func _ready():
 	
 	initial_pos = char_sprite.global_position
 	anim_sprite.frame_changed.connect(inflict_damage)
+	anim_sprite.frame_changed.connect(play_sfx)
 	anim_sprite.play("idle")
 	
 	match name :
-		"kai" : attack_frame = 4
-		"emerald" : attack_frame = 5
-		"tyrone" : attack_frame = 10
-		"bettany" : attack_frame = 15
+		"kai" : 
+			attack_sfx.stream = KaiAtkSfx
+			attack_frame = 5
+			sound_frame = 4
+		"emerald" : 
+			attack_sfx.stream = EmeraldAtkSfx
+			attack_frame = 5
+			sound_frame = 5
+		"tyrone" : 
+			attack_sfx.stream = TyroneAtkSfx
+			attack_frame = 10
+			sound_frame = 8
+		"bettany" : 
+			attack_sfx.stream = BettanyAtkSfx
+			attack_frame = 15
+			sound_frame = 13
+		
+
+		
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -145,7 +162,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			var attack_position 
 			
 			if name == "kai" or name == "tyrone": attack_position = tile_map.map_to_local(hovered_tile + Vector2i(-1, 0))
-			else: attack_position = tile_map.map_to_local(hovered_tile + 2*Vector2i(-1, 0))
+			else: attack_position = tile_map.map_to_local(hovered_tile + 3*Vector2i(-1, 0))
 			
 			tween = create_tween()
 			enemy_move_timer.set_paused(true)
@@ -157,19 +174,17 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
-	match name:
-		"kai": attack_sfx.stream = KaiAtkSfx
-		"emerald" : attack_sfx.stream = EmeraldAtkSfx
-		"tyrone" : attack_sfx.stream = TyroneAtkSfx
-		"bettany" : attack_sfx.stream = BettanyAtkSfx
-	
 	anim_sprite.play("attack")
 	anim_sprite.animation_finished.connect(return_to_position)
 			
+func play_sfx():
+	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
+		attack_sfx.play()
+	
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
 		return
-	attack_sfx.play()
+		
 	start_cooldown()
 	
 	for offset in offset_list:
@@ -222,6 +237,7 @@ func take_damage(damage : int):
 		character_defeated()
 
 func character_defeated():
+	character_killed.emit()
 	is_defeated = true
 	anim_sprite.play("death")
 	defeat_filter.show()

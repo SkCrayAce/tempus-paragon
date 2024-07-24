@@ -94,7 +94,6 @@ func burn(damage : int):
 	for i in 5:
 		hit(damage)	
 		await get_tree().create_timer(1).timeout
-		prints("burn")
 		continue
 
 func show_damage_numbers(damage : int):

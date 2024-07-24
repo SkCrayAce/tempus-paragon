@@ -8,8 +8,9 @@ var hovered_tile : Vector2i
 var eme_skill_AoE : Array[Vector2i]
 var tween
 var init_popup_x_pos : int
+var disabled : bool
 
-const SlideDistance = 427
+const SlideDistance = 490
 
 @onready var use_ability_btn = $UseAbilityBtn
 @onready var ability_icon = $"AbilityIcon"
@@ -24,6 +25,13 @@ const SlideDistance = 427
 
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
+@onready var emerald_skill_pop_up = get_node("../../../SkillPopups/EmeraldSkillPopUp") as ColorRect
+@onready var bettany_skill_pop_up = get_node("../../../SkillPopups/BettanySkillPopUp") as ColorRect
+
+@onready var kai = get_node("../../../../DraggableIcons/kai") as Node2D
+@onready var emerald = get_node("../../../../DraggableIcons/emerald") as Node2D
+@onready var tyrone = get_node("../../../../DraggableIcons/tyrone") as Node2D
+@onready var bettany = get_node("../../../../DraggableIcons/bettany") as Node2D
 
 #Ability
 var ability = null
@@ -66,8 +74,7 @@ func _process(delta):
 					start_cooldown()
 					
 			hover_active = false	
-		
-			
+					
 func switch_ability():
 	match name:
 		"KaiAbility": kai_skill()
@@ -94,7 +101,7 @@ func kai_skill():
 	
 func tyrone_skill():
 	slide_in.call(tyrone_skill_pop_up)
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(3).timeout
 	
 	for character in get_tree().get_nodes_in_group("characters"):
 		if not character.is_defeated:
@@ -125,7 +132,11 @@ func end_cooldown():
 	
 func slide_in(pop_up : ColorRect):
 	pop_up.position.x = -SlideDistance
+	pop_up.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	get_tree().paused = true
 	pop_up.show()
 	tween.tween_property(pop_up, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
@@ -133,18 +144,28 @@ func slide_in(pop_up : ColorRect):
 	
 func slide_out(pop_up : ColorRect):
 	var reset_popup = func(pop_up : ColorRect):
+		get_tree().paused = false
 		pop_up.hide()
 		pop_up.position.x = -SlideDistance
 		return
-		
+	
+	pop_up.process_mode = Node.PROCESS_MODE_ALWAYS
 	tween = create_tween()
-	tween.tween_property(pop_up, "position:x", 490, 0.5).set_trans(Tween.TRANS_EXPO)
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(pop_up, "position:x", SlideDistance, 0.5).set_trans(Tween.TRANS_EXPO)
 	tween.finished.connect(reset_popup.bind(pop_up))
 	#get_tree().paused = false
 	
+func disable():
+	use_ability_btn.set_disabled(true)
+	disabled = true
+	end_cooldown()
+	cooldown_filter.show()
 
 func _on_use_ability_btn_mouse_entered():
-	#if ability != null:
+	if disabled : return
+	
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	details_panel.visible = true
 
 
