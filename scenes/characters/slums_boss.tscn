@@ -964,7 +964,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 3000
+attack_damage = 1500
 wait_anim_time = 1.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]

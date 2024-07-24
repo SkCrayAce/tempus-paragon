@@ -104,11 +104,13 @@ func randomize_index():
 func hit(damage : int):
 	hit_effect.play("hit_flash")
 	show_damage_numbers(damage)
-	healthbar.value -= damage
 	
-	if healthbar.value <= 0:
+	if (healthbar.value - damage) <= 0:
 		death()
-		
+	
+	healthbar.value -= damage
+
+
 func show_damage_numbers(damage : int):
 	
 	var number = Label.new()

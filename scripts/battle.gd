@@ -160,9 +160,9 @@ func ui_start_animation():
 	tween.tween_property(move_timer_bar, "position", mtb_old_pos, 2).set_trans(Tween.TRANS_EXPO)
 	
 	tween.tween_property(kai_drag_icon, "position", kai_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(emerald_drag_icon, "position", emerald_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(emerald_drag_icon, "position", emerald_da_old_pos, 2).set_trans(Tween.TRANS_EXPO).set_delay(0.05)
+	tween.tween_property(tyrone_drag_icon, "position", tyrone_da_old_pos, 2).set_trans(Tween.TRANS_EXPO).set_delay(0.1)
+	tween.tween_property(bettany_drag_icon, "position", bettany_da_old_pos, 2).set_trans(Tween.TRANS_EXPO).set_delay(0.15)
 
 func set_up_character_health():
 	

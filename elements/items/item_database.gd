@@ -22,7 +22,7 @@ var items_uncommon = [
 	{"type": "Non-consumable", "name": "Cog Ring", "effect": "Become invincible for a short duration after getting hit", "rarity": "Uncommon",  
 	"texture": preload("res://tempus_assets/item sprites/item-spritesheet8.png"), "quantity": 1},
 	{"type": "Non-consumable", "name": "Anima Ring", "effect": "Grants health regeneration but increases Attack Cooldown", "rarity": "Uncommon",  
-	"texture": preload("res://tempus_assets/item sprites/item-spritesheet8.png"), "quantity": 1}
+	"texture": preload("res://tempus_assets/item sprites/item-spritesheet9.png"), "quantity": 1}
 	]
 
 var items_rare = [
