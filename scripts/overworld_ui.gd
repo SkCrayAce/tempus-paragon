@@ -11,17 +11,28 @@ extends Control
 @onready var tyrone_health_bar = $PartyContainer/tyrone/HealthBar
 @onready var bettany_health_bar = $PartyContainer/bettany/HealthBar
 
+@onready var kai_button = $PartyContainer/kai/kaiButton
+@onready var emerald_button = $PartyContainer/emerald/emeraldButton
+@onready var tyrone_button = $PartyContainer/tyrone/tyroneButton
+@onready var bettany_button = $PartyContainer/bettany/bettanyButton
+
+@onready var kai_head = $PartyContainer/kai/TextureRect
+@onready var emerald_head = $PartyContainer/emerald/TextureRect
+@onready var tyrone_head = $PartyContainer/tyrone/TextureRect
+@onready var bettany_head = $PartyContainer/bettany/TextureRect
 
 const pc_init_pos = Vector2(-100, 2)
 const pc_end_pos  = Vector2(2, 2)
 const c_init_pos = Vector2(2, 2)
 const c_end_pos = Vector2(2, -50)
 var playermenu_isopen = false
+var characters_alive = {"kai" : true, "emerald" : true, "tyrone" : true, "bettany" : true}
 
 signal switched_character(character : String)
 
 func _ready():
 	setup_health()
+	set_defeated_chars()
 
 func setup_health():
 	kai_health_bar.max_value = global.kai_max_hp
@@ -36,7 +47,20 @@ func setup_health():
 	bettany_health_bar.max_value = global.bettany_max_hp
 	bettany_health_bar.value = global.bettany_curr_hp
 	
-	#mc_health_bar.max_value = 
+
+func set_defeated_chars():
+	if global.kai_curr_hp <= 0:
+		kai_button.disabled = true
+		kai_head.texture = load("res://tempus_assets/chibi heads/kai_defeated_chibi_head.png")
+	if global.emerald_curr_hp <= 0:
+		emerald_button.disabled = true
+		emerald_head.texture = load("res://tempus_assets/chibi heads/emerald_defeated_chibi_head.png")
+	if global.tyrone_curr_hp <= 0:
+		tyrone_button.disabled = true
+		tyrone_head.texture = load("res://tempus_assets/chibi heads/tyrone_defeated_chibi_head.png")
+	if global.bettany_curr_hp <= 0:
+		bettany_button.disabled = true
+		bettany_head.texture = load("res://tempus_assets/chibi heads/bettany_defeated_chibi_head.png")
 
 func switch_player(character : String):
 	#TODO: check if player dead, switch sprite textures, switch health value
@@ -78,7 +102,6 @@ func _on_button_pressed():
 	toggle_player_menu()
 
 func toggle_player_menu():
-	print("playermenu toggled")
 	if playermenu_isopen == true:
 		var tween = create_tween().set_parallel()
 		tween.tween_property(main_character, "position", c_init_pos, 1).set_trans(Tween.TRANS_EXPO)

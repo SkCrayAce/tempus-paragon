@@ -389,6 +389,15 @@ func record_char_health():
 	global.tyrone_curr_hp = tyrone.health_bar.value
 	global.bettany_curr_hp = bettany.health_bar.value
 	print("health recorded")
+	
+	if global.kai_curr_hp <= 0:
+		global.character_status["kai"] = false
+	if global.emerald_curr_hp <= 0:
+		global.character_status["emerald"] = false
+	if global.tyrone_curr_hp <= 0:
+		global.character_status["tyrone"] = false
+	if global.bettany_curr_hp <= 0:
+		global.character_status["bettany"] = false
 
 func disable_skill(character : String):
 	prints("tinawag ko si", character)

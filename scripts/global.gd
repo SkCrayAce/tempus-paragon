@@ -5,18 +5,20 @@ const EnemyBody = preload("res://scripts/enemy.gd")
 
 var player_input_enabled = true
 var current_overworld_character : String = "kai"
+#record - if character is alive
+var character_status = {"kai" : true, "emerald" : true, "tyrone" : true, "bettany" : true}
 
 #health data
 var hp_initialized : bool = false
-var kai_max_hp : int
-var emerald_max_hp : int
-var tyrone_max_hp : int
-var bettany_max_hp: int
+var kai_max_hp : int = 1
+var emerald_max_hp : int = 1
+var tyrone_max_hp : int = 1
+var bettany_max_hp: int = 1
 
-var kai_curr_hp : int
-var emerald_curr_hp : int
-var tyrone_curr_hp : int
-var bettany_curr_hp : int
+var kai_curr_hp : int = 1
+var emerald_curr_hp : int = 1
+var tyrone_curr_hp : int = 1
+var bettany_curr_hp : int = 1
 
 # battle scene vars
 var is_dragging = false

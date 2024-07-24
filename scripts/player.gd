@@ -120,7 +120,6 @@ func _input(event):
 	if event.is_action_pressed("ui_inventory"):
 		inventory_ui_anim()
 	if event.is_action_pressed("ui_playermenu"):
-		print("pressed")
 		overworld_ui.toggle_player_menu()
 
 func apply_item_effect(item):
@@ -144,7 +143,27 @@ func inventory_ui_anim():
 		inventory_ui.visible = false
 
 func set_character(character: String):
+	if global.character_status[character] == false:
+		character = get_next_alive_character(character)
+	
 	overworld_ui.switch_player(character)
+
+func get_next_alive_character(character : String):
+	var keys = global.character_status.keys()
+	var found_main_character = false
+	
+	for key in keys:
+		if key == character:
+			found_main_character = true
+			continue
+		if found_main_character and global.character_status[key]:
+			return key
+	
+	for key in keys:
+		if global.character_status[key]:
+			return key
+	
+	return ""
 
 func _on_switch_character_signal_recieved(character : String):
 
