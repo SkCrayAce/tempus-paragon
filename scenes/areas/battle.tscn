@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=83 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://djt1cd4owv1my" path="res://tempus_assets/ability sprites/skill_icons33.png" id="5_4aa5m"]
 [ext_resource type="Texture2D" uid="uid://bm6w5gqxqjq36" path="res://tempus_assets/ability sprites/skill_icons36.png" id="6_y5ml1"]
 [ext_resource type="Texture2D" uid="uid://bb6aexrlbyn3v" path="res://tempus_assets/ability sprites/skill_icons13.png" id="7_libma"]
+[ext_resource type="Texture2D" uid="uid://c7e3vtcre8ts3" path="res://tempus_assets/chibi heads/tyrone_chibi_head.png" id="8_64q0s"]
 [ext_resource type="PackedScene" uid="uid://cqrt5njcuob82" path="res://scenes/skill_pop_up.tscn" id="9_eowdg"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
+[ext_resource type="Texture2D" uid="uid://df5ugnnp2gpkq" path="res://tempus_assets/chibi heads/bettany_chibi_head.png" id="10_kofbx"]
 [ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="10_tfk3o"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
 [ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
@@ -625,6 +627,9 @@ text = "Hands of the Healer"
 [node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/DetailsPanel" index="1"]
 text = "Heals everyone in the party by a significant amount,"
 
+[node name="Sprite2D" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility/HeadContainer" index="0"]
+texture = ExtResource("8_64q0s")
+
 [node name="BettanyAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
 
@@ -636,6 +641,9 @@ text = "Focused Chaos"
 
 [node name="AbilityDescription" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/DetailsPanel" index="1"]
 text = "Deal burning damage to every enemy."
+
+[node name="Sprite2D" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility/HeadContainer" index="0"]
+texture = ExtResource("10_kofbx")
 
 [node name="SkillPopups" type="Control" parent="CanvasLayer"]
 custom_minimum_size = Vector2(427, 240)
