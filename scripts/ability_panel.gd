@@ -22,7 +22,7 @@ const SlideDistance = 700
 @onready var cooldown_filter = $AbilityIcon/CooldownFilter
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
-@onready var skill_sfx = $AudioStreamPlayer2D as AudioStreamPlayer2D
+@onready var skill_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
 @onready var enemy_move_timer = get_node("../../../../EnemyMoveTimer") as Timer
 @onready var animation_timer = get_node("../../../../AnimationTimer") as Timer
 
@@ -61,7 +61,7 @@ func _ready():
 	tyrone_skill_pop_up.position.x = -SlideDistance
 	bettany_skill_pop_up.position.x = -SlideDistance
 	
-	
+	skill_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
@@ -97,9 +97,9 @@ func switch_ability():
 		"BettanyAbility": bettany_skill()
 
 func play_sfx(sfx_stream : AudioStream):
-	skill_sfx.stream = sfx_stream
-	skill_sfx.play()
-	await skill_sfx.finished
+	skill_sfx_player.stream = sfx_stream
+	skill_sfx_player.play()
+	await skill_sfx_player.finished
 	return
 		
 func kai_skill():
@@ -124,9 +124,12 @@ func tyrone_skill():
 	slide_in.call(tyrone_skill_pop_up)
 	await get_tree().create_timer(2).timeout
 	play_sfx(TYRONE_SKILL_SFX)
+	tween = create_tween().set_parallel()
 	for character in get_tree().get_nodes_in_group("characters"):
 		if not character.is_defeated:
-			character.health_bar.value += character.health_bar.max_value * 0.70
+			var new_health = character.health_bar.value + character.health_bar.max_value * 0.70
+			tween.tween_property(character.health_bar, "value", new_health, 1)
+			#character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()
 	start_cooldown()
 	

@@ -59,8 +59,8 @@ const BossScript = preload("res://scripts/slums_boss AI/slumsboss.gd")
 @onready var battle_sprite = $BattleSprite as Node2D
 @onready var anim_sprite : AnimatedSprite2D = $BattleSprite/AnimatedSprite2D
 @onready var hit_effect = $BattleSprite/HitEffect
-@onready var attack_sfx = $AttackSFX as AudioStreamPlayer2D
-@onready var hurt_sfx = $HurtSFX as AudioStreamPlayer2D
+@onready var attack_sfx_player = $AttackSFXPlayer as AudioStreamPlayer2D
+@onready var hurt_sfx_player = $HurtSFXPlayer as AudioStreamPlayer2D
 
 var char_sprite : Node2D
 
@@ -91,22 +91,24 @@ func _ready():
 	
 	match name :
 		"kai" : 
-			attack_sfx.stream = KaiAtkSfx
+			attack_sfx_player.stream = KaiAtkSfx
 			attack_frame = 5
 			sound_frame = 4
 		"emerald" : 
-			attack_sfx.stream = EmeraldAtkSfx
+			attack_sfx_player.stream = EmeraldAtkSfx
 			attack_frame = 5
 			sound_frame = 5
 		"tyrone" : 
-			attack_sfx.stream = TyroneAtkSfx
+			attack_sfx_player.stream = TyroneAtkSfx
 			attack_frame = 10
 			sound_frame = 8
 		"bettany" : 
-			attack_sfx.stream = BettanyAtkSfx
+			attack_sfx_player.stream = BettanyAtkSfx
 			attack_frame = 15
 			sound_frame = 8
-		
+	
+	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	hurt_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 
 	
 	
@@ -187,7 +189,7 @@ func attack_animation():
 			
 func play_attack_sfx():
 	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
-		attack_sfx.play()
+		attack_sfx_player.play()
 	
 func inflict_damage():
 	if not anim_sprite.animation == "attack" or not anim_sprite.frame == attack_frame:
@@ -236,8 +238,8 @@ func end_cooldown():
 
 func take_damage(damage : int):
 	var play_hurt_sfx = func(stream):
-		hurt_sfx.stream = stream
-		hurt_sfx.play()
+		hurt_sfx_player.stream = stream
+		hurt_sfx_player.play()
 		
 	match name:
 		"kai" : play_hurt_sfx.call(KAI_HURT_SFX)

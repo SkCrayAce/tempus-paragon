@@ -22,7 +22,7 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var appear_smoke = $AppearSmoke
-@onready var attack_sfx = $AudioStreamPlayer2D as AudioStreamPlayer2D
+@onready var attack_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
 
 
 var player_chase = false
@@ -63,8 +63,10 @@ func _ready():
 	animated_sprite.frame_changed.connect(inflict_damage)
 	current_map_position = tile_map.local_to_map(position)
 	
-	attack_sfx.stream = VirulentAttackSfx
-
+	
+	attack_sfx_player.stream = VirulentAttackSfx
+	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
 
@@ -91,7 +93,7 @@ func hit_by_eme_skill(damage : int):
 	for i in 3:
 		show_damage_numbers.call_deferred(damage)
 		if is_instance_valid(effect):
-			effect.play("hit_flash")
+			effect.play("hit_flash", -1, 1.5)
 			healthbar.value -= damage/3
 			if healthbar.value <= 0:
 				enemy_defeated()
@@ -191,7 +193,7 @@ func attack_animation():
 	
 	if not within_attack_range() or not is_attacking or finished_attacking: return
 	
-	attack_sfx.play()
+	attack_sfx_player.play()
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
 	#animated_sprite.play("side_idle_left")
