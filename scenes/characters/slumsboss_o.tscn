@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://bmgy7oxhcqxo1"]
+[gd_scene load_steps=31 format=3 uid="uid://bmgy7oxhcqxo1"]
 
 [ext_resource type="Texture2D" uid="uid://d21askene7pne" path="res://tempus_assets/boss_slums-sheet.png" id="1_3g05h"]
 [ext_resource type="Script" path="res://scripts/slumsboss_o.gd" id="1_4l7fb"]
 [ext_resource type="Texture2D" uid="uid://duv0gduy70pch" path="res://tempus_assets/slums_boss_shadow.png" id="2_ypp4v"]
+[ext_resource type="AudioStream" uid="uid://crceshpnut3mm" path="res://audio/04 - Boss/02 - Evil Laugh/boss-laugh.mp3" id="4_g1g4g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hgcet"]
 atlas = ExtResource("1_3g05h")
@@ -224,3 +225,6 @@ frame_progress = 1.0
 [node name="Shadow" type="Sprite2D" parent="AnimatedSprite2D"]
 z_index = -1
 texture = ExtResource("2_ypp4v")
+
+[node name="BossLaugh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_g1g4g")

@@ -79,7 +79,9 @@ func _on_bossfight_trigger_body_entered(body):
 			tween.tween_property(zoom, "position", slumsboss.position - Vector2(0, slumsboss.position.y - player_animation_end.position.y), 3).set_ease(Tween.EASE_IN_OUT)
 			await get_tree().create_timer(3).timeout
 			slumsboss.anim.play("laugh")
+			slumsboss.boss_laugh.play()
 			await get_tree().create_timer(3).timeout
+			slumsboss.boss_laugh.stop()
 			slumsboss.anim.play("idle")
 			print(global.transition_commence)
 			

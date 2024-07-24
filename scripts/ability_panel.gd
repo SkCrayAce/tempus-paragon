@@ -142,6 +142,10 @@ func bettany_skill():
 	await bettany_anim_sprite.animation_finished
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(600)
+	
+	for enemy in get_tree().get_nodes_in_group("boss"):
+		enemy.burn(600)
+	
 	start_cooldown()
 
 func emerald_skill():

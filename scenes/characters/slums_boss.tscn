@@ -912,8 +912,7 @@ _data = {
 "hit_flash": SubResource("Animation_3x2on")
 }
 
-[node name="SlumsBoss" type="CharacterBody2D" groups=["enemies"]]
-process_mode = 3
+[node name="SlumsBoss" type="CharacterBody2D" groups=["boss"]]
 script = ExtResource("1_g8sqm")
 health = 150000
 attack_damage = 200
