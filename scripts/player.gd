@@ -150,7 +150,8 @@ func _on_switch_character_signal_recieved(character : String):
 	print("signal recieved ", character)
 
 	print("poof! ", poof.visible)
-	poof.play("poof")
+	if global.current_overworld_character != character:
+		poof.play("poof")
 	
 	match character:
 		"kai":
