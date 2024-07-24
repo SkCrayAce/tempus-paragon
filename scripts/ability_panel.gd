@@ -2,6 +2,7 @@ extends TextureRect
 
 const Battle = preload("res://scripts/battle.gd")
 const Enemy = preload("res://scripts/enemy.gd")
+const Boss = preload("res://scripts/slums_boss AI/slumsboss.gd")
 
 var eme_skill_active : bool
 var hovered_tile : Vector2i
@@ -62,6 +63,8 @@ func _ready():
 	
 	skill_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
+	start_cooldown()
+	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 	
@@ -79,7 +82,8 @@ func _process(delta):
 				if Input.is_action_just_pressed("left_click"):
 					eme_skill_active = false
 					play_sfx(EMERALD_SKILL_SFX)
-					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
+					var valid_enemy = detected_enemy is Enemy or detected_enemy is Boss
+					if is_instance_valid(detected_enemy) and valid_enemy:
 						detected_enemy.hit_by_eme_skill(3000)
 					global.is_dragging = false
 					start_cooldown()
@@ -138,7 +142,7 @@ func bettany_skill():
 	await bettany_anim_sprite.animation_finished
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(600)
-	#start_cooldown()
+	start_cooldown()
 
 func emerald_skill():
 	slide_in(emerald_skill_pop_up)

@@ -11,6 +11,8 @@ extends CharacterBody2D
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var tile_map = get_parent() as TileMap
 @onready var boss_name = $BossHealthContainer/BossName
+@onready var enemy_move_timer = get_node("../../EnemyMoveTimer") as Timer
+@onready var animation_timer = get_node("../../AnimationTimer") as Timer
 
 
 #FSM References---------------------------------------
@@ -101,6 +103,12 @@ func randomize_index():
 	new_index = rng.randi() % states_to_choose.size()
 	fsm.change_state(states_to_choose[new_index])
 
+func burn(damage : int):
+	for i in 5:
+		hit(damage)	
+		await get_tree().create_timer(1).timeout
+		continue
+		
 func hit(damage : int):
 	hit_effect.play("hit_flash")
 	show_damage_numbers(damage)
@@ -109,6 +117,23 @@ func hit(damage : int):
 	if healthbar.value <= 0:
 		death()
 		
+func hit_by_eme_skill(damage : int):
+	if is_defeated:
+			return
+	enemy_move_timer.set_paused(true)
+	animation_timer.set_paused(true)
+	
+	for i in 3:
+		show_damage_numbers.call_deferred(damage)
+		if is_instance_valid(hit_effect):
+			hit_effect.play("hit_flash", -1, 1.5)
+			healthbar.value -= damage/3
+			if healthbar.value <= 0:
+				death()
+		await get_tree().create_timer(0.5).timeout
+	enemy_move_timer.set_paused(false)
+	animation_timer.set_paused(false)
+	
 func show_damage_numbers(damage : int):
 	
 	var number = Label.new()

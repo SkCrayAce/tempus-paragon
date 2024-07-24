@@ -99,6 +99,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
+			
 	if global.slums_boss_battle:
 		spawn_boss()
 	else:
