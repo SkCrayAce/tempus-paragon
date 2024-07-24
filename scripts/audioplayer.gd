@@ -8,7 +8,7 @@ const city_music = preload("res://audio/music/overworld01_v02.wav")
 #const underground_music = preload()
 
 func _ready():
-	process_mode = Node.PROCESS_MODE_DISABLED
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _play_music(music: AudioStream, volume = 0.0):
 	if stream == music:
@@ -34,6 +34,6 @@ func play_music_level():
 		#_play_music(underground_music)
 
 func _process(delta):
-	if playing == false or get_tree().paused:
+	if playing == false:
 		playing = true
 		

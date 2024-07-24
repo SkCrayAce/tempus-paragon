@@ -14,6 +14,7 @@ var eme_skill_active : bool
 var eme_skill_AoE : Array[Vector2i]
 var attempts : int
 var force_start : bool
+var tween : Tween
 
 
 const grid_length : int = 120
@@ -87,6 +88,7 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
+	battle_start_popup.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	for x in grid_length:
 		for y in grid_height:
@@ -98,7 +100,7 @@ func _ready():
 	else:
 		await get_tree().create_timer(3).timeout
 		start_wave()
-	prints("battle started:")
+	prints("battle started with", enemy_list.size(), "enemies")
 	
 	kai.character_killed.connect(disable_skill.bind("kai"))
 	emerald.character_killed.connect(disable_skill.bind("emerald"))
@@ -132,12 +134,28 @@ func _process(delta):
 
 				
 func show_start_screen():
-	var hide_start_screen = func():
+	var hide_start_screen = func(init_y : int, final_y : int):
+		tween = create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		
+		tween.tween_property(battle_start_popup, "position:y", final_y, 0.5).set_trans(Tween.TRANS_EXPO)
+		await tween.finished
 		battle_start_popup.hide()
+		battle_start_popup.position.y = init_y
 		get_tree().paused = false
-	battle_start_popup.show()
+		
+	var init_y = battle_start_popup.position.y
+	var final_y = init_y + 400
+	
 	get_tree().paused = true
-	get_tree().create_timer(2).timeout.connect(hide_start_screen)
+	
+	tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	battle_start_popup.position.y -= 400
+	battle_start_popup.show()
+	tween.tween_property(battle_start_popup, "position:y", init_y, 0.5).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	get_tree().create_timer(2).timeout.connect(hide_start_screen.bind(init_y, final_y))
 	set_up_character_health()
 
 func ui_start_animation():
@@ -344,6 +362,9 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		if not global.boss_spawning:
 			start_wave.call_deferred()
 
+func show_new_wave_pop_up():
+	pass
+	
 func battle_victory(victory : bool):
 	var tween = create_tween()
 	tween.tween_property(AudioPlayer, "volume_db", -100.0, 3)
