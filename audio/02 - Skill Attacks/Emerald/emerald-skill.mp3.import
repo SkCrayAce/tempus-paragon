@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://orsq66ci5mxk"
+path="res://.godot/imported/emerald-skill.mp3-2ec4d650b5c3077c1756dc26f8207124.mp3str"
+
+[deps]
+
+source_file="res://audio/02 - Skill Attacks/Emerald/emerald-skill.mp3"
+dest_files=["res://.godot/imported/emerald-skill.mp3-2ec4d650b5c3077c1756dc26f8207124.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

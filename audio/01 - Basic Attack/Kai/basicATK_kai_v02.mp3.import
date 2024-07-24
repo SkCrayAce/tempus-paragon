@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://4wh4ickeohmo"
+path="res://.godot/imported/basicATK_kai_v02.mp3-b1285e6945b85e2d3579faa3e14729bb.mp3str"
+
+[deps]
+
+source_file="res://audio/01 - Basic Attack/Kai/basicATK_kai_v02.mp3"
+dest_files=["res://.godot/imported/basicATK_kai_v02.mp3-b1285e6945b85e2d3579faa3e14729bb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

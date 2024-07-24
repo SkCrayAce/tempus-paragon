@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cgg5c5wssqi2j"
+path="res://.godot/imported/step on concrete_boots.mp3-bceb135848b9b073c6e85d1c4d1cadd2.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/06 - Concrete Footstep/step on concrete_boots.mp3"
+dest_files=["res://.godot/imported/step on concrete_boots.mp3-bceb135848b9b073c6e85d1c4d1cadd2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

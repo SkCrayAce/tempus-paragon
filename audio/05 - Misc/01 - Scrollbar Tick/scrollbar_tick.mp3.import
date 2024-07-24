@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cgsdycis6fnpi"
+path="res://.godot/imported/scrollbar_tick.mp3-65f7fc536263840acfdde344cde3cb18.mp3str"
+
+[deps]
+
+source_file="res://audio/05 - Misc/01 - Scrollbar Tick/scrollbar_tick.mp3"
+dest_files=["res://.godot/imported/scrollbar_tick.mp3-65f7fc536263840acfdde344cde3cb18.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dfnlv62cfhc6w"
+path="res://.godot/imported/basicATK_emerald_v03.mp3-d24ed24950611909cf67c41771a0ed97.mp3str"
+
+[deps]
+
+source_file="res://audio/01 - Basic Attack/Emerald/basicATK_emerald_v03.mp3"
+dest_files=["res://.godot/imported/basicATK_emerald_v03.mp3-d24ed24950611909cf67c41771a0ed97.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
