@@ -78,7 +78,6 @@ func _process(delta):
 				if Input.is_action_just_pressed("left_click"):
 					eme_skill_active = false
 					play_sfx(EMERALD_SKILL_SFX)
-					prints("hovered tile: ", hovered_tile)
 					if is_instance_valid(detected_enemy) and detected_enemy is Enemy:
 						detected_enemy.hit_by_eme_skill(3000)
 					global.is_dragging = false
@@ -134,11 +133,11 @@ func bettany_skill():
 	slide_in(bettany_skill_pop_up)
 	await get_tree().create_timer(2).timeout
 	play_sfx(BETTANY_SKILL_SFX)
-	bettany_anim_sprite.play("attack")
+	bettany_anim_sprite.play("special_attack")
 	await bettany_anim_sprite.animation_finished
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(600)
-	start_cooldown()
+	#start_cooldown()
 
 func emerald_skill():
 	slide_in(emerald_skill_pop_up)

@@ -488,7 +488,7 @@ _data = {
 [node name="Battle" type="Node"]
 script = ExtResource("1_30h06")
 min_num_of_groups = 4
-num_of_waves = 3
+num_of_waves = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -954,7 +954,9 @@ attack_damage = 3000
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")
 sprite_frames = ExtResource("18_fu5ue")
-animation = &"attack"
+animation = &"special_attack"
+frame = 20
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(15, 0)
