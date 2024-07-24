@@ -65,6 +65,7 @@ func _ready():
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 	
+	# Emerald Skill
 	if eme_skill_active:
 		hovered_tile = slums_tile_map.local_to_map(slums_tile_map.get_global_mouse_position()) as Vector2i
 		var hover_active : bool

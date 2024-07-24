@@ -179,7 +179,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			animation_timer.set_paused(true)
 			is_attacking = true
 			anim_sprite.play("walk")
-			tween.tween_property(char_sprite, "global_position", attack_position, 0.5).set_ease(Tween.EASE_OUT)
+			tween.tween_property(char_sprite, "global_position", attack_position, 0.25).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
 			
 	
@@ -217,7 +217,7 @@ func return_to_position():
 	tween = create_tween()
 	#anim_sprite.flip_h = true
 	anim_sprite.play("walk_back")
-	tween.tween_property(char_sprite, "global_position", initial_pos, 0.5).set_ease(Tween.EASE_OUT)
+	tween.tween_property(char_sprite, "global_position", initial_pos, 0.25).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(back_to_idle)
 	
 func start_cooldown():

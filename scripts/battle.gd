@@ -231,10 +231,11 @@ func update_team_health():
 		
 func start_enemy_action(): 
 	record_enemies()
+	animation_timer.start()
+	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.action()
 		
-	animation_timer.start()
 
 func end_enemy_action():
 	for enemy in get_tree().get_nodes_in_group("enemies"):
