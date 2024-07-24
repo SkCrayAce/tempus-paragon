@@ -13,7 +13,11 @@ extends CharacterBody2D
 @onready var boss_name = $BossHealthContainer/BossName
 @onready var enemy_move_timer = get_node("../../EnemyMoveTimer") as Timer
 @onready var animation_timer = get_node("../../AnimationTimer") as Timer
+@onready var boss_sfx = $BossSFX
 
+#Sound Effects----------------------------------------
+const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
+const BOSS_LAUGH = preload("res://audio/04 - Boss/02 - Evil Laugh/boss-laugh.mp3")
 
 #FSM References---------------------------------------
 @onready var fsm = $FiniteStateMachine as FiniteStateMachine
@@ -60,6 +64,8 @@ func _ready():
 	healthbar.max_value = health
 	healthbar.value = healthbar.max_value
 	
+	anim.frame_changed.connect(boss_stomp)
+	
 	rng.randomize()
 	states_to_choose.append(ranged_attack_state)
 	states_to_choose.append(melee_attack_state)
@@ -96,8 +102,7 @@ func _ready():
 	healthbar.value = health
 
 func _physics_process(delta):
-	if velocity.x < 0 :
-		anim.flip_h = true
+	pass
 		
 func randomize_index():
 	new_index = rng.randi() % states_to_choose.size()
@@ -118,8 +123,6 @@ func hit(damage : int):
 	
 	healthbar.value -= damage
 
-
-		
 func hit_by_eme_skill(damage : int):
 	if is_defeated:
 			return
@@ -171,7 +174,15 @@ func death():
 	boss_killed.emit()
 	queue_free()
 
-	
-	
+
+func boss_stomp():
+	if anim.animation != "moving":
+		return
+	if anim.frame == 1:
+		boss_sfx.play()
+		return
+	if anim.frame == 4:
+		boss_sfx.play()
+		return
 
 

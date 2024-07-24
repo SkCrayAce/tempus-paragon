@@ -9,6 +9,7 @@ const BattleNode = preload("res://scripts/battle.gd")
 
 @onready var tile_map = get_node("../../..") as TileMap
 @onready var battle_node = get_node("../..") as BattleNode
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
 
 var current_map_position : Vector2i
 var tween : Tween
@@ -22,6 +23,7 @@ var curr_health
 signal moving_finished
 signal take_many_damage
 
+const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
 const top_left_tile = Vector2i(9+1, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -31,6 +33,7 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state():
+	boss_sfx.stream = BOSS_STOMP
 	prints("Entered Moving State")
 	set_physics_process(true)
 	curr_health = healthbar.value

@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b84g10b3l08wc"]
+[gd_scene load_steps=18 format=3 uid="uid://b84g10b3l08wc"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qeil2"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="2_rw15f"]
 [ext_resource type="Texture2D" uid="uid://brflobhbarjry" path="res://sprites/textures/vecteezy_white-circle-png_21115771.png" id="3_y1w7v"]
+[ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="4_3mm2w"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="4_kp5s0"]
 [ext_resource type="SpriteFrames" uid="uid://b402elnhsyiy8" path="res://scenes/characters/spriteframes/kai_battle.tres" id="5_62wyn"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="6_oq016"]
@@ -14,6 +15,10 @@ size = Vector2(197, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_urski"]
 atlas = ExtResource("2_rw15f")
 region = Rect2(160, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33q4m"]
+atlas = ExtResource("4_3mm2w")
+region = Rect2(-1, 0, 49, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hmgi3"]
 atlas = ExtResource("2_rw15f")
@@ -149,8 +154,9 @@ patch_margin_bottom = 8
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="DragIcon/SpriteContainer"]
-position = Vector2(101, 50)
-scale = Vector2(0.9375, 0.9375)
+position = Vector2(100, 50)
+scale = Vector2(3.75, 3.75)
+texture = SubResource("AtlasTexture_33q4m")
 
 [node name="DefeatFilter" type="ColorRect" parent="DragIcon"]
 visible = false

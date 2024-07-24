@@ -8,6 +8,7 @@ extends State
 @export var healthbar : TextureProgressBar
 @export var melee_attack_range : int
 @export var attack_damage : int
+@export var attack_frame : int
 
 @export var rush_to_character_time : int
 @export var wait_anim_time : float
@@ -18,6 +19,11 @@ extends State
 @onready var emerald =  get_node("../../../../DraggableIcons/emerald") as Node2D
 @onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
 @onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
+
+const BOSS_MELEE = preload("res://audio/04 - Boss/04 - Melee Attack/boss-melee.mp3")
+const BOSS_CHARGING_UP_V_01 = preload("res://audio/04 - Boss/03 - Charging up/boss-charging up_v01.mp3")
+const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
 
 signal m_attack_finished
 
@@ -36,6 +42,7 @@ var bettany_hitbox : Array[int]
 func _ready():
 	if global.boss_is_defeated:
 		return
+	anim.frame_changed.connect(play_sfx)
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
 
@@ -48,6 +55,11 @@ func _enter_state():
 	prints("Entered Melee Attack State")
 	set_up_hitbox()
 	anim.play("wind_up_melee")
+	
+	boss_sfx.stream = BOSS_CHARGING_UP_V_01
+	boss_sfx.pitch_scale = 2.0
+	boss_sfx.play()
+	
 	await anim.animation_finished
 	
 	move_to_new_pos()
@@ -63,6 +75,7 @@ func _enter_state():
 	
 func move_to_new_pos():
 	#random position in grid
+	boss_sfx.stream = BOSS_STOMP
 	melee_position = tile_map.map_to_local(Vector2(top_left_tile.x, randi_range(top_left_tile.y, bottom_right_tile.y)))
 	prints(melee_position, " in ", rush_to_character_time, " seconds")
 	var new_map_position = tile_map.local_to_map(melee_position)
@@ -119,7 +132,12 @@ func inflict_damage():
 		bettany.take_damage(attack_damage)
 		
 	await anim.animation_finished
-	
+
+func play_sfx():
+	if anim.animation == "attack_melee":
+		if anim.frame == attack_frame:
+			boss_sfx.stream = BOSS_MELEE
+			boss_sfx.play()	
 
 func _exit_state():
 	prints("Exited Melee Attack State")

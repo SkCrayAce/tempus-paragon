@@ -6,6 +6,7 @@ extends State
 @export var healthbar : TextureProgressBar
 @export var attack_damage : int
 @export var wait_anim_time : float
+@export var attack_frame : int
 
 @onready var tile_map = get_node("../../..") as TileMap
 
@@ -13,7 +14,7 @@ extends State
 @onready var emerald =  get_node("../../../../DraggableIcons/emerald") as Node2D
 @onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
 @onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
-
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
 
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
@@ -21,8 +22,8 @@ var current_map_position
 var curr_health
 var stun_signal_emitted = false
 
-#Will move towards a random position, wind up, then damage all players
-#if hit during wind up, will go to stun state
+const BOSS_POWER_ATTACK = preload("res://audio/04 - Boss/06 - Power Attack/boss-power attack.mp3")
+const BOSS_CHARGING_UP_V_02 = preload("res://audio/04 - Boss/03 - Charging up/boss-charging up_v02.mp3")
 
 signal p_attack_finished
 signal hit_at_wind_up
@@ -32,6 +33,7 @@ func _ready():
 		return
 	set_physics_process(false)
 	anim.frame_changed.connect(inflict_damage)
+	anim.frame_changed.connect(play_sfx)
 
 func _enter_state():
 	prints("Entered Power Attack State")
@@ -41,6 +43,8 @@ func _enter_state():
 	curr_health = healthbar.value
 	prints("power attacking")
 	anim.play("wind_up_power")
+	boss_sfx.stream = BOSS_CHARGING_UP_V_02
+	boss_sfx.play()
 	await anim.animation_finished
 	
 	#shake camera?
@@ -50,10 +54,10 @@ func _enter_state():
 		p_attack_finished.emit()
 
 func inflict_damage():
-	if not anim.animation == "attack_power" or not anim.frame == 7:
+	if not anim.animation == "attack_power" or not anim.frame == attack_frame:
 		return
 	if !kai.is_defeated and !emerald.is_defeated and !tyrone.is_defeated and !bettany.is_defeated : 
-		await get_tree().create_timer(wait_anim_time).timeout
+		#await get_tree().create_timer(wait_anim_time).timeout
 		kai.take_damage(attack_damage)
 		emerald.take_damage(attack_damage)
 		tyrone.take_damage(attack_damage)
@@ -78,6 +82,14 @@ func wind_up_check():
 		hit_at_wind_up.emit()
 		stun_signal_emitted = true
 		set_physics_process(false)
+
+func play_sfx():
+	if anim.animation == "attack_power":
+		if anim.frame == attack_frame:
+			boss_sfx.stream = BOSS_POWER_ATTACK
+			boss_sfx.play()
+	
+	
 
 func _exit_state():
 	prints("Exited Power Attack State")

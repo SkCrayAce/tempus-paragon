@@ -6,6 +6,7 @@ extends State
 @export var healthbar : TextureProgressBar
 
 @onready var tile_map = get_node("../../..") as TileMap
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
 
 #If hit by player at during winding up, stun will happen
 #Stun will last for 2-4 seconds
@@ -20,6 +21,7 @@ func _ready():
 func _enter_state():
 	set_physics_process(true)
 	print("Entered Stunned State")
+	boss_sfx.stop()
 	anim.play("stunned")
 	#await get_tree().create_timer(randi_range(2, 4)).timeout
 	await get_tree().create_timer(5).timeout

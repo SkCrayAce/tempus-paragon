@@ -9,6 +9,9 @@ const BattleScript = preload("res://scripts/battle.gd")
 @onready var tile_map = get_node("../../..") as TileMap
 @onready var avoid_to_point = get_node("../../../AvoidToPoint") as Marker2D
 @onready var battle_node = get_node("../../../..") as BattleScript
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
+
+const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
 
 var new_position
 var tween
@@ -27,6 +30,8 @@ func _ready():
 
 func _enter_state():
 	set_physics_process(true)
+	boss_sfx.stream = BOSS_STOMP
+	global.enemy_dict.clear()
 	print("avoiding")
 	move_to_new_pos()
 	await get_tree().create_timer(2).timeout

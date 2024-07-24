@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://c01hbhvd1ndpk"]
+[gd_scene load_steps=137 format=3 uid="uid://c01hbhvd1ndpk"]
 
 [ext_resource type="Script" path="res://scripts/slums_boss AI/slumsboss.gd" id="1_g8sqm"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="2_aflqb"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/slums_boss AI/stunned_state.gd" id="9_3we5v"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/avoid_state.gd" id="10_1c0bj"]
 [ext_resource type="Script" path="res://scripts/slums_boss AI/return_to_grid_state.gd" id="11_cf2wi"]
+[ext_resource type="AudioStream" uid="uid://d5cgl5io3kg8" path="res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3" id="16_6he1p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gsc2j"]
 shader = ExtResource("2_aflqb")
@@ -864,11 +865,15 @@ animations = [{
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ywse"]
 atlas = ExtResource("5_tiois")
-region = Rect2(0, 112, 64, 16)
+region = Rect2(15, 112, 49, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_glohg"]
 atlas = ExtResource("5_tiois")
-region = Rect2(64, 112, 64, 16)
+region = Rect2(79, 112, 49, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdf2c"]
+atlas = ExtResource("5_tiois")
+region = Rect2(0, 112, 15, 16)
 
 [sub_resource type="Animation" id="Animation_x5a1d"]
 length = 0.001
@@ -907,7 +912,7 @@ _data = {
 "hit_flash": SubResource("Animation_3x2on")
 }
 
-[node name="SlumsBoss" type="CharacterBody2D" groups=["enemies"]]
+[node name="SlumsBoss" type="CharacterBody2D"]
 script = ExtResource("1_g8sqm")
 health = 150000
 attack_damage = 200
@@ -916,7 +921,7 @@ attack_damage = 200
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
-animation = &"attack_ranged"
+animation = &"wind_up_power"
 offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
@@ -948,6 +953,7 @@ healthbar = NodePath("../../BossHealthContainer/HealthBar")
 ranged_attack_range = 200
 wait_anim_time = 0.5
 attack_damage = 1000
+attack_frame = 5
 
 [node name="MeleeAttackState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
 script = ExtResource("7_4idyx")
@@ -956,6 +962,7 @@ anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 melee_attack_range = 1
 attack_damage = 1000
+attack_frame = 4
 rush_to_character_time = 1
 wait_anim_time = 0.5
 
@@ -966,6 +973,7 @@ anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
 attack_damage = 1500
 wait_anim_time = 1.0
+attack_frame = 7
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
 script = ExtResource("9_3we5v")
@@ -990,15 +998,15 @@ custom_minimum_size = Vector2(100, 16)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -300.0
+offset_left = -258.0
 offset_top = 16.0
-offset_right = -100.0
+offset_right = -73.0
 offset_bottom = 32.0
 grow_horizontal = 2
 scale = Vector2(3, 3)
 max_value = 100000.0
 step = 0.001
-value = 100.0
+value = 100000.0
 nine_patch_stretch = true
 stretch_margin_left = 19
 stretch_margin_right = 6
@@ -1024,9 +1032,24 @@ theme_override_font_sizes/font_size = 300
 text = "VIRULENT X"
 horizontal_alignment = 1
 
+[node name="TextureRect" type="TextureRect" parent="BossHealthContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.0
+offset_top = 16.0
+offset_right = -257.0
+offset_bottom = 64.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_tdf2c")
+
 [node name="HitEffect" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_7q6jt")
 }
 
 [node name="DamageNumberOrigin" type="Marker2D" parent="."]
+
+[node name="BossSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_6he1p")
+volume_db = -5.0

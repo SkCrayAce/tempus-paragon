@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_l0wft"]
 [ext_resource type="Texture2D" uid="uid://b3qt5t8bhsrmy" path="res://tempus_assets/particles/explosion (2).png" id="2_68yqe"]
-[ext_resource type="SpriteFrames" uid="uid://jyatbitas1x6" path="res://scenes/characters/spriteframes/kai_sprite_frames.tres" id="2_k2ecf"]
+[ext_resource type="SpriteFrames" uid="uid://c0djy5oewi1c6" path="res://scenes/characters/spriteframes/kai_sprite_frames.tres" id="2_k2ecf"]
 [ext_resource type="FontFile" uid="uid://cio0c4khks1uc" path="res://tempus_assets/font/monogram/ttf/monogram.ttf" id="4_6hgmu"]
 [ext_resource type="Texture2D" uid="uid://tcumh07810y3" path="res://tempus_assets/shadow.png" id="4_ajuoq"]
 [ext_resource type="Texture2D" uid="uid://bab8hhuyuwldy" path="res://tempus_assets/ui_assets.png" id="5_lnohu"]

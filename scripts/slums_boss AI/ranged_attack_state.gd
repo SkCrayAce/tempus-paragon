@@ -8,6 +8,7 @@ extends State
 @export var ranged_attack_range : int
 @export var wait_anim_time : float
 @export var attack_damage : int
+@export var attack_frame : int
 
 @onready var tile_map = get_node("../../..") as TileMap
 
@@ -15,6 +16,10 @@ extends State
 @onready var emerald =  get_node("../../../../DraggableIcons/emerald") as Node2D
 @onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
 @onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
+
+const BOSS_RANGED = preload("res://audio/04 - Boss/05 - Ranged Attack/boss-ranged.mp3")
+const BOSS_CHARGING_UP_V_01 = preload("res://audio/04 - Boss/03 - Charging up/boss-charging up_v01.mp3")
 
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
@@ -28,6 +33,7 @@ var bettany_hitbox : Array[int]
 signal r_attack_finished
 
 func _ready():
+	anim.frame_changed.connect(play_sfx)
 	if global.boss_is_defeated:
 		return
 	set_physics_process(false)
@@ -40,6 +46,11 @@ func _enter_state():
 	set_up_hitbox()
 	#attack character
 	anim.play("wind_up_ranged")
+	
+	boss_sfx.stream = BOSS_CHARGING_UP_V_01
+	boss_sfx.pitch_scale = 2.0
+	boss_sfx.play()
+	
 	await anim.animation_finished
 	
 	anim.play("attack_ranged")
@@ -92,6 +103,14 @@ func within_attack_range() -> bool:
 		return true
 	else:
 		return false
+
+func play_sfx():
+	if anim.animation != "attack_ranged":
+		return
+		
+	if anim.frame == attack_frame:
+		boss_sfx.stream = BOSS_RANGED
+		boss_sfx.play()
 
 func _exit_state():
 	set_physics_process(false)

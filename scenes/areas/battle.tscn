@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=81 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -14,8 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
 [ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="10_tfk3o"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
+[ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
-[ext_resource type="SpriteFrames" uid="uid://b1ghy03xfy1s0" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
+[ext_resource type="SpriteFrames" uid="uid://b0cxpnsavvq7" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
 [ext_resource type="Texture2D" uid="uid://yrpk7q8fovny" path="res://tempus_assets/tyrone-chibi-spritesheet.png" id="18_s6lim"]
 [ext_resource type="Shader" path="res://shaders/hit_effect.gdshader" id="19_13vx5"]
 
@@ -69,15 +70,27 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="Gradient" id="Gradient_qypai"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vq1i2"]
+atlas = ExtResource("15_uc11d")
+region = Rect2(0, 0, 48, 24)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c73iv"]
 resource_local_to_scene = true
 shader = ExtResource("19_13vx5")
 shader_parameter/hit_opacity = 0.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_riobh"]
+atlas = ExtResource("15_uc11d")
+region = Rect2(0, 24, 48, 24)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l6fur"]
 resource_local_to_scene = true
 shader = ExtResource("19_13vx5")
 shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv76d"]
+atlas = ExtResource("15_uc11d")
+region = Rect2(0, 48, 48, 24)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tb7un"]
 resource_local_to_scene = true
@@ -370,6 +383,10 @@ animations = [{
 "name": &"walk_back",
 "speed": 5.0
 }]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf61v"]
+atlas = ExtResource("15_uc11d")
+region = Rect2(0, 72, 48, 24)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dh8o6"]
 resource_local_to_scene = true
@@ -925,6 +942,9 @@ metadata/_edit_lock_ = true
 position = Vector2(132, 116)
 attack_damage = 3000
 
+[node name="Sprite2D" parent="DraggableIcons/kai/DragIcon/SpriteContainer" index="0"]
+texture = SubResource("AtlasTexture_vq1i2")
+
 [node name="AnimatedSprite2D" parent="DraggableIcons/kai/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_c73iv")
 animation = &"attack"
@@ -932,6 +952,9 @@ animation = &"attack"
 [node name="emerald" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 244)
 attack_damage = 3000
+
+[node name="Sprite2D" parent="DraggableIcons/emerald/DragIcon/SpriteContainer" index="0"]
+texture = SubResource("AtlasTexture_riobh")
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/emerald/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_l6fur")
@@ -942,6 +965,9 @@ animation = &"attack"
 position = Vector2(132, 372)
 attack_damage = 3000
 
+[node name="Sprite2D" parent="DraggableIcons/tyrone/DragIcon/SpriteContainer" index="0"]
+texture = SubResource("AtlasTexture_wv76d")
+
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_tb7un")
 sprite_frames = SubResource("SpriteFrames_y0dk6")
@@ -950,6 +976,9 @@ animation = &"attack"
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
 attack_damage = 3000
+
+[node name="Sprite2D" parent="DraggableIcons/bettany/DragIcon/SpriteContainer" index="0"]
+texture = SubResource("AtlasTexture_pf61v")
 
 [node name="AnimatedSprite2D" parent="DraggableIcons/bettany/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_dh8o6")
