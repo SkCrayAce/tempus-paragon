@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var attack_frame : int
 
 const VirulentAttackSfx = preload("res://audio/01 - Basic Attack/Virulent/basicATK_virulent_v01.mp3")
+const VirulentHurtSfx = preload("res://audio/03 - Hurt Sound/Virulent/virulent-hurt.mp3")
 const BattleNode = preload("res://scripts/battle.gd")
 const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
 const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
@@ -22,8 +23,8 @@ const bottom_right_tile = Vector2i(23, 10)
 @onready var effect = $AnimationPlayer as AnimationPlayer
 @onready var damage_number_origin = $DamageNumberOrigin
 @onready var appear_smoke = $AppearSmoke
-@onready var attack_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
-
+@onready var attack_sfx_player = $AttackSFXPlayer
+@onready var sfx_player = $SFXPlayer as AudioStreamPlayer2D
 
 var player_chase = false
 var player = null
@@ -40,7 +41,6 @@ var death_anims = ["death1", "death2"]
 @onready var emerald = get_node("../../DraggableIcons/emerald") as Node2D
 @onready var tyrone = get_node("../../DraggableIcons/tyrone") as Node2D
 @onready var bettany = get_node("../../DraggableIcons/bettany") as Node2D
-
 
 
 var kai_hitbox : Array[int]
@@ -64,9 +64,10 @@ func _ready():
 	animated_sprite.frame_changed.connect(inflict_damage)
 	current_map_position = tile_map.local_to_map(position)
 	
-	
+
 	attack_sfx_player.stream = VirulentAttackSfx
 	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 func _process(delta):
 	current_map_position = tile_map.local_to_map(position)
@@ -107,11 +108,12 @@ func hit_by_eme_skill(damage : int):
 	
 func hit(damage : int):
 	show_damage_numbers.call_deferred(damage)
-	
+	sfx_player.stream = VirulentHurtSfx
 	if is_defeated:
 		return
 	if is_instance_valid(effect):
 		effect.play("hit_flash")
+		sfx_player.play()
 		healthbar.value -= damage
 		if healthbar.value <= 0:
 			enemy_defeated()

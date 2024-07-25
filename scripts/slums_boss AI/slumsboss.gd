@@ -169,7 +169,7 @@ func show_damage_numbers(damage : int):
 	
 
 func death():
-	global.delete_enemy(current_map_position)
+	global.enemy_dict.clear()
 	anim.stop()
 	global.boss_is_defeated = true
 	boss_killed.emit()

@@ -87,3 +87,6 @@ grow_vertical = 2
 libraries = {
 "": SubResource("AnimationLibrary_002cq")
 }
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
+pitch_scale = 1.5

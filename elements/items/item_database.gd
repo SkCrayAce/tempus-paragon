@@ -44,7 +44,7 @@ var items_epic = [
 	{"type": "Non-consumable", "name": "Clockwork Edge", "effect": "Makes user deal double damage but also take double damage.", "rarity": "Epic",  
 	"texture": preload("res://tempus_assets/item sprites/item-spritesheet18.png"), "quantity": 1},
 	{"type": "Non-consumable", "name": "Ultima Emblem", "effect": "Grants special ability to damage all enemies in the area but damages 10% of all characters' health.", "rarity": "Epic",  
-	"texture": preload("res://tempus_assets/item sprites/item-spritesheet18.png"), "quantity": 1}
+	"texture": preload("res://tempus_assets/item sprites/item-spritesheet19.png"), "quantity": 1}
 ]
 
 var items_legendary = [

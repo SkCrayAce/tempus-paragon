@@ -173,8 +173,8 @@ offset = Vector2(0, -10)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.9, 0.9)
 sprite_frames = ExtResource("2_k2ecf")
-animation = &"side_idle_right"
-frame_progress = 0.553833
+animation = &"front_walk"
+frame_progress = 0.355445
 offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -327,3 +327,5 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]

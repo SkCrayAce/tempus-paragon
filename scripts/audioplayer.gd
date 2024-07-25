@@ -21,9 +21,9 @@ func _play_music(music: AudioStream, volume = 0.0):
 
 func play_battle_music():
 	if global.slums_boss_battle:
-		_play_music(slums_bf_music, -15.0)
+		_play_music(slums_bf_music, -5.0)
 	elif global.curr_area == "slums":
-		_play_music(slums_battle_music, -15.0)
+		_play_music(slums_battle_music, -5.0)
 		
 func play_music_level():
 	if global.curr_area == "slums":

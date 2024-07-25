@@ -16,6 +16,7 @@ const accel = 2000
 @onready var overworld_ui = $PlayerUI/Overworld_UI
 @onready var current_tile_map = get_parent().get_node("TileMap") as TileMap
 @onready var poof = $Poof
+@onready var sfx_player = $SFXPlayer
 
 @onready var control = $Control
 
@@ -24,6 +25,10 @@ const accel = 2000
 @onready var tyrone_sf = preload("res://scenes/characters/spriteframes/tyrone_sprite_frames.tres")
 @onready var bettany_sf = preload("res://scenes/characters/spriteframes/bettany_sprite_frames.tres")
 
+#sfx
+const STEP_ON_CONCRETE_BOOTS = preload("res://audio/05 - Misc/06 - Concrete Footstep/step on concrete_boots.mp3")
+const STEP_ON_CONCRETE_HEELS = preload("res://audio/05 - Misc/06 - Concrete Footstep/step on concrete_heels.mp3")
+
 var inventory_isopen = false
 var input = Vector2.ZERO
 var current_dir = "none"
@@ -31,7 +36,9 @@ var current_dir = "none"
 func _ready():
 	anim.play("front_idle")
 	
+	anim.frame_changed.connect(play_sfx)
 	overworld_ui.switched_character.connect(_on_switch_character_signal_recieved)
+	
 	set_character(global.current_overworld_character)
 	
 	#Set Camera Bound to Tilemap Size
@@ -141,7 +148,12 @@ func apply_item_effect(item):
 			print("i am effecting")
 		_:
 			print("no fuckin effect")
-	
+
+func play_sfx():
+	if anim.animation == "front_idle" or anim.animation == "back_idle" or anim.animation == "side_idle_left" or anim.animation == "side_idle_right":
+		return
+	if anim.frame == 1 or anim.frame == 4:
+		sfx_player.play()
 
 func inventory_ui_anim():
 	var tween = create_tween()
@@ -160,6 +172,7 @@ func set_character(character: String):
 		character = get_next_alive_character(character)
 	
 	overworld_ui.switch_player(character)
+	
 
 func get_next_alive_character(character : String):
 	var keys = global.character_status.keys()
@@ -196,5 +209,13 @@ func _on_switch_character_signal_recieved(character : String):
 		"bettany":
 			anim.sprite_frames = bettany_sf
 			global.current_overworld_character = "bettany"
+	
+	match global.current_overworld_character:
+		"kai", "tyrone":
+			sfx_player.stream = STEP_ON_CONCRETE_BOOTS
+			sfx_player.volume_db = -10.0
+		"emerald", "bettany":
+			sfx_player.stream = STEP_ON_CONCRETE_HEELS
+			sfx_player.volume_db = -10.0
 	
 	await poof.animation_finished

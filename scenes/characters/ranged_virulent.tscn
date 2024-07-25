@@ -477,4 +477,6 @@ libraries = {
 [node name="DamageNumberOrigin" type="Marker2D" parent="."]
 position = Vector2(0, -18)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AttackSFXPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
