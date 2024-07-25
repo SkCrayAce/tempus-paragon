@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+enum Type {MELEE, RANGED} 
+
+@export var virulent_type : Type
 @export var health : int
 @export var attack_damage : int
 @export var attack_range : int
@@ -8,8 +11,8 @@ extends CharacterBody2D
 
 const VirulentAttackSfx = preload("res://audio/01 - Basic Attack/Virulent/basicATK_virulent_v01.mp3")
 const BattleNode = preload("res://scripts/battle.gd")
-const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
-const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
+#const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
+#const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -164,13 +167,16 @@ func blown_back():
 	#global.delete_enemy(current_map_position)
 	tween = create_tween()
 	
-	for i in 3:
-		if is_followed(): return
-			
-		animated_sprite.stop()
-		tween.tween_property(self, "position", push_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
-		#global.add_enemy(current_map_position, self)
+	
+	if is_followed(): return
 		
+	animated_sprite.stop()
+	#tween.tween_property(self, "position", push_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
+	position.x += 16
+		
+		#global.add_enemy(current_map_position, self)
+	current_map_position = tile_map.local_to_map(position)
+	
 func move_animation():
 	var new_map_position = current_map_position + Vector2i.LEFT
 	new_position = tile_map.map_to_local(new_map_position)
@@ -190,17 +196,17 @@ func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	if is_attacking:
-		pass
 		animated_sprite.play("attack")
 		await animated_sprite.animation_finished
 		
 	animated_sprite.play("side_idle_left")
-	
+
 func attack_animation():
 	
 	if not within_attack_range() or not is_attacking or finished_attacking: return
 	
 	attack_sfx_player.play()
+	await get_tree().create_timer(1.5).timeout
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
 	#animated_sprite.play("side_idle_left")
@@ -235,9 +241,9 @@ func is_blocked() -> bool:
 	if is_instance_valid(next_enemy):
 		return next_enemy.is_blocked()
 	
-	if scene_file_path == MeleeVirulentScene:
+	if virulent_type == Type.MELEE:
 		return next_map_position.x < top_left_tile.x
-	elif scene_file_path == RangedVirulentScene:
+	elif virulent_type == Type.RANGED:
 		return next_map_position.x < top_left_tile.x + attack_range
 		
 	return true

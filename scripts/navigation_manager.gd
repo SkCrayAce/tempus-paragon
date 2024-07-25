@@ -15,15 +15,29 @@ var areas = ["slums", "city", "underground"]
 var curr_area
 var current_scene : PackedScene
 var next_scene
+var target_scene : PackedScene
 
 
 func _ready():
 	load_levels()
-	TransitionScreen.fade_out_finished.connect(scene_transition)
+	TransitionScreen.fade_out_finished.connect(transition_finished)
 
+func start_game():
+	target_scene = load("res://scenes/areas/slums0.tscn")
+	TransitionScreen.play_transition("fade_out")
+
+func next_map():
+	target_scene = load(next_scene)
+	TransitionScreen.play_transition("fade_out")
+
+func death_screen():
+	target_scene = load("res://scenes/death_screen.tscn")
+	TransitionScreen.play_transition("fade_out")
+	
+func transition_finished():
+	get_tree().change_scene_to_packed(target_scene)
 
 func next_level(levels_cleared):
-	TransitionScreen.transition_node.play("fade_out")
 	var randnum
 	
 	if levels_cleared != 0 and levels_cleared % mpla == 0 and bossfight_done == true:
@@ -64,9 +78,8 @@ func next_level(levels_cleared):
 				underground_levels.remove_at(randnum)
 		
 	global.battle_won = false
-
-func scene_transition():
-	get_tree().change_scene_to_packed(next_scene)
+	target_scene = next_scene
+	TransitionScreen.play_transition("fade_out")
 
 func load_levels():
 	slums_levels.append(load("res://scenes/areas/slums1.tscn"))

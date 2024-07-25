@@ -35,8 +35,9 @@ func _ready():
 	
 	
 func _process(delta):
-	if AudioPlayer.playing == false:
-		AudioPlayer.playing = true
+	#if AudioPlayer.playing == false:
+		#AudioPlayer.playing = true
+	pass
 
 func generate_random_vector(top_left_coord : Vector2, bottom_right_coord : Vector2) -> Vector2i :
 	var rng = RandomNumberGenerator.new()
