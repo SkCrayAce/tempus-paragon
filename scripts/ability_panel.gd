@@ -10,6 +10,7 @@ var eme_skill_AoE : Array[Vector2i]
 var tween
 var init_popup_x_pos : int
 var disabled : bool
+var kai_iteration : int
 
 const SlideDistance = 700
 
@@ -24,8 +25,6 @@ const SlideDistance = 700
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
 @onready var skill_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
-@onready var enemy_move_timer = get_node("../../../../EnemyMoveTimer") as Timer
-@onready var animation_timer = get_node("../../../../AnimationTimer") as Timer
 @onready var push_timer = get_node("../../../../PushTimer") as Timer
 
 
@@ -83,20 +82,14 @@ func _process(delta):
 				slums_tile_map.set_cell(1, target_pos, 2, Vector2i(0, 0), 0)
 				hover_active = true
 				if Input.is_action_just_pressed("left_click"):
-					eme_skill_active = false
-					play_sfx(EMERALD_SKILL_SFX)
-					var valid_enemy = detected_enemy is Enemy or detected_enemy is Boss
-					if is_instance_valid(detected_enemy) and valid_enemy:
-						detected_enemy.hit_by_eme_skill(3000)
-					global.is_dragging = false
-					start_cooldown()
+					activate_emerald_skill(detected_enemy)
 					
 			hover_active = false	
 					
 func switch_ability():
 	match name:
 		"KaiAbility": kai_skill()
-		"EmeraldAbility": emerald_skill()
+		"EmeraldAbility": toggle_emerald_skill()
 		"TyroneAbility": tyrone_skill()
 		"BettanyAbility": bettany_skill()
 
@@ -111,24 +104,29 @@ func kai_skill():
 	await get_tree().create_timer(2).timeout
 	play_sfx(KAI_SKILL_SFX)
 	prints("kai skill activate")
-	var update_positions = func():
-		for enemy in get_tree().get_nodes_in_group("enemies"):
-			enemy.stop_animation()
-			#enemy.position.x += 48
-		prints("nablow na kami!")
-		enemy_move_timer.set_paused(false)
-		battle.record_enemies()
-
-		
+	kai_iteration = 0
 	push_timer.timeout.connect(update_positions)
-	enemy_move_timer.set_paused(true)
-	push_timer.start()
+	battle.set_timers_paused(true)
+	update_positions.call()
+	
+func update_positions():
+	battle.record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		for i in 3:
+		if kai_iteration < 3 :
 			enemy.blown_back()
-			battle.record_enemies()
-	
-	
+		else:
+			await enemy.stop_animation()
+			battle.set_timers_paused(false)
+	if kai_iteration < 3:
+		push_timer.start()
+	else:
+		push_timer.timeout.disconnect(update_positions)
+	kai_iteration += 1
+	prints("iter", kai_iteration)
+		
+			#enemy.position.x += 48
+	prints("nablow na kami!")
+
 func tyrone_skill():
 	slide_in.call(tyrone_skill_pop_up)
 	await get_tree().create_timer(2).timeout
@@ -152,10 +150,22 @@ func bettany_skill():
 		enemy.burn(600)
 	start_cooldown()
 
-func emerald_skill():
-	slide_in(emerald_skill_pop_up)
-	eme_skill_active = ! eme_skill_active
+func toggle_emerald_skill():
+	if not eme_skill_active:
+		slide_in(emerald_skill_pop_up)
+	eme_skill_active = !eme_skill_active
 	global.is_dragging = !global.is_dragging
+	
+func activate_emerald_skill(detected_enemy : CharacterBody2D):
+	battle.set_timers_paused(true)
+	eme_skill_active = false
+	play_sfx(EMERALD_SKILL_SFX)
+	var valid_enemy = detected_enemy is Enemy or detected_enemy is Boss
+	if is_instance_valid(detected_enemy) and valid_enemy:
+		await detected_enemy.hit_by_eme_skill(3000)
+	global.is_dragging = false
+	battle.set_timers_paused(false)
+	start_cooldown()
 	
 func start_cooldown():
 	cooldown_filter.show()

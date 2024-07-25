@@ -92,8 +92,6 @@ func action():
 func hit_by_eme_skill(damage : int):
 	if is_defeated:
 			return
-	enemy_move_timer.set_paused(true)
-	animation_timer.set_paused(true)
 	
 	for i in 3:
 		show_damage_numbers.call_deferred(damage)
@@ -103,9 +101,7 @@ func hit_by_eme_skill(damage : int):
 			if healthbar.value <= 0:
 				enemy_defeated()
 		await get_tree().create_timer(0.5).timeout
-	enemy_move_timer.set_paused(false)
-	animation_timer.set_paused(false)
-	
+
 	
 func hit(damage : int):
 	show_damage_numbers.call_deferred(damage)
@@ -171,12 +167,12 @@ func blown_back():
 	if is_followed(): return
 		
 	animated_sprite.stop()
-	#tween.tween_property(self, "position", push_position, push_timer.wait_time/3).set_ease(Tween.EASE_OUT)
-	position.x += 16
-		
-		#global.add_enemy(current_map_position, self)
+	tween.tween_property(self, "position:x", position.x + 16, push_timer.wait_time).set_ease(Tween.EASE_OUT)
+	await tween.finished
 	current_map_position = tile_map.local_to_map(position)
+	return
 	
+
 func move_animation():
 	var new_map_position = current_map_position + Vector2i.LEFT
 	new_position = tile_map.map_to_local(new_map_position)

@@ -137,11 +137,9 @@ func _process(delta):
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
 			
 	if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
-		enemy_move_timer.set_paused(true)
-		animation_timer.set_paused(true)
+		set_timers_paused(true)
 	else:
-		enemy_move_timer.set_paused(false)
-		animation_timer.set_paused(false)
+		set_timers_paused(false)
 
 
 				
@@ -272,7 +270,7 @@ func start_wave():
 	count = 0
 	attempts = 0
 	force_start = false
-	enemy_move_timer.start(enemy_move_timer.wait_time)
+	
 	used_vectors.clear()
 	global.enemy_dict.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
@@ -282,13 +280,15 @@ func start_wave():
 	
 	if global.enemy_dict.size() == 0:
 		start_wave()
-		
-	enemy_move_timer.start()
+		return
+	
+	await get_tree().create_timer(1).timeout
+	enemy_move_timer.start(enemy_move_timer.wait_time)
 	prints("wave started with", enemy_list.size(), "enemies")
 
 func increase_attempt() :
 		attempts += 1
-		printraw(attempts)
+		prints(attempts)
 		if attempts == 100:
 			force_start = true
 		
@@ -462,7 +462,6 @@ func record_char_health():
 	print("health recorded")
 
 func disable_skill(character : String):
-	prints("tinawag ko si", character)
 	match character:
 		"kai" : kai_ability.disable()
 		"emerald" : emerald_ability.disable()
@@ -500,3 +499,7 @@ func within_bounds(coordinate : Vector2) -> bool:
 		return true
 	else:
 		return false
+
+func set_timers_paused(paused : bool):
+	enemy_move_timer.set_paused(paused)
+	animation_timer.set_paused(paused)
