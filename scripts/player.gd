@@ -124,22 +124,23 @@ func play_anim(movement):
 			anim.play("back_idle")
 
 func _input(event):
-	if event.is_action_pressed("ui_inventory"):
-		inventory_ui_anim()
-	if event.is_action_pressed("ui_playermenu"):
-		overworld_ui.toggle_player_menu()
-	if event.is_action_pressed("character_switch_1"):
-		if global.character_status["kai"] == true:
-			overworld_ui.switch_player("kai")
-	if event.is_action_pressed("character_switch_2"):
-		if global.character_status["emerald"] == true:
-			overworld_ui.switch_player("emerald")
-	if event.is_action_pressed("character_switch_3"):
-		if global.character_status["tyrone"] == true:
-			overworld_ui.switch_player("tyrone")
-	if event.is_action_pressed("character_switch_4"):
-		if global.character_status["bettany"] == true:
-			overworld_ui.switch_player("bettany")
+	if global.player_input_enabled == true:
+		if event.is_action_pressed("ui_inventory"):
+			inventory_ui_anim()
+		if event.is_action_pressed("ui_playermenu"):
+			overworld_ui.toggle_player_menu()
+		if event.is_action_pressed("character_switch_1"):
+			if global.character_status["kai"] == true:
+				overworld_ui.switch_player("kai")
+		if event.is_action_pressed("character_switch_2"):
+			if global.character_status["emerald"] == true:
+				overworld_ui.switch_player("emerald")
+		if event.is_action_pressed("character_switch_3"):
+			if global.character_status["tyrone"] == true:
+				overworld_ui.switch_player("tyrone")
+		if event.is_action_pressed("character_switch_4"):
+			if global.character_status["bettany"] == true:
+				overworld_ui.switch_player("bettany")
 			
 
 func apply_item_effect(item):
