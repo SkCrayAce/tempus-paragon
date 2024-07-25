@@ -24,6 +24,9 @@ const SlideDistance = 700
 @onready var battle = get_node("../../../..") as Battle
 @onready var slums_tile_map = get_node("../../../../SlumsTileMap") as TileMap
 @onready var skill_sfx_player = $AudioStreamPlayer2D as AudioStreamPlayer2D
+@onready var enemy_move_timer = get_node("../../../../EnemyMoveTimer") as Timer
+@onready var animation_timer = get_node("../../../../AnimationTimer") as Timer
+@onready var push_timer = get_node("../../../../PushTimer") as Timer
 
 
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
@@ -108,18 +111,23 @@ func kai_skill():
 	await get_tree().create_timer(2).timeout
 	play_sfx(KAI_SKILL_SFX)
 	prints("kai skill activate")
-	#var update_positions = func():
-		#for enemy in get_tree().get_nodes_in_group("enemies"):
-			#enemy.stop_animation()
-		#prints("nablow na kami!")
-		#enemy_move_timer.start(enemy_move_timer.time_left)
-		#record_enemies()
-		#
-	#push_timer.timeout.connect(update_positions)
-	#enemy_move_timer.stop()
-	#push_timer.start()
-	#for enemy in get_tree().get_nodes_in_group("enemies"):
-		#enemy.blown_back()
+	var update_positions = func():
+		for enemy in get_tree().get_nodes_in_group("enemies"):
+			enemy.stop_animation()
+			#enemy.position.x += 48
+		prints("nablow na kami!")
+		enemy_move_timer.set_paused(false)
+		battle.record_enemies()
+
+		
+	push_timer.timeout.connect(update_positions)
+	enemy_move_timer.set_paused(true)
+	push_timer.start()
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		for i in 3:
+			enemy.blown_back()
+			battle.record_enemies()
+	
 	
 func tyrone_skill():
 	slide_in.call(tyrone_skill_pop_up)

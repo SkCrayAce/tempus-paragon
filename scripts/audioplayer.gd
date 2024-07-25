@@ -13,7 +13,7 @@ func _ready():
 func _play_music(music: AudioStream, volume = 0.0):
 	if stream == music:
 		return
-	
+	prints("play music called")
 	stream = music
 	volume_db = volume
 	play()
@@ -28,6 +28,7 @@ func play_battle_music():
 func play_music_level():
 	if global.curr_area == "slums":
 		_play_music(slums_music)
+		prints("slums music played")
 	elif global.curr_area == "city":
 		_play_music(city_music)
 	#elif global.curr_area == "underground"

@@ -5,11 +5,11 @@ signal fade_in_finished
 
 @onready var animation_player = $AnimationPlayer
 @onready var transition_screen = $Transition/ColorRect
-@onready var transition_node = $Transition
+@onready var transition_node = $Transition as AnimationPlayer
 
 
-func _ready():
-	pass
+func play_transition(transition : String):
+	transition_node.play(str(transition))
 	
 func _on_transition_animation_finished(anim_name):
 	if anim_name == "fade_out":

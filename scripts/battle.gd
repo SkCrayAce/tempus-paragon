@@ -99,7 +99,7 @@ func _ready():
 			dictionary[str(Vector2(x, y))] = {
 				"Type" : "Battle Area"
 			}
-	#global.slums_boss_battle = true
+			
 	if global.slums_boss_battle:
 		spawn_boss()
 	else:
@@ -257,7 +257,6 @@ func record_enemies():
 	global.enemy_dict.clear()
 	for enemy in enemy_list:
 		add_enemy(enemy)
-
 
 func add_enemy(enemy : CharacterBody2D):
 	var enemy_map_pos = slums_tile_map.local_to_map(enemy.position)
@@ -427,8 +426,9 @@ func battle_victory(victory : bool):
 			get_tree().change_scene_to_packed.call_deferred(load(global.current_scene))
 	else:
 		global.battle_won = false
-		TransitionScreen.transition_node.play("fade_out")
-		TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
+		#TransitionScreen.transition_node.play("fade_out")
+		#TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_file.bind("res://scenes/death_screen.tscn"))
+		NavigationManager.death_screen()
 		#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
 	
 

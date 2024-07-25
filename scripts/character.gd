@@ -1,5 +1,8 @@
 extends Node2D
 
+enum States {READY, ATTACKING, ON_COOLDOWN, DEFEATED}
+
+var current_state : States
 var draggable : bool = false
 var on_cooldown : bool = false
 var is_defeated : bool = false
@@ -109,7 +112,9 @@ func _ready():
 	
 	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	hurt_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
-
+	
+	current_state = States.READY
+	prints("ENUM", current_state)
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -121,7 +126,8 @@ func _process(delta):
 
 	cooldown_bar.value = cooldown_timer.time_left
 	current_health = health_bar.value
-
+	
+	
 func set_up_max_hp():
 	
 	global.kai_max_hp = max_health
@@ -176,6 +182,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 			tween = create_tween()
 			is_attacking = true
+			current_state = States.ATTACKING
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "global_position", attack_position, 0.25).set_ease(Tween.EASE_OUT)
 			tween.finished.connect(attack_animation)
@@ -209,6 +216,7 @@ func return_to_position():
 		anim_sprite.flip_h = false
 		anim_sprite.play("idle")
 		is_attacking = false
+		current_state = States.ON_COOLDOWN
 		
 	tween = create_tween()
 	#anim_sprite.flip_h = true

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/slums.mp3-107bcc706985b4bb9b517ab388697635.mp
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
