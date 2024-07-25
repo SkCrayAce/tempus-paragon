@@ -214,8 +214,10 @@ libraries = {
 
 [node name="AttackSFXPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_n586q")
+bus = &"SFX"
 
 [node name="HurtSFXPlayer" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

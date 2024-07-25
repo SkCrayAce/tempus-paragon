@@ -41,3 +41,6 @@ func _on_play_btn_pressed():
 func _on_button_3_pressed():
 	get_tree().quit()
 
+
+func _on_options_btn_pressed():
+	get_tree().change_scene_to_file("res://scenes/options.tscn")

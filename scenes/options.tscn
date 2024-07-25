@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=3 uid="uid://dt1n3jkj0ngeo"]
+
+[ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="1_lmqyq"]
+[ext_resource type="Script" path="res://scripts/options.gd" id="1_tkh5v"]
+[ext_resource type="PackedScene" uid="uid://bgjeqm78huuxo" path="res://scenes/volume_slider.tscn" id="3_cfbmj"]
+[ext_resource type="PackedScene" uid="uid://gb0imj7ylski" path="res://scenes/button.tscn" id="3_vfdtf"]
+[ext_resource type="AudioStream" uid="uid://bce36kdaa1g41" path="res://audio/music/main_menu_music.mp3" id="5_m8vos"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_050x6"]
+font = ExtResource("1_lmqyq")
+font_size = 150
+
+[sub_resource type="LabelSettings" id="LabelSettings_u2fpg"]
+font = ExtResource("1_lmqyq")
+font_size = 40
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tkh5v")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0156863, 0.0666667, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_right = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="OptionsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+text = "Options"
+label_settings = SubResource("LabelSettings_050x6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="MasterVolumeLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "MASTER VOLUME"
+label_settings = SubResource("LabelSettings_u2fpg")
+vertical_alignment = 1
+
+[node name="MasterVolumeSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("3_cfbmj")]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "MUSIC VOLUME"
+label_settings = SubResource("LabelSettings_u2fpg")
+vertical_alignment = 1
+
+[node name="MusicVolumeSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("3_cfbmj")]
+layout_mode = 2
+bus_name = "Music"
+
+[node name="SFXVolumeLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "MSFXVOLUME"
+label_settings = SubResource("LabelSettings_u2fpg")
+vertical_alignment = 1
+
+[node name="SFXVolumeSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("3_cfbmj")]
+layout_mode = 2
+bus_name = "SFX"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 100
+
+[node name="CreditsButton" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_vfdtf")]
+layout_mode = 2
+text = "CREDITS
+"
+
+[node name="ReturnButton" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_vfdtf")]
+layout_mode = 2
+text = "RETURN
+"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_m8vos")
+bus = &"Music"
