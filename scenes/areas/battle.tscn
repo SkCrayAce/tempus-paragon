@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=89 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
 [ext_resource type="Texture2D" path="res://tempus_assets/emerald_portrait.png" id="12_o3jwk"]
 [ext_resource type="PackedScene" uid="uid://gb0imj7ylski" path="res://scenes/button.tscn" id="13_5p7s5"]
-[ext_resource type="PackedScene" uid="uid://dh18e42j4fj06" path="res://scenes/pause_menu.tscn" id="14_4dh3i"]
-[ext_resource type="Texture2D" uid="uid://d1bp3ufx2x7lc" path="res://temp_assets/stock_icons.png" id="14_ig45p"]
+[ext_resource type="PackedScene" uid="uid://du6d0wtioc0sq" path="res://scenes/pause_menu.tscn" id="14_4dh3i"]
+[ext_resource type="Texture2D" path="res://temp_assets/stock_icons.png" id="14_ig45p"]
 [ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
 [ext_resource type="SpriteFrames" uid="uid://b0cxpnsavvq7" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
