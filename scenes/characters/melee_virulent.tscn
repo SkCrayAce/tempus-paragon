@@ -130,7 +130,7 @@ animations = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tyvp3"]
 resource_local_to_scene = true
 shader = ExtResource("2_qxg8c")
-shader_parameter/hit_opacity = 1.0
+shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jx7v6"]
 atlas = ExtResource("2_wldsa")
@@ -379,7 +379,7 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_k11vb")
-animation = &"attack"
+animation = &"walk"
 offset = Vector2(0, -5)
 metadata/_edit_lock_ = true
 

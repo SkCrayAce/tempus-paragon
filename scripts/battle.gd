@@ -281,8 +281,10 @@ func start_wave():
 	if global.enemy_dict.size() == 0:
 		start_wave()
 		return
-	
-	await get_tree().create_timer(1).timeout
+		
+	if waves_cleared == 0:
+		await get_tree().create_timer(1).timeout
+		
 	enemy_move_timer.start(enemy_move_timer.wait_time)
 	prints("wave started with", enemy_list.size(), "enemies")
 
@@ -500,6 +502,10 @@ func within_bounds(coordinate : Vector2) -> bool:
 		return false
 
 func set_timers_paused(paused : bool):
+	if not paused:
+		if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
+			return
+			
 	enemy_move_timer.set_paused(paused)
 	animation_timer.set_paused(paused)
 	

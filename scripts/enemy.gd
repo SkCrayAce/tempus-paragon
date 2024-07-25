@@ -9,10 +9,10 @@ enum Type {MELEE, RANGED}
 @export var animated_sprite : AnimatedSprite2D
 @export var attack_frame : int
 
-const VirulentAttackSfx = preload("res://audio/01 - Basic Attack/Virulent/basicATK_virulent_v01.mp3")
+const RangedAttackSfx= preload("res://audio/01 - Basic Attack/Emerald/basicATK_emerald_v02.mp3")
+const MeleeAttackSfx = preload("res://audio/01 - Basic Attack/Virulent/basicATK_virulent_v01.mp3")
 const BattleNode = preload("res://scripts/battle.gd")
-#const MeleeVirulentScene = "res://scenes/characters/melee_virulent.tscn"
-#const RangedVirulentScene = "res://scenes/characters/ranged_virulent.tscn"
+
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
 
@@ -67,7 +67,6 @@ func _ready():
 	current_map_position = tile_map.local_to_map(position)
 	
 	
-	attack_sfx_player.stream = VirulentAttackSfx
 	attack_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 func _process(delta):
@@ -157,16 +156,19 @@ func enemy_defeated():
 		
 func blown_back():
 	if position.x == bottom_right_tile.x : return
-	var push_position = Vector2(position.x + 16, position.y)
+	
+	var new_map_position = current_map_position + Vector2i.RIGHT as Vector2i
+	var push_position = tile_map.map_to_local(new_map_position) as Vector2
 	#global.delete_enemy(current_map_position)
 	tween = create_tween()
 	
 	
 	if is_followed(): return
 		
-	animated_sprite.stop()
-	tween.tween_property(self, "position:x", position.x + 16, push_timer.wait_time).set_ease(Tween.EASE_OUT)
+	animated_sprite.play_backwards("walk")
+	tween.tween_property(self, "position", push_position, push_timer.wait_time).set_ease(Tween.EASE_OUT)
 	await tween.finished
+	position = push_position
 	current_map_position = tile_map.local_to_map(position)
 	return
 	
@@ -190,21 +192,30 @@ func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
 	
-	if not within_attack_range():
+	if animated_sprite.animation == "walk":
 		animated_sprite.stop()
-		animated_sprite.play("side_idle_left")
-	else:
+	elif animated_sprite.animation == "attack":
 		await animated_sprite.animation_finished 
-		animated_sprite.play("side_idle_left")
+	animated_sprite.play("side_idle_left")
+	
+	#if not within_attack_range():
+		#animated_sprite.stop()
+		#animated_sprite.play("side_idle_left")
+	#else:
+		#await animated_sprite.animation_finished 
+		#animated_sprite.play("side_idle_left")
 
 func attack_animation():
 	
 	if not within_attack_range() or finished_attacking: return
 	
-	attack_sfx_player.play()
+	if virulent_type == Type.MELEE:
+		play_attack_sfx(MeleeAttackSfx)
 	animated_sprite.play("attack", 0.75)
 
-
+func play_attack_sfx(stream : AudioStream):
+	attack_sfx_player.stream = stream
+	attack_sfx_player.play()
 	
 func inflict_damage():
 	if not animated_sprite.animation == "attack" or not animated_sprite.frame == attack_frame:
@@ -215,8 +226,11 @@ func inflict_damage():
 	var bettany_aligned = current_map_position.y in bettany_hitbox
 	var back_to_idle = func():
 		finished_attacking = true
-		animated_sprite.stop()
+		await animated_sprite.animation_finished
 		animated_sprite.play("side_idle_left")
+	
+	if virulent_type == Type.RANGED:
+		play_attack_sfx(RangedAttackSfx)
 		
 	if kai_aligned and not kai.is_defeated : kai.take_damage(attack_damage)
 	elif emerald_aligned and not emerald.is_defeated: emerald.take_damage(attack_damage)
