@@ -12,6 +12,7 @@ const BattleScript = preload("res://scripts/battle.gd")
 @onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
 
 const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
+const BOSS_LAUGH = preload("res://audio/04 - Boss/02 - Evil Laugh/boss-laugh.mp3")
 
 var new_position
 var tween
@@ -36,7 +37,9 @@ func _enter_state():
 	move_to_new_pos()
 	await get_tree().create_timer(2).timeout
 	anim.play("laughing")
-
+	play_sfx()
+	await anim.animation_looped
+	anim.play("idle")
 
 func move_to_new_pos():
 	new_position = avoid_to_point.position
@@ -51,9 +54,13 @@ func move_to_new_pos():
 	battle_node.start_wave()
 	global.boss_spawning = true
 
-
 func _on_goons_defeated():
 	summon_finished.emit()
+
+func play_sfx():
+	if anim.animation == "laughing":
+		boss_sfx.stream = BOSS_LAUGH
+		boss_sfx.play()
 
 func _exit_state():
 	set_physics_process(false)

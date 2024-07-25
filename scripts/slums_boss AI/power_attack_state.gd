@@ -15,6 +15,16 @@ extends State
 @onready var tyrone =  get_node("../../../../DraggableIcons/tyrone") as Node2D
 @onready var bettany =  get_node("../../../../DraggableIcons/bettany") as Node2D
 @onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
+@onready var camera = get_node("../../../../Camera2D") as Camera2D
+
+
+#for camera shake
+@export var random_strength : float = 30.0
+@export var shake_fade : float = 5.0
+var rng = RandomNumberGenerator.new()
+var shake_strength : float
+var shake_enabled : bool
+
 
 const top_left_tile = Vector2i(9, 3)
 const bottom_right_tile = Vector2i(23, 10)
@@ -40,6 +50,7 @@ func _enter_state():
 	#go to random position in grid
 	#wind up
 	set_physics_process(true)
+	shake_enabled = false
 	curr_health = healthbar.value
 	prints("power attacking")
 	anim.play("wind_up_power")
@@ -56,11 +67,15 @@ func _enter_state():
 func inflict_damage():
 	if not anim.animation == "attack_power" or not anim.frame == attack_frame:
 		return
-	if !kai.is_defeated and !emerald.is_defeated and !tyrone.is_defeated and !bettany.is_defeated : 
+	shake_enabled = true
+	if !kai.is_defeated :
 		#await get_tree().create_timer(wait_anim_time).timeout
 		kai.take_damage(attack_damage)
+	if !emerald.is_defeated:
 		emerald.take_damage(attack_damage)
+	if !tyrone.is_defeated:
 		tyrone.take_damage(attack_damage)
+	if !bettany.is_defeated: 
 		bettany.take_damage(attack_damage)
 		
 	await anim.animation_finished
@@ -68,6 +83,15 @@ func inflict_damage():
 func _physics_process(delta):
 	record_position()
 	wind_up_check()
+	
+	if shake_enabled == true:
+		apply_shake()
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength, 0, shake_fade * delta)
+		camera.offset = random_offset() + Vector2(15, 0)
+	else:
+		shake_enabled = false
+		
 
 func record_position():
 	global.enemy_dict.clear()
@@ -88,11 +112,17 @@ func play_sfx():
 		if anim.frame == attack_frame:
 			boss_sfx.stream = BOSS_POWER_ATTACK
 			boss_sfx.play()
-	
+
+func apply_shake():
+	shake_strength = random_strength
+
+func random_offset() -> Vector2:
+	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
 	
 
 func _exit_state():
 	prints("Exited Power Attack State")
+	print("shake enabled? ", shake_enabled)
 	set_physics_process(false)
 	anim.stop()
 	stun_signal_emitted = false

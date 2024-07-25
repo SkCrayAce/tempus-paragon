@@ -913,6 +913,7 @@ _data = {
 }
 
 [node name="SlumsBoss" type="CharacterBody2D" groups=["boss"]]
+y_sort_enabled = true
 script = ExtResource("1_g8sqm")
 health = 150000
 attack_damage = 200
@@ -926,6 +927,7 @@ offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
 z_index = -1
+y_sort_enabled = true
 texture = ExtResource("4_fmv5v")
 offset = Vector2(0, -20)
 
@@ -974,6 +976,7 @@ healthbar = NodePath("../../BossHealthContainer/HealthBar")
 attack_damage = 1200
 wait_anim_time = 1.0
 attack_frame = 7
+random_strength = 2.0
 
 [node name="StunnedState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "anim", "healthbar")]
 script = ExtResource("9_3we5v")
@@ -994,6 +997,7 @@ anim = NodePath("../../AnimatedSprite2D")
 [node name="BossHealthContainer" type="CanvasLayer" parent="."]
 
 [node name="HealthBar" type="TextureProgressBar" parent="BossHealthContainer"]
+process_mode = 1
 custom_minimum_size = Vector2(100, 16)
 anchors_preset = 5
 anchor_left = 0.5
@@ -1012,6 +1016,17 @@ stretch_margin_left = 19
 stretch_margin_right = 6
 texture_under = SubResource("AtlasTexture_1ywse")
 texture_progress = SubResource("AtlasTexture_glohg")
+
+[node name="TextureRect" type="TextureRect" parent="BossHealthContainer/HealthBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -108.5
+offset_right = -92.5
+offset_bottom = 16.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_tdf2c")
 
 [node name="BossName" type="Label" parent="BossHealthContainer"]
 anchors_preset = 5
@@ -1032,17 +1047,6 @@ theme_override_font_sizes/font_size = 300
 text = "VIRULENT X"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="BossHealthContainer"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -305.0
-offset_top = 16.0
-offset_right = -257.0
-offset_bottom = 64.0
-grow_horizontal = 2
-texture = SubResource("AtlasTexture_tdf2c")
-
 [node name="HitEffect" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_7q6jt")
@@ -1052,4 +1056,3 @@ libraries = {
 
 [node name="BossSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_6he1p")
-volume_db = -5.0

@@ -137,7 +137,7 @@ func play_sfx():
 	if anim.animation == "attack_melee":
 		if anim.frame == attack_frame:
 			boss_sfx.stream = BOSS_MELEE
-			boss_sfx.play()	
+			boss_sfx.play()
 
 func _exit_state():
 	prints("Exited Melee Attack State")

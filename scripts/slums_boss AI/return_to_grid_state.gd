@@ -7,6 +7,9 @@ extends State
 @export var anim : AnimatedSprite2D
 
 @onready var tile_map = get_node("../../..") as TileMap
+@onready var boss_sfx =  get_node("../../BossSFX") as AudioStreamPlayer2D
+
+const BOSS_STOMP = preload("res://audio/04 - Boss/01 - Stomping/boss-stomp.mp3")
 
 var current_map_position
 var tween : Tween
@@ -24,6 +27,7 @@ func _ready():
 
 func _enter_state():
 	set_physics_process(true)
+	boss_sfx.stream = BOSS_STOMP
 	#go to random valid position in grid from being outside the grid
 	move_to_new_pos()
 	await get_tree().create_timer(2).timeout
