@@ -48,6 +48,8 @@ const BattleScript = preload("res://scripts/battle.gd")
 const EnemyScript = preload("res://scripts/enemy.gd")
 const BossScript = preload("res://scripts/slums_boss AI/slumsboss.gd")
 
+const AttackEffectScene = preload("res://scenes/attack_effect.tscn")
+
 @onready var cooldown_bar = $DragIcon/CooldownBar 
 @onready var cooldown_timer = $CooldownTimer
 @onready var sprite = $DragIcon/SpriteContainer
@@ -190,9 +192,25 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
+
 	anim_sprite.play("attack")
+	anim_sprite.frame_changed.connect(attack_effects)
 	anim_sprite.animation_finished.connect(return_to_position)
-			
+	
+func attack_effects(attack_effect_instance):
+	if not anim_sprite.animation == "attack":
+		return
+	
+	if name == "bettany":
+		get_node("../../SlumsTileMap").add_child(attack_effect_instance)
+		print("playing")
+		attack_effect_instance.show()
+		attack_effect_instance.play("fire_column")
+		print(attack_effect_instance.animation)
+		await attack_effect_instance.animation_finished
+		attack_effect_instance.hide()
+		attack_effect_instance.queue_free()
+
 func play_attack_sfx():
 	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
 		attack_sfx_player.play()
@@ -205,6 +223,11 @@ func inflict_damage():
 	
 	for offset in offset_list:
 		var target_pos : Vector2i = hovered_tile + offset as Vector2i
+		
+		var attack_effect_instance = AttackEffectScene.instantiate()
+		attack_effect_instance.position = tile_map.map_to_local(target_pos - Vector2i(0, 2))
+		attack_effects(attack_effect_instance)
+		
 		var detected_enemy = global.enemy_dict.get(target_pos)
 		var valid_enemy = detected_enemy is EnemyScript or detected_enemy is BossScript
 		if is_instance_valid(detected_enemy) and valid_enemy:

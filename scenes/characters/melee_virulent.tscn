@@ -407,7 +407,6 @@ _data = {
 [node name="MeleeVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_hihgw")
 health = 5000
-attack_damage = 100
 animated_sprite = NodePath("MeleeAnimatedSprite")
 attack_frame = 4
 
@@ -422,6 +421,8 @@ frame_progress = 1.0
 
 [node name="MeleeAnimatedSprite" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
+z_index = 1
+z_as_relative = false
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_tyvp3")
 position = Vector2(0, -5)
@@ -433,7 +434,7 @@ offset = Vector2(0, -5)
 metadata/_edit_lock_ = true
 
 [node name="Shadow" type="Sprite2D" parent="."]
-z_index = -1
+z_as_relative = false
 texture = ExtResource("3_one7t")
 
 [node name="Area2D" type="ColorRect" parent="."]
@@ -451,6 +452,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+z_as_relative = false
 offset_left = -7.0
 offset_top = 8.0
 offset_right = 7.0

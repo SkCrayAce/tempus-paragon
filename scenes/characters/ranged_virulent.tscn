@@ -430,6 +430,9 @@ frame = 15
 frame_progress = 1.0
 
 [node name="RangedAnimatedSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_x58oj")
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_xgubh")
@@ -440,6 +443,7 @@ metadata/_edit_lock_ = true
 
 [node name="Shadow" type="Sprite2D" parent="."]
 z_index = -1
+z_as_relative = false
 texture = ExtResource("4_1xwbx")
 
 [node name="Area2D" type="ColorRect" parent="."]
@@ -457,6 +461,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+z_as_relative = false
 offset_left = -7.0
 offset_top = 8.0
 offset_right = 7.0

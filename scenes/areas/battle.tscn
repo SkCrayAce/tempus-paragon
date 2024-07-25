@@ -683,6 +683,7 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="KaiSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
+visible = false
 z_index = 4095
 layout_mode = 1
 anchor_top = 0.0
@@ -1009,7 +1010,7 @@ texture = SubResource("AtlasTexture_wv76d")
 [node name="AnimatedSprite2D" parent="DraggableIcons/tyrone/BattleSprite" index="0"]
 material = SubResource("ShaderMaterial_tb7un")
 sprite_frames = SubResource("SpriteFrames_y0dk6")
-animation = &"attack"
+animation = &"idle"
 
 [node name="bettany" parent="DraggableIcons" instance=ExtResource("9_yrs16")]
 position = Vector2(132, 500)
