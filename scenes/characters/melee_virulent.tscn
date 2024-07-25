@@ -473,5 +473,7 @@ libraries = {
 position = Vector2(0, -18)
 
 [node name="AttackSFXPlayer" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
 
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
