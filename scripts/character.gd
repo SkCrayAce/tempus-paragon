@@ -252,7 +252,7 @@ func take_damage(damage : int):
 		"bettany" : play_hurt_sfx.call(BETTANY_HURT_SFX)
 		
 	health_bar.value -= damage
-	hit_effect.play("hit_flash")
+	hit_effect.play("hit_flash", -1, 2)
 	battle_node.update_team_health()
 	if is_defeated: return
 	

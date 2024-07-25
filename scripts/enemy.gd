@@ -82,11 +82,9 @@ func action():
 	if is_defeated: return
 	
 	elif within_attack_range() and not finished_attacking:
-		is_attacking = true
 		attack_animation()
-		return
-
-	move_animation()
+		
+	else: move_animation()
 	current_map_position = tile_map.local_to_map(position)
 
 func hit_by_eme_skill(damage : int):
@@ -177,7 +175,7 @@ func move_animation():
 	var new_map_position = current_map_position + Vector2i.LEFT
 	new_position = tile_map.map_to_local(new_map_position)
 	
-	if is_blocked() or is_attacking: return
+	if is_blocked(): return
 	
 	tween = create_tween()
 	animated_sprite.stop()
@@ -191,21 +189,21 @@ func move_animation():
 func stop_animation():
 	if is_instance_valid(tween):
 		tween.kill()
-	if is_attacking:
-		animated_sprite.play("attack")
-		await animated_sprite.animation_finished
-		
-	animated_sprite.play("side_idle_left")
+	
+	if not within_attack_range():
+		animated_sprite.stop()
+		animated_sprite.play("side_idle_left")
+	else:
+		await animated_sprite.animation_finished 
+		animated_sprite.play("side_idle_left")
 
 func attack_animation():
 	
-	if not within_attack_range() or not is_attacking or finished_attacking: return
+	if not within_attack_range() or finished_attacking: return
 	
 	attack_sfx_player.play()
-	await get_tree().create_timer(1.5).timeout
-	animated_sprite.play("attack")
-	await animated_sprite.animation_finished
-	#animated_sprite.play("side_idle_left")
+	animated_sprite.play("attack", 0.75)
+
 
 	
 func inflict_damage():
@@ -216,7 +214,6 @@ func inflict_damage():
 	var tyrone_aligned = current_map_position.y in tyrone_hitbox
 	var bettany_aligned = current_map_position.y in bettany_hitbox
 	var back_to_idle = func():
-		is_attacking = false
 		finished_attacking = true
 		animated_sprite.stop()
 		animated_sprite.play("side_idle_left")

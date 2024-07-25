@@ -970,7 +970,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="AnimationTimer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.5
 one_shot = true
 
 [node name="PushTimer" type="Timer" parent="."]

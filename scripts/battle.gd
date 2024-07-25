@@ -136,10 +136,10 @@ func _process(delta):
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
 			
-	if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
-		set_timers_paused(true)
-	else:
-		set_timers_paused(false)
+	#if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
+		#set_timers_paused(true)
+	#else:
+		#set_timers_paused(false)
 
 
 				
@@ -288,7 +288,6 @@ func start_wave():
 
 func increase_attempt() :
 		attempts += 1
-		prints(attempts)
 		if attempts == 100:
 			force_start = true
 		
@@ -503,3 +502,7 @@ func within_bounds(coordinate : Vector2) -> bool:
 func set_timers_paused(paused : bool):
 	enemy_move_timer.set_paused(paused)
 	animation_timer.set_paused(paused)
+	
+	if paused: prints("timer paused")
+	else: prints("timer resumed")
+	

@@ -83,7 +83,6 @@ func _process(delta):
 				hover_active = true
 				if Input.is_action_just_pressed("left_click"):
 					activate_emerald_skill(detected_enemy)
-					
 			hover_active = false	
 					
 func switch_ability():
@@ -162,8 +161,9 @@ func activate_emerald_skill(detected_enemy : CharacterBody2D):
 	play_sfx(EMERALD_SKILL_SFX)
 	var valid_enemy = detected_enemy is Enemy or detected_enemy is Boss
 	if is_instance_valid(detected_enemy) and valid_enemy:
-		await detected_enemy.hit_by_eme_skill(3000)
+		detected_enemy.hit_by_eme_skill(3000)
 	global.is_dragging = false
+	await get_tree().create_timer(skill_sfx_player.stream.get_length()).timeout
 	battle.set_timers_paused(false)
 	start_cooldown()
 	

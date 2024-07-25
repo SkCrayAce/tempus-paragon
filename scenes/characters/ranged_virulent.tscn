@@ -354,6 +354,7 @@ _data = {
 
 [node name="RangedVirulent" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite") groups=["enemies"]]
 script = ExtResource("1_4ip0e")
+virulent_type = 1
 health = 3000
 attack_damage = 100
 attack_range = 8
