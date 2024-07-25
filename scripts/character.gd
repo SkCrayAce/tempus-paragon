@@ -182,6 +182,7 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 			tween = create_tween()
 			is_attacking = true
+			battle_node.set_timers_paused(true)
 			current_state = States.ATTACKING
 			anim_sprite.play("walk")
 			tween.tween_property(char_sprite, "global_position", attack_position, 0.25).set_ease(Tween.EASE_OUT)
@@ -216,6 +217,7 @@ func return_to_position():
 		anim_sprite.flip_h = false
 		anim_sprite.play("idle")
 		is_attacking = false
+		battle_node.set_timers_paused(false)
 		current_state = States.ON_COOLDOWN
 		
 	tween = create_tween()
@@ -252,7 +254,7 @@ func take_damage(damage : int):
 		"bettany" : play_hurt_sfx.call(BETTANY_HURT_SFX)
 		
 	health_bar.value -= damage
-	hit_effect.play("hit_flash")
+	hit_effect.play("hit_flash", -1, 2)
 	battle_node.update_team_health()
 	if is_defeated: return
 	

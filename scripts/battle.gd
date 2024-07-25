@@ -136,12 +136,10 @@ func _process(delta):
 			"tyrone": tyrone.preview_attack_AoE(hovered_tile, tyrone_offset_list)
 			"bettany": bettany.preview_attack_AoE(hovered_tile, bettany_offset_list)
 			
-	if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
-		enemy_move_timer.set_paused(true)
-		animation_timer.set_paused(true)
-	else:
-		enemy_move_timer.set_paused(false)
-		animation_timer.set_paused(false)
+	#if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
+		#set_timers_paused(true)
+	#else:
+		#set_timers_paused(false)
 
 
 
@@ -272,7 +270,7 @@ func start_wave():
 	count = 0
 	attempts = 0
 	force_start = false
-	enemy_move_timer.start(enemy_move_timer.wait_time)
+	
 	used_vectors.clear()
 	global.enemy_dict.clear()
 	var num_of_groups = randi_range(min_num_of_groups, max_num_of_groups)
@@ -282,13 +280,16 @@ func start_wave():
 	
 	if global.enemy_dict.size() == 0:
 		start_wave()
+		return
 		
-	enemy_move_timer.start()
+	if waves_cleared == 0:
+		await get_tree().create_timer(1).timeout
+		
+	enemy_move_timer.start(enemy_move_timer.wait_time)
 	prints("wave started with", enemy_list.size(), "enemies")
 
 func increase_attempt() :
 		attempts += 1
-		printraw(attempts)
 		if attempts == 100:
 			force_start = true
 		
@@ -301,7 +302,7 @@ func place_formation():
 	var attempts : int
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 4)	
+	var random_pattern = rng.randi_range(0, 7)	
 	
 	
 		
@@ -310,9 +311,9 @@ func place_formation():
 		1 : current_offset_list = emerald_offset_list
 		2 : current_offset_list = tyrone_offset_list
 		3 : current_offset_list = bettany_offset_list
-		#4 : current_offset_list = sqaure_offset_list
-		#5 : current_offset_list = h_rect_offset_list
-		#6 : current_offset_list = v_rect_offset_list
+		4 : current_offset_list = sqaure_offset_list
+		5 : current_offset_list = h_rect_offset_list
+		6 : current_offset_list = v_rect_offset_list
 		
 	
 	for offset in current_offset_list:
@@ -471,7 +472,6 @@ func record_char_health():
 		global.character_status["bettany"] = false
 
 func disable_skill(character : String):
-	prints("tinawag ko si", character)
 	match character:
 		"kai" : kai_ability.disable()
 		"emerald" : emerald_ability.disable()
@@ -509,3 +509,15 @@ func within_bounds(coordinate : Vector2) -> bool:
 		return true
 	else:
 		return false
+
+func set_timers_paused(paused : bool):
+	if not paused:
+		if kai.is_attacking or emerald.is_attacking or tyrone.is_attacking or bettany.is_attacking:
+			return
+			
+	enemy_move_timer.set_paused(paused)
+	animation_timer.set_paused(paused)
+	
+	if paused: prints("timer paused")
+	else: prints("timer resumed")
+	

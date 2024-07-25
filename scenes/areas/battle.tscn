@@ -1031,15 +1031,15 @@ anchor_mode = 0
 zoom = Vector2(3, 3)
 
 [node name="EnemyMoveTimer" type="Timer" parent="."]
-process_callback = 0
 wait_time = 2.0
 one_shot = true
 
 [node name="AnimationTimer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.5
 one_shot = true
 
 [node name="PushTimer" type="Timer" parent="."]
+wait_time = 0.33
 one_shot = true
 
 [node name="AttackRange" type="Marker2D" parent="."]
