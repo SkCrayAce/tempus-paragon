@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=84 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://cqrt5njcuob82" path="res://scenes/skill_pop_up.tscn" id="9_eowdg"]
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
 [ext_resource type="Texture2D" uid="uid://df5ugnnp2gpkq" path="res://tempus_assets/chibi heads/bettany_chibi_head.png" id="10_kofbx"]
-[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="10_tfk3o"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
 [ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
@@ -37,6 +36,12 @@ region = Rect2(144, 0, 16, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_muk67"]
 atlas = ExtResource("3_wcxqr")
 region = Rect2(0, 40, 256, 40)
+
+[sub_resource type="Gradient" id="Gradient_mobj2"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7oj3h"]
+gradient = SubResource("Gradient_mobj2")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8t05s"]
 atlas = ExtResource("3_ypaqq")
@@ -551,7 +556,6 @@ vertical_alignment = 1
 [node name="MoveTimerBar" type="TextureProgressBar" parent="CanvasLayer"]
 light_mask = 2
 visibility_layer = 2
-z_index = 1
 offset_left = 390.0
 offset_top = 49.0
 offset_right = 408.0
@@ -570,6 +574,23 @@ offset_top = 176.0
 offset_right = 473.0
 offset_bottom = 246.0
 texture = SubResource("AtlasTexture_muk67")
+
+[node name="BlackGradient" type="TextureRect" parent="CanvasLayer/AbilitiesContainer"]
+z_index = -1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.135
+anchor_right = 0.5
+anchor_bottom = 1.135
+offset_left = -248.0
+offset_top = -6.45
+offset_right = -184.0
+offset_bottom = 536.55
+grow_horizontal = 2
+grow_vertical = 0
+rotation = 4.71239
+texture = SubResource("GradientTexture2D_7oj3h")
 
 [node name="AbilitiesRow" type="HBoxContainer" parent="CanvasLayer/AbilitiesContainer"]
 layout_mode = 1
@@ -662,23 +683,20 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="KaiSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
-visible = false
 z_index = 4095
 layout_mode = 1
 anchor_top = 0.0
 anchor_right = 1.002
 anchor_bottom = 0.958
-offset_top = 30.0
-offset_right = -0.854034
-offset_bottom = 0.0799866
-grow_horizontal = 1
-grow_vertical = 1
+offset_top = 164.0
+offset_right = 101.146
+offset_bottom = 0.0800018
 
 [node name="TextureRect" parent="CanvasLayer/SkillPopups/KaiSkillPopUp" index="0"]
-offset_left = 40.0
-offset_top = -256.0
-offset_right = 296.0
-texture = ExtResource("10_tfk3o")
+offset_left = 20.0
+offset_top = -191.0
+offset_right = 220.0
+offset_bottom = 9.0
 
 [node name="EmeraldSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
 visible = false
@@ -687,17 +705,17 @@ layout_mode = 1
 anchor_top = 0.0
 anchor_right = 1.002
 anchor_bottom = 0.958
-offset_top = 30.0
-offset_right = -0.854034
-offset_bottom = 0.0799866
+offset_top = 164.0
+offset_right = 102.146
+offset_bottom = 0.0800018
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="TextureRect" parent="CanvasLayer/SkillPopups/EmeraldSkillPopUp" index="0"]
-offset_left = 40.0
-offset_top = -256.0
-offset_right = 296.0
-texture = ExtResource("10_tfk3o")
+offset_left = 20.0
+offset_top = -191.0
+offset_right = 220.0
+offset_bottom = 9.0
 
 [node name="TyroneSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
 visible = false
@@ -706,16 +724,17 @@ layout_mode = 1
 anchor_top = 0.0
 anchor_right = 1.002
 anchor_bottom = 0.958
-offset_top = 30.0
-offset_right = -0.854004
+offset_top = 164.0
+offset_right = 100.146
 offset_bottom = 0.0800018
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="TextureRect" parent="CanvasLayer/SkillPopups/TyroneSkillPopUp" index="0"]
-offset_left = 40.0
-offset_top = -256.0
-offset_right = 296.0
+offset_left = 50.0
+offset_top = -191.0
+offset_right = 250.0
+offset_bottom = 9.0
 texture = ExtResource("11_rum47")
 
 [node name="BettanySkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
@@ -725,17 +744,28 @@ layout_mode = 1
 anchor_top = 0.0
 anchor_right = 1.002
 anchor_bottom = 0.958
-offset_top = 30.0
-offset_right = -0.854004
-offset_bottom = 0.0800171
+offset_top = 164.0
+offset_right = 101.146
+offset_bottom = 0.0800018
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="TextureRect" parent="CanvasLayer/SkillPopups/BettanySkillPopUp" index="0"]
-offset_left = 40.0
-offset_top = -256.0
-offset_right = 296.0
-texture = ExtResource("10_tfk3o")
+offset_left = 20.0
+offset_top = -191.0
+offset_right = 220.0
+offset_bottom = 9.0
+
+[node name="Darkener" type="ColorRect" parent="CanvasLayer/SkillPopups"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
 
 [node name="NewWavePopup" type="TextureRect" parent="CanvasLayer"]
 visible = false

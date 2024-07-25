@@ -28,7 +28,7 @@ const SlideDistance = 700
 @onready var animation_timer = get_node("../../../../AnimationTimer") as Timer
 @onready var push_timer = get_node("../../../../PushTimer") as Timer
 
-
+@onready var darkener = get_node("../../../SkillPopups/Darkener") as ColorRect
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
 @onready var emerald_skill_pop_up = get_node("../../../SkillPopups/EmeraldSkillPopUp") as ColorRect
@@ -59,6 +59,7 @@ func _ready():
 			eme_skill_AoE.append(Vector2i(x, y))
 	eme_skill_AoE.append_array([Vector2i.UP*2, Vector2i.DOWN*2, Vector2i.LEFT*2, Vector2i.RIGHT*2])
 	
+	darkener.color = Color(0, 0, 0, 0)
 	kai_skill_pop_up.position.x = -SlideDistance
 	emerald_skill_pop_up.position.x = -SlideDistance
 	tyrone_skill_pop_up.position.x = -SlideDistance
@@ -176,12 +177,14 @@ func end_cooldown():
 func slide_in(pop_up : ColorRect):
 	pop_up.position.x = -SlideDistance
 	pop_up.process_mode = Node.PROCESS_MODE_ALWAYS
-	
+	darkener.show()
 	tween = create_tween()
+
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	get_tree().paused = true
 	pop_up.show()
 	tween.tween_property(pop_up, "position:x", 0, 0.5).set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property(darkener, "color", Color(0, 0, 0, 0.5), 0.5)
 	await tween.finished
 	get_tree().create_timer(1).timeout.connect(slide_out.bind(pop_up))
 	
@@ -191,13 +194,15 @@ func slide_out(pop_up : ColorRect):
 		pop_up.hide()
 		pop_up.position.x = -SlideDistance
 		return
-	
 	pop_up.process_mode = Node.PROCESS_MODE_ALWAYS
 	tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(pop_up, "position:x", SlideDistance, 0.5).set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property(darkener, "color", Color(0, 0, 0, 0), 1)
 	tween.finished.connect(reset_popup.bind(pop_up))
 	#get_tree().paused = false
+	await tween.finished
+	darkener.hide()
 	
 func disable():
 	use_ability_btn.set_disabled(true)

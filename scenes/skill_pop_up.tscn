@@ -1,25 +1,27 @@
-[gd_scene format=3 uid="uid://cqrt5njcuob82"]
+[gd_scene load_steps=2 format=3 uid="uid://cqrt5njcuob82"]
+
+[ext_resource type="Texture2D" uid="uid://c7rgkicupqin7" path="res://tempus_assets/kai_portrait.png" id="1_er5xi"]
 
 [node name="ColorRect" type="ColorRect"]
-custom_minimum_size = Vector2(427, 200)
 anchors_preset = -1
 anchor_top = 0.449
 anchor_right = 1.0
 anchor_bottom = 0.726
-offset_top = -0.280029
-offset_right = -853.0
+offset_top = 90.72
+offset_right = -1.0
 offset_bottom = 0.279968
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 145.0
-offset_top = -452.0
-offset_right = 597.0
+offset_top = -451.0
+offset_right = 200.0
+offset_bottom = -251.0
 grow_vertical = 0
-flip_h = true
-metadata/_edit_lock_ = true
+texture = ExtResource("1_er5xi")
+expand_mode = 1

@@ -144,7 +144,7 @@ func _process(delta):
 		animation_timer.set_paused(false)
 
 
-				
+
 func show_start_screen():
 	var hide_start_screen = func(init_y : int, final_y : int):
 		tween = create_tween()
