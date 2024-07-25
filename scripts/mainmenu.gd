@@ -2,22 +2,26 @@ extends Node
 
 @onready var texture_rect = %TextureRect
 const Slums0 = preload("res://scenes/areas/slums0.tscn")
+const MAIN_MENU_MUSIC = preload("res://audio/music/main_menu_music.mp3")
 
 var breakloop = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	AudioPlayer.stop()
-	AudioPlayer.stream = null
+	if not AudioPlayer.stream == MAIN_MENU_MUSIC:
+		AudioPlayer.stream = MAIN_MENU_MUSIC
+		AudioPlayer.play()
+	else:
+		AudioPlayer.stream_paused = false
+		
 	main_menu_play_anim()
-	#TransitionScreen.fade_out_finished.connect(scene_transition)
-	#TransitionScreen.fade_out_finished.connect(get_tree().change_scene_to_packed.bind(Slums0))
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	if $MainMenuMusic.playing == false:
-		$MainMenuMusic.playing = true
+	pass
+	#if $MainMenuMusic.playing == false:
+		#$MainMenuMusic.playing = true
 
 func main_menu_play_anim():
 	while true:

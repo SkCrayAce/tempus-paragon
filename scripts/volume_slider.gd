@@ -1,6 +1,5 @@
 extends HSlider
 
-#enum AudioBus {Master, Music, SFX}
 @export_enum("Master", "Music", "SFX") var bus_name : String = "Master"
 
 var bus_index: int
