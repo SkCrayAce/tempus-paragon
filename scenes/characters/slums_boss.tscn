@@ -971,7 +971,7 @@ script = ExtResource("8_fcru1")
 actor = NodePath("../..")
 anim = NodePath("../../AnimatedSprite2D")
 healthbar = NodePath("../../BossHealthContainer/HealthBar")
-attack_damage = 1500
+attack_damage = 1200
 wait_anim_time = 1.0
 attack_frame = 7
 

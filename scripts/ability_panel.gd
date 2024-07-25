@@ -128,7 +128,7 @@ func tyrone_skill():
 	tween = create_tween().set_parallel()
 	for character in get_tree().get_nodes_in_group("characters"):
 		if not character.is_defeated:
-			var new_health = character.health_bar.value + character.health_bar.max_value * 0.70
+			var new_health = character.health_bar.value + character.health_bar.max_value * 0.30
 			tween.tween_property(character.health_bar, "value", new_health, 1)
 			#character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()

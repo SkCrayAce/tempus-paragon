@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://byxuprksmamxn"]
 
 [ext_resource type="Texture2D" uid="uid://b362qpmvsyw3q" path="res://tempus_assets/abilities_container.png" id="1_e4lfn"]
-[ext_resource type="PackedScene" uid="uid://cbbigy34cyy77" path="res://scenes/ability_panel.tscn" id="2_qfx16"]
+[ext_resource type="PackedScene" uid="uid://b6qiham7oh4rh" path="res://scenes/ability_panel.tscn" id="2_qfx16"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iwbnr"]
 atlas = ExtResource("1_e4lfn")
