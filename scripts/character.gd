@@ -59,6 +59,7 @@ const AttackEffectScene = preload("res://scenes/attack_effect.tscn")
 @onready var slums_tile_map = $"../../SlumsTileMap"
 @onready var enemy_move_timer = $"../../EnemyMoveTimer"
 @onready var animation_timer = $"../../AnimationTimer"
+@onready var camera = $"../../Camera2D" as Camera2D
 @onready var drag_icon = $DragIcon
 
 @onready var battle_sprite = $BattleSprite as Node2D
@@ -69,6 +70,12 @@ const AttackEffectScene = preload("res://scenes/attack_effect.tscn")
 
 var char_sprite : Node2D
 
+#for camera shake
+@export var random_strength : float = 30.0
+@export var shake_fade : float = 5.0
+var rng = RandomNumberGenerator.new()
+var shake_strength : float
+var shake_enabled : bool
 
 # offsets
 var kai_offset_list = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
@@ -86,6 +93,7 @@ signal character_killed
 func _ready():
 	tile_map = slums_tile_map
 	on_cooldown = false
+	shake_enabled = false
 	set_up_max_hp()
 	char_sprite = battle_sprite
 	
@@ -129,7 +137,13 @@ func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
 	current_health = health_bar.value
 	
-	
+	if shake_enabled == true:
+		apply_shake()
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength, 0, shake_fade * delta)
+		camera.offset = random_offset() + Vector2(15, 0)
+		
+
 func set_up_max_hp():
 	
 	global.kai_max_hp = max_health
@@ -192,7 +206,6 @@ func preview_attack_AoE(new_hovered_tile, new_offset_list):
 			
 	
 func attack_animation():
-
 	anim_sprite.play("attack")
 	anim_sprite.frame_changed.connect(attack_effects)
 	anim_sprite.animation_finished.connect(return_to_position)
@@ -201,16 +214,34 @@ func attack_effects(attack_effect_instance):
 	if not anim_sprite.animation == "attack":
 		return
 	
-	if name == "bettany":
-		get_node("../../SlumsTileMap").add_child(attack_effect_instance)
-		print("playing")
-		attack_effect_instance.show()
-		attack_effect_instance.play("fire_column")
-		print(attack_effect_instance.animation)
-		await attack_effect_instance.animation_finished
-		attack_effect_instance.hide()
-		attack_effect_instance.queue_free()
-
+	get_node("../../SlumsTileMap").add_child(attack_effect_instance)
+	attack_effect_instance.show()
+	match name:
+		"kai":
+			attack_effect_instance.scale = Vector2(0.5, 0.5)
+			attack_effect_instance.position = attack_effect_instance.position + Vector2(-15, 20)
+			attack_effect_instance.play("space_slash")
+			await attack_effect_instance.animation_finished
+			
+		"emerald":
+			attack_effect_instance.scale = Vector2(0.9, 0.9)
+			attack_effect_instance.position = attack_effect_instance.position + Vector2(0, 28)
+			attack_effect_instance.play("bullet_impact")
+			await attack_effect_instance.animation_finished
+		
+		"tyrone":
+			attack_effect_instance.hide()
+			shake_enabled = true
+			await get_tree().create_timer(0.5).timeout
+			shake_enabled = false
+			
+		"bettany":
+			attack_effect_instance.play("fire_column")
+			await attack_effect_instance.animation_finished
+	
+	attack_effect_instance.hide()
+	attack_effect_instance.queue_free()
+	
 func play_attack_sfx():
 	if anim_sprite.animation == "attack" and anim_sprite.frame == sound_frame:
 		attack_sfx_player.play()
@@ -301,5 +332,9 @@ func within_bounds(coordinate : Vector2) -> bool:
 	else:
 		return false
 
+func apply_shake():
+	shake_strength = random_strength
 
+func random_offset() -> Vector2:
+	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
 

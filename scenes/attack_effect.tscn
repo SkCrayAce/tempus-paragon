@@ -1,6 +1,28 @@
-[gd_scene load_steps=17 format=3 uid="uid://db22paejqy5ai"]
+[gd_scene load_steps=28 format=3 uid="uid://db22paejqy5ai"]
 
 [ext_resource type="Texture2D" uid="uid://2w1euapmtdjw" path="res://tempus_assets/particles/fire_column_medium_1-Sheet.png" id="1_gsuy2"]
+[ext_resource type="Texture2D" uid="uid://dkax6j4qthxw7" path="res://tempus_assets/particles/bullet_impact.png" id="1_ihoh7"]
+[ext_resource type="Texture2D" uid="uid://evyib7vcqp2x" path="res://tempus_assets/particles/slash.png" id="2_om1ud"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqoc1"]
+atlas = ExtResource("1_ihoh7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8l4vc"]
+atlas = ExtResource("1_ihoh7")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_602rw"]
+atlas = ExtResource("1_ihoh7")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_how02"]
+atlas = ExtResource("1_ihoh7")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki0oc"]
+atlas = ExtResource("1_ihoh7")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fxf1s"]
 atlas = ExtResource("1_gsuy2")
@@ -58,8 +80,44 @@ region = Rect2(540, 0, 45, 90)
 atlas = ExtResource("1_gsuy2")
 region = Rect2(585, 0, 45, 90)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3itt7"]
+atlas = ExtResource("2_om1ud")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mgud"]
+atlas = ExtResource("2_om1ud")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yf72"]
+atlas = ExtResource("2_om1ud")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54hh1"]
+atlas = ExtResource("2_om1ud")
+region = Rect2(384, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7or4d"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqoc1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8l4vc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_602rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_how02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki0oc")
+}],
+"loop": false,
+"name": &"bullet_impact",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fxf1s")
@@ -106,6 +164,23 @@ animations = [{
 "loop": false,
 "name": &"fire_column",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3itt7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mgud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yf72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54hh1")
+}],
+"loop": false,
+"name": &"space_slash",
+"speed": 10.0
 }]
 
 [node name="AttackEffect" type="AnimatedSprite2D"]
@@ -113,6 +188,6 @@ clip_children = 2
 z_index = 10
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_7or4d")
-animation = &"fire_column"
-frame = 13
+animation = &"bullet_impact"
+frame = 4
 frame_progress = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=85 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
 [ext_resource type="Texture2D" uid="uid://df5ugnnp2gpkq" path="res://tempus_assets/chibi heads/bettany_chibi_head.png" id="10_kofbx"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
+[ext_resource type="Texture2D" uid="uid://cqcfmi487u8am" path="res://tempus_assets/emerald_portrait.png" id="12_o3jwk"]
 [ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
 [ext_resource type="SpriteFrames" uid="uid://b0cxpnsavvq7" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
@@ -717,6 +718,7 @@ offset_left = 20.0
 offset_top = -191.0
 offset_right = 220.0
 offset_bottom = 9.0
+texture = ExtResource("12_o3jwk")
 
 [node name="TyroneSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
 visible = false
