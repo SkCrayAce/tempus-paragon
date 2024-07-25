@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkb5nslxxihq6"]
+[gd_scene load_steps=5 format=3 uid="uid://dkb5nslxxihq6"]
 
 [ext_resource type="Script" path="res://scripts/mainmenu.gd" id="1_drxc3"]
 [ext_resource type="Texture2D" uid="uid://b2hwgpt6su2mu" path="res://tempus_assets/title.png" id="1_eowjy"]
 [ext_resource type="AudioStream" uid="uid://bce36kdaa1g41" path="res://audio/music/main_menu_music.mp3" id="2_4xbrc"]
-[ext_resource type="Theme" uid="uid://dsn1ed1mngin" path="res://theme/mainmenu.tres" id="2_ffp8h"]
-[ext_resource type="Script" path="res://scripts/button.gd" id="5_73gh7"]
+[ext_resource type="PackedScene" uid="uid://gb0imj7ylski" path="res://scenes/button.tscn" id="4_cnykv"]
 
 [node name="mainmenu" type="Control"]
 layout_mode = 3
@@ -54,36 +53,28 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 25
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
-[node name="PlayBtn" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="PlayBtn" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_cnykv")]
 layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme = ExtResource("2_ffp8h")
-text = "PLAY"
-script = ExtResource("5_73gh7")
+text = "PLAY
+"
 
-[node name="OptionsBtn" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OptionsBtn" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_cnykv")]
 layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme = ExtResource("2_ffp8h")
 text = "OPTIONS"
-script = ExtResource("5_73gh7")
 
-[node name="ExitBtn" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="ExitBtn" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_cnykv")]
 layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme = ExtResource("2_ffp8h")
-text = "EXIT"
-script = ExtResource("5_73gh7")
+text = "EXIT
+"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/PlayBtn" to="." method="_on_play_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/OptionsBtn" to="." method="_on_options_btn_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ExitBtn" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]

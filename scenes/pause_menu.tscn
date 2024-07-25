@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://du6d0wtioc0sq"]
+[gd_scene load_steps=7 format=3 uid="uid://dh18e42j4fj06"]
 
 [ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="1_hdyne"]
 [ext_resource type="Script" path="res://scenes/pause_menu.gd" id="1_yikfo"]
@@ -209,10 +209,10 @@ metadata/_edit_lock_ = true
 [node name="MarginContainer" parent="Options/ColorRect" index="0"]
 metadata/_edit_lock_ = true
 
-[node name="ReturnButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+[node name="ReturnButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
 visible = false
 
-[node name="ReturnToPauseButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1" instance=ExtResource("2_2isnv")]
+[node name="ReturnToPauseButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="2" instance=ExtResource("2_2isnv")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "RETURN

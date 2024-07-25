@@ -37,14 +37,10 @@ func main_menu_play_anim():
 
 func _on_play_btn_pressed():
 	breakloop = true
-	#get_tree().change_scene_to_packed(Slums0)
-	#TransitionScreen.play_transition("fade_out")
 	NavigationManager.start_game()
-
-
-func _on_button_3_pressed():
-	get_tree().quit()
-
 
 func _on_options_btn_pressed():
 	get_tree().change_scene_to_file("res://scenes/options.tscn")
+
+func _on_exit_btn_pressed():
+	get_tree().quit()
