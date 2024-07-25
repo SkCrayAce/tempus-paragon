@@ -117,12 +117,13 @@ func push_enemies():
 	var push_distance = kai_push_distance
 	battle.record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if kai_iteration < push_distance :
-			enemy.blown_back()
-		else:
-			await enemy.stop_animation()
-			battle.set_timers_paused(false)
-			start_cooldown()
+		if not enemy is Boss:
+			if kai_iteration < push_distance :
+				enemy.blown_back()
+			else:
+				await enemy.stop_animation()
+				battle.set_timers_paused(false)
+				start_cooldown()
 	if kai_iteration < push_distance:
 		push_timer.start()
 	else:
