@@ -1,0 +1,221 @@
+[gd_scene load_steps=7 format=3 uid="uid://du6d0wtioc0sq"]
+
+[ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="1_hdyne"]
+[ext_resource type="Script" path="res://scenes/pause_menu.gd" id="1_yikfo"]
+[ext_resource type="PackedScene" uid="uid://gb0imj7ylski" path="res://scenes/button.tscn" id="2_2isnv"]
+[ext_resource type="PackedScene" uid="uid://dt1n3jkj0ngeo" path="res://scenes/options.tscn" id="4_hgeax"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7635i"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_ivbyo"]
+font = ExtResource("1_hdyne")
+font_size = 20
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+custom_minimum_size = Vector2(427, 240)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -853.0
+offset_bottom = -480.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yikfo")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_mode = 3
+position = Vector2(640, 361)
+enabled = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.470588)
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(0.0156863, 0.0666667, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 32.0
+offset_right = -100.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7635i")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 10
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+metadata/_edit_lock_ = true
+
+[node name="PauseLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/font = ExtResource("1_hdyne")
+theme_override_font_sizes/font_size = 40
+text = "Game Paused
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_2isnv")]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "RESUME
+"
+
+[node name="OptionsButton" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_2isnv")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "OPTIONS
+"
+
+[node name="QuitButton" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_2isnv")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "QUIT"
+
+[node name="ConfirmationPanel" type="Panel" parent="."]
+visible = false
+self_modulate = Color(0.0156863, 0.0666667, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 32.0
+offset_right = -100.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7635i")
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmationPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationPanel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_lock_ = true
+
+[node name="ConfirmLabel" type="Label" parent="ConfirmationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.0
+text = "Are you sure?
+You will lose all progress"
+label_settings = SubResource("LabelSettings_ivbyo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationPanel/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="YesButton" parent="ConfirmationPanel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_2isnv")]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "YES
+"
+
+[node name="NoButton" parent="ConfirmationPanel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_2isnv")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "NO
+"
+
+[node name="Options" parent="." instance=ExtResource("4_hgeax")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 2.995
+anchor_bottom = 2.979
+offset_right = 0.134888
+offset_bottom = 0.039978
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" parent="Options" index="0"]
+anchors_preset = -1
+anchor_top = -0.029
+offset_top = 20.735
+offset_bottom = 7.0
+metadata/_edit_lock_ = true
+
+[node name="MarginContainer" parent="Options/ColorRect" index="0"]
+metadata/_edit_lock_ = true
+
+[node name="ReturnButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+visible = false
+
+[node name="ReturnToPauseButton" parent="Options/ColorRect/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer" index="1" instance=ExtResource("2_2isnv")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RETURN
+"
+
+[editable path="Options"]
