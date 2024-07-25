@@ -3,8 +3,8 @@ extends CharacterBody2D
 enum Type {MELEE, RANGED} 
 
 @export var virulent_type : Type
-@export var health : int
-@export var attack_damage : int
+@export var health : int = 3000
+@export var attack_damage : int = 100
 @export var attack_range : int
 @export var animated_sprite : AnimatedSprite2D
 @export var attack_frame : int
@@ -151,8 +151,6 @@ func enemy_defeated():
 	remove_from_group("enemies")
 	animated_sprite.animation_finished.connect(queue_free)
 	
-	if get_tree().get_node_count() <= 5 :
-		tree_exited.connect(battle_node.start_wave)
 		
 func blown_back():
 	if position.x == bottom_right_tile.x : return
@@ -196,6 +194,8 @@ func stop_animation():
 		animated_sprite.stop()
 	elif animated_sprite.animation == "attack":
 		await animated_sprite.animation_finished 
+	elif finished_attacking:
+		return
 	animated_sprite.play("side_idle_left")
 	
 	#if not within_attack_range():

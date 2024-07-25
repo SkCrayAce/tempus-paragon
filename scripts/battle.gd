@@ -302,7 +302,7 @@ func place_formation():
 	var attempts : int
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var random_pattern = rng.randi_range(0, 4)	
+	var random_pattern = rng.randi_range(0, 7)	
 	
 	
 		
@@ -311,9 +311,9 @@ func place_formation():
 		1 : current_offset_list = emerald_offset_list
 		2 : current_offset_list = tyrone_offset_list
 		3 : current_offset_list = bettany_offset_list
-		#4 : current_offset_list = sqaure_offset_list
-		#5 : current_offset_list = h_rect_offset_list
-		#6 : current_offset_list = v_rect_offset_list
+		4 : current_offset_list = sqaure_offset_list
+		5 : current_offset_list = h_rect_offset_list
+		6 : current_offset_list = v_rect_offset_list
 		
 	
 	for offset in current_offset_list:

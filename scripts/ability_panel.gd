@@ -1,5 +1,10 @@
 extends TextureRect
 
+@export var kai_push_distance : int = 5
+@export var emerald_skill_dmg : int = 3000
+@export var tyrone_heal_percentage : int = 70
+@export var bettany_burn_dmg : int = 600
+
 const Battle = preload("res://scripts/battle.gd")
 const Enemy = preload("res://scripts/enemy.gd")
 const Boss = preload("res://scripts/slums_boss AI/slumsboss.gd")
@@ -65,7 +70,7 @@ func _ready():
 	
 	skill_sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	#start_cooldown()
+	start_cooldown()
 	
 func _process(delta):
 	cooldown_bar.value = cooldown_timer.time_left
@@ -104,26 +109,27 @@ func kai_skill():
 	play_sfx(KAI_SKILL_SFX)
 	prints("kai skill activate")
 	kai_iteration = 0
-	push_timer.timeout.connect(update_positions)
+	push_timer.timeout.connect(push_enemies)
 	battle.set_timers_paused(true)
-	update_positions.call()
+	push_enemies.call()
 	
-func update_positions():
+func push_enemies():
+	var push_distance = kai_push_distance
 	battle.record_enemies()
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if kai_iteration < 3 :
+		if kai_iteration < push_distance :
 			enemy.blown_back()
 		else:
 			await enemy.stop_animation()
 			battle.set_timers_paused(false)
-	if kai_iteration < 3:
+			start_cooldown()
+	if kai_iteration < push_distance:
 		push_timer.start()
 	else:
-		push_timer.timeout.disconnect(update_positions)
+		push_timer.timeout.disconnect(push_enemies)
 	kai_iteration += 1
 	prints("iter", kai_iteration)
 		
-			#enemy.position.x += 48
 	prints("nablow na kami!")
 
 func tyrone_skill():
@@ -133,7 +139,7 @@ func tyrone_skill():
 	tween = create_tween().set_parallel()
 	for character in get_tree().get_nodes_in_group("characters"):
 		if not character.is_defeated:
-			var new_health = character.health_bar.value + character.health_bar.max_value * 0.70
+			var new_health = character.health_bar.value + character.health_bar.max_value * tyrone_heal_percentage/100
 			tween.tween_property(character.health_bar, "value", new_health, 1)
 			#character.health_bar.value += character.health_bar.max_value * 0.70
 	battle.update_team_health()
@@ -146,7 +152,7 @@ func bettany_skill():
 	bettany_anim_sprite.play("special_attack")
 	await bettany_anim_sprite.animation_finished
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.burn(600)
+		enemy.burn(bettany_burn_dmg)
 	start_cooldown()
 
 func toggle_emerald_skill():
@@ -161,7 +167,7 @@ func activate_emerald_skill(detected_enemy : CharacterBody2D):
 	play_sfx(EMERALD_SKILL_SFX)
 	var valid_enemy = detected_enemy is Enemy or detected_enemy is Boss
 	if is_instance_valid(detected_enemy) and valid_enemy:
-		detected_enemy.hit_by_eme_skill(3000)
+		detected_enemy.hit_by_eme_skill(emerald_skill_dmg)
 	global.is_dragging = false
 	await get_tree().create_timer(skill_sfx_player.stream.get_length()).timeout
 	battle.set_timers_paused(false)
