@@ -62,7 +62,7 @@ func _ready():
 	global.enemy_dict[enemy_map_pos] = position
 	healthbar.max_value = health
 	healthbar.value = healthbar.max_value
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	#process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	anim.frame_changed.connect(boss_stomp)
 	
@@ -102,7 +102,11 @@ func _ready():
 	healthbar.value = health
 
 func _physics_process(delta):
-	pass
+	if not global.battle_start_popup:
+		if get_tree().paused:
+			Engine.time_scale = 0
+		else:
+			Engine.time_scale = 1.0
 		
 func randomize_index():
 	new_index = rng.randi() % states_to_choose.size()

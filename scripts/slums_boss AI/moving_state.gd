@@ -75,6 +75,7 @@ func _physics_process(delta):
 			take_many_damage.emit()
 	current_map_position = tile_map.local_to_map(actor.position)
 	
+	
 func record_position():
 	global.enemy_dict.clear()
 	var boss_map_pos = tile_map.local_to_map(actor.position)

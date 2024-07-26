@@ -15,6 +15,8 @@ extends State
 signal idle_finished
 signal take_many_damage
 
+var signal_emitted = false
+var stay_idle = false
 var curr_health
 
 func _ready():
@@ -25,6 +27,7 @@ func _ready():
 func _enter_state():
 	prints("Entered Idle State")
 	set_physics_process(true)
+	stay_idle = false
 	curr_health = healthbar.value
 
 	var boss_map_pos = tile_map.local_to_map(actor.position)
@@ -34,7 +37,9 @@ func _enter_state():
 	
 	anim.play("idle")
 	await get_tree().create_timer(randi_range(3, 4)).timeout
-	idle_finished.emit()
+	
+	if stay_idle == false:
+		idle_finished.emit()
 
 
 func _physics_process(delta):

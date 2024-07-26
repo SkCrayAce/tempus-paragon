@@ -150,16 +150,17 @@ func show_start_screen():
 	var hide_start_screen = func(init_y : int, final_y : int):
 		tween = create_tween()
 		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-		
 		tween.tween_property(battle_start_popup, "position:y", final_y, 0.5).set_trans(Tween.TRANS_EXPO)
 		await tween.finished
 		battle_start_popup.hide()
+		global.battle_start_popup = false
 		battle_start_popup.position.y = init_y
 		get_tree().paused = false
 		
 	var init_y = battle_start_popup.position.y
 	var final_y = init_y + 400
 	
+	global.battle_start_popup = true
 	get_tree().paused = true
 	
 	tween = create_tween()
@@ -489,6 +490,7 @@ func spawn_boss():
 	boss_instance.position = slums_tile_map.map_to_local(Vector2i(21, 7))
 	slums_tile_map.add_child.call_deferred(boss_instance)
 	boss_instance.boss_killed.connect(_on_boss_killed)
+	
 
 func _on_boss_killed():
 	var dead_boss_instance = boss_death_scene.instantiate() as AnimatedSprite2D

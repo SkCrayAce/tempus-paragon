@@ -158,10 +158,6 @@ func bettany_skill():
 	modulator.color = Color(1, 0.6, 0.3)
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(bettany_burn_dmg)
-		
-	if global.slums_boss_battle:
-		for enemy in get_tree().get_nodes_in_group("boss"):
-			enemy.burn(bettany_burn_dmg)
 	
 	start_cooldown()
 	await get_tree().create_timer(2).timeout
