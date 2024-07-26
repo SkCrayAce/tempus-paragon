@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh18e42j4fj06"]
+[gd_scene load_steps=7 format=3 uid="uid://du6d0wtioc0sq"]
 
 [ext_resource type="FontFile" uid="uid://br5imkqdstone" path="res://tempus_assets/font/monogram/ttf/monogram-extended.ttf" id="1_hdyne"]
 [ext_resource type="Script" path="res://scenes/pause_menu.gd" id="1_yikfo"]
