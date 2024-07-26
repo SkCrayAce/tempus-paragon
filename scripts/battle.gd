@@ -375,7 +375,10 @@ func enemy_defeated(enemy_ref : CharacterBody2D):
 		prints("wave cleared:", waves_cleared)
 		if not global.slums_boss_battle:
 			if waves_cleared < num_of_waves:
-				show_new_wave_pop_up()
+				#show_new_wave_pop_up()
+				await get_tree().create_timer(1).timeout
+				start_wave.call_deferred()
+				pass
 			else:
 				battle_victory(true)
 		elif global.boss_spawning:

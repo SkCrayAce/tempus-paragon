@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=95 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -57,6 +57,13 @@ region = Rect2(64, 48, 16, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e7xbr"]
 texture = SubResource("AtlasTexture_nx0ei")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8g5k"]
+atlas = ExtResource("3_ypaqq")
+region = Rect2(128, 64, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rjpl7"]
+texture = SubResource("AtlasTexture_y8g5k")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_to7op"]
 atlas = ExtResource("3_ypaqq")
@@ -841,6 +848,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = null
 theme_override_styles/normal = SubResource("StyleBoxTexture_e7xbr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rjpl7")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_5uitk")
 text = ""
 icon = SubResource("AtlasTexture_wgm6x")
