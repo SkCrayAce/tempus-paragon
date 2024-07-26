@@ -33,6 +33,7 @@ const SlideDistance = 700
 @onready var push_timer = get_node("../../../../PushTimer") as Timer
 
 @onready var darkener = get_node("../../../SkillPopups/Darkener") as ColorRect
+@onready var modulator = get_node("../../../../Modulator") as CanvasModulate
 @onready var kai_skill_pop_up = get_node("../../../SkillPopups/KaiSkillPopUp") as ColorRect
 @onready var tyrone_skill_pop_up = get_node("../../../SkillPopups/TyroneSkillPopUp") as ColorRect
 @onready var emerald_skill_pop_up = get_node("../../../SkillPopups/EmeraldSkillPopUp") as ColorRect
@@ -153,6 +154,8 @@ func bettany_skill():
 	play_sfx(BETTANY_SKILL_SFX)
 	bettany_anim_sprite.play("special_attack")
 	await bettany_anim_sprite.animation_finished
+	modulator.show()
+	modulator.color = Color(1, 0.6, 0.3)
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.burn(bettany_burn_dmg)
 		
@@ -161,7 +164,9 @@ func bettany_skill():
 			enemy.burn(bettany_burn_dmg)
 	
 	start_cooldown()
-
+	await get_tree().create_timer(2).timeout
+	modulator.hide()
+	
 func toggle_emerald_skill():
 	if not eme_skill_active:
 		slide_in(emerald_skill_pop_up)

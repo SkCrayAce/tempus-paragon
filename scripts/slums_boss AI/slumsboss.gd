@@ -67,11 +67,11 @@ func _ready():
 	anim.frame_changed.connect(boss_stomp)
 	
 	rng.randomize()
-	#states_to_choose.append(ranged_attack_state)
-	#states_to_choose.append(melee_attack_state)
+	states_to_choose.append(ranged_attack_state)
+	states_to_choose.append(melee_attack_state)
 	states_to_choose.append(power_attack_state)
-	#states_to_choose.append(idle_state)
-	#states_to_choose.append(moving_state)
+	states_to_choose.append(idle_state)
+	states_to_choose.append(moving_state)
 	
 	if not global.boss_is_defeated:
 		#will go to move state after certain amount of time
