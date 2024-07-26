@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://bvw1dpdysu56x"]
+[gd_scene load_steps=88 format=3 uid="uid://bvw1dpdysu56x"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_30h06"]
 [ext_resource type="FontFile" uid="uid://bva5uqdcp6uv4" path="res://tempus_assets/font/KarenFat.ttf" id="3_755tb"]
@@ -15,8 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://b84g10b3l08wc" path="res://scenes/character.tscn" id="9_yrs16"]
 [ext_resource type="Texture2D" uid="uid://df5ugnnp2gpkq" path="res://tempus_assets/chibi heads/bettany_chibi_head.png" id="10_kofbx"]
 [ext_resource type="Texture2D" uid="uid://cuo4qjd4lf1ow" path="res://tempus_assets/tyrone_portrait.png" id="11_rum47"]
-[ext_resource type="Texture2D" uid="uid://cqcfmi487u8am" path="res://tempus_assets/emerald_portrait.png" id="12_o3jwk"]
-[ext_resource type="Texture2D" uid="uid://dmbmpt233p4ct" path="res://tempus_assets/bettany_portrait.png" id="14_h4p7r"]
+[ext_resource type="PackedScene" uid="uid://gb0imj7ylski" path="res://scenes/button.tscn" id="13_5p7s5"]
+[ext_resource type="PackedScene" uid="uid://dh18e42j4fj06" path="res://scenes/pause_menu.tscn" id="14_4dh3i"]
+[ext_resource type="Texture2D" uid="uid://d1bp3ufx2x7lc" path="res://temp_assets/stock_icons.png" id="14_ig45p"]
 [ext_resource type="Texture2D" uid="uid://bpuaosqpj60vb" path="res://tempus_assets/miniportraits.png" id="15_uc11d"]
 [ext_resource type="SpriteFrames" uid="uid://dqo4rfsiqxgb4" path="res://scenes/characters/spriteframes/emerald_battle.tres" id="17_01l8e"]
 [ext_resource type="SpriteFrames" uid="uid://b0cxpnsavvq7" path="res://scenes/characters/spriteframes/bettany_battle.tres" id="18_fu5ue"]
@@ -48,6 +49,10 @@ gradient = SubResource("Gradient_mobj2")
 [sub_resource type="AtlasTexture" id="AtlasTexture_8t05s"]
 atlas = ExtResource("3_ypaqq")
 region = Rect2(96, 80, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ure78"]
+atlas = ExtResource("14_ig45p")
+region = Rect2(28, 99, 16, 16)
 
 [sub_resource type="Gradient" id="Gradient_k253i"]
 offsets = PackedFloat32Array(0.0362319, 0.746377)
@@ -516,10 +521,6 @@ process_mode = 1
 script = ExtResource("1_30h06")
 num_of_waves = 3
 
-[node name="Modulator" type="CanvasModulate" parent="."]
-visible = false
-color = Color(0.999997, 0.617328, 0.364471, 1)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
@@ -723,7 +724,6 @@ offset_left = 20.0
 offset_top = -191.0
 offset_right = 220.0
 offset_bottom = 9.0
-texture = ExtResource("12_o3jwk")
 
 [node name="TyroneSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
 visible = false
@@ -760,10 +760,9 @@ grow_vertical = 1
 
 [node name="TextureRect" parent="CanvasLayer/SkillPopups/BettanySkillPopUp" index="0"]
 offset_left = 20.0
-offset_top = -185.0
+offset_top = -191.0
 offset_right = 220.0
-offset_bottom = 15.0
-texture = ExtResource("14_h4p7r")
+offset_bottom = 9.0
 
 [node name="Darkener" type="ColorRect" parent="CanvasLayer/SkillPopups"]
 visible = false
@@ -811,6 +810,28 @@ theme_override_font_sizes/font_size = 400
 text = "WAVE"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("13_5p7s5")]
+custom_minimum_size = Vector2(0, 0)
+offset_left = 21.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 27.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = null
+text = ""
+icon = SubResource("AtlasTexture_ure78")
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("14_4dh3i")]
+visible = false
+offset_left = 15.0
+offset_right = -838.0
+metadata/_edit_lock_ = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.90921, 0.703457, 0.701886, 0.988235)
 
 [node name="SlumsTileMap" type="TileMap" parent="."]
 self_modulate = Color(0.909804, 0.701961, 0.701961, 0.988235)

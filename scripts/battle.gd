@@ -43,6 +43,8 @@ const max_hover_y : int = bottom_right_tile.y
 @onready var new_wave_popup = $CanvasLayer/NewWavePopup as TextureRect
 @onready var new_wave_label = $CanvasLayer/NewWavePopup/NewWaveLabel as Label
 @onready var abilities_container = $CanvasLayer/AbilitiesContainer
+@onready var pause_button = $CanvasLayer/PauseButton as Button
+@onready var pause_menu = $CanvasLayer/PauseMenu as Control
 
 @onready var kai_drag_icon = $DraggableIcons/kai/DragIcon
 @onready var emerald_drag_icon = $DraggableIcons/emerald/DragIcon
@@ -90,6 +92,7 @@ func _ready():
 	enemy_move_timer.timeout.connect(start_enemy_action)
 	animation_timer.timeout.connect(end_enemy_action)
 	move_timer_bar.max_value = int(enemy_move_timer.wait_time)
+	pause_button.pressed.connect(show_pause_menu)
 	
 	battle_start_popup.process_mode = Node.PROCESS_MODE_ALWAYS
 	new_wave_popup.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -521,3 +524,6 @@ func set_timers_paused(paused : bool):
 	if paused: prints("timer paused")
 	else: prints("timer resumed")
 	
+func show_pause_menu():
+	pause_menu.show()
+	get_tree().paused = true
