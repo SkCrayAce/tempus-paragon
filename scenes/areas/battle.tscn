@@ -601,10 +601,17 @@ texture_under = SubResource("AtlasTexture_0dq3t")
 texture_progress = SubResource("AtlasTexture_5hxf3")
 
 [node name="AbilitiesContainer" type="TextureRect" parent="CanvasLayer"]
-offset_left = 25.0
-offset_top = 176.0
-offset_right = 473.0
-offset_bottom = 246.0
+anchors_preset = -1
+anchor_left = 0.177
+anchor_top = 0.335
+anchor_right = 0.177
+anchor_bottom = 0.335
+offset_left = -223.56
+offset_top = -64.2
+offset_right = 224.44
+offset_bottom = 4.79999
+grow_horizontal = 2
+grow_vertical = 0
 texture = SubResource("AtlasTexture_muk67")
 
 [node name="BlackGradient" type="TextureRect" parent="CanvasLayer/AbilitiesContainer"]
@@ -615,14 +622,15 @@ anchor_left = 0.5
 anchor_top = 1.135
 anchor_right = 0.5
 anchor_bottom = 1.135
-offset_left = -248.0
-offset_top = -6.45
-offset_right = -184.0
-offset_bottom = 536.55
+offset_left = -271.0
+offset_top = -9.31499
+offset_right = -207.0
+offset_bottom = 533.685
 grow_horizontal = 2
 grow_vertical = 0
 rotation = 4.71239
 texture = SubResource("GradientTexture2D_7oj3h")
+metadata/_edit_lock_ = true
 
 [node name="AbilitiesRow" type="HBoxContainer" parent="CanvasLayer/AbilitiesContainer"]
 layout_mode = 1
@@ -635,9 +643,11 @@ offset_right = -56.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="KaiAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="AbilityName" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/KaiAbility/DetailsPanel" index="0"]
 text = "Spatial Push"
@@ -647,6 +657,7 @@ text = "Pushes all enemies away using Kai's ability."
 
 [node name="EmeraldAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/EmeraldAbility" index="1"]
 texture = ExtResource("5_4aa5m")
@@ -666,6 +677,7 @@ texture = SubResource("AtlasTexture_8t05s")
 
 [node name="TyroneAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="UseAbilityBtn" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/TyroneAbility" index="0"]
 offset_left = 1.0
@@ -685,6 +697,7 @@ texture = ExtResource("8_64q0s")
 
 [node name="BettanyAbility" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow" instance=ExtResource("4_hfq5b")]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="AbilityIcon" parent="CanvasLayer/AbilitiesContainer/AbilitiesRow/BettanyAbility" index="1"]
 texture = ExtResource("7_libma")
@@ -713,6 +726,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
 [node name="KaiSkillPopUp" parent="CanvasLayer/SkillPopups" instance=ExtResource("9_eowdg")]
 visible = false

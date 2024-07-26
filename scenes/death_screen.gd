@@ -7,6 +7,7 @@ var tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	global.player_input_enabled = true
 	return_button = get_node("ColorRect/VBoxContainer/ReturnButton")
 	button_fade = get_node("ColorRect/VBoxContainer/ReturnButton/AnimationPlayer")
 	return_button.self_modulate = Color(1, 1, 1, 0)
