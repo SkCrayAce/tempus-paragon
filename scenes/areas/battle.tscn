@@ -588,9 +588,12 @@ vertical_alignment = 1
 [node name="MoveTimerBar" type="TextureProgressBar" parent="CanvasLayer"]
 light_mask = 2
 visibility_layer = 2
-offset_left = 390.0
+anchors_preset = -1
+anchor_left = 0.012
+anchor_right = 0.012
+offset_left = 374.64
 offset_top = 49.0
-offset_right = 408.0
+offset_right = 392.64
 offset_bottom = 178.0
 step = 0.01
 fill_mode = 3

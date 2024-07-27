@@ -914,12 +914,14 @@ _data = {
 
 [node name="SlumsBoss" type="CharacterBody2D" groups=["enemies"]]
 process_mode = 3
+z_as_relative = false
 y_sort_enabled = true
 script = ExtResource("1_g8sqm")
 health = 150000
 attack_damage = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_as_relative = false
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gsc2j")
 sprite_frames = SubResource("SpriteFrames_el4pk")
@@ -928,6 +930,7 @@ offset = Vector2(0, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
 z_index = -1
+z_as_relative = false
 y_sort_enabled = true
 texture = ExtResource("4_fmv5v")
 offset = Vector2(0, -20)

@@ -32,6 +32,7 @@ var slums_boss_battle : bool = false
 var boss_spawning : bool
 var boss_is_defeated : bool
 var battle_start_popup : bool = false
+var skill_popup : bool = false
 
 #Overworld Data
 var levels_cleared = 0

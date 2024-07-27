@@ -102,7 +102,7 @@ func _ready():
 	healthbar.value = health
 
 func _physics_process(delta):
-	if not global.battle_start_popup:
+	if not global.battle_start_popup and not global.skill_popup:
 		if get_tree().paused:
 			Engine.time_scale = 0
 		else:

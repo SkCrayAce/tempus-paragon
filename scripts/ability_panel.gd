@@ -194,6 +194,7 @@ func end_cooldown():
 	use_ability_btn.disabled = false
 	
 func slide_in(pop_up : ColorRect):
+	global.skill_popup = true
 	pop_up.position.x = -SlideDistance
 	pop_up.process_mode = Node.PROCESS_MODE_ALWAYS
 	darkener.show()
@@ -222,6 +223,7 @@ func slide_out(pop_up : ColorRect):
 	#get_tree().paused = false
 	await tween.finished
 	darkener.hide()
+	global.skill_popup = false
 	
 func disable():
 	use_ability_btn.set_disabled(true)
